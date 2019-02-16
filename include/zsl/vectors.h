@@ -47,7 +47,16 @@ struct zsl_vec {
   struct zsl_vec name = {\
       .sz   = n,\
       .data = name##_vec\
-  };
+  }
+
+/**
+ * Initialises vector 'v' with 0.0 values.
+ *
+ * @param v         Pointer to the zsl_vec to initialise.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_init(struct zsl_vec *v);
 
 /**
  * @brief Converts an array of values into a vector. The number of elements in
@@ -67,24 +76,26 @@ struct zsl_vec {
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_data_t *a);
 
 /**
- * @brief Adds corresponding vector elements.
+ * @brief Adds corresponding vector elements in 'v' and 'w', saving to 'x'.
  *
  * @param v The first vector.
  * @param w The second vector.
+ * @param x The output vector.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w);
+int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
 
 /**
- * @brief Subtracts corresponding vector elements.
+ * @brief Subtracts corresponding vector elements in 'v' and 'w', saving to 'x'.
  *
  * @param v The first vector.
  * @param w The second vector.
+ * @param x The output vector.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w);
+int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
 
 /**
  * @brief Component-wise sum of a set of vectors.
@@ -102,10 +113,11 @@ int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
  *
  * @param v The vector to use.
  * @param s The scalar to multiply by.
+ * @param w The output vector.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
+int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s, struct zsl_vec *w);
 
 /**
  * @brief Computes the component-wise mean of a set of identically-sized
@@ -121,15 +133,16 @@ int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
 int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
 
 /**
- * @brief Computes the dot product of two vectors (the sum of their
- *        component-wise products).
+ * @brief Computes the dot (aka scalar) product of two equal-length vectors
+ *        (the sum of their component-wise products).
  *
  * @param v The first vector.
  * @param w The second vector.
+ * @param d The dot product.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w);
+int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
 
 /**
  * @brief Computes the vector's sum of squares.

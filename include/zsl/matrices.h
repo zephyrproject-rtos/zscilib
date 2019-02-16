@@ -50,7 +50,7 @@ struct zsl_mtx {
       .sz_rows      = m,\
       .sz_cols      = n,\
       .data         = name##_mtx\
-  };
+  }
 
 /**
  * Function prototype called when populating a matrix via `zsl_mtx_init`.
