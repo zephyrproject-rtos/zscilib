@@ -1,0 +1,5 @@
+tests:
+  zsl.core:
+    #extra_args: CONF_FILE=prj_sw_random_systimer.conf
+    tags: math
+    min_ram: 16
