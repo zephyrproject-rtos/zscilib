@@ -62,7 +62,7 @@ zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a)
 }
 
 int
-zsl_mtx_get(zsl_data_t *x, struct zsl_mtx *m, size_t i, size_t j)
+zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x)
 {
     if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
         return -EINVAL;

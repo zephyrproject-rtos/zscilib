@@ -131,15 +131,15 @@ int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a);
 /**
  * @brief Gets a single value from the specified row (i) and column (j).
  *
- * @param x     Pointer to where the value should be stored.
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to read (0-based).
  * @param j     The column number to read (0-based).
+ * @param x     Pointer to where the value should be stored.
  *
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
-int zsl_mtx_get(zsl_data_t *x, struct zsl_mtx *m, size_t i, size_t j);
+int zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x);
 
 /**
  * @brief Sets a single value at the specified row (i) and column (j).
@@ -147,6 +147,7 @@ int zsl_mtx_get(zsl_data_t *x, struct zsl_mtx *m, size_t i, size_t j);
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to update (0-based).
  * @param j     The column number to update (0-based).
+ * @param x     The value to assign.
  *
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
@@ -167,14 +168,12 @@ int zsl_mtx_scale(struct zsl_mtx *m, zsl_data_t *s);
 int zsl_mtx_trans(struct zsl_mtx *m);
 int zsl_mtx_inv(struct zsl_mtx *m);
 
-int zsl_mtx_min(struct zsl_mtx *m); /** Get the min value in the matrix. */
-int zsl_mtx_max(struct zsl_mtx *m); /** Get the max value in the matrix. */
+int zsl_mtx_min(struct zsl_mtx *m, zsl_data_t *x); /** Get the min value in the matrix. */
+int zsl_mtx_max(struct zsl_mtx *m, zsl_data_t *x); /** Get the max value in the matrix. */
 int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the min value index in the matrix. */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the max value index in the matrix. */
 
 int zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
-
-int zsl_mtx_copy(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 
