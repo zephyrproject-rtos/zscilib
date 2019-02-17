@@ -105,13 +105,13 @@ void test_vector_cross(void)
 
     /* Initialise the vectors. */
     rc = zsl_vec_init(&v);
-    zassert_true(rc == 0, "is_equal:initv != 0");
+    zassert_true(rc == 0, "cross:initv != 0");
     rc = zsl_vec_init(&w);
-    zassert_true(rc == 0, "is_equal:initw != 0");
+    zassert_true(rc == 0, "cross:initw != 0");
     rc = zsl_vec_init(&c);
-    zassert_true(rc == 0, "is_equal:initc != 0");
+    zassert_true(rc == 0, "cross:initc != 0");
     rc = zsl_vec_init(&z);
-    zassert_true(rc == 0, "is_equal:initz != 0");
+    zassert_true(rc == 0, "cross:initz != 0");
 
     /* TODO: Test cross product results and boundary checks! */
 }

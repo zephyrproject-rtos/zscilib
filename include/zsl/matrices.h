@@ -173,7 +173,7 @@ int zsl_mtx_max(struct zsl_mtx *m, zsl_data_t *x); /** Get the max value in the 
 int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the min value index in the matrix. */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the max value index in the matrix. */
 
-int zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
+bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 

@@ -12,20 +12,20 @@
 int
 zsl_mtx_entry_fn_empty(struct zsl_mtx *m, size_t i, size_t j)
 {
-    return zsl_mtx_set(m, i, j, 0.0);
+    return zsl_mtx_set(m, i, j, 0);
 }
 
 int
 zsl_mtx_entry_fn_diagonal(struct zsl_mtx *m, size_t i, size_t j)
 {
-    return zsl_mtx_set(m, i, j, i == j ? 1.0 : 0.0);
+    return zsl_mtx_set(m, i, j, i == j ? 1.0 : 0);
 }
 
 int
 zsl_mtx_entry_fn_random(struct zsl_mtx *m, size_t i, size_t j)
 {
     /* TODO: Determine an appropriate random number generator. */
-    return zsl_mtx_set(m, i, j, 0.0);
+    return zsl_mtx_set(m, i, j, 0);
 }
 
 int

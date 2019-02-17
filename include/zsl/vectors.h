@@ -82,7 +82,7 @@ int zsl_vec_from_arr(struct zsl_vec *v, zsl_data_t *a);
  * @param w The second vector.
  * @param x The output vector.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return 0 on success, -EINVAL if v and w are not equal length.
  */
 int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
 
@@ -93,9 +93,18 @@ int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
  * @param w The second vector.
  * @param x The output vector.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return 0 on success, -EINVAL if v and w are not equal length.
  */
 int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
+
+/**
+ * @brief Negates the elements in vector 'v'.
+ *
+ * @param v The vector to negate.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_neg(struct zsl_vec *v);
 
 /**
  * @brief Component-wise sum of a set of vectors.
@@ -109,28 +118,34 @@ int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
 int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
 
 /**
- * @brief Multiply a vector by a scalar.
+ * @brief Computes the magnitude of a vector.
  *
  * @param v The vector to use.
- * @param s The scalar to multiply by.
- * @param w The output vector.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return The magnitude of vector 'v'.
  */
-int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s, struct zsl_vec *w);
+zsl_data_t zsl_vec_magnitude(struct zsl_vec *v);
 
 /**
- * @brief Computes the component-wise mean of a set of identically-sized
- * vectors.
+ * @brief Multiply a vector by a scalar.
  *
- * @param v  Pointer to the array of vectors.
- * @param n  The number of vectors in 'v'.
- * @param i  The vector whose ith element is the mean of the ith elements
- *           of the input vectors.
+ * @param v The vector to scale.
+ * @param s The scalar to multiply by.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
+int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
+
+/**
+ * @brief Calculates the distance between two vectors, which is equal to the
+ *        magnitude of vector v - vector w.
+ *
+ * @param v The first vector.
+ * @param w The second vector.
+ *
+ * @return The magnitude of vector v - vector w.
+ */
+zsl_data_t zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w);
 
 /**
  * @brief Computes the dot (aka scalar) product of two equal-length vectors
@@ -140,9 +155,28 @@ int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
  * @param w The second vector.
  * @param d The dot product.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return 0 on success, or -EINVAL if vectors v and w aren't equal-length.
  */
 int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
+
+/**
+ * @brief Calculates the norm or absolute value of vector 'v' (the
+ *        square root of the vector's dot product).
+ *
+ * @param v The vector to calculate the norm of.
+ *
+ * @return The norm of vector 'v'.
+ */
+zsl_data_t zsl_vec_norm(struct zsl_vec *v);
+
+/**
+ * @brief Unitizes vector 'v', dividing each element by the it's norm.
+ *
+ * @param v The vector to unitize.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_unitize(struct zsl_vec *v);
 
 /**
  * @brief Computes the cross (or vector) product of two 3-vectors.
@@ -180,26 +214,17 @@ int zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c);
 int zsl_vec_sum_of_sqrs(struct zsl_vec *v, struct zsl_vec *w);
 
 /**
- * @brief Computes the magnitude of a vector.
+ * @brief Computes the component-wise mean of a set of identically-sized
+ * vectors.
  *
- * @param v The vector to use.
- * @param m The magnitude of vector 'v'.
- *
- * @return 0 on success, and non-zero error code on failure
- */
-int zsl_vec_magnitude(struct zsl_vec *v, zsl_data_t *m);
-
-/**
- * @brief Calculates the distance between two vectors, which is equal to the
- *        magnitude of vector v - vector w.
- *
- * @param v The first vector.
- * @param w The second vector.
- * @param d The magnitude of vector v = vector w.
+ * @param v  Pointer to the array of vectors.
+ * @param n  The number of vectors in 'v'.
+ * @param i  The vector whose ith element is the mean of the ith elements
+ *           of the input vectors.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
+int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
 
 /**
  * @brief Checks if two vectors are identical in size and content.
