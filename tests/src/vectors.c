@@ -40,6 +40,33 @@ void test_vector_from_arr(void)
 }
 
 /**
+ * @brief zsl_vec_cross unit tests.
+ *
+ * This test verifies the zsl_vec_cross function.
+ */
+void test_vector_cross(void)
+{
+    int rc;
+
+    ZSL_VECTOR_DEF(v, 3);
+    ZSL_VECTOR_DEF(w, 3);
+    ZSL_VECTOR_DEF(c, 3);
+    ZSL_VECTOR_DEF(z, 2);
+
+    /* Initialise the vectors. */
+    rc = zsl_vec_init(&v);
+    zassert_true(rc == 0, "cross:initv != 0");
+    rc = zsl_vec_init(&w);
+    zassert_true(rc == 0, "cross:initw != 0");
+    rc = zsl_vec_init(&c);
+    zassert_true(rc == 0, "cross:initc != 0");
+    rc = zsl_vec_init(&z);
+    zassert_true(rc == 0, "cross:initz != 0");
+
+    /* TODO: Test cross product results and boundary checks! */
+}
+
+/**
  * @brief zsl_vec_is_equal unit tests.
  *
  * This test verifies the zsl_vec_is_equal function.
@@ -87,31 +114,4 @@ void test_vector_is_equal(void)
     v.data[0] = 1.0;
     eq = zsl_vec_is_equal(&v, &w);
     zassert_false(eq, "is_equal:vals equal");
-}
-
-/**
- * @brief zsl_vec_cross unit tests.
- *
- * This test verifies the zsl_vec_cross function.
- */
-void test_vector_cross(void)
-{
-    int rc;
-
-    ZSL_VECTOR_DEF(v, 3);
-    ZSL_VECTOR_DEF(w, 3);
-    ZSL_VECTOR_DEF(c, 3);
-    ZSL_VECTOR_DEF(z, 2);
-
-    /* Initialise the vectors. */
-    rc = zsl_vec_init(&v);
-    zassert_true(rc == 0, "cross:initv != 0");
-    rc = zsl_vec_init(&w);
-    zassert_true(rc == 0, "cross:initw != 0");
-    rc = zsl_vec_init(&c);
-    zassert_true(rc == 0, "cross:initc != 0");
-    rc = zsl_vec_init(&z);
-    zassert_true(rc == 0, "cross:initz != 0");
-
-    /* TODO: Test cross product results and boundary checks! */
 }
