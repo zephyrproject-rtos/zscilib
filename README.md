@@ -21,7 +21,7 @@ to have the following problems in an embedded context::
   raw sensor data into actionable information (CMSIS-DAP).
 
 The second item is of particular importance, since the goal of embedded systems
-is often 'sensing' via raw data, manipulating that dat, then acting on the
+is often 'sensing' via raw data, manipulating that data, then acting on the
 converted data points or passing them on for further analysis.
 
 CMSIS-DAP contains a number of highly efficient algorithms for filtering
@@ -30,10 +30,11 @@ filtered accelerometer vectors into orientation data, for example, or reading
 a set of photodiodes and converting that data into a useful photometric value
 like lux.
 
-ZSL attempts to bridge the divide between the raw data, and actionable,
-scientifically-relevant data points. It aims to provide helpers for common
-mathematical operations (linear algebra, statistical analysis, etc.), as well
-as domain-specific algorithms in fields commonly used in embedded devices.
+This library attempts to bridge the divide between raw data, and actionable,
+scientifically-relevant data points, in a resource-constrained environment.
+It aims to provide helpers for common mathematical operations (linear algebra,
+statistical analysis, etc.), as well as domain-specific algorithms in fields
+commonly associated with embedded devices.
 
 ## Current Features
 
@@ -112,12 +113,17 @@ features listed below have been defined as key goals.
 
 ### Digital Signal Processing
 
-- Basic IIR and FIR-type filters and helper functions.
+- Simple moving average filter
+- Windowed moving average filter
+- Weighted moving average filter
+- Other basic IIR and FIR-type filters and helper functions.
 
 ### Domain-Specific Operations
 
 #### Orientation
 
+- Acceleration/magnetic field -> orientation
+- Sensor fusion (accel/mag/gyro -> quaternion)
 - Euler/Quaternion conversion
 
 #### Spectrometry
