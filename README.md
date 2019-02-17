@@ -1,6 +1,6 @@
-# Zephyr Scientific Library (zsl)
+# Zephyr Scientific Library (zscilib)
 
-The **Zephyr scientific library** is an attempt to provide a set of functions
+The **Zephyr scientific library (zscilib)** is an attempt to provide a set of functions
 useful for scientific computing, data analysis and data manipulation in the
 context of resource constrained embedded devices or 'end nodes'.
 
@@ -11,7 +11,7 @@ Numerous high quality, mature, open source scientific libraries already exist:
 - [GNU scientific library (gsl)](https://www.gnu.org/software/gsl/)
 - [CMSIS-DSP](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
 
-So, why reinvent the wheel with zsl?
+So, why reinvent the wheel with zscilib?
 
 Despite the wealth of mature functions in these existing libraries, they tend
 to have the following problems in an embedded context::
@@ -134,7 +134,7 @@ features listed below have been defined as key goals.
 
 ## Usage
 
-### Adding zsl to your Zephyr project
+### Adding zscilib to your Zephyr project
 
 **TODO**: Setup Instructions based on `west`.
 
