@@ -94,7 +94,7 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
 }
 
 zsl_data_t
-zsl_vec_magnitude(struct zsl_vec *v)
+zsl_vec_magn(struct zsl_vec *v)
 {
     return sqrt(zsl_vec_sum_of_sqrs(v));
 }
@@ -110,7 +110,7 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
 }
 
 zsl_data_t
-zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w)
+zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 {
     int rc = 0;
     ZSL_VECTOR_DEF(x, v->sz);
@@ -120,7 +120,7 @@ zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w)
         return NAN;
     }
 
-    return zsl_vec_magnitude(&x);
+    return zsl_vec_magn(&x);
 }
 
 int

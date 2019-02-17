@@ -125,7 +125,7 @@ int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
  *
  * @return The magnitude of vector 'v'.
  */
-zsl_data_t zsl_vec_magnitude(struct zsl_vec *v);
+zsl_data_t zsl_vec_magn(struct zsl_vec *v);
 
 /**
  * @brief Multiply a vector by a scalar.
@@ -147,7 +147,7 @@ int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
  * @return The magnitude of vector v - vector w, or NAN is there was a
  *         size mismatch between vectors v and w.
  */
-zsl_data_t zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w);
+zsl_data_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
 
 /**
  * @brief Computes the dot (aka scalar) product of two equal-length vectors
