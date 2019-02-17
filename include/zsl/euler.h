@@ -19,13 +19,13 @@
 
 /**
  * @file
- * @brief API header file for quaternions in ZSL.
+ * @brief API header file for euler angles in ZSL.
  *
- * This file contains the ZSL quaternion APIs
+ * This file contains the ZSL euler angle APIs
  */
 
-#ifndef ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_
-#define ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_
+#ifndef ZEPHYR_INCLUDE_ZSL_EULER_H_
+#define ZEPHYR_INCLUDE_ZSL_EULER_H_
 
 #include <zsl/zsl.h>
 
@@ -37,4 +37,4 @@ extern "C" {
 }
 #endif
 
-#endif /* ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_ */
+#endif /* ZEPHYR_INCLUDE_ZSL_EULER_H_ */

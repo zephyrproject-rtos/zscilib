@@ -145,6 +145,31 @@ int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
 int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
 
 /**
+ * @brief Computes the cross (or vector) product of two 3-vectors.
+ *
+ * @param v The first 3-vector.
+ * @param w The second 3-vector.
+ * @param c The cross product 3-vector output.
+ *
+ * @return 0 on success, or -EINVAL if a non 3-vector is provided.
+ *
+ * Given two linearly independent 3-vectors (v and w), the cross product,
+ * (v X w), is a vector that is perpendicular to both v and w and thus 'normal'
+ * to the plane containing them.
+ *
+ * If two vectors have the same direction (or have the exact opposite direction
+ * from one another, i.e. are not linearly independent) or if either one has
+ * zero length, then their cross product is zero.
+ *
+ * The magnitude of the cross product equals the area of a parallelogram
+ * with vectors v and w for sides.
+ *
+ * For a discusson of geometric and algebraic applications, see:
+ * https://en.wikipedia.org/wiki/Cross_product
+ */
+int zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c);
+
+/**
  * @brief Computes the vector's sum of squares.
  *
  * @param v The vector to use.
@@ -175,6 +200,17 @@ int zsl_vec_magnitude(struct zsl_vec *v, zsl_data_t *m);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
+
+/**
+ * @brief Checks if two vectors are identical in size and content.
+ *
+ * @param v The first vector.
+ * @param w The second vector.
+ *
+ * @return true if the two vectors have the same size and the same values,
+ *         otherwise false.
+ */
+bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w);
 
 #ifdef __cplusplus
 }

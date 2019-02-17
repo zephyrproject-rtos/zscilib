@@ -56,7 +56,7 @@ err:
 int
 zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a)
 {
-    memcpy(m->data, a, (m->sz_rows * m->sz_cols) * (sizeof(zsl_data_t)));
+    memcpy(m->data, a, (m->sz_rows * m->sz_cols) * sizeof(zsl_data_t));
 
     return 0;
 }
