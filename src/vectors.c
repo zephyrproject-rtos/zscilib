@@ -68,7 +68,27 @@ zsl_vec_neg(struct zsl_vec *v)
 int
 zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
 {
-    /* TODO */
+    int sz_last;
+
+    if (!n) {
+        return -EINVAL;
+    }
+
+    /* Make sure all vectors have the same size. */
+    sz_last = v[0]->sz;
+    for (size_t i = 0; i < n; i++) {
+        if (sz_last != v[i]->sz) {
+            return -EINVAL;
+        }
+    }
+
+    /* Sum all vectors. */
+    w->sz = sz_last;
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < w->sz; j++) {
+            w->data[j] += v[i]->data[j];
+        }
+    }
 
     return 0;
 }
@@ -76,9 +96,7 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
 zsl_data_t
 zsl_vec_magnitude(struct zsl_vec *v)
 {
-    /* TODO */
-
-    return 0;
+    return sqrt(zsl_vec_sum_of_sqrs(v));
 }
 
 int
@@ -94,9 +112,15 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
 zsl_data_t
 zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w)
 {
-    /* TODO */
+    int rc = 0;
+    ZSL_VECTOR_DEF(x, v->sz);
 
-    return 0;
+    rc = zsl_vec_sub(v, w, &x);
+    if (rc) {
+        return NAN;
+    }
+
+    return zsl_vec_magnitude(&x);
 }
 
 int
@@ -187,18 +211,33 @@ zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c)
     return 0;
 }
 
-int
-zsl_vec_sum_of_sqrs(struct zsl_vec *v, struct zsl_vec *w)
+zsl_data_t
+zsl_vec_sum_of_sqrs(struct zsl_vec *v)
 {
-    /* TODO */
+    zsl_data_t dot = 0.0;
 
-    return 0;
+    zsl_vec_dot(v, v, &dot);
+
+    return dot;
 }
 
 int
-zsl_vec_mean(struct zsl_vec **v, size_t n, int i)
+zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
 {
-    /* TODO */
+    int rc;
+
+    /* Make sure the mean vector has an approproate size. */
+    if (m->sz != v[0]->sz) {
+        return -EINVAL;
+    }
+
+    /* sum also checks that all vectors have the same length. */
+    rc = zsl_vec_sum(v, n, m);
+    if (rc) {
+        return rc;
+    }
+
+    rc = zsl_vec_scalar_mult(m, 1/n);
 
     return 0;
 }

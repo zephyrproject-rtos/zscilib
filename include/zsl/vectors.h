@@ -107,13 +107,14 @@ int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x);
 int zsl_vec_neg(struct zsl_vec *v);
 
 /**
- * @brief Component-wise sum of a set of vectors.
+ * @brief Component-wise sum of a set of equal-length vectors.
  *
  * @param v  Pointer to the array of vectors.
  * @param n  The number of vectors in 'v'.
  * @param w  Pointer to the output vector containing the component-wise sum.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return 0 on success, -EINVAL if vectors in 'v' are no equal length, or
+ *         -EINVAL if 'n' = 0.
  */
 int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
 
@@ -143,7 +144,8 @@ int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
  * @param v The first vector.
  * @param w The second vector.
  *
- * @return The magnitude of vector v - vector w.
+ * @return The magnitude of vector v - vector w, or NAN is there was a
+ *         size mismatch between vectors v and w.
  */
 zsl_data_t zsl_vec_distance(struct zsl_vec *v, struct zsl_vec *w);
 
@@ -207,11 +209,10 @@ int zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c);
  * @brief Computes the vector's sum of squares.
  *
  * @param v The vector to use.
- * @param w The output vector.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return The sum of the squares of vector 'v'.
  */
-int zsl_vec_sum_of_sqrs(struct zsl_vec *v, struct zsl_vec *w);
+zsl_data_t zsl_vec_sum_of_sqrs(struct zsl_vec *v);
 
 /**
  * @brief Computes the component-wise mean of a set of identically-sized
@@ -219,12 +220,12 @@ int zsl_vec_sum_of_sqrs(struct zsl_vec *v, struct zsl_vec *w);
  *
  * @param v  Pointer to the array of vectors.
  * @param n  The number of vectors in 'v'.
- * @param i  The vector whose ith element is the mean of the ith elements
- *           of the input vectors.
+ * @param m  Pointer to the output vector whose i'th element is the mean of
+ *           the i'th elements of the input vectors.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return 0 on success, and -EINVAL if all vectors aren't identically sized.
  */
-int zsl_vec_mean(struct zsl_vec **v, size_t n, int i);
+int zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m);
 
 /**
  * @brief Checks if two vectors are identical in size and content.
