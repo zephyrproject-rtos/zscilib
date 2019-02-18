@@ -34,7 +34,7 @@
 #define REG_RW_LO "+l"
 #define REG_WRITE_LO "=l"
 
-#if (CONFIG_ZSL_PLATFORM == 2)  /* ARM Thumb2 */
+#if (CONFIG_ZSL_PLATFORM_OPT == 2)  /* ARM Thumb2 */
     #define RESUME_SYNTAX
 #else
     #define RESUME_SYNTAX ".syntax divided \n\t"

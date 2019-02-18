@@ -10,7 +10,7 @@
 #include <zsl/vectors.h>
 
 /* Enable optimised ARM Thumb/Thumb2 functions if available. */
-#if (CONFIG_ZSL_PLATFORM == 1 || CONFIG_ZSL_PLATFORM == 2)
+#if (CONFIG_ZSL_PLATFORM_OPT == 1 || CONFIG_ZSL_PLATFORM_OPT == 2)
     #include <zsl/asm/arm/asm_arm_vectors.h>
 #endif
 

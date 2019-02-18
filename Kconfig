@@ -31,14 +31,14 @@ config ZSL_SINGLE_PRECISION
 	  precision (32-bit) floating point values, rather than the default of
 	  double-precision (64-bits).
 
-config ZSL_PLATFORM
-    int "Platform optimisation"
+config ZSL_PLATFORM_OPT
+    int "Platform optimisations"
 	default 0
 	range 0 2
 	help
 	  Platform used for optimised assembly functions where possible.
 	  0 None
-	  1 ARM Thumb
-	  2 ARM Thumb2
+	  1 ARM Thumb (GNU)
+	  2 ARM Thumb2 (GNU)
 
 endif
