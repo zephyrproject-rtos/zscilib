@@ -27,17 +27,12 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_CONSTS_H_
 #define ZEPHYR_INCLUDE_ZSL_CONSTS_H_
 
-#include <zsl/zsl.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define ZSL_CONST_GRAV_ACCEL                (9.80665e0)       /* m / s^2 */
-#define ZSL_CONST_PLANCKS_CONSTANT_H        (6.62606896e-34)  /* kg m^2 / s */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* ZEPHYR_INCLUDE_ZSL_EULER_H_ */
+#endif /* ZEPHYR_INCLUDE_ZSL_CONSTS_H_ */

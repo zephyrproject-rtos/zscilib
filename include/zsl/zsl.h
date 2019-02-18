@@ -28,10 +28,30 @@
 #define ZEPHYR_INCLUDE_ZSL_H_
 
 #include <math.h>
+#include <zsl/consts.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/*
+ * Version numbers take the form of "MAJOR.MINOR.REVISION-STATUS".
+ *
+ * ZSL_VERSION_STATUS should be one of:
+ *
+ *   o "-alpha"
+ *   o "-beta"
+ *   o "-rc0", "-rc1", etc.
+ *   o "-release"
+ */
+
+#define ZSL_VERSION             "0.1.0-alpha"
+#define ZSL_VERSION_MAJOR       0
+#define ZSL_VERSION_MINOR       1
+#define ZSL_VERSION_REVISION    0
+#define ZSL_VERSION_STATUS      "-alpha"
+
+extern const char * zsl_version;
 
 #if CONFIG_ZSL_SINGLE_PRECISION
 typedef float zsl_data_t;

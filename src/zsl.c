@@ -6,3 +6,5 @@
 
 #include <zephyr.h>
 #include <zsl/zsl.h>
+
+const char * zsl_version = ZSL_VERSION;
