@@ -40,36 +40,36 @@ commonly associated with embedded devices.
 
 ### Vector Operations
 
-- Add
-- Subtract
-- Negate
-- Sum (two or more vectors)
-- Magnitude
-- Scalar multiply
-- Distance (between two vectors)
-- Norm/absolute value
-- To Unit Vector
-- Dot product
-- Cross product
-- Sum of squares
-- Mean (two or more vectors)
-- Equality check
+- [x] Add
+- [x] Subtract
+- [x] Negate
+- [x] Sum (two or more vectors)
+- [x] Magnitude
+- [x] Scalar multiply
+- [x] Distance (between two vectors)
+- [x] Norm/absolute value
+- [x] To Unit Vector
+- [x] Dot product
+- [x] Cross product
+- [x] Sum of squares
+- [x] Mean (two or more vectors)
+- [x] Equality check
 
 ### Matrix Operations
 
-- Add
-- Subtract
-- Multiply
-- Scalar multiply
-- Transpose
-- Invert
-- Get/set row/column vector
-- Min/max value or index
-- Minor
-- Determinant
-- Cofactor
-- Adjoint
-- Eigenvalues and eigenvectors
+- [x] Add
+- [x] Subtract
+- [x] Multiply
+- [x] Scalar multiply
+- [x] Transpose
+- [ ] Invert
+- [x] Get/set row/column vector
+- [ ] Min/max value or index
+- [ ] Minor
+- [ ] Determinant
+- [ ] Cofactor
+- [ ] Adjoint
+- [ ] Eigenvalues and eigenvectors
 
 ## Planned Features
 
