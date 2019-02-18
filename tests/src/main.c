@@ -10,7 +10,8 @@ extern void test_matrix_init(void);
 extern void test_matrix_from_arr(void);
 extern void test_matrix_get(void);
 extern void test_matrix_set(void);
-extern void test_matrix_mult(void);
+extern void test_matrix_mult_sq(void);
+extern void test_matrix_mult_rect(void);
 
 extern void test_vector_from_arr(void);
 extern void test_vector_cross(void);
@@ -23,7 +24,8 @@ void test_main(void)
         ztest_unit_test(test_matrix_from_arr),
         ztest_unit_test(test_matrix_get),
         ztest_unit_test(test_matrix_set),
-        ztest_unit_test(test_matrix_mult),
+        ztest_unit_test(test_matrix_mult_sq),
+        ztest_unit_test(test_matrix_mult_rect),
 
         ztest_unit_test(test_vector_from_arr),
         ztest_unit_test(test_vector_cross),

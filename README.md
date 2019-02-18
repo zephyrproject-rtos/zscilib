@@ -57,15 +57,14 @@ commonly associated with embedded devices.
 
 ### Matrix Operations
 
-- Add
-- Subtract
-- Multiply
+- Add (two matrices)
+- Subtract (two matrices)
+- Multiply (two matrices)
 - Scalar multiply
 - Transpose
 - Invert
 - Get/set row/column vector
 - Min/max element value/index
-- Product
 - Minor
 - Determinant
 - Cofactor

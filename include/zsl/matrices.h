@@ -268,7 +268,9 @@ int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 /**
  * @brief Multiplies matrix 'ma' by 'mb', assigning the output to 'mc'.
- *        Matrices 'ma' and 'mb' must be compatibly shaped.
+ *        Matrices 'ma' and 'mb' must be compatibly shaped, meaning that
+ *        'ma' must have the same numbers of columns as there are rows
+ *        in 'mb'.
  *
  * @param ma    Pointer to the first input zsl_mtx.
  * @param mb    Pointer to the second input zsl_mtx.
