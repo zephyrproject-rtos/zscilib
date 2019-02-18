@@ -252,7 +252,7 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
     zsl_data_t x;
 
-    if (ma->sz_rows != mb->sz_cols) {
+    if ((ma->sz_rows != mb->sz_cols) || (ma->sz_cols != mb->sz_rows)) {
         return -EINVAL;
     }
 
@@ -271,11 +271,5 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
         }
     }
 
-    return 0;
-}
-
-int
-zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
-{
     return 0;
 }
