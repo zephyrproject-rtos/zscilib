@@ -172,13 +172,14 @@ int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
 zsl_data_t zsl_vec_norm(struct zsl_vec *v);
 
 /**
- * @brief Unitizes vector 'v', dividing each element by the it's norm.
+ * @brief Converts vector 'v' to a unit vector (a vector of length 1).
+ *        This is accomploished by dividing each element by the it's norm.
  *
- * @param v The vector to unitize.
+ * @param v The vector to convert to a unit vector.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_unitize(struct zsl_vec *v);
+int zsl_vec_to_unit(struct zsl_vec *v);
 
 /**
  * @brief Computes the cross (or vector) product of two 3-vectors.

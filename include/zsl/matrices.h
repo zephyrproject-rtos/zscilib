@@ -281,11 +281,30 @@ int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
  */
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
+/**
+ * @brief Multiplies all elements in vector 'm' by scalar value 's'.
+ *
+ * @param m     Pointer to the zsl_mtz to adjust.
+ * @param s     The scalar value to multiply elements in matrix 'm' with.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_data_t s);
-int zsl_mtx_trans(struct zsl_mtx *m);
-int zsl_mtx_inv(struct zsl_mtx *m);
 
-int zsl_mtx_prod(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+/**
+ * @brief Transposes the matrix 'ma' into matrix 'mb'. Note that output
+ *        matrix 'mb' must have 'ma->sz_rows' columns, and 'ma->sz_cols' rows.
+ *
+ * @param ma    Pointer to the input matrix to transpose.
+ * @param mb    Pointer to the output zsl_mtz.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if ma and mb are
+ *          not compatibly shaped.
+ */
+int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
+
+int zsl_mtx_inv(struct zsl_mtx *m);
 
 int zsl_mtx_min(struct zsl_mtx *m, zsl_data_t *x); /** Get the min value in the matrix. */
 int zsl_mtx_max(struct zsl_mtx *m, zsl_data_t *x); /** Get the max value in the matrix. */

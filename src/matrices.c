@@ -273,3 +273,31 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 
     return 0;
 }
+
+int
+zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_data_t s)
+{
+    for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
+        m->data[i] *= s;
+    }
+
+    return 0;
+}
+
+int
+zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+    /* Ensure that ma and mb have the same shape. */
+    if ((ma->sz_rows != mb->sz_cols) || (ma->sz_cols != mb->sz_rows)) {
+        return -EINVAL;
+    }
+
+    zsl_data_t d[ma->sz_cols];
+
+    for (size_t i = 0; i < ma->sz_rows; i++) {
+        zsl_mtx_get_row(ma, i, d);
+        zsl_mtx_set_col(mb, i, d);
+    }
+
+    return 0;
+}

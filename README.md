@@ -48,7 +48,7 @@ commonly associated with embedded devices.
 - Scalar multiply
 - Distance (between two vectors)
 - Norm/absolute value
-- Unitize
+- To Unit Vector
 - Dot product
 - Cross product
 - Sum of squares
@@ -57,18 +57,19 @@ commonly associated with embedded devices.
 
 ### Matrix Operations
 
-- Add (two matrices)
-- Subtract (two matrices)
-- Multiply (two matrices)
+- Add
+- Subtract
+- Multiply
 - Scalar multiply
 - Transpose
 - Invert
 - Get/set row/column vector
-- Min/max element value/index
+- Min/max value or index
 - Minor
 - Determinant
 - Cofactor
 - Adjoint
+- Eigenvalues and eigenvectors
 
 ## Planned Features
 
@@ -82,7 +83,7 @@ features listed below have been defined as key goals.
 #### Matrix Operations
 
 - Singular value decomposition (SVD)
-- Pseudoinverse (pinv)
+- Pseudoinverse (AKA Moore-Penrose inverse)
 
 #### Statistics Operations
 

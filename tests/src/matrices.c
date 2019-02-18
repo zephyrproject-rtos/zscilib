@@ -294,3 +294,75 @@ void test_matrix_mult_rect(void)
     zassert_equal(mref.data[10], mc.data[10], "multr:valerr:10");
     zassert_equal(mref.data[11], mc.data[11], "multr:valerr:11");
 }
+
+/**
+ * @brief zsl_mtx_scalar_mult unit tests.
+ *
+ * This test verifies the zsl_mtx_scalar_mult function.
+ */
+void test_matrix_scalar_mult(void)
+{
+    int rc = 0;
+    zsl_data_t s = 10.0;
+
+    /* Input matrix. */
+    zsl_data_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_scalar_mult(&m, s);
+    zassert_equal(rc, 0, "scalmult:exec == ERR");
+    zassert_equal(m.data[0], 20.0, "scalmult:valerr:0");
+    zassert_equal(m.data[1], 30.0, "scalmult:valerr:1");
+    zassert_equal(m.data[2], 10.0, "scalmult:valerr:2");
+    zassert_equal(m.data[3], 40.0, "scalmult:valerr:3");
+    zassert_equal(m.data[4], 40.0, "scalmult:valerr:4");
+    zassert_equal(m.data[5], 30.0, "scalmult:valerr:5");
+    zassert_equal(m.data[6], 30.0, "scalmult:valerr:6");
+    zassert_equal(m.data[7], 40.0, "scalmult:valerr:7");
+}
+
+/**
+ * @brief zsl_mtx_scalar_trans unit tests.
+ *
+ * This test verifies the zsl_mtx_trans function.
+ */
+void test_matrix_trans(void)
+{
+    int rc = 0;
+
+    ZSL_MATRIX_DEF(mt, 2, 4);
+
+    /* Input matrix. */
+    zsl_data_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&mt, NULL);
+    zassert_equal(rc, 0, "trans:initmt == ERR");
+
+    rc = zsl_mtx_trans(&m, &mt);
+    zassert_equal(rc, 0, "trans:exec == ERR");
+    zassert_equal(mt.sz_cols, m.sz_rows, "trans:shapecol:err");
+    zassert_equal(mt.sz_rows, m.sz_cols, "trans:shaperow:err");
+    zassert_equal(mt.data[0], 2.0, "trans:valerr:0");
+    zassert_equal(mt.data[1], 1.0, "trans:valerr:1");
+    zassert_equal(mt.data[2], 4.0, "trans:valerr:2");
+    zassert_equal(mt.data[3], 3.0, "trans:valerr:3");
+    zassert_equal(mt.data[4], 3.0, "trans:valerr:4");
+    zassert_equal(mt.data[5], 4.0, "trans:valerr:5");
+    zassert_equal(mt.data[6], 3.0, "trans:valerr:6");
+    zassert_equal(mt.data[7], 4.0, "trans:valerr:7");
+}

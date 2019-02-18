@@ -159,7 +159,7 @@ zsl_vec_norm(struct zsl_vec *v)
 }
 
 int
-zsl_vec_unitize(struct zsl_vec *v)
+zsl_vec_to_unit(struct zsl_vec *v)
 {
     zsl_data_t mag = zsl_vec_norm(v);
 
