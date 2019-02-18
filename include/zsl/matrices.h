@@ -224,6 +224,21 @@ int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
 int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
 /**
+ * @brief Adds matrices 'ma' and 'mb', assigning the output to 'ma'.
+ *        Matrices 'ma', and 'mb' must be identically shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx. This matrix will be
+ *              overwritten with the results of the addition operations!
+ * @param mb    Pointer to the second input zsl_mtx.
+ *
+ * @warning     This function is destructive!
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the two input
+ *          matrices are not identically shaped.
+ */
+int zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
+
+/**
  * @brief Subtracts matrices 'mb' from 'ma', assigning the output to 'mc'.
  *        Matrices 'ma', 'mb' and 'mc' must all be identically shaped.
  *
@@ -236,8 +251,25 @@ int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  */
 int zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
+/**
+ * @brief Subtracts matrix 'mb' from 'ma', assigning the output to 'ma'.
+ *        Matrices 'ma', and 'mb' must be identically shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx. This matrix will be
+ *              overwritten with the results of the subtraction operations!
+ * @param mb    Pointer to the second input zsl_mtx.
+ *
+ * @warning     This function is destructive!
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the two input
+ *          matrices are not identically shaped.
+ */
+int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
+
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+int zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 int zsl_mtx_div(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+int zsl_mtx_div_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 int zsl_mtx_scale(struct zsl_mtx *m, zsl_data_t *s);
 int zsl_mtx_trans(struct zsl_mtx *m);

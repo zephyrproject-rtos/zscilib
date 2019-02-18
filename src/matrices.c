@@ -217,6 +217,12 @@ zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 }
 
 int
+zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+    return zsl_mtx_add(ma, mb, ma);
+}
+
+int
 zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
     /* TODO: Add inline helper to validate shape of multiple matrices. */
@@ -233,4 +239,10 @@ zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
     }
 
     return 0;
+}
+
+int
+zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+    return zsl_mtx_sub(ma, mb, ma);
 }
