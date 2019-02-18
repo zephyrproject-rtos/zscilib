@@ -14,7 +14,7 @@ Numerous high quality, mature, open source scientific libraries already exist:
 So, why reinvent the wheel with zscilib?
 
 Despite the wealth of mature functions in these existing libraries, they tend
-to have the following problems in an embedded context::
+to have the following problems in an embedded context:
 
 - They are overly broad and resource intensive (in the case of GSL)
 - They are missing many of the domain-specific features required to convert

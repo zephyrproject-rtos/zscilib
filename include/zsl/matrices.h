@@ -154,15 +154,90 @@ int zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x);
  */
 int zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t x);
 
+/**
+ * @brief Gets the contents of row 'i' from matrix 'm', assigning the array
+ *        of data to 'v'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param i     The row number to read (0-based).
+ * @param v     Pointer to the array where the row vector should be written.
+ *              Must be at least m->sz_cols elements long!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
+
+/**
+ * @brief Sets the contents of row 'i' in matrix 'm', assigning the values
+ *        found in array 'v'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param j     The row number to write to (0-based).
+ * @param v     Pointer to the array where the row vector data is stored.
+ *              Must be at least m->sz_cols elements long!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
+
+/**
+ * @brief Gets the contents of column 'j' from matrix 'm', assigning the array
+ *        of data to 'v'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param j     The column number to read (0-based).
+ * @param v     Pointer to the array where the column vector should be written.
+ *              Must be at least m->sz_rows elements long!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
+
+/**
+ * @brief Sets the contents of column 'j' in matrix 'm', assigning the values
+ *        found in array 'v'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param j     The column number to write to (0-based).
+ * @param v     Pointer to the array where the column vector data is stored.
+ *              Must be at least m->sz_rows elements long!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
 
-int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb);
-int zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb);
-int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb);
-int zsl_mtx_div(struct zsl_mtx *ma, struct zsl_mtx *mb);
+/**
+ * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.
+ *        Matrices 'ma', 'mb' and 'mc' must all be identically shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx.
+ * @param mb    Pointer to the second input zsl_mtx.
+ * @param mc    Pointer to the output zsl_mtx.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the three
+ *          matrices are not all identically shaped.
+ */
+int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+
+/**
+ * @brief Subtracts matrices 'mb' from 'ma', assigning the output to 'mc'.
+ *        Matrices 'ma', 'mb' and 'mc' must all be identically shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx.
+ * @param mb    Pointer to the second input zsl_mtx.
+ * @param mc    Pointer to the output zsl_mtx.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the three
+ *          matrices are not all identically shaped.
+ */
+int zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+
+int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+int zsl_mtx_div(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
 int zsl_mtx_scale(struct zsl_mtx *m, zsl_data_t *s);
 int zsl_mtx_trans(struct zsl_mtx *m);
