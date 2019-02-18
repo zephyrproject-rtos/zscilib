@@ -65,8 +65,8 @@ commonly associated with embedded devices.
 - Invert
 - Get/set row vector
 - Get/set column vector
-- Min/max element
-- Index of min/max element
+- Min/max element value
+- Min/max element index
 
 ## Planned Features
 
@@ -76,10 +76,6 @@ features listed below have been defined as key goals.
 > Any suggested additions to this list are highly welcome at this early stage.
 
 ### Numerical Analysis
-
-#### Vector Operations
-
-- TBD
 
 #### Matrix Operations
 
@@ -117,13 +113,18 @@ features listed below have been defined as key goals.
 - Weighted moving average filter
 - Other basic IIR and FIR-type filters and helper functions.
 
+### Calibration Management
+
+- A framework to persist, retrieve and apply calibration coefficients.
+
 ### Domain-Specific Operations
 
-#### Orientation
+#### Motion and Orientation
 
 - Acceleration/magnetic field -> orientation
 - Sensor fusion (accel/mag/gyro -> quaternion)
 - Euler/Quaternion conversion
+- Functions for acceleration, time/distance, etc.
 
 #### Spectrometry
 
