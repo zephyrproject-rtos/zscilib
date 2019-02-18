@@ -9,6 +9,11 @@
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
 
+/* Enable optimised ARM Thumb/Thumb2 functions if requested. */
+#if (CONFIG_ZSL_PLATFORM == 1 || CONFIG_ZSL_PLATFORM == 2)
+    #include <zsl/asm/arm/asm_arm_vectors.h>
+#endif
+
 int
 zsl_vec_init(struct zsl_vec *v)
 {
@@ -99,6 +104,7 @@ zsl_vec_magn(struct zsl_vec *v)
     return sqrt(zsl_vec_sum_of_sqrs(v));
 }
 
+#if !asm_vec_scalar_mult
 int
 zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
 {
@@ -108,6 +114,7 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
 
     return 0;
 }
+#endif
 
 zsl_data_t
 zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)

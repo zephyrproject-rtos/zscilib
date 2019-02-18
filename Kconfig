@@ -28,7 +28,17 @@ config ZSL_SINGLE_PRECISION
 	default n
 	help
 	  Enabling this option will cause all zsl functions to use single
-      precision (32-bit) floating point values, rather than the default of
-      double-precision (64-bits).
+	  precision (32-bit) floating point values, rather than the default of
+	  double-precision (64-bits).
+
+config ZSL_PLATFORM
+    int "Platform optimisation"
+	default 0
+	range 0 2
+	help
+	  Platform used for optimised assembly functions where possible.
+	  0 None
+	  1 ARM Thumb
+	  2 ARM Thumb2
 
 endif
