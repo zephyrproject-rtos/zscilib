@@ -246,3 +246,15 @@ zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 {
     return zsl_mtx_sub(ma, mb, ma);
 }
+
+int
+zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
+{
+    return 0;
+}
+
+int
+zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+    return 0;
+}

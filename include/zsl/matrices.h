@@ -231,7 +231,7 @@ int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  *              overwritten with the results of the addition operations!
  * @param mb    Pointer to the second input zsl_mtx.
  *
- * @warning     This function is destructive!
+ * @warning     This function is destructive to 'ma'!
  *
  * @return  0 if everything executed correctly, or -EINVAL if the two input
  *          matrices are not identically shaped.
@@ -259,17 +259,41 @@ int zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  *              overwritten with the results of the subtraction operations!
  * @param mb    Pointer to the second input zsl_mtx.
  *
- * @warning     This function is destructive!
+ * @warning     This function is destructive to 'ma'!
  *
  * @return  0 if everything executed correctly, or -EINVAL if the two input
  *          matrices are not identically shaped.
  */
 int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
+/**
+ * @brief Multiplies matrix 'ma' by 'mb', assigning the output to 'mc'.
+ *        Matrices 'ma' and 'mb' must be compatibly shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx.
+ * @param mb    Pointer to the second input zsl_mtx.
+ * @param mc    Pointer to the output zsl_mtx.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the input
+ *          matrices are not compatibly shaped.
+ */
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
+
+/**
+ * @brief Multiplies matrix 'ma' by 'mb', assigning the output to 'ma'.
+ *        Matrices 'ma' and 'mb' must be compatibly shaped.
+ *
+ * @param ma    Pointer to the first input zsl_mtx. This matrix will be
+ *              overwritten with the results of the multiplication operations!
+ * @param mb    Pointer to the second input zsl_mtx.
+ * @param mc    Pointer to the output zsl_mtx.
+ *
+ * @warning     This function is destructive to 'ma'!
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the input
+ *          matrices are not compatibly shaped.
+ */
 int zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
-int zsl_mtx_div(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
-int zsl_mtx_div_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 int zsl_mtx_scale(struct zsl_mtx *m, zsl_data_t *s);
 int zsl_mtx_trans(struct zsl_mtx *m);

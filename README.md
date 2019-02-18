@@ -60,7 +60,6 @@ commonly associated with embedded devices.
 - Add
 - Subtract
 - Multiply
-- Divide
 - Scale
 - Transpose
 - Invert
