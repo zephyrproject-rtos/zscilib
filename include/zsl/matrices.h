@@ -279,9 +279,11 @@ int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
  */
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
-int zsl_mtx_scale(struct zsl_mtx *m, zsl_data_t *s);
+int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_data_t s);
 int zsl_mtx_trans(struct zsl_mtx *m);
 int zsl_mtx_inv(struct zsl_mtx *m);
+
+int zsl_mtx_prod(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
 int zsl_mtx_min(struct zsl_mtx *m, zsl_data_t *x); /** Get the min value in the matrix. */
 int zsl_mtx_max(struct zsl_mtx *m, zsl_data_t *x); /** Get the max value in the matrix. */

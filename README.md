@@ -60,13 +60,16 @@ commonly associated with embedded devices.
 - Add
 - Subtract
 - Multiply
-- Scale
+- Scalar multiply
 - Transpose
 - Invert
-- Get/set row vector
-- Get/set column vector
-- Min/max element value
-- Min/max element index
+- Get/set row/column vector
+- Min/max element value/index
+- Product
+- Minor
+- Determinant
+- Cofactor
+- Adjoint
 
 ## Planned Features
 
@@ -96,6 +99,7 @@ features listed below have been defined as key goals.
 - Interquartile range
 - Covariance
 - Correlation
+- Error
 
 #### Probability Operations
 
