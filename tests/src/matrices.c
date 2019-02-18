@@ -169,3 +169,66 @@ void test_matrix_set(void)
     /* Check for out of bounbds error. */
     zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, "set:mtx[3][3] != ERR");
 }
+
+/**
+ * @brief zsl_mtx_mult unit tests.
+ *
+ * This test verifies the zsl_mtx_mult function.
+ */
+void test_matrix_mult(void)
+{
+    int rc = 0;
+    ZSL_MATRIX_DEF(mc, 3, 3);
+    ZSL_MATRIX_DEF(merr, 4, 3);
+
+    /* Input matrix a. */
+    zsl_data_t data_a[9] = { 1.0, 2.0, 3.0,
+                             4.0, 5.0, 6.0,
+                             7.0, 8.0, 9.0 };
+    struct zsl_mtx ma = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data_a
+    };
+
+    /* Input matrix b. */
+    zsl_data_t data_b[9] = { 10.0, 20.0, 30.0,
+                             40.0, 50.0, 60.0,
+                             70.0, 80.0, 90.0 };
+    struct zsl_mtx mb = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data_b
+    };
+
+    /* Output reference matrix (for comparison). */
+    zsl_data_t data_ref[9] = { 300.0,  360.0,  420.0,
+                               660.0,  810.0,  960.0,
+                               1020.0, 1260.0, 1500.0 };
+    struct zsl_mtx mref = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data_ref
+    };
+
+    /* Initialise the output matrix. */
+    rc = zsl_mtx_init(&mc, NULL);
+    zassert_equal(rc, 0, "mult:initc == ERR");
+
+    /* Perform a valid 3x3 square matrix multiplication. */
+    rc = zsl_mtx_mult(&ma, &mb, &mc);
+    zassert_equal(rc, 0, "mult:exec == ERR");
+    zassert_equal(mref.data[0], mc.data[0], "mult:valerr:0");
+    zassert_equal(mref.data[1], mc.data[1], "mult:valerr:1");
+    zassert_equal(mref.data[2], mc.data[2], "mult:valerr:2");
+    zassert_equal(mref.data[3], mc.data[3], "mult:valerr:3");
+    zassert_equal(mref.data[4], mc.data[4], "mult:valerr:4");
+    zassert_equal(mref.data[5], mc.data[5], "mult:valerr:5");
+    zassert_equal(mref.data[6], mc.data[6], "mult:valerr:6");
+    zassert_equal(mref.data[7], mc.data[7], "mult:valerr:7");
+    zassert_equal(mref.data[8], mc.data[8], "mult:valerr:8");
+
+    /* Attempt an invalid 3x3 x 4x3 matrix multiplication. */
+    rc = zsl_mtx_mult(&merr, &mb, &mc);
+    zassert_equal(rc, -EINVAL, "mult:badshape != ERR");
+}

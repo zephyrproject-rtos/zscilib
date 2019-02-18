@@ -250,6 +250,27 @@ zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 int
 zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
+    zsl_data_t x;
+
+    if (ma->sz_rows != mb->sz_cols) {
+        return -EINVAL;
+    }
+
+    /* TODO: Validate shape of mc for rectangular inputs! */
+
+    for (size_t i = 0; i < ma->sz_rows; i++) {
+        for (size_t j = 0; j < ma->sz_cols; j++) {
+            x = 0.0;
+            /* Iterate through columns and rows to mult & accum value pairs. */
+            for (size_t k = 0; k < ma->sz_cols; k++) {
+                x += ma->data[(i * ma->sz_cols) + k] *
+                     mb->data[(j + (k * ma->sz_cols))];
+            }
+            /* Assign the value at an appropriate location in matrix mc. */
+            mc->data[(i * mc->sz_cols) + j] = x;
+        }
+    }
+
     return 0;
 }
 
