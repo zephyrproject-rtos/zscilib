@@ -3,5 +3,7 @@ tests:
     extra_args: CONFIG_ZSL_PLATFORM=0
     min_ram: 16
   zsl.core.thumb2:
+    arch_whitelist: arm
+    platform_whitelist: qemu_cortex_m3
     extra_args: CONFIG_ZSL_PLATFORM=2
     min_ram: 16
