@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for probability in ZSL.
+ * @brief API header file for probability in zscilib.
  *
- * This file contains the ZSL probability APIs
+ * This file contains the zscilib probability APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_PROBABILITY_H_

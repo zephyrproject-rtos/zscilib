@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for quaternions in ZSL.
+ * @brief API header file for quaternions in zscilib.
  *
- * This file contains the ZSL quaternion APIs
+ * This file contains the zscilib quaternion APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_

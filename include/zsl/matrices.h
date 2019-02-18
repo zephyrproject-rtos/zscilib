@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for matrices in ZSL.
+ * @brief API header file for matrices in zscilib.
  *
- * This file contains the ZSL matrix APIs
+ * This file contains the zscilib matrix APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_MATRICES_H_

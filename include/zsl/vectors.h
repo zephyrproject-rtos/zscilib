@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for vectors in ZSL.
+ * @brief API header file for vectors in zscilib.
  *
- * This file contains the ZSL vector APIs
+ * This file contains the zscilib vector APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_VECTORS_H_

@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for euler angles in ZSL.
+ * @brief API header file for euler angles in zscilib.
  *
- * This file contains the ZSL euler angle APIs
+ * This file contains the zscilib euler angle APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_EULER_H_

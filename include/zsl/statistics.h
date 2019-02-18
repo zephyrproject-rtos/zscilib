@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for statistics in ZSL.
+ * @brief API header file for statistics in zscilib.
  *
- * This file contains the ZSL statistics APIs
+ * This file contains the zscilib statistics APIs
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_STATISTICS_H_

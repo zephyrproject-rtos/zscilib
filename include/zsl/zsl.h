@@ -19,9 +19,9 @@
 
 /**
  * @file
- * @brief API header file for ZSL.
+ * @brief API header file for zscilib.
  *
- * This file contains the entry points to the ZSL APIs.
+ * This file contains the entry points to the zscilib APIs.
  */
 
 #ifndef ZEPHYR_INCLUDE_ZSL_H_
