@@ -29,8 +29,10 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_ASM_ARM_H_
 #define ZEPHYR_INCLUDE_ZSL_ASM_ARM_H_
 
-#define REG_RW "+l"
-#define REG_WRITE "=l"
+/** Read/Write constraint with Thumb general purpose registers (R0..R7). */
+#define OP_RW_T "+l"
+/** Write (output) constraint with Thumb general purpose registers (RO..R7). */
+#define OP_WR_T "=l"
 
 #if (CONFIG_ZSL_PLATFORM_OPT == 2)  /* ARM Thumb2 */
     #define RESUME_SYNTAX
