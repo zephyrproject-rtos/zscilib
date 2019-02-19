@@ -31,8 +31,6 @@
 
 #define REG_RW "+l"
 #define REG_WRITE "=l"
-#define REG_RW_LO "+l"
-#define REG_WRITE_LO "=l"
 
 #if (CONFIG_ZSL_PLATFORM_OPT == 2)  /* ARM Thumb2 */
     #define RESUME_SYNTAX
