@@ -4,7 +4,23 @@ The **Zephyr scientific library (zscilib)** is an attempt to provide a set of fu
 useful for scientific computing, data analysis and data manipulation in the
 context of resource constrained embedded devices or 'end nodes'.
 
-### Motivation
+## Quick Start
+
+### Adding zscilib to your Zephyr project
+
+**TODO**: Setup Instructions based on `west`.
+
+### Running Unit Tests
+
+To run the unit tests for this library, run the following command:
+
+```
+$ sanitycheck -p qemu_cortex_m3 -T ext/lib/zsl/tests/
+```
+
+See the `tests` folder for further details.
+
+## Project Motivation
 
 Numerous high quality, mature, open source scientific libraries already exist:
 
@@ -136,21 +152,18 @@ features listed below have been defined as key goals.
 - Radiometric data to lux
 - Spectral analysis
 
-## Usage
+## Architecture-Specific Optimisations
 
-### Adding zscilib to your Zephyr project
+Basic tooling has been added to allow for optimised architecture-specific
+implementations of key functions in assembly.
 
-**TODO**: Setup Instructions based on `west`.
+At present, this feature isn't being actively used or developed, but an aim
+of zscilib is to add optimised versions of key functions to try to get the
+best possible performance out of limited resources.
 
-### Running Unit Tests
-
-To run the unit tests for this library, run the following command:
-
-```
-$ sanitycheck -p qemu_cortex_m3 -T ext/lib/zsl/tests/
-```
-
-See the `tests` folder for further details.
+Initial optimisation will target the **ARM Cortex-M** family of devices and the
+**Thumb2** instruction set, though other architectures can be accommodated if
+necessary or useful.
 
 ## Contributing
 
