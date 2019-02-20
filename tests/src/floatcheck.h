@@ -43,7 +43,7 @@ extern "C" {
  * @param b         The value to compare against
  * @param b         The +/- margin for equality
  *
- * @return  True if value is greater than or equal to 'b', otherwise false.
+ * @return  True if value 'a' is equal to 'b', otherwise false.
  */
 bool val_is_equal(zsl_data_t a, zsl_data_t b, zsl_data_t epsilon);
 
@@ -53,7 +53,7 @@ bool val_is_equal(zsl_data_t a, zsl_data_t b, zsl_data_t epsilon);
  * @param a         The value to check
  * @param b         The value to compare against
  *
- * @return  True if value is greater than or equal to 'b', otherwise false.
+ * @return  True if value 'a' is greater than or equal to 'b', otherwise false.
  */
 bool val_is_at_least(zsl_data_t a, zsl_data_t b);
 
@@ -63,7 +63,7 @@ bool val_is_at_least(zsl_data_t a, zsl_data_t b);
  * @param a         The value to check
  * @param b         The value to compare against
  *
- * @return  True if value is less than 'b', otherwise false.
+ * @return  True if value 'a' is less than 'b', otherwise false.
  */
 bool val_is_less_than(zsl_data_t a, zsl_data_t b);
 
@@ -73,7 +73,7 @@ bool val_is_less_than(zsl_data_t a, zsl_data_t b);
  * @param a         The value to check
  * @param b         The value to compare against
  *
- * @return  True if value is greater than 'b', otherwise false.
+ * @return  True if value 'a' is greater than 'b', otherwise false.
  */
 bool val_is_greater_than(zsl_data_t a, zsl_data_t b);
 
@@ -84,7 +84,7 @@ bool val_is_greater_than(zsl_data_t a, zsl_data_t b);
  * @param upper     The upper value to compare against (inclusive)
  * @param lower     The lower value to compare against (inclusive)
  *
- * @return  True if value is less than 'b', otherwise false.
+ * @return  True if value 'a' is <= 'upper' and >='lower', otherwise false.
  */
 bool val_is_within(zsl_data_t a, zsl_data_t upper, zsl_data_t lower);
 
