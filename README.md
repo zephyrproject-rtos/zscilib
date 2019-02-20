@@ -20,7 +20,7 @@ $ sanitycheck -p qemu_cortex_m3 -T ext/lib/zsl/tests/
 
 See the `tests` folder for further details.
 
-## Project Motivation
+## Motivation
 
 Numerous high quality, mature, open source scientific libraries already exist:
 

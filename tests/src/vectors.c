@@ -39,6 +39,127 @@ void test_vector_from_arr(void)
     }
 }
 
+void test_vector_add(void)
+{
+    int rc;
+
+    ZSL_VECTOR_DEF(va, 3);
+    ZSL_VECTOR_DEF(vb, 3);
+    ZSL_VECTOR_DEF(vc, 3);
+
+    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_data_t b[3] = {-1.0, 0.5, 0.1 };
+    zsl_data_t c[3] = {-1.0, 1.5, 2.1 };
+
+    /* Initialise the vectors. */
+    zsl_vec_init(&va);
+    zsl_vec_init(&vb);
+    zsl_vec_init(&vc);
+
+    /* Assign arrays to vectors. */
+    rc = zsl_vec_from_arr(&va, a);
+    zassert_true(rc == 0, "");
+    rc = zsl_vec_from_arr(&vb, b);
+    zassert_true(rc == 0, "");
+
+    /* Perform the add operation. */
+    rc = zsl_vec_add(&va, &vb, &vc);
+    zassert_true(rc == 0, "");
+    zassert_equal(vc.data[0], c[0], "");
+    zassert_equal(vc.data[1], c[1], "");
+    zassert_equal(vc.data[2], c[2], "");
+}
+
+void test_vector_sub(void)
+{
+    int rc;
+
+    ZSL_VECTOR_DEF(va, 3);
+    ZSL_VECTOR_DEF(vb, 3);
+    ZSL_VECTOR_DEF(vc, 3);
+
+    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_data_t b[3] = {-1.0, 0.5, 0.1 };
+    zsl_data_t c[3] = { 1.0, 0.5, 1.9 };
+
+    /* Initialise the vectors. */
+    zsl_vec_init(&va);
+    zsl_vec_init(&vb);
+    zsl_vec_init(&vc);
+
+    /* Assign arrays to vectors. */
+    rc = zsl_vec_from_arr(&va, a);
+    zassert_true(rc == 0, "");
+    rc = zsl_vec_from_arr(&vb, b);
+    zassert_true(rc == 0, "");
+
+    /* Perform the add operation. */
+    rc = zsl_vec_sub(&va, &vb, &vc);
+    zassert_true(rc == 0, "");
+    zassert_equal(vc.data[0], c[0], "");
+    zassert_equal(vc.data[1], c[1], "");
+    zassert_equal(vc.data[2], c[2], "");
+}
+
+void test_vector_neg(void)
+{
+    int rc;
+
+    ZSL_VECTOR_DEF(v, 3);
+
+    zsl_data_t a[3] = {  0.0,  1.0,  2.0 };
+    zsl_data_t b[3] = { -0.0, -1.0, -2.0 };
+
+    /* Initialise the vectors. */
+    zsl_vec_init(&v);
+
+    /* Assign array to vector. */
+    rc = zsl_vec_from_arr(&v, a);
+    zassert_true(rc == 0, "");
+
+    /* Perform the add operation. */
+    rc = zsl_vec_neg(&v);
+    zassert_true(rc == 0, "");
+    zassert_equal(v.data[0], b[0], "");
+    zassert_equal(v.data[1], b[1], "");
+    zassert_equal(v.data[2], b[2], "");
+}
+
+void test_vector_sum(void)
+{
+
+}
+
+void test_vector_magn(void)
+{
+
+}
+
+void test_vector_scalar_mult(void)
+{
+
+}
+
+void test_vector_dist(void)
+{
+
+}
+
+void test_vector_dot(void)
+{
+
+}
+
+void test_vector_norm(void)
+{
+
+}
+
+void test_vector_to_unit(void)
+{
+
+}
+
 /**
  * @brief zsl_vec_cross unit tests.
  *
@@ -64,6 +185,16 @@ void test_vector_cross(void)
     zassert_true(rc == 0, "cross:initz != 0");
 
     /* TODO: Test cross product results and boundary checks! */
+}
+
+void test_vector_sum_of_sqrs(void)
+{
+
+}
+
+void test_vector_mean(void)
+{
+
 }
 
 /**

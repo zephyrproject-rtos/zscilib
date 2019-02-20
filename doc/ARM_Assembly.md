@@ -115,7 +115,11 @@ Possible ARM Thumb constraint modifiers are:
   operand. Operands with the `=&` constraint modifier are known as
   early-clobber operands. Output only.
 
-> Use the `&` constraint modifier on all output operands that must not overlap an input. Otherwise, GCC may allocate the output operand in the same register as an unrelated input operand, on the assumption that the assembler code consumes its inputs before producing outputs. This assumption may be false if the assembler code actually consists of more than one instruction.
+> Use the `&` constraint modifier on all output operands that must not overlap
+  an input. Otherwise, GCC may allocate the output operand in the same register
+  as an unrelated input operand, on the assumption that the assembler code
+  consumes its inputs before producing outputs. This assumption may be false
+  if the assembler code actually consists of more than one instruction.
 
 ### Constraint codes
 
@@ -161,9 +165,10 @@ TODO: Add link to ARM document on function argument usage in assembly.
 | R14 (`lr`) | Link register, Workspace |
 | R15 (`pc`) | Program counter |
 
-## Further Reading
+## Sources and Further Reading
 
 - [ARM inline assembly](http://www.ethernut.de/en/documents/arm-inline-asm.html)
   Somewhat dated, but very useful summary of GNU inline ARM assembly.
 - [GNU Extended ASM](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#Extended-Asm)
-Details the format used for inline assembler instructions with C expression operands
+  Details the format used for inline assembler instructions with C expression
+  operands
