@@ -7,6 +7,7 @@
 #include <ztest.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
+#include "floatcheck.h"
 
 /**
  * @brief zsl_vec_from_arr unit tests.
@@ -127,7 +128,40 @@ void test_vector_neg(void)
 
 void test_vector_sum(void)
 {
+    int rc;
 
+    ZSL_VECTOR_DEF(va, 3);
+    ZSL_VECTOR_DEF(vb, 3);
+    ZSL_VECTOR_DEF(vc, 3);
+    ZSL_VECTOR_DEF(vsum, 3);
+
+    struct zsl_vec *vlist[3] = { &va, &vb, &vc };
+
+    /* Initialise the vectors. */
+    zsl_vec_init(&va);
+    zsl_vec_init(&vb);
+    zsl_vec_init(&vc);
+    zsl_vec_init(&vsum);
+
+    /* Assign values to vectors. */
+    va.data[0] = 1.0;
+    va.data[1] = 2.0;
+    va.data[2] = 3.0;
+    vb.data[0] = 3.0;
+    vb.data[1] = 2.0;
+    vb.data[2] = 1.0;
+    vc.data[0] = -1.0;
+    vc.data[1] = -2.0;
+    vc.data[2] = -3.0;
+
+    /* Perform sum operation on va..vc. */
+    rc = zsl_vec_sum(vlist, 3, &vsum);
+    zassert_true(rc == 0, "");
+
+    /* Check output. */
+    for (size_t i = 0; i <3; i++) {
+        zassert_equal(vsum.data[i], va.data[i]+vb.data[i]+vc.data[i], "");
+    }
 }
 
 void test_vector_magn(void)
@@ -167,24 +201,7 @@ void test_vector_to_unit(void)
  */
 void test_vector_cross(void)
 {
-    int rc;
 
-    ZSL_VECTOR_DEF(v, 3);
-    ZSL_VECTOR_DEF(w, 3);
-    ZSL_VECTOR_DEF(c, 3);
-    ZSL_VECTOR_DEF(z, 2);
-
-    /* Initialise the vectors. */
-    rc = zsl_vec_init(&v);
-    zassert_true(rc == 0, "cross:initv != 0");
-    rc = zsl_vec_init(&w);
-    zassert_true(rc == 0, "cross:initw != 0");
-    rc = zsl_vec_init(&c);
-    zassert_true(rc == 0, "cross:initc != 0");
-    rc = zsl_vec_init(&z);
-    zassert_true(rc == 0, "cross:initz != 0");
-
-    /* TODO: Test cross product results and boundary checks! */
 }
 
 void test_vector_sum_of_sqrs(void)

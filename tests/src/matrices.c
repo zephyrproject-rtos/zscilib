@@ -7,6 +7,7 @@
 #include <ztest.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
+#include "floatcheck.h"
 
 /**
  * @brief zsl_mtx_init unit tests.
@@ -85,7 +86,7 @@ void test_matrix_from_arr(void)
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
     zassert_equal(rc, 0, "from_arr:mtx[2][2] == ERR");
-    zassert_equal(x, 0.1, "from_arr:mtx[2][2] != 0.1");
+    zassert_true(val_is_equal(x, 0.1, 1E-5), "from_arr:mtx[2][2] != 0.1");
 
     rc = zsl_mtx_get(&m, 1, 0, &x);
     zassert_equal(rc, 0, "from_arr:mtx[1][0] == ERR");
@@ -122,7 +123,7 @@ void test_matrix_get(void)
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
     zassert_equal(rc, 0, "get:mtx[2][2] == ERR");
-    zassert_equal(x, 0.1, "get:mtx[2][2] != 0.1");
+    zassert_true(val_is_equal(x, 0.1, 1E-5), "get:mtx[2][2] != 0.1");
 
     /* Check for out of bounbds error. */
     zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL, "get:mtx[3][3] != ERR");
@@ -164,7 +165,7 @@ void test_matrix_set(void)
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
     zassert_equal(rc, 0, "set:get:mtx[2][2] == ERR");
-    zassert_true(x == 0.1, "set:get:mtx[2][2] != 0.1");
+    zassert_true(val_is_equal(x, 0.1, 1E-5), "set:get:mtx[2][2] != 0.1");
 
     /* Check for out of bounbds error. */
     zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, "set:mtx[3][3] != ERR");
