@@ -171,6 +171,36 @@ void test_matrix_set(void)
     zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, "set:mtx[3][3] != ERR");
 }
 
+void test_matrix_get_set_row(void)
+{
+
+}
+
+void test_matrix_get_set_col(void)
+{
+
+}
+
+void test_matrix_add(void)
+{
+
+}
+
+void test_matrix_add_d(void)
+{
+
+}
+
+void test_matrix_sub(void)
+{
+
+}
+
+void test_matrix_sub_d(void)
+{
+
+}
+
 /**
  * @brief zsl_mtx_mult unit tests with square matrices.
  *
@@ -366,4 +396,14 @@ void test_matrix_trans(void)
     zassert_true(val_is_equal(mt.data[5], 4.0, 1E-5), "trans:valerr:5");
     zassert_true(val_is_equal(mt.data[6], 3.0, 1E-5), "trans:valerr:6");
     zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), "trans:valerr:7");
+}
+
+void test_matrix_inv(void)
+{
+
+}
+
+void test_matrix_is_equal(void)
+{
+
 }
