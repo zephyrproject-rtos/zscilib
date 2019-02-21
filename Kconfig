@@ -16,10 +16,10 @@
 # under the License.
 
 config ZSL
-    bool "Zephyr scientific library support"
-    default n
-    help
-      This option enables the zephyr scientific library.
+	bool "Zephyr scientific library support"
+	default n
+	help
+	  This option enables the zephyr scientific library.
 
 if ZSL
 
@@ -40,5 +40,39 @@ config ZSL_PLATFORM_OPT
 	  0 None
 	  1 ARM Thumb (GNU)
 	  2 ARM Thumb2 (GNU)
+
+config ZSL_VECTOR_INLINE
+	bool "Use inline vector functions."
+	default n
+	help
+	  Enabling this option will cause common vector functions to use inline
+	  versions, avoiding the overhead of function calls at the expense of
+	  a larger firmware image.
+
+config ZSL_MATRIX_INLINE
+	bool "Use inline matrix functions."
+	default n
+	help
+	  Enabling this option will cause common matrix functions to use inline
+	  versions, avoiding the overhead of function calls at the expense of
+	  a larger firmware image.
+
+config ZSL_BOUNDS_CHECKS
+	bool "Enable bounds checking in functions."
+	default y
+	help
+	  Enabling this option will cause common functions to ensure that requested
+	  data is within the bounds of the vector, matrix, etc. object. This should
+	  generally always be enabled for safety reasons, but you may wish to
+	  disable it in exceptional circumstances for performance reasons.
+
+	  Note that the performance gains from enabling inline functions will
+	  generally be greater than the benefit of disabling bounds checks, and
+	  with far less risk associated with the decision.
+
+	  EXTREME CARE should be taken when disabling this option since it can
+	  easily lead to stack corruption and critical firmware failures. This
+	  should only be disabled as a final option, and only on known-gppd and
+	  thoroughly tested code.
 
 endif

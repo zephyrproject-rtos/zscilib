@@ -22,20 +22,35 @@ See the `tests` folder for further details.
 
 ## Motivation
 
+**A key goal of zscilib is to allow more data processing to happen on the
+endnode**.
+
+As the cost of small, embedded MCUs increases and costs fall, more processing
+can be done on the endnode itself, allowing the 'complex' off-node computing
+(data aggregation, complex statistical analysis, etc.) to be done in less time,
+using less data storage, and at a lower overall processing cost.
+
+By generating immediately actionable and scientifically-relevant data points
+(standard SI units, pre-filtered data, etc.) directly on the endnode, zscilib
+aims to be a bridge between raw data and more numerically complex toolkits like
+`gsl`, `numpy` or `R`.
+
+#### Why Yet Another Library?
+
 Numerous high quality, mature, open source scientific libraries already exist:
 
 - [GNU scientific library (gsl)](https://www.gnu.org/software/gsl/)
 - [Lis (Library of Iterative Solvers for linear systems)](https://github.com/anishida/lis)
 - [CMSIS-DSP](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
 
-So, why reinvent the wheel with zscilib?
 
-Despite the wealth of mature functions in these existing libraries, they tend
-to have the following problems in an embedded context:
+Despite the wealth of mature functions in these existing libraries, though,
+they tend to have the following two problems in an embedded context:
 
-- They are overly broad and resource intensive (in the case of GSL)
+- They are overly broad and resource intensive (GSL, etc.), and this not
+  appropriate for resource constrained devices like the ARM Cortex M family.
 - They are missing many of the domain-specific features required to convert
-  raw sensor data into actionable information (CMSIS-DAP).
+  raw sensor data into actionable information (CMSIS-DAP, Lis).
 
 The second item is of particular importance, since the goal of embedded systems
 is often 'sensing' via raw data, manipulating that data, then acting on the
@@ -45,13 +60,11 @@ CMSIS-DAP contains a number of highly efficient algorithms for filtering
 raw sensor data, but it doesn't offer any domain-specific assistance converting
 filtered accelerometer vectors into orientation data, for example, or reading
 a set of photodiodes and converting that data into a useful photometric value
-like lux.
+like lux. It is excellent at 'conditioning' data, but not at 'understanding' it.
 
-This library attempts to bridge the divide between raw data, and actionable,
-scientifically-relevant data points, in a resource-constrained environment.
-It aims to provide helpers for common mathematical operations (linear algebra,
-statistical analysis, etc.), as well as domain-specific algorithms in fields
-commonly associated with embedded devices.
+zscilib aims to find a middle ground between these two, allow for richer
+processing of raw data, but within the confines and limitations of the class
+of microcontrollers commonly used on low-cost sensor endnodes.
 
 ## Current Features
 

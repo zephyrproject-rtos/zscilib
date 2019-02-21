@@ -88,9 +88,11 @@ zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *x)
 {
     /* TODO: Evaluate inlining function to avoid repetitive branches. */
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
         return -EINVAL;
     }
+#endif
 
     *x = m->data[(i * m->sz_cols) + j];
 
@@ -102,9 +104,11 @@ zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t x)
 {
     /* TODO: Evaluate inlining function to avoid repetitive branches. */
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
         return -EINVAL;
     }
+#endif
 
     m->data[(i * m->sz_cols) + j] = x;
 
@@ -202,10 +206,12 @@ zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
     /* TODO: Add inline helper to validate shape of multiple matrices. */
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
         (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
         return -EINVAL;
     }
+#endif
 
     /* TODO: Evaluate if a while(i--) loop would be faster reading sz once. */
 
@@ -227,10 +233,12 @@ zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
     /* TODO: Add inline helper to validate shape of multiple matrices. */
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
         (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
         return -EINVAL;
     }
+#endif
 
     /* TODO: Evaluate if a while(i--) loop would be faster reading sz once. */
 
@@ -250,6 +258,7 @@ zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 int
 zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Ensure that ma has the same number as columns as mb has rows. */
     if (ma->sz_cols != mb->sz_rows) {
         return -EINVAL;
@@ -259,6 +268,7 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
     if ((mc->sz_rows != ma->sz_rows) || (mc->sz_cols != mb->sz_cols)) {
         return -EINVAL;
     }
+#endif
 
     for (size_t i = 0; i < ma->sz_rows; i++) {
         for (size_t j = 0; j < mb->sz_cols; j++) {
@@ -287,10 +297,12 @@ zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s)
 int
 zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Ensure that ma and mb have the same shape. */
     if ((ma->sz_rows != mb->sz_cols) || (ma->sz_cols != mb->sz_rows)) {
         return -EINVAL;
     }
+#endif
 
     zsl_real_t d[ma->sz_cols];
 

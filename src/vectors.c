@@ -33,10 +33,12 @@ zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a)
 int
 zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure v and w are equal length. */
     if ((v->sz != w->sz) || (v->sz != x->sz)) {
         return -EINVAL;
     }
+#endif
 
     for (size_t i = 0; i < v->sz; i++) {
         x->data[i] = v->data[i] + w->data[i];
@@ -48,10 +50,12 @@ zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 int
 zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure v and w are equal length. */
     if ((v->sz != w->sz) || (v->sz != x->sz)) {
         return -EINVAL;
     }
+#endif
 
     for (size_t i = 0; i < v->sz; i++) {
         x->data[i] = v->data[i] - w->data[i];
@@ -79,6 +83,7 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
         return -EINVAL;
     }
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure all vectors have the same size. */
     sz_last = v[0]->sz;
     for (size_t i = 0; i < n; i++) {
@@ -86,6 +91,7 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
             return -EINVAL;
         }
     }
+#endif
 
     /* Sum all vectors. */
     w->sz = sz_last;
@@ -135,10 +141,12 @@ zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d)
 {
     zsl_real_t res = 0.0;
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure v and w are equal length. */
     if (v->sz != w->sz) {
         return -EINVAL;
     }
+#endif
 
     for (size_t i = 0; i < v->sz; i++) {
         res += v->data[i] * w->data[i];
@@ -192,10 +200,12 @@ zsl_vec_to_unit(struct zsl_vec *v)
 int
 zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure this is a 3-vector. */
     if ((v->sz != 3) || (w->sz != 3) || (c->sz != 3)) {
         return -EINVAL;
     }
+#endif
 
     /*
      * Using column vectors, if ...
@@ -233,10 +243,12 @@ zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
 {
     int rc;
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure the mean vector has an approproate size. */
     if (m->sz != v[0]->sz) {
         return -EINVAL;
     }
+#endif
 
     /* sum also checks that all vectors have the same length. */
     rc = zsl_vec_sum(v, n, m);
