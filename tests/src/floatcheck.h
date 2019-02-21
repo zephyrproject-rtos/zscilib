@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 /**
- * Checks if a zsl_data_t is equal to the specified value, with a +/- margin of
+ * Checks if a zsl_real_t is equal to the specified value, with a +/- margin of
  * 'epsilon'.
  *
  * @param a         The value to check
@@ -45,40 +45,40 @@ extern "C" {
  *
  * @return  True if value 'a' is equal to 'b', otherwise false.
  */
-bool val_is_equal(zsl_data_t a, zsl_data_t b, zsl_data_t epsilon);
+bool val_is_equal(zsl_real_t a, zsl_real_t b, zsl_real_t epsilon);
 
 /**
- * Checks if a zsl_data_t is equal to or greater than the specified value.
+ * Checks if a zsl_real_t is equal to or greater than the specified value.
  *
  * @param a         The value to check
  * @param b         The value to compare against
  *
  * @return  True if value 'a' is greater than or equal to 'b', otherwise false.
  */
-bool val_is_at_least(zsl_data_t a, zsl_data_t b);
+bool val_is_at_least(zsl_real_t a, zsl_real_t b);
 
 /**
- * Checks if a zsl_data_t is less than the specified value.
+ * Checks if a zsl_real_t is less than the specified value.
  *
  * @param a         The value to check
  * @param b         The value to compare against
  *
  * @return  True if value 'a' is less than 'b', otherwise false.
  */
-bool val_is_less_than(zsl_data_t a, zsl_data_t b);
+bool val_is_less_than(zsl_real_t a, zsl_real_t b);
 
 /**
- * Checks if a zsl_data_t is greater than the specified value.
+ * Checks if a zsl_real_t is greater than the specified value.
  *
  * @param a         The value to check
  * @param b         The value to compare against
  *
  * @return  True if value 'a' is greater than 'b', otherwise false.
  */
-bool val_is_greater_than(zsl_data_t a, zsl_data_t b);
+bool val_is_greater_than(zsl_real_t a, zsl_real_t b);
 
 /**
- * Checks if a zsl_data_t is within the range of 'upper' and 'lower'.
+ * Checks if a zsl_real_t is within the range of 'upper' and 'lower'.
  *
  * @param a         The value to check
  * @param upper     The upper value to compare against (inclusive)
@@ -86,7 +86,7 @@ bool val_is_greater_than(zsl_data_t a, zsl_data_t b);
  *
  * @return  True if value 'a' is <= 'upper' and >='lower', otherwise false.
  */
-bool val_is_within(zsl_data_t a, zsl_data_t upper, zsl_data_t lower);
+bool val_is_within(zsl_real_t a, zsl_real_t upper, zsl_real_t lower);
 
 #ifdef __cplusplus
 }

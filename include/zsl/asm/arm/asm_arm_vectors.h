@@ -33,7 +33,7 @@
 #define ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_
 
 #if !asm_vec_scalar_mult
-int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
+int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
 {
     for (size_t i = 0; i < v->sz; i++) {
         v->data[i] *= s;

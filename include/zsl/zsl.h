@@ -54,9 +54,9 @@ extern "C" {
 extern const char * zsl_version;
 
 #if CONFIG_ZSL_SINGLE_PRECISION
-typedef float zsl_data_t;
+typedef float zsl_real_t;
 #else
-typedef double zsl_data_t;
+typedef double zsl_real_t;
 #endif
 
 /* TODO: Define common errors like shape mismatch, etc. */

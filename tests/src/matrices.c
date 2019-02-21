@@ -17,7 +17,7 @@
 void test_matrix_init(void)
 {
     int rc;
-    zsl_data_t x;
+    zsl_real_t x;
     ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Initialise the matrix with the default (empty) entry_fn. */
@@ -61,13 +61,13 @@ void test_matrix_init(void)
 void test_matrix_from_arr(void)
 {
     int rc;
-    zsl_data_t x;
+    zsl_real_t x;
 
     /* Destination matrix. */
     ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Source array. */
-    zsl_data_t data[9] = { 1.0, 0.0, 0.0,
+    zsl_real_t data[9] = { 1.0, 0.0, 0.0,
                            0.0, 0.5, 0.0,
                            0.0, 0.0, 0.1 };
 
@@ -101,8 +101,8 @@ void test_matrix_from_arr(void)
 void test_matrix_get(void)
 {
     int rc;
-    zsl_data_t x;
-    zsl_data_t data[9] = { 1.0, 0.0, 0.0,
+    zsl_real_t x;
+    zsl_real_t data[9] = { 1.0, 0.0, 0.0,
                            0.0, 0.5, 0.0,
                            0.0, 0.0, 0.1 };
 
@@ -137,7 +137,7 @@ void test_matrix_get(void)
 void test_matrix_set(void)
 {
     int rc = 0;
-    zsl_data_t x;
+    zsl_real_t x;
     ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Initialise the matrix with the default (empty) entry_fn. */
@@ -212,7 +212,7 @@ void test_matrix_mult_sq(void)
     ZSL_MATRIX_DEF(mc, 3, 3);
 
     /* Input matrix a. */
-    zsl_data_t data_a[9] = { 1.0, 2.0, 3.0,
+    zsl_real_t data_a[9] = { 1.0, 2.0, 3.0,
                              4.0, 5.0, 6.0,
                              7.0, 8.0, 9.0 };
     struct zsl_mtx ma = {
@@ -222,7 +222,7 @@ void test_matrix_mult_sq(void)
     };
 
     /* Input matrix b. */
-    zsl_data_t data_b[9] = { 10.0, 20.0, 30.0,
+    zsl_real_t data_b[9] = { 10.0, 20.0, 30.0,
                              40.0, 50.0, 60.0,
                              70.0, 80.0, 90.0 };
     struct zsl_mtx mb = {
@@ -232,7 +232,7 @@ void test_matrix_mult_sq(void)
     };
 
     /* Output reference matrix (for comparison). */
-    zsl_data_t data_ref[9] = { 300.0,  360.0,  420.0,
+    zsl_real_t data_ref[9] = { 300.0,  360.0,  420.0,
                                660.0,  810.0,  960.0,
                                1020.0, 1260.0, 1500.0 };
     struct zsl_mtx mref = {
@@ -271,7 +271,7 @@ void test_matrix_mult_rect(void)
     ZSL_MATRIX_DEF(merr, 5, 3);
 
     /* Input matrix a (4x2). */
-    zsl_data_t data_a[8] = { 2.0, 3.0,
+    zsl_real_t data_a[8] = { 2.0, 3.0,
                              1.0, 4.0,
                              4.0, 3.0,
                              3.0, 4.0 };
@@ -282,7 +282,7 @@ void test_matrix_mult_rect(void)
     };
 
     /* Input matrix b (2x3). */
-    zsl_data_t data_b[9] = { 3.0, 1.0, 2.0,
+    zsl_real_t data_b[9] = { 3.0, 1.0, 2.0,
                              2.0, 4.0, 2.0 };
     struct zsl_mtx mb = {
         .sz_rows = 2,
@@ -291,7 +291,7 @@ void test_matrix_mult_rect(void)
     };
 
     /* Output reference matrix (4x3). */
-    zsl_data_t data_ref[12] = { 12.0, 14.0, 10.0,
+    zsl_real_t data_ref[12] = { 12.0, 14.0, 10.0,
                                 11.0, 17.0, 10.0,
                                 18.0, 16.0, 14.0,
                                 17.0, 19.0, 14.0 };
@@ -334,10 +334,10 @@ void test_matrix_mult_rect(void)
 void test_matrix_scalar_mult(void)
 {
     int rc = 0;
-    zsl_data_t s = 10.0;
+    zsl_real_t s = 10.0;
 
     /* Input matrix. */
-    zsl_data_t data[8] = { 2.0, 3.0,
+    zsl_real_t data[8] = { 2.0, 3.0,
                            1.0, 4.0,
                            4.0, 3.0,
                            3.0, 4.0 };
@@ -371,7 +371,7 @@ void test_matrix_trans(void)
     ZSL_MATRIX_DEF(mt, 2, 4);
 
     /* Input matrix. */
-    zsl_data_t data[8] = { 2.0, 3.0,
+    zsl_real_t data[8] = { 2.0, 3.0,
                            1.0, 4.0,
                            4.0, 3.0,
                            3.0, 4.0 };

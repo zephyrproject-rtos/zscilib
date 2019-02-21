@@ -37,13 +37,13 @@ extern "C" {
 struct zsl_vec {
     /** The number of elements in the vector. */
     size_t sz;
-    /** The single-precision data assigned to the vector. */
-    zsl_data_t *data;
+    /** The array of real number values assigned to the vector. */
+    zsl_real_t *data;
 };
 
 /** Macro to declare a vector with static memory allocation. */
 #define ZSL_VECTOR_DEF(name, n)\
-  zsl_data_t name##_vec[n];\
+  zsl_real_t name##_vec[n];\
   struct zsl_vec name = {\
       .sz   = n,\
       .data = name##_vec\
@@ -73,7 +73,7 @@ int zsl_vec_init(struct zsl_vec *v);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_from_arr(struct zsl_vec *v, zsl_data_t *a);
+int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
 /**
  * @brief Adds corresponding vector elements in 'v' and 'w', saving to 'x'.
@@ -125,7 +125,7 @@ int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
  *
  * @return The magnitude of vector 'v'.
  */
-zsl_data_t zsl_vec_magn(struct zsl_vec *v);
+zsl_real_t zsl_vec_magn(struct zsl_vec *v);
 
 /**
  * @brief Multiply a vector by a scalar.
@@ -135,7 +135,7 @@ zsl_data_t zsl_vec_magn(struct zsl_vec *v);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
+int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s);
 
 /**
  * @brief Calculates the distance between two vectors, which is equal to the
@@ -147,7 +147,7 @@ int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s);
  * @return The magnitude of vector v - vector w, or NAN is there was a
  *         size mismatch between vectors v and w.
  */
-zsl_data_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
+zsl_real_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
 
 /**
  * @brief Computes the dot (aka scalar) product of two equal-length vectors
@@ -159,7 +159,7 @@ zsl_data_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
  *
  * @return 0 on success, or -EINVAL if vectors v and w aren't equal-length.
  */
-int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
+int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d);
 
 /**
  * @brief Calculates the norm or absolute value of vector 'v' (the
@@ -169,7 +169,7 @@ int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d);
  *
  * @return The norm of vector 'v'.
  */
-zsl_data_t zsl_vec_norm(struct zsl_vec *v);
+zsl_real_t zsl_vec_norm(struct zsl_vec *v);
 
 /**
  * @brief Converts vector 'v' to a unit vector (a vector of length 1).
@@ -213,7 +213,7 @@ int zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c);
  *
  * @return The sum of the squares of vector 'v'.
  */
-zsl_data_t zsl_vec_sum_of_sqrs(struct zsl_vec *v);
+zsl_real_t zsl_vec_sum_of_sqrs(struct zsl_vec *v);
 
 /**
  * @brief Computes the component-wise mean of a set of identically-sized

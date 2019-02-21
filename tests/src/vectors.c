@@ -17,13 +17,13 @@
 void test_vector_from_arr(void)
 {
     int rc;
-    zsl_data_t x;
+    zsl_real_t x;
 
     /* Destination vector. */
     ZSL_VECTOR_DEF(v, 3);
 
     /* Test array. */
-    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
 
     /* Initialise the vector. */
     rc = zsl_vec_init(&v);
@@ -48,9 +48,9 @@ void test_vector_add(void)
     ZSL_VECTOR_DEF(vb, 3);
     ZSL_VECTOR_DEF(vc, 3);
 
-    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
-    zsl_data_t b[3] = {-1.0, 0.5, 0.1 };
-    zsl_data_t c[3] = {-1.0, 1.5, 2.1 };
+    zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
+    zsl_real_t c[3] = {-1.0, 1.5, 2.1 };
 
     /* Initialise the vectors. */
     zsl_vec_init(&va);
@@ -79,9 +79,9 @@ void test_vector_sub(void)
     ZSL_VECTOR_DEF(vb, 3);
     ZSL_VECTOR_DEF(vc, 3);
 
-    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
-    zsl_data_t b[3] = {-1.0, 0.5, 0.1 };
-    zsl_data_t c[3] = { 1.0, 0.5, 1.9 };
+    zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
+    zsl_real_t c[3] = { 1.0, 0.5, 1.9 };
 
     /* Initialise the vectors. */
     zsl_vec_init(&va);
@@ -108,8 +108,8 @@ void test_vector_neg(void)
 
     ZSL_VECTOR_DEF(v, 3);
 
-    zsl_data_t a[3] = {  0.0,  1.0,  2.0 };
-    zsl_data_t b[3] = { -0.0, -1.0, -2.0 };
+    zsl_real_t a[3] = {  0.0,  1.0,  2.0 };
+    zsl_real_t b[3] = { -0.0, -1.0, -2.0 };
 
     /* Initialise the vectors. */
     zsl_vec_init(&v);
@@ -229,8 +229,8 @@ void test_vector_is_equal(void)
     ZSL_VECTOR_DEF(x, 2);
 
     /* Test arrays. */
-    zsl_data_t a[3] = { 0.0, 1.0, 2.0 };
-    zsl_data_t b[3] = { 0.0, 1.0, 2.0 };
+    zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
+    zsl_real_t b[3] = { 0.0, 1.0, 2.0 };
 
     /* Initialise the vectors. */
     rc = zsl_vec_init(&v);

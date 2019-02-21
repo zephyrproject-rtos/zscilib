@@ -74,17 +74,17 @@ err:
 }
 
 int
-zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a)
+zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a)
 {
     /* TODO: Evaluate inlining function to avoid repetitive branches. */
 
-    memcpy(m->data, a, (m->sz_rows * m->sz_cols) * sizeof(zsl_data_t));
+    memcpy(m->data, a, (m->sz_rows * m->sz_cols) * sizeof(zsl_real_t));
 
     return 0;
 }
 
 int
-zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x)
+zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *x)
 {
     /* TODO: Evaluate inlining function to avoid repetitive branches. */
 
@@ -98,7 +98,7 @@ zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x)
 }
 
 int
-zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t x)
+zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t x)
 {
     /* TODO: Evaluate inlining function to avoid repetitive branches. */
 
@@ -112,10 +112,10 @@ zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t x)
 }
 
 int
-zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_data_t *v)
+zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_real_t *v)
 {
     int rc;
-    zsl_data_t x;
+    zsl_real_t x;
 
     /*
      * TODO: Optimise by determining start pos and perform consecutive
@@ -134,7 +134,7 @@ zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_data_t *v)
 }
 
 int
-zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_data_t *v)
+zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_real_t *v)
 {
     int rc;
 
@@ -154,10 +154,10 @@ zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_data_t *v)
 }
 
 int
-zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_data_t *v)
+zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_real_t *v)
 {
     int rc;
-    zsl_data_t x;
+    zsl_real_t x;
 
     /*
      * TODO: Optimise by determining start pos and perform consecutive
@@ -177,7 +177,7 @@ zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_data_t *v)
 }
 
 int
-zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_data_t *v)
+zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v)
 {
     int rc;
 
@@ -275,7 +275,7 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 }
 
 int
-zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_data_t s)
+zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s)
 {
     for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
         m->data[i] *= s;
@@ -292,7 +292,7 @@ zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb)
         return -EINVAL;
     }
 
-    zsl_data_t d[ma->sz_cols];
+    zsl_real_t d[ma->sz_cols];
 
     for (size_t i = 0; i < ma->sz_rows; i++) {
         zsl_mtx_get_row(ma, i, d);

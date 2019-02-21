@@ -17,15 +17,15 @@
 int
 zsl_vec_init(struct zsl_vec *v)
 {
-    memset(v->data, 0, v->sz * sizeof(zsl_data_t));
+    memset(v->data, 0, v->sz * sizeof(zsl_real_t));
 
     return 0;
 }
 
 int
-zsl_vec_from_arr(struct zsl_vec *v, zsl_data_t *a)
+zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a)
 {
-    memcpy(v->data, a, v->sz * sizeof(zsl_data_t));
+    memcpy(v->data, a, v->sz * sizeof(zsl_real_t));
 
     return 0;
 }
@@ -98,7 +98,7 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
     return 0;
 }
 
-zsl_data_t
+zsl_real_t
 zsl_vec_magn(struct zsl_vec *v)
 {
     return sqrt(zsl_vec_sum_of_sqrs(v));
@@ -106,7 +106,7 @@ zsl_vec_magn(struct zsl_vec *v)
 
 #if !asm_vec_scalar_mult
 int
-zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
+zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
 {
     for (size_t i = 0; i < v->sz; i++) {
         v->data[i] *= s;
@@ -116,7 +116,7 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_data_t s)
 }
 #endif
 
-zsl_data_t
+zsl_real_t
 zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 {
     int rc = 0;
@@ -131,9 +131,9 @@ zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 }
 
 int
-zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d)
+zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d)
 {
-    zsl_data_t res = 0.0;
+    zsl_real_t res = 0.0;
 
     /* Make sure v and w are equal length. */
     if (v->sz != w->sz) {
@@ -149,10 +149,10 @@ zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_data_t *d)
     return 0;
 }
 
-zsl_data_t
+zsl_real_t
 zsl_vec_norm(struct zsl_vec *v)
 {
-    zsl_data_t sum = 0;
+    zsl_real_t sum = 0;
 
     /*
      * |v| = sqroot( v[0]^2 + v[1]^2 + V[...]^2 )
@@ -168,7 +168,7 @@ zsl_vec_norm(struct zsl_vec *v)
 int
 zsl_vec_to_unit(struct zsl_vec *v)
 {
-    zsl_data_t mag = zsl_vec_norm(v);
+    zsl_real_t mag = zsl_vec_norm(v);
 
     /*
      *            v
@@ -218,10 +218,10 @@ zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c)
     return 0;
 }
 
-zsl_data_t
+zsl_real_t
 zsl_vec_sum_of_sqrs(struct zsl_vec *v)
 {
-    zsl_data_t dot = 0.0;
+    zsl_real_t dot = 0.0;
 
     zsl_vec_dot(v, v, &dot);
 

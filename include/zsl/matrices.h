@@ -40,12 +40,12 @@ struct zsl_mtx {
     /** The number of columns in the matrix (typically denoted as 'n'). */
     size_t sz_cols;
     /** The data assigned to the matrix, in row-major order (left to right). */
-    zsl_data_t *data;
+    zsl_real_t *data;
 };
 
 /** Macro to declare a matrix with static memory allocation. */
 #define ZSL_MATRIX_DEF(name, m, n)\
-  zsl_data_t name##_mtx[m*n] = { 0 };\
+  zsl_real_t name##_mtx[m*n] = { 0 };\
   struct zsl_mtx name = {\
       .sz_rows      = m,\
       .sz_cols      = n,\
@@ -126,7 +126,7 @@ int zsl_mtx_init(struct zsl_mtx *m, zsl_mtx_init_entry_fn_t entry_fn);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a);
+int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a);
 
 /**
  * @brief Gets a single value from the specified row (i) and column (j).
@@ -139,7 +139,7 @@ int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_data_t *a);
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
-int zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x);
+int zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *x);
 
 /**
  * @brief Sets a single value at the specified row (i) and column (j).
@@ -152,7 +152,7 @@ int zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t *x);
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
-int zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t x);
+int zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t x);
 
 /**
  * @brief Gets the contents of row 'i' from matrix 'm', assigning the array
@@ -166,7 +166,7 @@ int zsl_mtx_set(struct zsl_mtx *m, size_t i, size_t j, zsl_data_t x);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
+int zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_real_t *v);
 
 /**
  * @brief Sets the contents of row 'i' in matrix 'm', assigning the values
@@ -180,7 +180,7 @@ int zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
+int zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_real_t *v);
 
 /**
  * @brief Gets the contents of column 'j' from matrix 'm', assigning the array
@@ -194,7 +194,7 @@ int zsl_mtx_set_row(struct zsl_mtx *m, size_t i, zsl_data_t *v);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
+int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 
 /**
  * @brief Sets the contents of column 'j' in matrix 'm', assigning the values
@@ -208,7 +208,7 @@ int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_data_t *v);
+int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 
 /**
  * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.
@@ -290,7 +290,7 @@ int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_data_t s);
+int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
 
 /**
  * @brief Transposes the matrix 'ma' into matrix 'mb'. Note that output
@@ -306,17 +306,17 @@ int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 int zsl_mtx_inv(struct zsl_mtx *m);
 
-int zsl_mtx_min(struct zsl_mtx *m, zsl_data_t *x); /** Get the min value in the matrix. */
-int zsl_mtx_max(struct zsl_mtx *m, zsl_data_t *x); /** Get the max value in the matrix. */
+int zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x); /** Get the min value in the matrix. */
+int zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x); /** Get the max value in the matrix. */
 int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the min value index in the matrix. */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the max value index in the matrix. */
 
-zsl_data_t zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j);
-zsl_data_t zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j);
-zsl_data_t zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j);
-zsl_data_t zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j);
+zsl_real_t zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j);
+zsl_real_t zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j);
+zsl_real_t zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j);
+zsl_real_t zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j);
 
-int zsl_mtx_eigen(struct zsl_mtx *m, zsl_data_t *eval, struct zsl_mtx *evec);
+int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *eval, struct zsl_mtx *evec);
 
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
