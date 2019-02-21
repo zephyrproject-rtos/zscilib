@@ -63,14 +63,12 @@ zsl_mtx_init(struct zsl_mtx *m, zsl_mtx_init_entry_fn_t entry_fn)
             }
             /* Abort if entry_fn returned an error code. */
             if (rc) {
-                goto err;
+                return rc;
             }
         }
     }
 
     return 0;
-err:
-    return rc;
 }
 
 int

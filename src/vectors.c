@@ -30,6 +30,18 @@ zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a)
     return 0;
 }
 
+struct zsl_vec*
+zsl_vec_from_arr_ret(zsl_real_t *a, size_t len)
+{
+    return NULL;
+}
+
+struct zsl_vec*
+zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len)
+{
+    return NULL;
+}
+
 int
 zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 {

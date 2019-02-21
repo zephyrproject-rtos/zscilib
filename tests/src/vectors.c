@@ -40,6 +40,16 @@ void test_vector_from_arr(void)
     }
 }
 
+void test_vector_from_arr_ret(void)
+{
+
+}
+
+void test_vector_get_subset(void)
+{
+
+}
+
 void test_vector_add(void)
 {
     int rc;
