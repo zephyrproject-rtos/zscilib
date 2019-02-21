@@ -25,6 +25,7 @@ See the `tests` folder for further details.
 Numerous high quality, mature, open source scientific libraries already exist:
 
 - [GNU scientific library (gsl)](https://www.gnu.org/software/gsl/)
+- [Lis (Library of Iterative Solvers for linear systems)](https://github.com/anishida/lis)
 - [CMSIS-DSP](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
 
 So, why reinvent the wheel with zscilib?
@@ -56,36 +57,36 @@ commonly associated with embedded devices.
 
 ### Vector Operations
 
-- [x] Add
-- [x] Subtract
-- [x] Negate
-- [x] Sum (two or more vectors)
-- [x] Magnitude
-- [x] Scalar multiply
-- [x] Distance (between two vectors)
-- [x] Norm/absolute value
-- [x] To Unit Vector
-- [x] Dot product
-- [x] Cross product
-- [x] Sum of squares
-- [x] Mean (two or more vectors)
-- [x] Equality check
+- Add
+- Subtract
+- Negate
+- Sum (two or more vectors)
+- Magnitude
+- Scalar multiply
+- Distance (between two vectors)
+- Norm/absolute value
+- To Unit Vector
+- Dot product
+- Cross product
+- Sum of squares
+- Mean (two or more vectors)
+- Equality check
 
 ### Matrix Operations
 
-- [x] Add
-- [x] Subtract
-- [x] Multiply
-- [x] Scalar multiply
-- [x] Transpose
-- [ ] Invert
-- [x] Get/set row/column vector
-- [ ] Min/max value or index
-- [ ] Minor
-- [ ] Determinant
-- [ ] Cofactor
-- [ ] Adjoint
-- [ ] Eigenvalues and eigenvectors
+- Add
+- Subtract
+- Multiply
+- Scalar multiply
+- Transpose
+- Invert
+- Get/set row/column vector
+- Min/max value or index
+- Minor
+- Determinant
+- Cofactor
+- Adjoint
+- Eigenvalues and eigenvectors
 
 ## Planned Features
 
