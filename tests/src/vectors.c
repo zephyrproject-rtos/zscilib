@@ -179,7 +179,17 @@ void test_vector_magn(void)
 
 }
 
+void test_vector_scalar_add(void)
+{
+
+}
+
 void test_vector_scalar_mult(void)
+{
+
+}
+
+void test_vector_scalar_div(void)
 {
 
 }
@@ -220,6 +230,11 @@ void test_vector_sum_of_sqrs(void)
 }
 
 void test_vector_mean(void)
+{
+
+}
+
+void test_vector_rev(void)
 {
 
 }
@@ -272,4 +287,9 @@ void test_vector_is_equal(void)
     v.data[0] = 1.0;
     eq = zsl_vec_is_equal(&v, &w);
     zassert_false(eq, "is_equal:vals equal");
+}
+
+void test_vector_is_notneg(void)
+{
+
 }

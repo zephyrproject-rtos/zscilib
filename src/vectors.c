@@ -122,6 +122,13 @@ zsl_vec_magn(struct zsl_vec *v)
     return sqrt(zsl_vec_sum_of_sqrs(v));
 }
 
+int
+zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s)
+{
+    /* Not implemnted error. */
+    return -ENOSYS;
+}
+
 #if !asm_vec_scalar_mult
 int
 zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
@@ -133,6 +140,13 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
     return 0;
 }
 #endif
+
+int
+zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s)
+{
+    /* Not implemnted error. */
+    return -ENOSYS;
+}
 
 zsl_real_t
 zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
@@ -273,6 +287,13 @@ zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
     return 0;
 }
 
+int
+zsl_vec_rev(struct zsl_vec *v)
+{
+    /* Not implemnted error. */
+    return -ENOSYS;
+}
+
 bool
 zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w)
 {
@@ -282,6 +303,18 @@ zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w)
 
     for (size_t i = 0; i < v->sz; i++) {
         if (v->data[i] != w->data[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool
+zsl_vec_is_nonneg(struct zsl_vec *v)
+{
+    for (size_t i = 0; i < v->sz; i++) {
+        if (v->data[i] < 0.0) {
             return false;
         }
     }

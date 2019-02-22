@@ -75,7 +75,9 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Negate
 - Sum (two or more vectors)
 - Magnitude
+- Scalar add
 - Scalar multiply
+- Scalar divide
 - Distance (between two vectors)
 - Norm/absolute value
 - To Unit Vector
@@ -83,7 +85,9 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Cross product
 - Sum of squares
 - Mean (two or more vectors)
+- Reverse
 - Equality check
+- Not negative check
 
 ### Matrix Operations
 

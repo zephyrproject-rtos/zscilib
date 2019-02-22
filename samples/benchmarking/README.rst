@@ -16,7 +16,7 @@ have on code execution on the same or different platforms.
 Requirements
 ************
 
-Depending you the device you are testing with, you may need to enable or
+Depending on the device you are testing with, you may need to enable or
 disable the ``CONFIG_STDOUT_CONSOLE`` flag.
 
 It should be set to ``y`` when using the emulator, and to ``n`` when running on
@@ -38,10 +38,10 @@ the result to the console:
     $ ninja run
 
 To run the application on real HW, typically outputting the results to the
-serial port, you can try a variant of the following, adjusting the ``-DBOARD``
-value as appropriate.
+serial port, you can try a variant of the following, adjusting ``-DBOARD``
+as appropriate.
 
-The **nRF82840 PCA10056** from Nordic Semiconductors is used below:
+The **nRF52840 PCA10056** from Nordic Semiconductors is used below:
 
 .. code-block:: console
 

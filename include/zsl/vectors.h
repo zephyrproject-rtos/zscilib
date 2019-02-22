@@ -158,6 +158,16 @@ int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
 zsl_real_t zsl_vec_magn(struct zsl_vec *v);
 
 /**
+ * @brief Adds a scalar to each element in a vector.
+ *
+ * @param v The vector to scale.
+ * @param s The scalar to add to each element.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s);
+
+/**
  * @brief Multiply a vector by a scalar.
  *
  * @param v The vector to scale.
@@ -166,6 +176,16 @@ zsl_real_t zsl_vec_magn(struct zsl_vec *v);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s);
+
+/**
+ * @brief Divide a vector by a scalar.
+ *
+ * @param v The vector to scale.
+ * @param s The scalar to divide all elements by.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s);
 
 /**
  * @brief Calculates the distance between two vectors, which is equal to the
@@ -259,6 +279,15 @@ zsl_real_t zsl_vec_sum_of_sqrs(struct zsl_vec *v);
 int zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m);
 
 /**
+ * @brief Reverses the order of the entries in vector 'v'.
+ *
+ * @param v The vector to use.
+ *
+ * @return 0 on success, otherwise an appropriate error code.
+ */
+int zsl_vec_rev(struct zsl_vec *v);
+
+/**
  * @brief Checks if two vectors are identical in size and content.
  *
  * @param v The first vector.
@@ -268,6 +297,16 @@ int zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m);
  *         otherwise false.
  */
 bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w);
+
+/**
+ * @brief Checks if all elements in vector v are >= zero and non-null.
+ *
+ * @param v The vector to check.
+ *
+ * @return true if the all vector elements are zero, positive and non-null,
+ *         otherwise false.
+ */
+bool zsl_vec_is_nonneg(struct zsl_vec *v);
 
 #ifdef __cplusplus
 }

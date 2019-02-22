@@ -31,7 +31,9 @@ extern void test_vector_sub(void);
 extern void test_vector_neg(void);
 extern void test_vector_sum(void);
 extern void test_vector_magn(void);
+extern void test_vector_scalar_add(void);
 extern void test_vector_scalar_mult(void);
+extern void test_vector_scalar_div(void);
 extern void test_vector_dist(void);
 extern void test_vector_dot(void);
 extern void test_vector_norm(void);
@@ -39,7 +41,9 @@ extern void test_vector_to_unit(void);
 extern void test_vector_cross(void);
 extern void test_vector_sum_of_sqrs(void);
 extern void test_vector_mean(void);
+extern void test_vector_rev(void);
 extern void test_vector_is_equal(void);
+extern void test_vector_is_notneg(void);
 
 void test_main(void)
 {
@@ -69,7 +73,9 @@ void test_main(void)
         ztest_unit_test(test_vector_neg),
         ztest_unit_test(test_vector_sum),
         ztest_unit_test(test_vector_magn),
+        ztest_unit_test(test_vector_scalar_add),
         ztest_unit_test(test_vector_scalar_mult),
+        ztest_unit_test(test_vector_scalar_div),
         ztest_unit_test(test_vector_dist),
         ztest_unit_test(test_vector_dot),
         ztest_unit_test(test_vector_norm),
@@ -77,7 +83,9 @@ void test_main(void)
         ztest_unit_test(test_vector_cross),
         ztest_unit_test(test_vector_sum_of_sqrs),
         ztest_unit_test(test_vector_mean),
-        ztest_unit_test(test_vector_is_equal)
+        ztest_unit_test(test_vector_rev),
+        ztest_unit_test(test_vector_is_equal),
+        ztest_unit_test(test_vector_is_notneg)
 	);
 
 	ztest_run_test_suite(zsl_tests);

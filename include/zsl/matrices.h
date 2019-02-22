@@ -319,6 +319,7 @@ zsl_real_t zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j);
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
+bool zsl_mtx_is_notneg(struct zsl_mtx *m);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 

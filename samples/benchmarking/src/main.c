@@ -12,6 +12,10 @@
 #include <tc_util.h>
 #include "timing_info.h"
 
+char sline[256];
+volatile u64_t vector_add_start_time;
+volatile u64_t vector_add_end_time;
+
 void print_settings(void)
 {
     printk("BOARD:                       %s\n", CONFIG_BOARD);
@@ -45,8 +49,8 @@ void print_settings(void)
 void test_vec_add(void)
 {
     u32_t loops = 100000;
-    u64_t vector_add_start_time;
-    u64_t vector_add_end_time;
+
+    DECLARE_VAR(vector, add)
 
     ZSL_VECTOR_DEF(va, 3);
     ZSL_VECTOR_DEF(vb, 3);
@@ -73,9 +77,8 @@ void test_vec_add(void)
     TIMING_INFO_PRE_READ();
 	vector_add_end_time = TIMING_INFO_OS_GET_TIME();
 
-    printk("zsl_vec_add cycles: %u\n",
-    		(u32_t)((vector_add_end_time - vector_add_start_time) &
-    			   0xFFFFFFFFULL));
+    u32_t time = (u32_t)((vector_add_end_time - vector_add_start_time) & 0xFFFFFFFFULL);
+    printk("zsl_vec_add : %u ticks\n", time);
 }
 
 void main(void)
