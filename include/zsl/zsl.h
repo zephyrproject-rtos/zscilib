@@ -39,17 +39,18 @@ extern "C" {
  *
  * ZSL_VERSION_STATUS should be one of:
  *
+ *   o "-dev"
  *   o "-alpha"
  *   o "-beta"
  *   o "-rc0", "-rc1", etc.
  *   o "-release"
  */
 
-#define ZSL_VERSION             "0.1.0-alpha"
+#define ZSL_VERSION             "0.1.0-dev"
 #define ZSL_VERSION_MAJOR       0
 #define ZSL_VERSION_MINOR       1
 #define ZSL_VERSION_REVISION    0
-#define ZSL_VERSION_STATUS      "-alpha"
+#define ZSL_VERSION_STATUS      "-dev"
 
 extern const char * zsl_version;
 

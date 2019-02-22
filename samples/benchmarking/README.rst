@@ -1,28 +1,61 @@
 .. _zscilib-benchmark-sample:
 
-zscilib Benchmark Test
-######################
+Benchmark Test
+##############
 
 Overview
 ********
 
-TODO
+This sample performs a set of calculations repetitively, tracking the time it
+takes to execute each set of functions and outputting them in a standard
+format to the console.
+
+It can be used to determine the effect different compiler or device settings
+have on code execution on the same or different platforms.
 
 Requirements
 ************
 
-TODO
+Depending you the device you are testing with, you may need to enable or
+disable the ``CONFIG_STDOUT_CONSOLE`` flag.
+
+It should be set to ``y`` when using the emulator, and to ``n`` when running on
+real hardware.
 
 Building and Running
 ********************
 
-This samples runs various benchmarks and outputs the result to the console:
+To run the benchmarks on the **Cortex M3 emulator**, run the following commands
+which will compile the application, run it on the emulator, and output
+the result to the console:
 
-    .. code-block:: console
+.. code-block:: console
 
-        $ cd samples/benchmarking
-        $ mkdir b && cd b
-        $ cmake -GNinja -DBOARD=qemu_cortex_m3 ..
-        $ ninja
+    $ cd samples/benchmarking
+    $ mkdir b && cd b
+    $ cmake -GNinja -DBOARD=qemu_cortex_m3 ..
+    $ ninja
+    $ ninja run
 
-TODO
+To run the application on real HW, typically outputting the results to the
+serial port, you can try a variant of the following, adjusting the ``-DBOARD``
+value as appropriate.
+
+The **nRF82840 PCA10056** from Nordic Semiconductors is used below:
+
+.. code-block:: console
+
+    $ cd samples/benchmarking
+    $ mkdir b && cd b
+    $ cmake -GNinja -DBOARD=nrf52840_pca10056 ..
+    $ ninja
+    $ ninja flash
+
+Sample Output
+*************
+
+The benchmark application will normally output text resembling the following:
+
+.. code-block:: console
+
+    TODO
