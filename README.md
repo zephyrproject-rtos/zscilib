@@ -180,8 +180,8 @@ of zscilib is to add optimised versions of key functions to try to get the
 best possible performance out of limited resources.
 
 Initial optimisation will target the **ARM Cortex-M** family of devices and the
-**Thumb2** instruction set, though other architectures can be accommodated if
-necessary or useful.
+**Thumb** and **Thumb-2** instruction sets, though other architectures can be
+accommodated if necessary or useful.
 
 ## Contributing
 
