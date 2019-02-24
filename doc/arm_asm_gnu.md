@@ -1,6 +1,6 @@
 # Inline ARM Assembly with GNU
 
-To ensure optimal performance when running on ARM Thumb or ARM Thumb2
+To ensure optimal performance when running on ARM Thumb or ARM Thumb-2
 devices, zscilib includes support for re-implementing key functions in
 inline assembly.
 

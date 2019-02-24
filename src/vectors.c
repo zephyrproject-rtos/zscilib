@@ -125,8 +125,11 @@ zsl_vec_magn(struct zsl_vec *v)
 int
 zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s)
 {
-    /* Not implemnted error. */
-    return -ENOSYS;
+    for (size_t i = 0; i < v->sz; i++) {
+        v->data[i] += s;
+    }
+
+    return 0;
 }
 
 #if !asm_vec_scalar_mult
@@ -144,8 +147,16 @@ zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
 int
 zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s)
 {
-    /* Not implemnted error. */
-    return -ENOSYS;
+    /* Avoid divide by zero errors. */
+    if (s == 0) {
+        return -EINVAL;
+    }
+
+    for (size_t i = 0; i < v->sz; i++) {
+        v->data[i] /= s;
+    }
+
+    return 0;
 }
 
 zsl_real_t
