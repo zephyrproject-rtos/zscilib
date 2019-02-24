@@ -23,6 +23,8 @@ For a more comprehensive or accessible treatment on the subject see:
 
 - [Modern Assembly Language Programming with the ARM Processor](https://www.elsevier.com/books/modern-assembly-language-programming-with-the-arm-processor/pyeatt/978-0-12-803698-3),
 Larry D. Pyeatt (Newnes, 2016)
+- [ARM Assembly Language, 2nd Edition](https://www.oreilly.com/library/view/arm-assembly-language/9781482229851/),
+William Hohl (CRC Press, 2016)
 
 ## ARM User Registers
 

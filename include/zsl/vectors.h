@@ -76,21 +76,6 @@ int zsl_vec_init(struct zsl_vec *v);
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
 /**
- * @brief Returns a zsl_vec pointer, containg the contents of array 'a',
- *        adding 'len' elements into the vector. This new vector is stored on
- *        the stack, and should only be used as a temporary object since it
- *        has a limited lifespan.
- *
- * @param a     Pointer to the array containing the values to assign to 'v'.
- *              The array will be read v.sz elements deep.
- * @param len   The number of elements to read in 'a'.
- *
- * @return A pointer to a new temporary vector, or 'NULL' if an error
- *         occured.
- */
-struct zsl_vec* zsl_vec_from_arr_ret(zsl_real_t *a, size_t len);
-
-/**
  * @brief Returns a subset of source vector 'v' as a new zsl_vec. This new
  *        vector is stored on the stack, and should only be used as a
  *        temporary object since it has a limited lifespan.

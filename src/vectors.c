@@ -31,12 +31,6 @@ zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a)
 }
 
 struct zsl_vec*
-zsl_vec_from_arr_ret(zsl_real_t *a, size_t len)
-{
-    return NULL;
-}
-
-struct zsl_vec*
 zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len)
 {
     return NULL;
@@ -301,8 +295,19 @@ zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
 int
 zsl_vec_rev(struct zsl_vec *v)
 {
-    /* Not implemnted error. */
-    return -ENOSYS;
+    zsl_real_t t;
+    size_t start = 0;
+    size_t end = v->sz - 1;
+
+    while (start < end) {
+        t = v->data[start];
+        v->data[start] = v->data[end];
+        v->data[end] = t;
+        start++;
+        end--;
+    }
+
+    return 0;
 }
 
 bool

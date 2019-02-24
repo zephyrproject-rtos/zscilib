@@ -40,11 +40,6 @@ void test_vector_from_arr(void)
     }
 }
 
-void test_vector_from_arr_ret(void)
-{
-
-}
-
 void test_vector_get_subset(void)
 {
 
@@ -236,7 +231,24 @@ void test_vector_mean(void)
 
 void test_vector_rev(void)
 {
+    int rc;
+    ZSL_VECTOR_DEF(v, 7);
 
+    zsl_real_t a[7] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 };
+
+    /* Assign array to vector. */
+    rc = zsl_vec_from_arr(&v, a);
+    zassert_true(rc == 0, "rev:fromarr != 0");
+
+    rc = zsl_vec_rev(&v);
+    zassert_true(rc == 0, "rev:ret != 0");
+    zassert_equal(v.data[0], 6.0, "rev:val[0] != 6.0");
+    zassert_equal(v.data[1], 5.0, "rev:val[0] != 5.0");
+    zassert_equal(v.data[2], 4.0, "rev:val[0] != 4.0");
+    zassert_equal(v.data[3], 3.0, "rev:val[0] != 3.0");
+    zassert_equal(v.data[4], 2.0, "rev:val[0] != 2.0");
+    zassert_equal(v.data[5], 1.0, "rev:val[0] != 1.0");
+    zassert_equal(v.data[6], 0.0, "rev:val[0] != 0.0");
 }
 
 /**
