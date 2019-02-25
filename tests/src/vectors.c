@@ -45,57 +45,55 @@ void test_vector_get_subset(void)
     int rc;
 
     ZSL_VECTOR_DEF(vsrc, 10);
-    ZSL_VECTOR_DEF(vcp1, 6);
-    ZSL_VECTOR_DEF(vcp2, 4);
+    ZSL_VECTOR_DEF(vcp, 6);
 
     zsl_real_t a[10] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
 
     /* Initialise the vectors. */
-    zsl_vec_init(&vcp1);
-    zsl_vec_init(&vcp2);
+    zsl_vec_init(&vcp);
 
     /* Populate the source vector. */
     rc = zsl_vec_from_arr(&vsrc, a);
     zassert_true(rc == 0, "");
 
     /* Get a valid subset (no range issues). */
-    rc = zsl_vec_get_subset(&vsrc, 3, 6, &vcp1);
+    rc = zsl_vec_get_subset(&vsrc, 3, 6, &vcp);
     zassert_true(rc == 0, "");
-    zassert_equal(vcp1.sz, 6, "");
-    zassert_equal(vcp1.data[0], a[3], "");
-    zassert_equal(vcp1.data[1], a[4], "");
-    zassert_equal(vcp1.data[2], a[5], "");
-    zassert_equal(vcp1.data[3], a[6], "");
-    zassert_equal(vcp1.data[4], a[7], "");
-    zassert_equal(vcp1.data[5], a[8], "");
+    zassert_equal(vcp.sz, 6, "");
+    zassert_equal(vcp.data[0], a[3], "");
+    zassert_equal(vcp.data[1], a[4], "");
+    zassert_equal(vcp.data[2], a[5], "");
+    zassert_equal(vcp.data[3], a[6], "");
+    zassert_equal(vcp.data[4], a[7], "");
+    zassert_equal(vcp.data[5], a[8], "");
 
-    /* vcp1->sz resize test (sz should truncate from 6 to 3). */
-    zsl_vec_init(&vcp1);
-    rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp1);
+    /* vcp->sz resize test (sz should truncate from 6 to 3). */
+    zsl_vec_init(&vcp);
+    rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp);
     zassert_true(rc == 0, "");
-    zassert_equal(vcp1.sz, 3, "");
-    zassert_equal(vcp1.data[0], a[3], "");
-    zassert_equal(vcp1.data[1], a[4], "");
-    zassert_equal(vcp1.data[2], a[5], "");
+    zassert_equal(vcp.sz, 3, "");
+    zassert_equal(vcp.data[0], a[3], "");
+    zassert_equal(vcp.data[1], a[4], "");
+    zassert_equal(vcp.data[2], a[5], "");
 
     /* Check for len overrun truncate (sz should truncate to 1). */
-    vcp1.sz = 6;
-    zsl_vec_init(&vcp1);
-    rc = zsl_vec_get_subset(&vsrc, 9, 3, &vcp1);
+    vcp.sz = 6;
+    zsl_vec_init(&vcp);
+    rc = zsl_vec_get_subset(&vsrc, 9, 3, &vcp);
     zassert_true(rc == 0, "");
-    zassert_equal(vcp1.sz, 1, "");
-    zassert_equal(vcp1.data[0], a[9], "");
+    zassert_equal(vcp.sz, 1, "");
+    zassert_equal(vcp.data[0], a[9], "");
 
     /* Check to out of range error. */
-    vcp1.sz = 6;
-    zsl_vec_init(&vcp1);
-    rc = zsl_vec_get_subset(&vsrc, 10, 3, &vcp1);
+    vcp.sz = 6;
+    zsl_vec_init(&vcp);
+    rc = zsl_vec_get_subset(&vsrc, 10, 3, &vcp);
     zassert_true(rc == -EINVAL, "");
 
     /* Check buffer too small error (needs 3 elements, has 2). */
-    vcp1.sz = 2;
-    zsl_vec_init(&vcp1);
-    rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp1);
+    vcp.sz = 2;
+    zsl_vec_init(&vcp);
+    rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp);
     zassert_true(rc == -EINVAL, "");
 }
 
@@ -263,11 +261,6 @@ void test_vector_to_unit(void)
 
 }
 
-/**
- * @brief zsl_vec_cross unit tests.
- *
- * This test verifies the zsl_vec_cross function.
- */
 void test_vector_cross(void)
 {
 

@@ -304,19 +304,38 @@ int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
  */
 int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
+int zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor);
+int zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c);
+int zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a);
+int zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d);
+int zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d);
 int zsl_mtx_inv(struct zsl_mtx *m);
+int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
-int zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x); /** Get the min value in the matrix. */
-int zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x); /** Get the max value in the matrix. */
+/**
+ * @brief Traverses the matrix elements to find the minimum element value.
+ *
+ * @param m     Pointer to the zsl_mtz to traverse.
+ * @param x     The minimum element value found in matrix 'm'.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x);
+
+/**
+ * @brief Traverses the matrix elements to find the maximum element value.
+ *
+ * @param m     Pointer to the zsl_mtz to traverse.
+ * @param x     The maximum element value found in matrix 'm'.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x);
+
 int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the min value index in the matrix. */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the max value index in the matrix. */
-
-zsl_real_t zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j);
-zsl_real_t zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j);
-zsl_real_t zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j);
-zsl_real_t zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j);
-
-int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);

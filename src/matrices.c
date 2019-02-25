@@ -311,3 +311,95 @@ zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb)
 
     return 0;
 }
+
+
+
+int
+zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    return 0;
+}
+
+
+int
+zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    return 0;
+}
+
+int
+zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    return 0;
+}
+
+int
+zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    /* Single row/col variant. */
+    return 0;
+}
+
+int
+zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    /* Recurvie variant. */
+    return 0;
+}
+
+int
+zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x)
+{
+    zsl_real_t min = m->data[0];
+
+    for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
+        if (m->data[i] < min) {
+            min = m->data[i];
+        }
+    }
+
+    *x = min;
+
+    return 0;
+}
+
+int
+zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x)
+{
+    zsl_real_t max = m->data[0];
+
+    for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
+        if (m->data[i] > max) {
+            max = m->data[i];
+        }
+    }
+
+    *x = max;
+
+    return 0;
+}

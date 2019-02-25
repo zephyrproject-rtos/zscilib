@@ -403,6 +403,58 @@ void test_matrix_inv(void)
 
 }
 
+void test_matrix_min(void)
+{
+    int rc = 0;
+    zsl_real_t min;
+
+    ZSL_MATRIX_DEF(mt, 2, 4);
+
+    /* Input matrix. */
+    zsl_real_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&mt, NULL);
+    zassert_equal(rc, 0, "min:init == ERR");
+
+    rc = zsl_mtx_min(&m, &min);
+    zassert_equal(rc, 0, "min:get == ERR");
+    zassert_equal(min, 1.0, "min:res != 1.0");
+}
+
+void test_matrix_max(void)
+{
+    int rc = 0;
+    zsl_real_t max;
+
+    ZSL_MATRIX_DEF(mt, 2, 4);
+
+    /* Input matrix. */
+    zsl_real_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&mt, NULL);
+    zassert_equal(rc, 0, "max:init == ERR");
+
+    rc = zsl_mtx_max(&m, &max);
+    zassert_equal(rc, 0, "max:get == ERR");
+    zassert_equal(max, 4.0, "max:res != 4.0");
+}
+
 void test_matrix_is_equal(void)
 {
 
