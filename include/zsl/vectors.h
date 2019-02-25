@@ -76,19 +76,19 @@ int zsl_vec_init(struct zsl_vec *v);
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
 /**
- * @brief Returns a subset of source vector 'v' as a new zsl_vec. This new
- *        vector is stored on the stack, and should only be used as a
- *        temporary object since it has a limited lifespan.
+ * @brief Returns a subset of source vector 'v' in 'vsub'..
  *
  * @param v         The parent vector to read a subset of.
  * @param offset    The starting index (zero-based) foor the data subset.
  * @param len       The number of values to read, starting at offset.
+ * @param vsub      The subset vector, which must have a buffer of at least
+ *                  size 'len'. If the data buffer isn't sufficiently large,
+ *                  this function will return -EINVAL.
  *
- * @return A pointer to a new temporary vector, or 'NULL' if an error
- *         occured.
+ * @return 0 on success, -EINVAL on a size of index error.
  */
-struct zsl_vec* zsl_vec_get_subset(
-    struct zsl_vec *v, size_t offset, size_t len);
+int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
+    struct zsl_vec* vsub);
 
 /**
  * @brief Adds corresponding vector elements in 'v' and 'w', saving to 'x'.

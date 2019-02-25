@@ -30,10 +30,33 @@ zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a)
     return 0;
 }
 
-struct zsl_vec*
-zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len)
+int
+zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
+    struct zsl_vec* vsub)
 {
-    return NULL;
+#if CONFIG_ZSL_BOUNDS_CHECKS
+    /* Make sure offset doesn't exceed v->sz. */
+    if (offset >= v->sz) {
+        return -EINVAL;
+    }
+    /* If offset+len exceeds v->sz, truncate len. */
+    if (offset + len >= v->sz) {
+        len = v->sz - offset;
+    }
+    /* Make sure vsub->sz is at least len, otherwise buffer overrun. */
+    if (vsub->sz < len) {
+        return -EINVAL;
+    }
+#endif
+
+    /* Truncate vsub->sz if there is an underrun. */
+    if (vsub->sz > len) {
+        vsub->sz = len;
+    }
+
+    memcpy(vsub->data, &v->data[offset], len * sizeof(zsl_real_t));
+
+    return 0;
 }
 
 int
