@@ -513,5 +513,67 @@ void test_matrix_max_idx(void)
 
 void test_matrix_is_equal(void)
 {
+    int rc = 0;
+    bool res;
 
+    zsl_real_t data_a[8] = { 2.0, 3.0,
+                             1.0, 4.0,
+                             4.0, 3.0,
+                             3.0, 4.0 };
+    struct zsl_mtx ma = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data_a
+    };
+
+    zsl_real_t data_b[8] = { 2.0, 3.0,
+                             1.0, 4.0,
+                             4.0, 3.0,
+                             3.0, 4.0 };
+    struct zsl_mtx mb = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data_b
+    };
+
+    rc = zsl_mtx_init(&ma, NULL);
+    zassert_equal(rc, 0, "iseq:inita == ERR");
+    rc = zsl_mtx_init(&mb, NULL);
+    zassert_equal(rc, 0, "iseq:initb == ERR");
+
+    /* Perform a test of equal elements. */
+    res = zsl_mtx_is_equal(&ma, &mb);
+    zassert_equal(res, true, "iseq:reseq == false");
+
+    /* Perform a test of unequal elements. */
+    zsl_mtx_set(&mb, 1, 1, 0.5);
+    res = zsl_mtx_is_equal(&ma, &mb);
+    zassert_equal(res, false, "iseq:reseq == true");
+}
+
+void test_matrix_is_notneg(void)
+{
+    int rc = 0;
+    bool res;
+
+    /* Input matrix. */
+    zsl_real_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&m, NULL);
+    zassert_equal(rc, 0, "notneg:init == ERR");
+
+    res = zsl_mtx_is_notneg(&m);
+    zassert_equal(res, true, "notneg:postest == false");
+
+    zsl_mtx_set(&m, 1, 1, -0.01);
+    res = zsl_mtx_is_notneg(&m);
+    zassert_equal(res, false, "notneg:negest == true");
 }

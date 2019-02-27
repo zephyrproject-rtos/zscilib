@@ -26,6 +26,7 @@ extern void test_matrix_max(void);
 extern void test_matrix_min_idx(void);
 extern void test_matrix_max_idx(void);
 extern void test_matrix_is_equal(void);
+extern void test_matrix_is_notneg(void);
 
 extern void test_vector_from_arr(void);
 extern void test_vector_get_subset(void);
@@ -70,6 +71,7 @@ void test_main(void)
         ztest_unit_test(test_matrix_min_idx),
         ztest_unit_test(test_matrix_max_idx),
         ztest_unit_test(test_matrix_is_equal),
+        ztest_unit_test(test_matrix_is_notneg),
 
         ztest_unit_test(test_vector_from_arr),
         ztest_unit_test(test_vector_get_subset),

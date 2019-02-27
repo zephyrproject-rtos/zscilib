@@ -334,10 +334,57 @@ int zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x);
  */
 int zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x);
 
+/**
+ * @brief Traverses the matrix elements to find the (i,j) index of the minimum
+ *        element value. If multiple identical minimum values are founds,
+ *        the (i, j) index values returned will refer to the first element.
+ *
+ * @param m     Pointer to the zsl_mtz to traverse.
+ * @param i     Pointer to the row index of the minimum element value found
+ *              in matrix 'm'.
+ * @param j     Pointer to the column index of the minimum element value
+ *              found in matrix 'm'.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j);
+
+/**
+ * @brief Traverses the matrix elements to find the (i,j) index of the maximum
+ *        element value. If multiple identical maximum values are founds,
+ *        the (i, j) index values returned will refer to the first element.
+ *
+ * @param m     Pointer to the zsl_mtz to traverse.
+ * @param i     Pointer to the row index of the maximum element value found
+ *              in matrix 'm'.
+ * @param j     Pointer to the column index of the maximum element value
+ *              found in matrix 'm'.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
 
+/**
+ * @brief Checks if two matrices are identical in shape and content.
+ *
+ * @param ma The first matrix.
+ * @param mb The second matrix.
+ *
+ * @return true if the two matrices have the same shape and values,
+ *         otherwise false.
+ */
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
+
+/**
+ * @brief Checks if all elements in matrix m are >= zero and non-null.
+ *
+ * @param m The matrix to check.
+ *
+ * @return true if the all matrix elements are zero, positive and non-null,
+ *         otherwise false.
+ */
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);

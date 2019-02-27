@@ -470,3 +470,31 @@ zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j)
 
     return 0;
 }
+
+bool
+zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+    int res;
+
+    /* Make sure shape is the same. */
+    if ((ma->sz_rows != mb->sz_rows) || (ma->sz_cols != mb->sz_cols)) {
+        return false;
+    }
+
+    res = memcmp(ma->data, mb->data,
+        sizeof(zsl_real_t) * (ma->sz_rows + ma->sz_cols));
+
+    return res == 0 ? true : false;
+}
+
+bool
+zsl_mtx_is_notneg(struct zsl_mtx *m)
+{
+    for (size_t i = 0; i < m->sz_rows * m->sz_cols; i++) {
+        if (m->data[i] < 0.0) {
+            return false;
+        }
+    }
+
+    return true;
+}
