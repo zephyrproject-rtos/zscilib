@@ -307,8 +307,10 @@ int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
 int zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor);
 int zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c);
 int zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a);
-int zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d);
-int zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d);
+
+int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
+int zsl_mtx_deter_nxn(struct zsl_mtx *m, zsl_real_t *d);
+
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 

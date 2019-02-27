@@ -349,12 +349,38 @@ zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a)
 }
 
 int
-zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d)
+zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 {
     /* Make sure this is a square matrix. */
     if (m->sz_rows != m->sz_cols) {
         return -EINVAL;
     }
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+    /* Make sure this is a 3x3 matrix. */
+    if (m->sz_rows != 3) {
+        return -EINVAL;
+    }
+#endif
+
+    /* Single row/col variant. */
+    return -ENOSYS; /* Not yet implemented! */
+}
+
+int
+zsl_mtx_deter_nxn(struct zsl_mtx *m, zsl_real_t *d)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+    /* Shortcut to 3x3 if this is already the right size. */
+    if (m->sz_rows == 3) {
+        return zsl_mtx_deter(m, d);
+    }
+
+    /* TODO: Recursive calls to reduce to 3x3 matrices. */
 
     /* Single row/col variant. */
     return -ENOSYS; /* Not yet implemented! */

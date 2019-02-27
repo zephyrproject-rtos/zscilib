@@ -100,10 +100,13 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Get/set row/column vector
 - Min/max value or index
 - Minor
-- Determinant
 - Cofactor
 - Adjoint
+- Determinant (3x3 and nxn)
+- Gaussian elimination
 - Eigenvalues and eigenvectors
+- Equality check
+- Not negative check
 
 ## Planned Features
 
