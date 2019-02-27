@@ -23,6 +23,8 @@ extern void test_matrix_trans(void);
 extern void test_matrix_inv(void);
 extern void test_matrix_min(void);
 extern void test_matrix_max(void);
+extern void test_matrix_min_idx(void);
+extern void test_matrix_max_idx(void);
 extern void test_matrix_is_equal(void);
 
 extern void test_vector_from_arr(void);
@@ -65,6 +67,8 @@ void test_main(void)
         ztest_unit_test(test_matrix_inv),
         ztest_unit_test(test_matrix_min),
         ztest_unit_test(test_matrix_max),
+        ztest_unit_test(test_matrix_min_idx),
+        ztest_unit_test(test_matrix_max_idx),
         ztest_unit_test(test_matrix_is_equal),
 
         ztest_unit_test(test_vector_from_arr),

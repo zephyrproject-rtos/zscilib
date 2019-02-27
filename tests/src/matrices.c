@@ -455,6 +455,62 @@ void test_matrix_max(void)
     zassert_equal(max, 4.0, "max:res != 4.0");
 }
 
+void test_matrix_min_idx(void)
+{
+    int rc = 0;
+    size_t min_i;
+    size_t min_j;
+
+    ZSL_MATRIX_DEF(mt, 2, 4);
+
+    /* Input matrix. */
+    zsl_real_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&mt, NULL);
+    zassert_equal(rc, 0, "minidx:init == ERR");
+
+    rc = zsl_mtx_min_idx(&m, &min_i, &min_j);
+    zassert_equal(rc, 0, "minidx:get == ERR");
+    zassert_equal(min_i, 1, "minidx:resi != 1");
+    zassert_equal(min_j, 0, "minidx:resj != 0");
+}
+
+void test_matrix_max_idx(void)
+{
+    int rc = 0;
+    size_t max_i;
+    size_t max_j;
+
+    ZSL_MATRIX_DEF(mt, 2, 4);
+
+    /* Input matrix. */
+    zsl_real_t data[8] = { 2.0, 3.0,
+                           1.0, 4.0,
+                           4.0, 3.0,
+                           3.0, 4.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 4,
+        .sz_cols = 2,
+        .data = data
+    };
+
+    rc = zsl_mtx_init(&mt, NULL);
+    zassert_equal(rc, 0, "maxidx:init == ERR");
+
+    rc = zsl_mtx_max_idx(&m, &max_i, &max_j);
+    zassert_equal(rc, 0, "maxidx:get == ERR");
+    zassert_equal(max_i, 1, "maxidx:resi != 1");
+    zassert_equal(max_j, 1, "maxidx:resj != 1");
+}
+
 void test_matrix_is_equal(void)
 {
 

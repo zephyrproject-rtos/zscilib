@@ -309,7 +309,7 @@ int zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c);
 int zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a);
 int zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d);
 int zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d);
-int zsl_mtx_inv(struct zsl_mtx *m);
+int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
 /**
@@ -334,8 +334,8 @@ int zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x);
  */
 int zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x);
 
-int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the min value index in the matrix. */
-int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j); /** Get the max value index in the matrix. */
+int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j);
+int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
 
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);

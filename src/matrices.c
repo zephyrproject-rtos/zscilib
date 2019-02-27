@@ -322,7 +322,7 @@ zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor)
         return -EINVAL;
     }
 
-    return 0;
+    return -ENOSYS; /* Not yet implemented! */
 }
 
 
@@ -334,7 +334,7 @@ zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c)
         return -EINVAL;
     }
 
-    return 0;
+    return -ENOSYS; /* Not yet implemented! */
 }
 
 int
@@ -345,7 +345,7 @@ zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a)
         return -EINVAL;
     }
 
-    return 0;
+    return -ENOSYS; /* Not yet implemented! */
 }
 
 int
@@ -357,7 +357,7 @@ zsl_mtx_deter(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *d)
     }
 
     /* Single row/col variant. */
-    return 0;
+    return -ENOSYS; /* Not yet implemented! */
 }
 
 int
@@ -369,7 +369,34 @@ zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d)
     }
 
     /* Recurvie variant. */
-    return 0;
+    return -ENOSYS; /* Not yet implemented! */
+}
+
+int
+zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
+{
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+    /* Make sure 'm' and 'mi' have the same shape. */
+    if (m->sz_rows != mi->sz_rows) {
+        return -EINVAL;
+    }
+    if (m->sz_cols != mi->sz_cols) {
+        return -EINVAL;
+    }
+#endif
+
+    return -ENOSYS; /* Not yet implemented! */
+}
+
+int
+zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec)
+{
+    return -ENOSYS; /* Not yet implemented! */
 }
 
 int
@@ -400,6 +427,46 @@ zsl_mtx_max(struct zsl_mtx *m, zsl_real_t *x)
     }
 
     *x = max;
+
+    return 0;
+}
+
+int
+zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j)
+{
+    zsl_real_t min = m->data[0];
+    *i = 0;
+    *j = 0;
+
+    for (size_t _i = 0; _i < m->sz_rows; _i++) {
+        for (size_t _j = 0; _j < m->sz_cols; _j++) {
+            if (m->data[_i * m->sz_cols + _j] < min) {
+                min = m->data[_i * m->sz_cols + _j];
+                *i = _i;
+                *j = _j;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int
+zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j)
+{
+    zsl_real_t max = m->data[0];
+    *i = 0;
+    *j = 0;
+
+    for (size_t _i = 0; _i < m->sz_rows; _i++) {
+        for (size_t _j = 0; _j < m->sz_cols; _j++) {
+            if (m->data[_i * m->sz_cols + _j] > max) {
+                max = m->data[_i * m->sz_cols + _j];
+                *i = _i;
+                *j = _j;
+            }
+        }
+    }
 
     return 0;
 }
