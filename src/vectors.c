@@ -180,7 +180,15 @@ zsl_real_t
 zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 {
     int rc = 0;
-    ZSL_VECTOR_STATIC_INIT(x, v->sz);
+
+    zsl_real_t xdat[v->sz];
+
+    struct zsl_vec x = {
+        .sz = v->sz,
+        .data = xdat
+    };
+
+    memset(xdat, 0, x.sz * sizeof(zsl_real_t));
 
     rc = zsl_vec_sub(v, w, &x);
     if (rc) {

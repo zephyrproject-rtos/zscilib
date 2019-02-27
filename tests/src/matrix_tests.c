@@ -140,10 +140,6 @@ void test_matrix_set(void)
     zsl_real_t x;
     ZSL_MATRIX_STATIC_INIT(m, 3, 3);
 
-    /* Initialise the matrix with the default (empty) entry_fn. */
-    rc = zsl_mtx_init(&m, NULL);
-    zassert_equal(rc, 0, "set:mtx:init == ERR");
-
     /* Set values in matrix m. */
     rc = zsl_mtx_set(&m, 0, 0, 1.0);
     zassert_equal(rc, 0, "set:mtx[0][0] == ERR");
@@ -241,10 +237,6 @@ void test_matrix_mult_sq(void)
         .data = data_ref
     };
 
-    /* Initialise the output matrix. */
-    rc = zsl_mtx_init(&mc, NULL);
-    zassert_equal(rc, 0, "mult:initc == ERR");
-
     /* Perform a valid 3x3 square matrix multiplication. */
     rc = zsl_mtx_mult(&ma, &mb, &mc);
     zassert_equal(rc, 0, "mult:exec == ERR");
@@ -296,7 +288,7 @@ void test_matrix_mult_rect(void)
                                 18.0, 16.0, 14.0,
                                 17.0, 19.0, 14.0 };
     struct zsl_mtx mref = {
-        .sz_rows = 3,
+        .sz_rows = 4,
         .sz_cols = 3,
         .data = data_ref
     };
@@ -304,10 +296,6 @@ void test_matrix_mult_rect(void)
     /* Attempt an invalid 4x2 x 5x3 matrix multiplication. */
     rc = zsl_mtx_mult(&merr, &mb, &mc);
     zassert_equal(rc, -EINVAL, "multr:badshape != ERR");
-
-    /* Initialise the output matrix. */
-    rc = zsl_mtx_init(&mc, NULL);
-    zassert_equal(rc, 0, "multr:initc == ERR");
 
     /* Perform a valid 3x3 square matrix multiplication. */
     rc = zsl_mtx_mult(&ma, &mb, &mc);
@@ -381,9 +369,6 @@ void test_matrix_trans(void)
         .data = data
     };
 
-    rc = zsl_mtx_init(&mt, NULL);
-    zassert_equal(rc, 0, "trans:initmt == ERR");
-
     rc = zsl_mtx_trans(&m, &mt);
     zassert_equal(rc, 0, "trans:exec == ERR");
     zassert_equal(mt.sz_cols, m.sz_rows, "trans:shapecol:err");
@@ -408,8 +393,6 @@ void test_matrix_min(void)
     int rc = 0;
     zsl_real_t min;
 
-    ZSL_MATRIX_STATIC_INIT(mt, 2, 4);
-
     /* Input matrix. */
     zsl_real_t data[8] = { 2.0, 3.0,
                            1.0, 4.0,
@@ -420,9 +403,6 @@ void test_matrix_min(void)
         .sz_cols = 2,
         .data = data
     };
-
-    rc = zsl_mtx_init(&mt, NULL);
-    zassert_equal(rc, 0, "min:init == ERR");
 
     rc = zsl_mtx_min(&m, &min);
     zassert_equal(rc, 0, "min:get == ERR");
@@ -434,8 +414,6 @@ void test_matrix_max(void)
     int rc = 0;
     zsl_real_t max;
 
-    ZSL_MATRIX_STATIC_INIT(mt, 2, 4);
-
     /* Input matrix. */
     zsl_real_t data[8] = { 2.0, 3.0,
                            1.0, 4.0,
@@ -446,9 +424,6 @@ void test_matrix_max(void)
         .sz_cols = 2,
         .data = data
     };
-
-    rc = zsl_mtx_init(&mt, NULL);
-    zassert_equal(rc, 0, "max:init == ERR");
 
     rc = zsl_mtx_max(&m, &max);
     zassert_equal(rc, 0, "max:get == ERR");
@@ -461,8 +436,6 @@ void test_matrix_min_idx(void)
     size_t min_i;
     size_t min_j;
 
-    ZSL_MATRIX_STATIC_INIT(mt, 2, 4);
-
     /* Input matrix. */
     zsl_real_t data[8] = { 2.0, 3.0,
                            1.0, 4.0,
@@ -473,9 +446,6 @@ void test_matrix_min_idx(void)
         .sz_cols = 2,
         .data = data
     };
-
-    rc = zsl_mtx_init(&mt, NULL);
-    zassert_equal(rc, 0, "minidx:init == ERR");
 
     rc = zsl_mtx_min_idx(&m, &min_i, &min_j);
     zassert_equal(rc, 0, "minidx:get == ERR");
@@ -489,7 +459,6 @@ void test_matrix_max_idx(void)
     size_t max_i;
     size_t max_j;
 
-    ZSL_MATRIX_STATIC_INIT(mt, 2, 4);
 
     /* Input matrix. */
     zsl_real_t data[8] = { 2.0, 3.0,
@@ -502,9 +471,6 @@ void test_matrix_max_idx(void)
         .data = data
     };
 
-    rc = zsl_mtx_init(&mt, NULL);
-    zassert_equal(rc, 0, "maxidx:init == ERR");
-
     rc = zsl_mtx_max_idx(&m, &max_i, &max_j);
     zassert_equal(rc, 0, "maxidx:get == ERR");
     zassert_equal(max_i, 1, "maxidx:resi != 1");
@@ -513,7 +479,6 @@ void test_matrix_max_idx(void)
 
 void test_matrix_is_equal(void)
 {
-    int rc = 0;
     bool res;
 
     zsl_real_t data_a[8] = { 2.0, 3.0,
@@ -536,11 +501,6 @@ void test_matrix_is_equal(void)
         .data = data_b
     };
 
-    rc = zsl_mtx_init(&ma, NULL);
-    zassert_equal(rc, 0, "iseq:inita == ERR");
-    rc = zsl_mtx_init(&mb, NULL);
-    zassert_equal(rc, 0, "iseq:initb == ERR");
-
     /* Perform a test of equal elements. */
     res = zsl_mtx_is_equal(&ma, &mb);
     zassert_equal(res, true, "iseq:reseq == false");
@@ -553,7 +513,6 @@ void test_matrix_is_equal(void)
 
 void test_matrix_is_notneg(void)
 {
-    int rc = 0;
     bool res;
 
     /* Input matrix. */
@@ -566,9 +525,6 @@ void test_matrix_is_notneg(void)
         .sz_cols = 2,
         .data = data
     };
-
-    rc = zsl_mtx_init(&m, NULL);
-    zassert_equal(rc, 0, "notneg:init == ERR");
 
     res = zsl_mtx_is_notneg(&m);
     zassert_equal(res, true, "notneg:postest == false");

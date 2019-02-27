@@ -25,10 +25,6 @@ void test_vector_from_arr(void)
     /* Test array. */
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
 
-    /* Initialise the vector. */
-    rc = zsl_vec_init(&v);
-    zassert_true(rc == 0, "from_arr:vec_init != 0");
-
     /* Assign the array a to vector v. */
     rc = zsl_vec_from_arr(&v, a);
     zassert_true(rc == 0, "from_arr:ret != 0");
@@ -48,9 +44,6 @@ void test_vector_get_subset(void)
     ZSL_VECTOR_STATIC_INIT(vcp, 6);
 
     zsl_real_t a[10] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
-
-    /* Initialise the vectors. */
-    zsl_vec_init(&vcp);
 
     /* Populate the source vector. */
     rc = zsl_vec_from_arr(&vsrc, a);
@@ -109,11 +102,6 @@ void test_vector_add(void)
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
     zsl_real_t c[3] = {-1.0, 1.5, 2.1 };
 
-    /* Initialise the vectors. */
-    zsl_vec_init(&va);
-    zsl_vec_init(&vb);
-    zsl_vec_init(&vc);
-
     /* Assign arrays to vectors. */
     rc = zsl_vec_from_arr(&va, a);
     zassert_true(rc == 0, "");
@@ -140,11 +128,6 @@ void test_vector_sub(void)
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
     zsl_real_t c[3] = { 1.0, 0.5, 1.9 };
 
-    /* Initialise the vectors. */
-    zsl_vec_init(&va);
-    zsl_vec_init(&vb);
-    zsl_vec_init(&vc);
-
     /* Assign arrays to vectors. */
     rc = zsl_vec_from_arr(&va, a);
     zassert_true(rc == 0, "");
@@ -168,9 +151,6 @@ void test_vector_neg(void)
     zsl_real_t a[3] = {  0.0,  1.0,  2.0 };
     zsl_real_t b[3] = { -0.0, -1.0, -2.0 };
 
-    /* Initialise the vectors. */
-    zsl_vec_init(&v);
-
     /* Assign array to vector. */
     rc = zsl_vec_from_arr(&v, a);
     zassert_true(rc == 0, "");
@@ -193,12 +173,6 @@ void test_vector_sum(void)
     ZSL_VECTOR_STATIC_INIT(vsum, 3);
 
     struct zsl_vec *vlist[3] = { &va, &vb, &vc };
-
-    /* Initialise the vectors. */
-    zsl_vec_init(&va);
-    zsl_vec_init(&vb);
-    zsl_vec_init(&vc);
-    zsl_vec_init(&vsum);
 
     /* Assign values to vectors. */
     va.data[0] = 1.0;
@@ -315,14 +289,6 @@ void test_vector_is_equal(void)
     /* Test arrays. */
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
     zsl_real_t b[3] = { 0.0, 1.0, 2.0 };
-
-    /* Initialise the vectors. */
-    rc = zsl_vec_init(&v);
-    zassert_true(rc == 0, "is_equal:initv != 0");
-    rc = zsl_vec_init(&w);
-    zassert_true(rc == 0, "is_equal:initw != 0");
-    rc = zsl_vec_init(&x);
-    zassert_true(rc == 0, "is_equal:initx != 0");
 
     /* Check for unequal size. */
     eq = zsl_vec_is_equal(&v, &x);

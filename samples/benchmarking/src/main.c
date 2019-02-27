@@ -59,11 +59,6 @@ void test_vec_add(void)
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
 
-    /* Initialise the vectors. */
-    zsl_vec_init(&va);
-    zsl_vec_init(&vb);
-    zsl_vec_init(&vc);
-
     /* Assign arrays to vectors. */
     zsl_vec_from_arr(&va, a);
     zsl_vec_from_arr(&vb, b);
