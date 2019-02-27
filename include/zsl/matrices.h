@@ -44,7 +44,7 @@ struct zsl_mtx {
 };
 
 /** Macro to declare a matrix with static memory allocation. */
-#define ZSL_MATRIX_DEF(name, m, n)\
+#define ZSL_MATRIX_STATIC_INIT(name, m, n)\
   zsl_real_t name##_mtx[m*n] = { 0 };\
   struct zsl_mtx name = {\
       .sz_rows      = m,\

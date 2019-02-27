@@ -52,9 +52,9 @@ void test_vec_add(void)
 
     DECLARE_VAR(vector, add)
 
-    ZSL_VECTOR_DEF(va, 3);
-    ZSL_VECTOR_DEF(vb, 3);
-    ZSL_VECTOR_DEF(vc, 3);
+    ZSL_VECTOR_STATIC_INIT(va, 3);
+    ZSL_VECTOR_STATIC_INIT(vb, 3);
+    ZSL_VECTOR_STATIC_INIT(vc, 3);
 
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };

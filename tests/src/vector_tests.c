@@ -20,7 +20,7 @@ void test_vector_from_arr(void)
     zsl_real_t x;
 
     /* Destination vector. */
-    ZSL_VECTOR_DEF(v, 3);
+    ZSL_VECTOR_STATIC_INIT(v, 3);
 
     /* Test array. */
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
@@ -44,8 +44,8 @@ void test_vector_get_subset(void)
 {
     int rc;
 
-    ZSL_VECTOR_DEF(vsrc, 10);
-    ZSL_VECTOR_DEF(vcp, 6);
+    ZSL_VECTOR_STATIC_INIT(vsrc, 10);
+    ZSL_VECTOR_STATIC_INIT(vcp, 6);
 
     zsl_real_t a[10] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
 
@@ -101,9 +101,9 @@ void test_vector_add(void)
 {
     int rc;
 
-    ZSL_VECTOR_DEF(va, 3);
-    ZSL_VECTOR_DEF(vb, 3);
-    ZSL_VECTOR_DEF(vc, 3);
+    ZSL_VECTOR_STATIC_INIT(va, 3);
+    ZSL_VECTOR_STATIC_INIT(vb, 3);
+    ZSL_VECTOR_STATIC_INIT(vc, 3);
 
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
@@ -132,9 +132,9 @@ void test_vector_sub(void)
 {
     int rc;
 
-    ZSL_VECTOR_DEF(va, 3);
-    ZSL_VECTOR_DEF(vb, 3);
-    ZSL_VECTOR_DEF(vc, 3);
+    ZSL_VECTOR_STATIC_INIT(va, 3);
+    ZSL_VECTOR_STATIC_INIT(vb, 3);
+    ZSL_VECTOR_STATIC_INIT(vc, 3);
 
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
     zsl_real_t b[3] = {-1.0, 0.5, 0.1 };
@@ -163,7 +163,7 @@ void test_vector_neg(void)
 {
     int rc;
 
-    ZSL_VECTOR_DEF(v, 3);
+    ZSL_VECTOR_STATIC_INIT(v, 3);
 
     zsl_real_t a[3] = {  0.0,  1.0,  2.0 };
     zsl_real_t b[3] = { -0.0, -1.0, -2.0 };
@@ -187,10 +187,10 @@ void test_vector_sum(void)
 {
     int rc;
 
-    ZSL_VECTOR_DEF(va, 3);
-    ZSL_VECTOR_DEF(vb, 3);
-    ZSL_VECTOR_DEF(vc, 3);
-    ZSL_VECTOR_DEF(vsum, 3);
+    ZSL_VECTOR_STATIC_INIT(va, 3);
+    ZSL_VECTOR_STATIC_INIT(vb, 3);
+    ZSL_VECTOR_STATIC_INIT(vc, 3);
+    ZSL_VECTOR_STATIC_INIT(vsum, 3);
 
     struct zsl_vec *vlist[3] = { &va, &vb, &vc };
 
@@ -279,7 +279,7 @@ void test_vector_mean(void)
 void test_vector_rev(void)
 {
     int rc;
-    ZSL_VECTOR_DEF(v, 7);
+    ZSL_VECTOR_STATIC_INIT(v, 7);
 
     zsl_real_t a[7] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 };
 
@@ -308,9 +308,9 @@ void test_vector_is_equal(void)
     int rc;
     bool eq;
 
-    ZSL_VECTOR_DEF(v, 3);
-    ZSL_VECTOR_DEF(w, 3);
-    ZSL_VECTOR_DEF(x, 2);
+    ZSL_VECTOR_STATIC_INIT(v, 3);
+    ZSL_VECTOR_STATIC_INIT(w, 3);
+    ZSL_VECTOR_STATIC_INIT(x, 2);
 
     /* Test arrays. */
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
