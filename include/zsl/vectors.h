@@ -264,6 +264,16 @@ zsl_real_t zsl_vec_sum_of_sqrs(struct zsl_vec *v);
 int zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m);
 
 /**
+ * @brief Computes the arithmetic mean of a vector.
+ *
+ * @param v  The vector to use.
+ * @param m  The arithmetic mean of vector v.
+ *
+ * @return 0 on success, otherwise an appropriate error code.
+ */
+int zsl_vec_ar_mean(struct zsl_vec *v, zsl_real_t *m);
+
+/**
  * @brief Reverses the order of the entries in vector 'v'.
  *
  * @param v The vector to use.

@@ -324,6 +324,24 @@ zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
 }
 
 int
+zsl_vec_ar_mean(struct zsl_vec *v, zsl_real_t *m)
+{
+    /* Avoid divide by zero errors. */
+    if (v->sz < 1) {
+        return -EINVAL;
+    }
+
+    *m = 0.0;
+    for (size_t i = 0; i < v->sz; i++) {
+        *m += v->data[i];
+    }
+
+    *m /= v->sz;
+
+    return 0;
+}
+
+int
 zsl_vec_rev(struct zsl_vec *v)
 {
     zsl_real_t t;

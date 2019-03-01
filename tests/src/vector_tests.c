@@ -250,6 +250,11 @@ void test_vector_mean(void)
 
 }
 
+void test_vector_ar_mean(void)
+{
+
+}
+
 void test_vector_rev(void)
 {
     int rc;
