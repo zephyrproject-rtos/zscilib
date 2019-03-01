@@ -96,15 +96,12 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Multiply
 - Scalar multiply
 - Transpose
-- Invert
+- Adjoint (3x3 and nxn)
+- Determinant (3x3 and nxn)
+- Inverse (3x3 and nxn)
+- Eigenvalues and eigenvectors
 - Get/set row/column vector
 - Min/max value or index
-- Minor
-- Cofactor
-- Adjoint
-- Determinant (3x3 and nxn)
-- Gaussian elimination
-- Eigenvalues and eigenvectors
 - Equality check
 - Not negative check
 

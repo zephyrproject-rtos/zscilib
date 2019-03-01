@@ -312,44 +312,57 @@ zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb)
     return 0;
 }
 
-
-
 int
-zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor)
+zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma)
 {
     /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
+    if ((m->sz_rows != m->sz_cols) || (ma->sz_rows != ma->sz_cols)) {
         return -EINVAL;
+    }
+
+    #if CONFIG_ZSL_BOUNDS_CHECKS
+        /* Make sure this is a 3x3 matrix. */
+        if ((m->sz_rows != 3) || (ma->sz_rows != 3)) {
+            return -EINVAL;
+        }
+    #endif
+
+    /*
+     * 3x3 matrix element to array table:
+     *
+     * 1,1 = 0  1,2 = 1  1,3 = 2
+     * 2,1 = 3  2,2 = 4  2,3 = 5
+     * 3,1 = 6  3,2 = 7  3,3 = 8
+     */
+
+    ma->data[0] = m->data[4] * m->data[8] - m->data[7] * m->data[5];
+    ma->data[1] = m->data[7] * m->data[2] - m->data[1] * m->data[8];
+    ma->data[2] = m->data[1] * m->data[5] - m->data[4] * m->data[2];
+
+    ma->data[3] = m->data[6] * m->data[5] - m->data[3] * m->data[8];
+    ma->data[4] = m->data[0] * m->data[8] - m->data[6] * m->data[2];
+    ma->data[5] = m->data[3] * m->data[2] - m->data[0] * m->data[5];
+
+    ma->data[6] = m->data[3] * m->data[7] - m->data[6] * m->data[4];
+    ma->data[7] = m->data[6] * m->data[1] - m->data[0] * m->data[7];
+    ma->data[8] = m->data[0] * m->data[4] - m->data[3] * m->data[2];
+
+    return 0;
+}
+
+int
+zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
+{
+    /* Currently only 3x3 matrices are supported. */
+    if (m->sz_rows == 3) {
+        return zsl_mtx_adjoint_3x3(m, ma);
     }
 
     return -ENOSYS; /* Not yet implemented! */
 }
 
-
 int
-zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c)
-{
-    /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
-        return -EINVAL;
-    }
-
-    return -ENOSYS; /* Not yet implemented! */
-}
-
-int
-zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a)
-{
-    /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
-        return -EINVAL;
-    }
-
-    return -ENOSYS; /* Not yet implemented! */
-}
-
-int
-zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
+zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d)
 {
     /* Make sure this is a square matrix. */
     if (m->sz_rows != m->sz_cols) {
@@ -363,46 +376,41 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
     }
 #endif
 
-    /* Single row/col variant. */
-    return -ENOSYS; /* Not yet implemented! */
+    /*
+     * 3x3 matrix element to array table:
+     *
+     * 1,1 = 0  1,2 = 1  1,3 = 2
+     * 2,1 = 3  2,2 = 4  2,3 = 5
+     * 3,1 = 6  3,2 = 7  3,3 = 8
+     */
+
+    *d = m->data[0] * (m->data[4] * m->data[8] - m->data[7] * m->data[5]);
+    *d -= m->data[3] * (m->data[1] * m->data[8] - m->data[7] * m->data[2]);
+    *d += m->data[6] * (m->data[1] * m->data[5] - m->data[4] * m->data[2]);
+
+    return 0;
 }
 
 int
-zsl_mtx_deter_nxn(struct zsl_mtx *m, zsl_real_t *d)
+zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 {
-    /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
-        return -EINVAL;
-    }
-
-    /* Shortcut to 3x3 if this is already the right size. */
+    /* Currently only 3x3 matrices are supported. */
     if (m->sz_rows == 3) {
-        return zsl_mtx_deter(m, d);
+        return zsl_mtx_deter_3x3(m, d);
     }
 
-    /* TODO: Recursive calls to reduce to 3x3 matrices. */
-
-    /* Single row/col variant. */
     return -ENOSYS; /* Not yet implemented! */
 }
 
 int
-zsl_mtx_deter_recur(struct zsl_mtx *m, zsl_real_t *d)
+zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi)
 {
-    /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
-        return -EINVAL;
-    }
+    int rc;
+    zsl_real_t d;   /* Determinant. */
+    zsl_real_t s;   /* Scale factor. */
 
-    /* Recurvie variant. */
-    return -ENOSYS; /* Not yet implemented! */
-}
-
-int
-zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
-{
-    /* Make sure this is a square matrix. */
-    if (m->sz_rows != m->sz_cols) {
+    /* Make sure these are square matrices. */
+    if ((m->sz_rows != m->sz_cols) || (mi->sz_rows != mi->sz_cols)) {
         return -EINVAL;
     }
 
@@ -414,7 +422,45 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
     if (m->sz_cols != mi->sz_cols) {
         return -EINVAL;
     }
+    /* Make sure these are 3x3 matrices. */
+    if ((m->sz_cols != 3) || (mi->sz_cols != 3)) {
+        return -EINVAL;
+    }
 #endif
+
+    /* Calculate the determinant. */
+    rc = zsl_mtx_deter_3x3(m, &d);
+    if (rc) {
+        goto err;
+    }
+
+    /* Calculate the adjoint matrix. */
+    rc = zsl_mtx_adjoint_3x3(m, mi);
+    if (rc) {
+        goto err;
+    }
+
+    /* Scale the output using the determinant. */
+    if (d != 0) {
+        s = 1.0 / d;
+        rc = zsl_mtx_scalar_mult(mi, s);
+    } else {
+        /* Avoid divide by zero error! */
+        return -EINVAL;
+    }
+
+    return 0;
+err:
+    return rc;
+}
+
+int
+zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
+{
+    /* Currently only 3x3 matrices are supported. */
+    if (m->sz_rows == 3) {
+        return zsl_mtx_inv_3x3(m, mi);
+    }
 
     return -ENOSYS; /* Not yet implemented! */
 }

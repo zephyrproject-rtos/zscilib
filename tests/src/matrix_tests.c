@@ -383,6 +383,16 @@ void test_matrix_trans(void)
     zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), "trans:valerr:7");
 }
 
+void test_matrix_adj(void)
+{
+
+}
+
+void test_matrix_deter(void)
+{
+
+}
+
 void test_matrix_inv(void)
 {
 

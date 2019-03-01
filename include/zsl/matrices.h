@@ -304,14 +304,72 @@ int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
  */
 int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
-int zsl_mtx_minor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *minor);
-int zsl_mtx_cofactor(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *c);
-int zsl_mtx_adjoint(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *a);
+/**
+ * @brief Calculates the ajoint matrix, based on the input 3x3 matrix 'm'.
+ *
+ * @param m     The input 3x3 matrix to use.
+ * @param a     The output 3x3 matrix the adjoint values will be assigned to.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          3x3 matrix.
+ */
+int zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma);
 
+/**
+ * @brief Calculates the ajoint matrix, based on the input square matrix 'm'.
+ *
+ * @param m     The input square matrix to use.
+ * @param a     The output square matrix the adjoint values will be assigned to.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          square matrix.
+ */
+int zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma);
+
+/**
+ * @brief Calculates the determinant of the input 3x3 matrix 'm'.
+ *
+ * @param m     The input 3x3 matrix to use.
+ * @param d     The determinant of 3x3 matrix m.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          3x3 matrix.
+ */
+int zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d);
+
+/**
+ * @brief Calculates the determinant of the input square matrix 'm'.
+ *
+ * @param m     The input square matrix to use.
+ * @param d     The determinant of square matrix m.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          square matrix.
+ */
 int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
-int zsl_mtx_deter_nxn(struct zsl_mtx *m, zsl_real_t *d);
 
+/**
+ * @brief Calculates the inverse of 3x3 matrix 'm'.
+ *
+ * @param m     The input 3x3 matrix to use.
+ * @param a     The output inverse 3x3 matrix.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          3x3 matrix.
+ */
+int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
+
+/**
+ * @brief Calculates the inverse of square matrix 'm'.
+ *
+ * @param m     The input square matrix to use.
+ * @param a     The output inverse square matrix.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          square matrix.
+ */
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
+
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
 /**

@@ -20,6 +20,8 @@ extern void test_matrix_mult_sq(void);
 extern void test_matrix_mult_rect(void);
 extern void test_matrix_scalar_mult(void);
 extern void test_matrix_trans(void);
+extern void test_matrix_adj(void);
+extern void test_matrix_deter(void);
 extern void test_matrix_inv(void);
 extern void test_matrix_min(void);
 extern void test_matrix_max(void);
@@ -65,6 +67,8 @@ void test_main(void)
         ztest_unit_test(test_matrix_mult_rect),
         ztest_unit_test(test_matrix_scalar_mult),
         ztest_unit_test(test_matrix_trans),
+        ztest_unit_test(test_matrix_adj),
+        ztest_unit_test(test_matrix_deter),
         ztest_unit_test(test_matrix_inv),
         ztest_unit_test(test_matrix_min),
         ztest_unit_test(test_matrix_max),
