@@ -395,7 +395,31 @@ void test_matrix_deter(void)
 
 void test_matrix_inv(void)
 {
+    int rc = 0;
 
+    ZSL_MATRIX_STATIC_INIT(mi, 3, 3);
+
+    /* Input matrix. */
+    zsl_real_t data[9] = {  67.5,  43.0,  31.5,
+                           226.5, 256.5,  94.5,
+                           226.5, 415.0, 302.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data
+    };
+
+    rc = zsl_mtx_inv(&m, &mi);
+    zassert_equal(rc, 0, "inv:exec == ERR");
+    zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6), "inv:valerr:0");
+    zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6), "inv:valerr:1");
+    zassert_true(val_is_equal(mi.data[2], -0.00237440, 1E-6), "inv:valerr:2");
+    zassert_true(val_is_equal(mi.data[3], -0.02778553, 1E-6), "inv:valerr:3");
+    zassert_true(val_is_equal(mi.data[4],  0.00783351, 1E-6), "inv:valerr:4");
+    zassert_true(val_is_equal(mi.data[5],  0.00044695, 1E-6), "inv:valerr:5");
+    zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6), "inv:valerr:6");
+    zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6), "inv:valerr:7");
+    zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), "inv:valerr:8");
 }
 
 void test_matrix_min(void)

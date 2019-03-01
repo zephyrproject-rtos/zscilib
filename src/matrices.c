@@ -285,7 +285,7 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 int
 zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s)
 {
-    for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
+    for (size_t i = 0; i < m->sz_rows * m->sz_cols; i++) {
         m->data[i] *= s;
     }
 
@@ -345,7 +345,7 @@ zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma)
 
     ma->data[6] = m->data[3] * m->data[7] - m->data[6] * m->data[4];
     ma->data[7] = m->data[6] * m->data[1] - m->data[0] * m->data[7];
-    ma->data[8] = m->data[0] * m->data[4] - m->data[3] * m->data[2];
+    ma->data[8] = m->data[0] * m->data[4] - m->data[3] * m->data[1];
 
     return 0;
 }
