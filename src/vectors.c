@@ -270,13 +270,13 @@ zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c)
 #endif
 
     /*
-     * Using column vectors, if ...
+     * Given:
      *
      *       |Cx|      |Vx|      |Wx|
      *   C = |Cy|, V = |Vy|, W = |Wy|
      *       |Cz|      |Vz|      |Wz|
      *
-     * ... then then cross product can be represented as:
+     * The cross product can be represented as:
      *
      *   Cx = VyWz - VzWy
      *   Cy = VzWx - VxWz

@@ -84,7 +84,8 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Dot product
 - Cross product
 - Sum of squares
-- Mean (two or more vectors)
+- Component-wise mean (two or more vectors)
+- Arithmetic mean (single vector)
 - Reverse
 - Equality check
 - Not negative check
