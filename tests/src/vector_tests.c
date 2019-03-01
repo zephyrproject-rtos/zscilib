@@ -27,12 +27,12 @@ void test_vector_from_arr(void)
 
     /* Assign the array a to vector v. */
     rc = zsl_vec_from_arr(&v, a);
-    zassert_true(rc == 0, "from_arr:ret != 0");
+    zassert_true(rc == 0, NULL);
 
     /* Test values. */
     for (size_t i = 0; i < v.sz; i++) {
         x = v.data[i];
-        zassert_true(x == a[i], "from_arr:unexpected val in .data");
+        zassert_true(x == a[i], NULL);
     }
 }
 
@@ -47,47 +47,47 @@ void test_vector_get_subset(void)
 
     /* Populate the source vector. */
     rc = zsl_vec_from_arr(&vsrc, a);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
 
     /* Get a valid subset (no range issues). */
     rc = zsl_vec_get_subset(&vsrc, 3, 6, &vcp);
-    zassert_true(rc == 0, "");
-    zassert_equal(vcp.sz, 6, "");
-    zassert_equal(vcp.data[0], a[3], "");
-    zassert_equal(vcp.data[1], a[4], "");
-    zassert_equal(vcp.data[2], a[5], "");
-    zassert_equal(vcp.data[3], a[6], "");
-    zassert_equal(vcp.data[4], a[7], "");
-    zassert_equal(vcp.data[5], a[8], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(vcp.sz, 6, NULL);
+    zassert_equal(vcp.data[0], a[3], NULL);
+    zassert_equal(vcp.data[1], a[4], NULL);
+    zassert_equal(vcp.data[2], a[5], NULL);
+    zassert_equal(vcp.data[3], a[6], NULL);
+    zassert_equal(vcp.data[4], a[7], NULL);
+    zassert_equal(vcp.data[5], a[8], NULL);
 
     /* vcp->sz resize test (sz should truncate from 6 to 3). */
     zsl_vec_init(&vcp);
     rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp);
-    zassert_true(rc == 0, "");
-    zassert_equal(vcp.sz, 3, "");
-    zassert_equal(vcp.data[0], a[3], "");
-    zassert_equal(vcp.data[1], a[4], "");
-    zassert_equal(vcp.data[2], a[5], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(vcp.sz, 3, NULL);
+    zassert_equal(vcp.data[0], a[3], NULL);
+    zassert_equal(vcp.data[1], a[4], NULL);
+    zassert_equal(vcp.data[2], a[5], NULL);
 
     /* Check for len overrun truncate (sz should truncate to 1). */
     vcp.sz = 6;
     zsl_vec_init(&vcp);
     rc = zsl_vec_get_subset(&vsrc, 9, 3, &vcp);
-    zassert_true(rc == 0, "");
-    zassert_equal(vcp.sz, 1, "");
-    zassert_equal(vcp.data[0], a[9], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(vcp.sz, 1, NULL);
+    zassert_equal(vcp.data[0], a[9], NULL);
 
     /* Check to out of range error. */
     vcp.sz = 6;
     zsl_vec_init(&vcp);
     rc = zsl_vec_get_subset(&vsrc, 10, 3, &vcp);
-    zassert_true(rc == -EINVAL, "");
+    zassert_true(rc == -EINVAL, NULL);
 
     /* Check buffer too small error (needs 3 elements, has 2). */
     vcp.sz = 2;
     zsl_vec_init(&vcp);
     rc = zsl_vec_get_subset(&vsrc, 3, 3, &vcp);
-    zassert_true(rc == -EINVAL, "");
+    zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_vector_add(void)
@@ -104,16 +104,16 @@ void test_vector_add(void)
 
     /* Assign arrays to vectors. */
     rc = zsl_vec_from_arr(&va, a);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
     rc = zsl_vec_from_arr(&vb, b);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
 
     /* Perform the add operation. */
     rc = zsl_vec_add(&va, &vb, &vc);
-    zassert_true(rc == 0, "");
-    zassert_equal(vc.data[0], c[0], "");
-    zassert_equal(vc.data[1], c[1], "");
-    zassert_equal(vc.data[2], c[2], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(vc.data[0], c[0], NULL);
+    zassert_equal(vc.data[1], c[1], NULL);
+    zassert_equal(vc.data[2], c[2], NULL);
 }
 
 void test_vector_sub(void)
@@ -130,16 +130,16 @@ void test_vector_sub(void)
 
     /* Assign arrays to vectors. */
     rc = zsl_vec_from_arr(&va, a);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
     rc = zsl_vec_from_arr(&vb, b);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
 
     /* Perform the add operation. */
     rc = zsl_vec_sub(&va, &vb, &vc);
-    zassert_true(rc == 0, "");
-    zassert_equal(vc.data[0], c[0], "");
-    zassert_equal(vc.data[1], c[1], "");
-    zassert_equal(vc.data[2], c[2], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(vc.data[0], c[0], NULL);
+    zassert_equal(vc.data[1], c[1], NULL);
+    zassert_equal(vc.data[2], c[2], NULL);
 }
 
 void test_vector_neg(void)
@@ -153,14 +153,14 @@ void test_vector_neg(void)
 
     /* Assign array to vector. */
     rc = zsl_vec_from_arr(&v, a);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
 
     /* Perform the add operation. */
     rc = zsl_vec_neg(&v);
-    zassert_true(rc == 0, "");
-    zassert_equal(v.data[0], b[0], "");
-    zassert_equal(v.data[1], b[1], "");
-    zassert_equal(v.data[2], b[2], "");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(v.data[0], b[0], NULL);
+    zassert_equal(v.data[1], b[1], NULL);
+    zassert_equal(v.data[2], b[2], NULL);
 }
 
 void test_vector_sum(void)
@@ -187,11 +187,11 @@ void test_vector_sum(void)
 
     /* Perform sum operation on va..vc. */
     rc = zsl_vec_sum(vlist, 3, &vsum);
-    zassert_true(rc == 0, "");
+    zassert_true(rc == 0, NULL);
 
     /* Check output. */
     for (size_t i = 0; i <3; i++) {
-        zassert_equal(vsum.data[i], va.data[i]+vb.data[i]+vc.data[i], "");
+        zassert_equal(vsum.data[i], va.data[i]+vb.data[i]+vc.data[i], NULL);
     }
 }
 
@@ -259,17 +259,17 @@ void test_vector_rev(void)
 
     /* Assign array to vector. */
     rc = zsl_vec_from_arr(&v, a);
-    zassert_true(rc == 0, "rev:fromarr != 0");
+    zassert_true(rc == 0, NULL);
 
     rc = zsl_vec_rev(&v);
-    zassert_true(rc == 0, "rev:ret != 0");
-    zassert_equal(v.data[0], 6.0, "rev:val[0] != 6.0");
-    zassert_equal(v.data[1], 5.0, "rev:val[0] != 5.0");
-    zassert_equal(v.data[2], 4.0, "rev:val[0] != 4.0");
-    zassert_equal(v.data[3], 3.0, "rev:val[0] != 3.0");
-    zassert_equal(v.data[4], 2.0, "rev:val[0] != 2.0");
-    zassert_equal(v.data[5], 1.0, "rev:val[0] != 1.0");
-    zassert_equal(v.data[6], 0.0, "rev:val[0] != 0.0");
+    zassert_true(rc == 0, NULL);
+    zassert_equal(v.data[0], 6.0, NULL);
+    zassert_equal(v.data[1], 5.0, NULL);
+    zassert_equal(v.data[2], 4.0, NULL);
+    zassert_equal(v.data[3], 3.0, NULL);
+    zassert_equal(v.data[4], 2.0, NULL);
+    zassert_equal(v.data[5], 1.0, NULL);
+    zassert_equal(v.data[6], 0.0, NULL);
 }
 
 /**
@@ -292,26 +292,26 @@ void test_vector_is_equal(void)
 
     /* Check for unequal size. */
     eq = zsl_vec_is_equal(&v, &x);
-    zassert_false(eq, "is_equal:size mismatch");
+    zassert_false(eq, NULL);
 
     /* Check equality for zero value vectors. */
     eq = zsl_vec_is_equal(&v, &w);
-    zassert_true(eq, "is_equal:zerovals !equal");
+    zassert_true(eq, NULL);
 
     /* Assign the array a to vector v. */
     rc = zsl_vec_from_arr(&v, a);
-    zassert_true(rc == 0, "is_equal:arr:retv != 0");
+    zassert_true(rc == 0, NULL);
     rc = zsl_vec_from_arr(&w, b);
-    zassert_true(rc == 0, "is_equal:arr:retw != 0");
+    zassert_true(rc == 0, NULL);
 
     /* Check equality for array value vectors. */
     eq = zsl_vec_is_equal(&v, &w);
-    zassert_true(eq, "is_equal:vals !equal");
+    zassert_true(eq, NULL);
 
     /* Check for inequality. */
     v.data[0] = 1.0;
     eq = zsl_vec_is_equal(&v, &w);
-    zassert_false(eq, "is_equal:vals equal");
+    zassert_false(eq, NULL);
 }
 
 void test_vector_is_notneg(void)

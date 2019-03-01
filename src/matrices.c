@@ -358,6 +358,8 @@ zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
         return zsl_mtx_adjoint_3x3(m, ma);
     }
 
+    /* TODO: Recursive calls to reduce matrix to 3x3 chunks. */
+
     return -ENOSYS; /* Not yet implemented! */
 }
 
@@ -398,6 +400,8 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
     if (m->sz_rows == 3) {
         return zsl_mtx_deter_3x3(m, d);
     }
+
+    /* TODO: Recursive calls to reduce matrix to 3x3 chunks. */
 
     return -ENOSYS; /* Not yet implemented! */
 }
@@ -461,6 +465,8 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
     if (m->sz_rows == 3) {
         return zsl_mtx_inv_3x3(m, mi);
     }
+
+    /* TODO: Recursive calls to reduce matrix to 3x3 chunks. */
 
     return -ENOSYS; /* Not yet implemented! */
 }

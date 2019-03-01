@@ -22,35 +22,35 @@ void test_matrix_init(void)
 
     /* Initialise the matrix with the default (empty) entry_fn. */
     rc = zsl_mtx_init(&m, NULL);
-    zassert_equal(rc, 0, "init:NULL == ERR");
+    zassert_equal(rc, 0, NULL);
 
     rc = zsl_mtx_get(&m, 1, 0, &x);
-    zassert_equal(rc, 0, "init:empty:mtx[1][0] == ERR");
-    zassert_equal(x, 0.0, "init:empty:mtx[1][0] != 0.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(x, 0.0, NULL);
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
-    zassert_equal(rc, 0, "init:empty:mtx[2][2] == ERR");
-    zassert_equal(x, 0.0, "init:empty:mtx[2][2] != 0.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(x, 0.0, NULL);
 
     /* Reinitialise the matrix as an identity/diagonal matrix. */
     rc = zsl_mtx_init(&m, zsl_mtx_entry_fn_diagonal);
-    zassert_equal(rc, 0, "init:diag == ERR");
+    zassert_equal(rc, 0, NULL);
 
     rc = zsl_mtx_get(&m, 0, 0, &x);
-    zassert_equal(rc, 0, "init:diag:mtx[0][0] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "init:diag:mtx[0][0] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 1, 1, &x);
-    zassert_equal(rc, 0, "init:diag:mtx[1][1] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "init::diag:mtx[1][1] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
-    zassert_equal(rc, 0, "init:diag:mtx[2][2] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "init::diag:mtx[2][2] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 0, 1, &x);
-    zassert_equal(x, 0.0, "init::diag:mtx[0][1] != 0.0");
-    zassert_equal(rc, 0, "init:diag:mtx[0][1] == ERR");
+    zassert_equal(x, 0.0, NULL);
+    zassert_equal(rc, 0, NULL);
 }
 
 /**
@@ -74,23 +74,23 @@ void test_matrix_from_arr(void)
 
     /* Initialise the matrix with the default (empty) entry_fn. */
     rc = zsl_mtx_from_arr(&m, data);
-    zassert_true(rc == 0, "zsl_mtx_from_arr != 0");
+    zassert_true(rc == 0, NULL);
 
     rc = zsl_mtx_get(&m, 0, 0, &x);
-    zassert_equal(rc, 0, "from_arr:mtx[0][0] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "from_arr:mtx[0][0] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 1, 1, &x);
-    zassert_equal(rc, 0, "from_arr:mtx[1][1] == ERR");
-    zassert_true(val_is_equal(x, 0.5, 1E-5), "from_arr:mtx[1][1] != 0.5");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 0.5, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
-    zassert_equal(rc, 0, "from_arr:mtx[2][2] == ERR");
-    zassert_true(val_is_equal(x, 0.1, 1E-5), "from_arr:mtx[2][2] != 0.1");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 1, 0, &x);
-    zassert_equal(rc, 0, "from_arr:mtx[1][0] == ERR");
-    zassert_equal(x, 0.0, "from_arr:mtx[1][0] != 0.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(x, 0.0, NULL);
 }
 
 /**
@@ -114,19 +114,19 @@ void test_matrix_get(void)
 
     /* Read values from the matrix above. */
     rc = zsl_mtx_get(&m, 0, 0, &x);
-    zassert_equal(rc, 0, "get:mtx[0][0] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "get:mtx[0][0] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 1, 0, &x);
-    zassert_equal(rc, 0, "get:mtx[1][0] == ERR");
-    zassert_equal(x, 0.0, "get:mtx[1][0] != 0.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(x, 0.0, NULL);
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
-    zassert_equal(rc, 0, "get:mtx[2][2] == ERR");
-    zassert_true(val_is_equal(x, 0.1, 1E-5), "get:mtx[2][2] != 0.1");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
 
     /* Check for out of bounbds error. */
-    zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL, "get:mtx[3][3] != ERR");
+    zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL, NULL);
 }
 
 /**
@@ -142,29 +142,29 @@ void test_matrix_set(void)
 
     /* Set values in matrix m. */
     rc = zsl_mtx_set(&m, 0, 0, 1.0);
-    zassert_equal(rc, 0, "set:mtx[0][0] == ERR");
+    zassert_equal(rc, 0, NULL);
 
     rc = zsl_mtx_set(&m, 1, 1, 0.5);
-    zassert_equal(rc, 0, "set:mtx[1][1] == ERR");
+    zassert_equal(rc, 0, NULL);
 
     rc = zsl_mtx_set(&m, 2, 2, 0.1);
-    zassert_equal(rc, 0, "set:mtx[2][2] == ERR");
+    zassert_equal(rc, 0, NULL);
 
     /* Verify assigned values */
     rc = zsl_mtx_get(&m, 0, 0, &x);
-    zassert_equal(rc, 0, "set:get:mtx[0][0] == ERR");
-    zassert_true(val_is_equal(x, 1.0, 1E-5), "set:get:mtx[0][0] != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 1, 1, &x);
-    zassert_equal(rc, 0, "set:get:mtx[1][1] == ERR");
-    zassert_true(val_is_equal(x, 0.5, 1E-5), "set:get:mtx[1][1] != 0.5");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 0.5, 1E-5), NULL);
 
     rc = zsl_mtx_get(&m, 2, 2, &x);
-    zassert_equal(rc, 0, "set:get:mtx[2][2] == ERR");
-    zassert_true(val_is_equal(x, 0.1, 1E-5), "set:get:mtx[2][2] != 0.1");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
 
     /* Check for out of bounbds error. */
-    zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, "set:mtx[3][3] != ERR");
+    zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, NULL);
 }
 
 void test_matrix_get_set_row(void)
@@ -239,16 +239,16 @@ void test_matrix_mult_sq(void)
 
     /* Perform a valid 3x3 square matrix multiplication. */
     rc = zsl_mtx_mult(&ma, &mb, &mc);
-    zassert_equal(rc, 0, "mult:exec == ERR");
-    zassert_equal(mref.data[0], mc.data[0], "mult:valerr:0");
-    zassert_equal(mref.data[1], mc.data[1], "mult:valerr:1");
-    zassert_equal(mref.data[2], mc.data[2], "mult:valerr:2");
-    zassert_equal(mref.data[3], mc.data[3], "mult:valerr:3");
-    zassert_equal(mref.data[4], mc.data[4], "mult:valerr:4");
-    zassert_equal(mref.data[5], mc.data[5], "mult:valerr:5");
-    zassert_equal(mref.data[6], mc.data[6], "mult:valerr:6");
-    zassert_equal(mref.data[7], mc.data[7], "mult:valerr:7");
-    zassert_equal(mref.data[8], mc.data[8], "mult:valerr:8");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(mref.data[0], mc.data[0], NULL);
+    zassert_equal(mref.data[1], mc.data[1], NULL);
+    zassert_equal(mref.data[2], mc.data[2], NULL);
+    zassert_equal(mref.data[3], mc.data[3], NULL);
+    zassert_equal(mref.data[4], mc.data[4], NULL);
+    zassert_equal(mref.data[5], mc.data[5], NULL);
+    zassert_equal(mref.data[6], mc.data[6], NULL);
+    zassert_equal(mref.data[7], mc.data[7], NULL);
+    zassert_equal(mref.data[8], mc.data[8], NULL);
 }
 
 /**
@@ -295,23 +295,23 @@ void test_matrix_mult_rect(void)
 
     /* Attempt an invalid 4x2 x 5x3 matrix multiplication. */
     rc = zsl_mtx_mult(&merr, &mb, &mc);
-    zassert_equal(rc, -EINVAL, "multr:badshape != ERR");
+    zassert_equal(rc, -EINVAL, NULL);
 
     /* Perform a valid 3x3 square matrix multiplication. */
     rc = zsl_mtx_mult(&ma, &mb, &mc);
-    zassert_equal(rc, 0, "multr:exec == ERR");
-    zassert_equal(mref.data[0], mc.data[0], "multr:valerr:0");
-    zassert_equal(mref.data[1], mc.data[1], "multr:valerr:1");
-    zassert_equal(mref.data[2], mc.data[2], "multr:valerr:2");
-    zassert_equal(mref.data[3], mc.data[3], "multr:valerr:3");
-    zassert_equal(mref.data[4], mc.data[4], "multr:valerr:4");
-    zassert_equal(mref.data[5], mc.data[5], "multr:valerr:5");
-    zassert_equal(mref.data[6], mc.data[6], "multr:valerr:6");
-    zassert_equal(mref.data[7], mc.data[7], "multr:valerr:7");
-    zassert_equal(mref.data[8], mc.data[8], "multr:valerr:8");
-    zassert_equal(mref.data[9], mc.data[9], "multr:valerr:9");
-    zassert_equal(mref.data[10], mc.data[10], "multr:valerr:10");
-    zassert_equal(mref.data[11], mc.data[11], "multr:valerr:11");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(mref.data[0], mc.data[0], NULL);
+    zassert_equal(mref.data[1], mc.data[1], NULL);
+    zassert_equal(mref.data[2], mc.data[2], NULL);
+    zassert_equal(mref.data[3], mc.data[3], NULL);
+    zassert_equal(mref.data[4], mc.data[4], NULL);
+    zassert_equal(mref.data[5], mc.data[5], NULL);
+    zassert_equal(mref.data[6], mc.data[6], NULL);
+    zassert_equal(mref.data[7], mc.data[7], NULL);
+    zassert_equal(mref.data[8], mc.data[8], NULL);
+    zassert_equal(mref.data[9], mc.data[9], NULL);
+    zassert_equal(mref.data[10], mc.data[10], NULL);
+    zassert_equal(mref.data[11], mc.data[11], NULL);
 }
 
 /**
@@ -336,15 +336,15 @@ void test_matrix_scalar_mult(void)
     };
 
     rc = zsl_mtx_scalar_mult(&m, s);
-    zassert_equal(rc, 0, "scalmult:exec == ERR");
-    zassert_true(val_is_equal(m.data[0], 20.0, 1E-5), "scalmult:valerr:0");
-    zassert_true(val_is_equal(m.data[1], 30.0, 1E-5), "scalmult:valerr:1");
-    zassert_true(val_is_equal(m.data[2], 10.0, 1E-5), "scalmult:valerr:2");
-    zassert_true(val_is_equal(m.data[3], 40.0, 1E-5), "scalmult:valerr:3");
-    zassert_true(val_is_equal(m.data[4], 40.0, 1E-5), "scalmult:valerr:4");
-    zassert_true(val_is_equal(m.data[5], 30.0, 1E-5), "scalmult:valerr:5");
-    zassert_true(val_is_equal(m.data[6], 30.0, 1E-5), "scalmult:valerr:6");
-    zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), "scalmult:valerr:7");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(m.data[0], 20.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[1], 30.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[2], 10.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[3], 40.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[4], 40.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[5], 30.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[6], 30.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), NULL);
 }
 
 /**
@@ -370,17 +370,17 @@ void test_matrix_trans(void)
     };
 
     rc = zsl_mtx_trans(&m, &mt);
-    zassert_equal(rc, 0, "trans:exec == ERR");
-    zassert_equal(mt.sz_cols, m.sz_rows, "trans:shapecol:err");
-    zassert_equal(mt.sz_rows, m.sz_cols, "trans:shaperow:err");
-    zassert_true(val_is_equal(mt.data[0], 2.0, 1E-5), "trans:valerr:0");
-    zassert_true(val_is_equal(mt.data[1], 1.0, 1E-5), "trans:valerr:1");
-    zassert_true(val_is_equal(mt.data[2], 4.0, 1E-5), "trans:valerr:2");
-    zassert_true(val_is_equal(mt.data[3], 3.0, 1E-5), "trans:valerr:3");
-    zassert_true(val_is_equal(mt.data[4], 3.0, 1E-5), "trans:valerr:4");
-    zassert_true(val_is_equal(mt.data[5], 4.0, 1E-5), "trans:valerr:5");
-    zassert_true(val_is_equal(mt.data[6], 3.0, 1E-5), "trans:valerr:6");
-    zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), "trans:valerr:7");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(mt.sz_cols, m.sz_rows, NULL);
+    zassert_equal(mt.sz_rows, m.sz_cols, NULL);
+    zassert_true(val_is_equal(mt.data[0], 2.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[1], 1.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[2], 4.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[3], 3.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[4], 3.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[5], 4.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[6], 3.0, 1E-5), NULL);
+    zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), NULL);
 }
 
 void test_matrix_adj(void)
@@ -410,16 +410,16 @@ void test_matrix_inv(void)
     };
 
     rc = zsl_mtx_inv(&m, &mi);
-    zassert_equal(rc, 0, "inv:exec == ERR");
-    zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6), "inv:valerr:0");
-    zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6), "inv:valerr:1");
-    zassert_true(val_is_equal(mi.data[2], -0.00237440, 1E-6), "inv:valerr:2");
-    zassert_true(val_is_equal(mi.data[3], -0.02778553, 1E-6), "inv:valerr:3");
-    zassert_true(val_is_equal(mi.data[4],  0.00783351, 1E-6), "inv:valerr:4");
-    zassert_true(val_is_equal(mi.data[5],  0.00044695, 1E-6), "inv:valerr:5");
-    zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6), "inv:valerr:6");
-    zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6), "inv:valerr:7");
-    zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), "inv:valerr:8");
+    zassert_equal(rc, 0, NULL);
+    zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[2], -0.00237440, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[3], -0.02778553, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[4],  0.00783351, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[5],  0.00044695, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6), NULL);
+    zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), NULL);
 }
 
 void test_matrix_min(void)
@@ -439,8 +439,8 @@ void test_matrix_min(void)
     };
 
     rc = zsl_mtx_min(&m, &min);
-    zassert_equal(rc, 0, "min:get == ERR");
-    zassert_equal(min, 1.0, "min:res != 1.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(min, 1.0, NULL);
 }
 
 void test_matrix_max(void)
@@ -460,8 +460,8 @@ void test_matrix_max(void)
     };
 
     rc = zsl_mtx_max(&m, &max);
-    zassert_equal(rc, 0, "max:get == ERR");
-    zassert_equal(max, 4.0, "max:res != 4.0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(max, 4.0, NULL);
 }
 
 void test_matrix_min_idx(void)
@@ -482,9 +482,9 @@ void test_matrix_min_idx(void)
     };
 
     rc = zsl_mtx_min_idx(&m, &min_i, &min_j);
-    zassert_equal(rc, 0, "minidx:get == ERR");
-    zassert_equal(min_i, 1, "minidx:resi != 1");
-    zassert_equal(min_j, 0, "minidx:resj != 0");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(min_i, 1, NULL);
+    zassert_equal(min_j, 0, NULL);
 }
 
 void test_matrix_max_idx(void)
@@ -506,9 +506,9 @@ void test_matrix_max_idx(void)
     };
 
     rc = zsl_mtx_max_idx(&m, &max_i, &max_j);
-    zassert_equal(rc, 0, "maxidx:get == ERR");
-    zassert_equal(max_i, 1, "maxidx:resi != 1");
-    zassert_equal(max_j, 1, "maxidx:resj != 1");
+    zassert_equal(rc, 0, NULL);
+    zassert_equal(max_i, 1, NULL);
+    zassert_equal(max_j, 1, NULL);
 }
 
 void test_matrix_is_equal(void)
@@ -537,12 +537,12 @@ void test_matrix_is_equal(void)
 
     /* Perform a test of equal elements. */
     res = zsl_mtx_is_equal(&ma, &mb);
-    zassert_equal(res, true, "iseq:reseq == false");
+    zassert_equal(res, true, NULL);
 
     /* Perform a test of unequal elements. */
     zsl_mtx_set(&mb, 1, 1, 0.5);
     res = zsl_mtx_is_equal(&ma, &mb);
-    zassert_equal(res, false, "iseq:reseq == true");
+    zassert_equal(res, false, "");
 }
 
 void test_matrix_is_notneg(void)
@@ -561,9 +561,9 @@ void test_matrix_is_notneg(void)
     };
 
     res = zsl_mtx_is_notneg(&m);
-    zassert_equal(res, true, "notneg:postest == false");
+    zassert_equal(res, true, NULL);
 
     zsl_mtx_set(&m, 1, 1, -0.01);
     res = zsl_mtx_is_notneg(&m);
-    zassert_equal(res, false, "notneg:negest == true");
+    zassert_equal(res, false, NULL);
 }
