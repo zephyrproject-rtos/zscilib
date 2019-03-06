@@ -10,17 +10,22 @@
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
 #include <tc_util.h>
-#include "timing_info.h"
+
+/** The number of times to executed the code under test. */
+#define BENCH_LOOPS (10000U)
+
+/* High-precision kernel clock. */
+u32_t start_time;
+u32_t stop_time;
+u32_t cycles_spent;
+u32_t nanoseconds_spent;
 
 char sline[256];
-volatile u64_t vector_add_start_time;
-volatile u64_t vector_add_end_time;
 
 void print_settings(void)
 {
     printk("BOARD:                       %s\n", CONFIG_BOARD);
     printk("ZSL VERSION:                 %s\n", ZSL_VERSION);
-    printk("\n");
 
     printk("CONFIG_ZSL_PLATFORM_OPT:     %i\n", CONFIG_ZSL_PLATFORM_OPT);
 #if CONFIG_ZSL_SINGLE_PRECISION
@@ -48,10 +53,6 @@ void print_settings(void)
 
 void test_vec_add(void)
 {
-    u32_t loops = 100000;
-
-    DECLARE_VAR(vector, add)
-
     ZSL_VECTOR_STATIC_INIT(va, 3);
     ZSL_VECTOR_STATIC_INIT(vb, 3);
     ZSL_VECTOR_STATIC_INIT(vc, 3);
@@ -63,17 +64,18 @@ void test_vec_add(void)
     zsl_vec_from_arr(&va, a);
     zsl_vec_from_arr(&vb, b);
 
-    /* Perform the add operation. */
-    TIMING_INFO_PRE_READ();
-    vector_add_start_time = TIMING_INFO_OS_GET_TIME();
-    for (u32_t i = 0; i < loops; i++) {
+    /* Perform the add operation, tracking start and end times. */
+    start_time = k_cycle_get_32();
+    for (u32_t i = 0; i < BENCH_LOOPS; i++) {
         zsl_vec_add(&va, &vb, &vc);
     }
-    TIMING_INFO_PRE_READ();
-	vector_add_end_time = TIMING_INFO_OS_GET_TIME();
+    stop_time = k_cycle_get_32();
 
-    u32_t time = (u32_t)((vector_add_end_time - vector_add_start_time) & 0xFFFFFFFFULL);
-    printk("zsl_vec_add : %u ticks\n", time);
+    /* compute how long the work took (assumes no counter rollover) */
+    cycles_spent = stop_time - start_time;
+    nanoseconds_spent = SYS_CLOCK_HW_CYCLES_TO_NS(cycles_spent);
+
+    printk("zsl_vec_add : %u ns\n", nanoseconds_spent / BENCH_LOOPS);
 }
 
 void main(void)

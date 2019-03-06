@@ -43,7 +43,7 @@ struct zsl_vec {
 
 /** Macro to declare a vector with static memory allocation. */
 #define ZSL_VECTOR_STATIC_INIT(name, n)\
-  zsl_real_t name##_vec[n] = { 0 };\
+  zsl_real_t name##_vec[n];\
   struct zsl_vec name = {\
       .sz   = n,\
       .data = name##_vec\
