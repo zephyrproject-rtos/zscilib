@@ -349,7 +349,8 @@ int zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d);
 int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
 
 /**
- * @brief Calculates the inverse of 3x3 matrix 'm'.
+ * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of
+ *        'm' is zero, an identity matrix will be returned via 'mi'.
  *
  * @param m     The input 3x3 matrix to use.
  * @param a     The output inverse 3x3 matrix.

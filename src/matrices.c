@@ -449,8 +449,10 @@ zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi)
         s = 1.0 / d;
         rc = zsl_mtx_scalar_mult(mi, s);
     } else {
-        /* Avoid divide by zero error! */
-        return -EINVAL;
+        /* Provide an identity matrix if the determinant is zero. */
+        mi->data[0] = 1.0;
+        mi->data[4] = 1.0;
+        mi->data[8] = 1.0;
     }
 
     return 0;
