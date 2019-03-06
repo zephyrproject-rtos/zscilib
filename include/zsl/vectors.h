@@ -41,9 +41,9 @@ struct zsl_vec {
     zsl_real_t *data;
 };
 
-/** Macro to declare a vector with static memory allocation. */
-#define ZSL_VECTOR_STATIC_INIT(name, n)\
-  zsl_real_t name##_vec[n];\
+/** Macro to declare a vector of size `n`. */
+#define ZSL_VECTOR_DEF(name, n)\
+  zsl_real_t name##_vec[n] = { 0 };\
   struct zsl_vec name = {\
       .sz   = n,\
       .data = name##_vec\

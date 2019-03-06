@@ -18,7 +18,7 @@ void test_matrix_init(void)
 {
     int rc;
     zsl_real_t x;
-    ZSL_MATRIX_STATIC_INIT(m, 3, 3);
+    ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Initialise the matrix with the default (empty) entry_fn. */
     rc = zsl_mtx_init(&m, NULL);
@@ -64,7 +64,7 @@ void test_matrix_from_arr(void)
     zsl_real_t x;
 
     /* Destination matrix. */
-    ZSL_MATRIX_STATIC_INIT(m, 3, 3);
+    ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Source array. */
     zsl_real_t data[9] = { 1.0, 0.0, 0.0,
@@ -138,7 +138,7 @@ void test_matrix_set(void)
 {
     int rc = 0;
     zsl_real_t x;
-    ZSL_MATRIX_STATIC_INIT(m, 3, 3);
+    ZSL_MATRIX_DEF(m, 3, 3);
 
     /* Set values in matrix m. */
     rc = zsl_mtx_set(&m, 0, 0, 1.0);
@@ -205,7 +205,7 @@ void test_matrix_sub_d(void)
 void test_matrix_mult_sq(void)
 {
     int rc = 0;
-    ZSL_MATRIX_STATIC_INIT(mc, 3, 3);
+    ZSL_MATRIX_DEF(mc, 3, 3);
 
     /* Input matrix a. */
     zsl_real_t data_a[9] = { 1.0, 2.0, 3.0,
@@ -259,8 +259,8 @@ void test_matrix_mult_sq(void)
 void test_matrix_mult_rect(void)
 {
     int rc = 0;
-    ZSL_MATRIX_STATIC_INIT(mc, 4, 3);
-    ZSL_MATRIX_STATIC_INIT(merr, 5, 3);
+    ZSL_MATRIX_DEF(mc, 4, 3);
+    ZSL_MATRIX_DEF(merr, 5, 3);
 
     /* Input matrix a (4x2). */
     zsl_real_t data_a[8] = { 2.0, 3.0,
@@ -356,7 +356,7 @@ void test_matrix_trans(void)
 {
     int rc = 0;
 
-    ZSL_MATRIX_STATIC_INIT(mt, 2, 4);
+    ZSL_MATRIX_DEF(mt, 2, 4);
 
     /* Input matrix. */
     zsl_real_t data[8] = { 2.0, 3.0,
@@ -397,7 +397,7 @@ void test_matrix_inv(void)
 {
     int rc = 0;
 
-    ZSL_MATRIX_STATIC_INIT(mi, 3, 3);
+    ZSL_MATRIX_DEF(mi, 3, 3);
 
     /* Input matrix. */
     zsl_real_t data[9] = {  67.5,  43.0,  31.5,
