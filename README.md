@@ -152,6 +152,14 @@ features listed below have been defined as key goals.
 - Weighted moving average filter
 - Other basic IIR and FIR-type filters and helper functions.
 
+### Machine Learning
+
+#### Neural Networks
+
+- Basic neural network processing
+- Simplistic training of models
+- Feeding data through a trained network
+
 ### Calibration Management
 
 - A framework to persist, retrieve and apply calibration coefficients.
