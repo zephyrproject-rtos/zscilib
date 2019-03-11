@@ -200,6 +200,91 @@ zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v)
 }
 
 int
+zsl_mtx_unary(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
+{
+        int rc;
+        zsl_real_t x;
+
+        for (size_t i = 0; i < m->sz_rows; i++) {
+            for (size_t j = 0; j < m->sz_cols; j++) {
+                /* Retrieve the current value. */
+                rc = zsl_mtx_get(m, i, j, &x);
+                if (rc) {
+                    return rc;
+                }
+
+                /* Execute the unary operation. */
+                switch (op) {
+                        case ZSL_MTX_UNARY_OP_INCREMENT:
+                                x++;
+                                break;
+                        case ZSL_MTX_UNARY_OP_DECREMENT:
+                                x--;
+                                break;
+                        case ZSL_MTX_UNARY_OP_NEGATIVE:
+                                x = -x;
+                                break;
+                        case ZSL_MTX_UNARY_OP_LOGICAL_NEGATION:
+                                x = !x;
+                                break;
+                        case ZSL_MTX_UNARY_OP_SIZEOF:
+                                x = sizeof(x);
+                                break;
+                        case ZSL_MTX_UNARY_OP_ROUND:
+                        case ZSL_MTX_UNARY_OP_ABS:
+                        case ZSL_MTX_UNARY_OP_FLOOR:
+                        case ZSL_MTX_UNARY_OP_CEIL:
+                        case ZSL_MTX_UNARY_OP_EXP:
+                        case ZSL_MTX_UNARY_OP_LOG:
+                        case ZSL_MTX_UNARY_OP_LOG10:
+                        case ZSL_MTX_UNARY_OP_SQRT:
+                        case ZSL_MTX_UNARY_OP_SIN:
+                        case ZSL_MTX_UNARY_OP_COS:
+                        case ZSL_MTX_UNARY_OP_TAN:
+                        case ZSL_MTX_UNARY_OP_ASIN:
+                        case ZSL_MTX_UNARY_OP_ACOS:
+                        case ZSL_MTX_UNARY_OP_ATAN:
+                        case ZSL_MTX_UNARY_OP_SINH:
+                        case ZSL_MTX_UNARY_OP_COSH:
+                        case ZSL_MTX_UNARY_OP_TANH:
+                        default:
+                                /* Not yet implemented! */
+                                return -ENOSYS;
+                }
+
+                /* Set the updated value. */
+                rc = zsl_mtx_set(m, i, j, x);
+                if (rc) {
+                    return rc;
+                }
+            }
+        }
+
+        return 0;
+}
+
+int
+zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t unary_fn)
+{
+        int rc;
+
+        for (size_t i = 0; i < m->sz_rows; i++) {
+            for (size_t j = 0; j < m->sz_cols; j++) {
+                /* If entry_fn is NULL, do nothing. */
+                if (unary_fn != NULL) {
+                    rc = unary_fn(m, i, j);
+                }
+                /* Abort if unary_fn returned an error code. */
+                if (rc) {
+                    return rc;
+                }
+            }
+        }
+
+        return 0;
+}
+
+int
 zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
     /* TODO: Add inline helper to validate shape of multiple matrices. */

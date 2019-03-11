@@ -106,6 +106,7 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Min/max value or index
 - Equality check
 - Not negative check
+- Apply unary operand (incr, decr, round, log, sqrt, etc.)
 
 ## Planned Features
 

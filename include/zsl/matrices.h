@@ -52,6 +52,43 @@ struct zsl_mtx {
       .data         = name##_mtx\
   }
 
+typedef enum zsl_mtx_unary_op {
+        ZSL_MTX_UNARY_OP_INCREMENT,             /**< ++ */
+        ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
+        ZSL_MTX_UNARY_OP_NEGATIVE,              /**< - */
+        ZSL_MTX_UNARY_OP_LOGICAL_NEGATION,      /**< ! */
+        ZSL_MTX_UNARY_OP_SIZEOF,                /**< sizeof(x) */
+        ZSL_MTX_UNARY_OP_ROUND,
+        ZSL_MTX_UNARY_OP_ABS,
+        ZSL_MTX_UNARY_OP_FLOOR,
+        ZSL_MTX_UNARY_OP_CEIL,
+        ZSL_MTX_UNARY_OP_EXP,
+        ZSL_MTX_UNARY_OP_LOG,
+        ZSL_MTX_UNARY_OP_LOG10,
+        ZSL_MTX_UNARY_OP_SQRT,
+        ZSL_MTX_UNARY_OP_SIN,
+        ZSL_MTX_UNARY_OP_COS,
+        ZSL_MTX_UNARY_OP_TAN,
+        ZSL_MTX_UNARY_OP_ASIN,
+        ZSL_MTX_UNARY_OP_ACOS,
+        ZSL_MTX_UNARY_OP_ATAN,
+        ZSL_MTX_UNARY_OP_SINH,
+        ZSL_MTX_UNARY_OP_COSH,
+        ZSL_MTX_UNARY_OP_TANH,
+} zsl_mtx_unary_op_t;
+
+/**
+ * Function prototype called when applying a unary operation to a matrix via
+ * `zsl_mtx_unary_func`.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param i     The row number to write (0-based).
+ * @param j     The column number to write (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+typedef int (*zsl_mtx_unary_fn_t)(struct zsl_mtx *m, size_t i, size_t j);
+
 /**
  * Function prototype called when populating a matrix via `zsl_mtx_init`.
  *
@@ -209,6 +246,27 @@ int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
  *          error code.
  */
 int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
+
+/**
+ * Applies a unary operand on every coefficient in matrix 'm'.
+ *
+ * @param m         Pointer to the zsl_mtx to use.
+ * @param op        The unary operation to apply to each coefficient.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_unary(struct zsl_mtx *m, zsl_mtx_unary_op_t op);
+
+/**
+ * Applies a unary function on every coefficient in matrix 'm', using the
+ * specified 'zsl_mtx_apply_unary_fn_t' instance.
+ *
+ * @param m         Pointer to the zsl_mtx to use.
+ * @param unary_fn  The zsl_mtx_unary_fn_t instance to call.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t unary_fn);
 
 /**
  * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.
