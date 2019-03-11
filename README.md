@@ -97,6 +97,7 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Subtract
 - Multiply
 - Scalar multiply
+- Unary operations (round, log, sqrt, increment, etc.)
 - Transpose
 - Adjoint (3x3 and nxn)
 - Determinant (3x3 and nxn)
@@ -106,7 +107,6 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Min/max value or index
 - Equality check
 - Not negative check
-- Apply unary operand (incr, decr, round, log, sqrt, etc.)
 
 ## Planned Features
 
