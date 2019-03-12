@@ -69,6 +69,10 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 
 ## Current Features
 
+### Scalar Operations
+
+To be determined.
+
 ### Vector Operations
 
 - Add
@@ -88,8 +92,8 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Component-wise mean (two or more vectors)
 - Arithmetic mean (single vector)
 - Reverse
-- Equality check
-- Not negative check
+- Equality check (size and values)
+- Not-negative check
 
 ### Matrix Operations
 
@@ -104,10 +108,10 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Eigenvalues and eigenvectors
 - Get/set row/column vector
 - Min/max value or index
-- Equality check
-- Not negative check
+- Equality test (shape and values)
+- Not-negative check
 
-##### Unary matrix operations
+#### Unary matrix operations
 
 The following component-wise unary operations can be executed on a matrix:
 
@@ -127,7 +131,7 @@ The following component-wise unary operations can be executed on a matrix:
 - Asin, acos, atan
 - Sinh, cosh, tanh
 
-##### Binary matrix operations
+#### Binary matrix operations
 
 The following component-wise binary operations can be executed on a pair
 of symmetric matrices:
@@ -159,6 +163,10 @@ features listed below have been defined as key goals.
 > Any suggested additions to this list are highly welcome at this early stage.
 
 ### Numerical Analysis
+
+#### Scalar Operations
+
+- Fast trigonometry approximations
 
 #### Matrix Operations
 
@@ -217,11 +225,13 @@ features listed below have been defined as key goals.
 - Sensor fusion (accel/mag/gyro -> quaternion)
 - Euler/Quaternion conversion
 - Functions for acceleration, time/distance, etc.
+- Frame of reference conversion (Aerospace, Android, etc.)
 
 #### Spectrometry
 
 - Conversion between radiometric and photometric units
 - Radiometric data to lux
+- Radiometric data to CCT/Duv
 - Spectral analysis
 
 ## Architecture-Specific Optimisations
