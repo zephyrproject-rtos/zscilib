@@ -200,62 +200,65 @@ zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v)
 }
 
 int
-zsl_mtx_unary(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
+zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
+{
+        /* Execute the unary operation component by component. */
+        for (size_t i = 0; i < m->sz_cols * m->sz_rows; i++) {
+                switch (op) {
+                case ZSL_MTX_UNARY_OP_INCREMENT:
+                        m->data[i] += 1.0;
+                        break;
+                case ZSL_MTX_UNARY_OP_DECREMENT:
+                        m->data[i] -= 1.0;
+                        break;
+                case ZSL_MTX_UNARY_OP_NEGATIVE:
+                        m->data[i] = -m->data[i];
+                        break;
+                case ZSL_MTX_UNARY_OP_LOGICAL_NEGATION:
+                        m->data[i] = !m->data[i];
+                        break;
+                case ZSL_MTX_UNARY_OP_SIZEOF:
+                        m->data[i] = sizeof(m->data[i]);
+                        break;
+                case ZSL_MTX_UNARY_OP_ROUND:
+                case ZSL_MTX_UNARY_OP_ABS:
+                case ZSL_MTX_UNARY_OP_FLOOR:
+                case ZSL_MTX_UNARY_OP_CEIL:
+                case ZSL_MTX_UNARY_OP_EXP:
+                case ZSL_MTX_UNARY_OP_LOG:
+                case ZSL_MTX_UNARY_OP_LOG10:
+                case ZSL_MTX_UNARY_OP_SQRT:
+                case ZSL_MTX_UNARY_OP_SIN:
+                case ZSL_MTX_UNARY_OP_COS:
+                case ZSL_MTX_UNARY_OP_TAN:
+                case ZSL_MTX_UNARY_OP_ASIN:
+                case ZSL_MTX_UNARY_OP_ACOS:
+                case ZSL_MTX_UNARY_OP_ATAN:
+                case ZSL_MTX_UNARY_OP_SINH:
+                case ZSL_MTX_UNARY_OP_COSH:
+                case ZSL_MTX_UNARY_OP_TANH:
+                default:
+                        /* Not yet implemented! */
+                        return -ENOSYS;
+                }
+        }
+
+        return 0;
+}
+
+int
+zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn)
 {
         int rc;
-        zsl_real_t x;
 
         for (size_t i = 0; i < m->sz_rows; i++) {
             for (size_t j = 0; j < m->sz_cols; j++) {
-                /* Retrieve the current value. */
-                rc = zsl_mtx_get(m, i, j, &x);
-                if (rc) {
-                    return rc;
-                }
-
-                /* Execute the unary operation. */
-                switch (op) {
-                        case ZSL_MTX_UNARY_OP_INCREMENT:
-                                x++;
-                                break;
-                        case ZSL_MTX_UNARY_OP_DECREMENT:
-                                x--;
-                                break;
-                        case ZSL_MTX_UNARY_OP_NEGATIVE:
-                                x = -x;
-                                break;
-                        case ZSL_MTX_UNARY_OP_LOGICAL_NEGATION:
-                                x = !x;
-                                break;
-                        case ZSL_MTX_UNARY_OP_SIZEOF:
-                                x = sizeof(x);
-                                break;
-                        case ZSL_MTX_UNARY_OP_ROUND:
-                        case ZSL_MTX_UNARY_OP_ABS:
-                        case ZSL_MTX_UNARY_OP_FLOOR:
-                        case ZSL_MTX_UNARY_OP_CEIL:
-                        case ZSL_MTX_UNARY_OP_EXP:
-                        case ZSL_MTX_UNARY_OP_LOG:
-                        case ZSL_MTX_UNARY_OP_LOG10:
-                        case ZSL_MTX_UNARY_OP_SQRT:
-                        case ZSL_MTX_UNARY_OP_SIN:
-                        case ZSL_MTX_UNARY_OP_COS:
-                        case ZSL_MTX_UNARY_OP_TAN:
-                        case ZSL_MTX_UNARY_OP_ASIN:
-                        case ZSL_MTX_UNARY_OP_ACOS:
-                        case ZSL_MTX_UNARY_OP_ATAN:
-                        case ZSL_MTX_UNARY_OP_SINH:
-                        case ZSL_MTX_UNARY_OP_COSH:
-                        case ZSL_MTX_UNARY_OP_TANH:
-                        default:
-                                /* Not yet implemented! */
-                                return -ENOSYS;
-                }
-
-                /* Set the updated value. */
-                rc = zsl_mtx_set(m, i, j, x);
-                if (rc) {
-                    return rc;
+                /* If fn is NULL, do nothing. */
+                if (fn != NULL) {
+                    rc = fn(m, i, j);
+                    if (rc) {
+                        return rc;
+                    }
                 }
             }
         }
@@ -264,19 +267,74 @@ zsl_mtx_unary(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
 }
 
 int
-zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t unary_fn)
+zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc,
+        zsl_mtx_binary_op_t op)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+        if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
+            (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
+            return -EINVAL;
+        }
+#endif
+
+        /* Execute the binary operation component by component. */
+        for (size_t i = 0; i < ma->sz_cols * ma->sz_rows; i++) {
+                switch (op) {
+                case ZSL_MTX_BINARY_OP_ADD:
+                        mc->data[i] = ma->data[i] + mb->data[i];
+                        break;
+                case ZSL_MTX_BINARY_OP_SUB:
+                        mc->data[i] = ma->data[i] - mb->data[i];
+                        break;
+                case ZSL_MTX_BINARY_OP_MULT:
+                        mc->data[i] = ma->data[i] * mb->data[i];
+                        break;
+                case ZSL_MTX_BINARY_OP_DIV:
+                        if (mb->data[i] == 0.0) {
+                                mc->data[i] = 0.0;
+                        } else {
+                                mc->data[i] = ma->data[i] / mb->data[i];
+                        }
+                        break;
+                case ZSL_MTX_BINARY_OP_EXPON:
+                case ZSL_MTX_BINARY_OP_MIN:
+                case ZSL_MTX_BINARY_OP_MAX:
+                case ZSL_MTX_BINARY_OP_EQUAL:
+                case ZSL_MTX_BINARY_OP_NEQUAL:
+                case ZSL_MTX_BINARY_OP_LESS:
+                case ZSL_MTX_BINARY_OP_GREAT:
+                case ZSL_MTX_BINARY_OP_LEQ:
+                case ZSL_MTX_BINARY_OP_GEQ:
+                default:
+                        /* Not yet implemented! */
+                        return -ENOSYS;
+                }
+        }
+
+        return 0;
+}
+
+int
+zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
+        struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn)
 {
         int rc;
 
-        for (size_t i = 0; i < m->sz_rows; i++) {
-            for (size_t j = 0; j < m->sz_cols; j++) {
-                /* If entry_fn is NULL, do nothing. */
-                if (unary_fn != NULL) {
-                    rc = unary_fn(m, i, j);
-                }
-                /* Abort if unary_fn returned an error code. */
-                if (rc) {
-                    return rc;
+#if CONFIG_ZSL_BOUNDS_CHECKS
+        if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
+            (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
+            return -EINVAL;
+        }
+#endif
+
+        for (size_t i = 0; i < ma->sz_rows; i++) {
+            for (size_t j = 0; j < ma->sz_cols; j++) {
+                /* If fn is NULL, do nothing. */
+                if (fn != NULL) {
+                    rc = fn(ma, mb, mc, i, j);
+                    if (rc) {
+                        return rc;
+                    }
                 }
             }
         }
@@ -287,55 +345,25 @@ zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t unary_fn)
 int
 zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
-    /* TODO: Add inline helper to validate shape of multiple matrices. */
-
-#if CONFIG_ZSL_BOUNDS_CHECKS
-    if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
-        (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
-        return -EINVAL;
-    }
-#endif
-
-    /* TODO: Evaluate if a while(i--) loop would be faster reading sz once. */
-
-    for (size_t i = 0; i < ma->sz_cols * ma->sz_rows; i++) {
-        mc->data[i] = ma->data[i] + mb->data[i];
-    }
-
-    return 0;
+        return zsl_mtx_binary_op(ma, mb, mc, ZSL_MTX_BINARY_OP_ADD);
 }
 
 int
 zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 {
-    return zsl_mtx_add(ma, mb, ma);
+        return zsl_mtx_binary_op(ma, mb, ma, ZSL_MTX_BINARY_OP_ADD);
 }
 
 int
 zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
-    /* TODO: Add inline helper to validate shape of multiple matrices. */
-
-#if CONFIG_ZSL_BOUNDS_CHECKS
-    if ((ma->sz_rows != mb->sz_rows) || (mb->sz_rows != mc->sz_rows) ||
-        (ma->sz_cols != mb->sz_cols) || (mb->sz_cols != mc->sz_cols)) {
-        return -EINVAL;
-    }
-#endif
-
-    /* TODO: Evaluate if a while(i--) loop would be faster reading sz once. */
-
-    for (size_t i = 0; i < ma->sz_cols * ma->sz_rows; i++) {
-        mc->data[i] = ma->data[i] - mb->data[i];
-    }
-
-    return 0;
+        return zsl_mtx_binary_op(ma, mb, mc, ZSL_MTX_BINARY_OP_SUB);
 }
 
 int
 zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 {
-    return zsl_mtx_sub(ma, mb, ma);
+        return zsl_mtx_binary_op(ma, mb, ma, ZSL_MTX_BINARY_OP_SUB);
 }
 
 int

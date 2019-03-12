@@ -52,6 +52,7 @@ struct zsl_mtx {
       .data         = name##_mtx\
   }
 
+/* Component-wise unary operations. */
 typedef enum zsl_mtx_unary_op {
         ZSL_MTX_UNARY_OP_INCREMENT,             /**< ++ */
         ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
@@ -77,9 +78,26 @@ typedef enum zsl_mtx_unary_op {
         ZSL_MTX_UNARY_OP_TANH,
 } zsl_mtx_unary_op_t;
 
+/** Component-wise binary operations. */
+typedef enum zsl_mtx_binary_op {
+        ZSL_MTX_BINARY_OP_ADD,                  /**< a + b */
+        ZSL_MTX_BINARY_OP_SUB,                  /**< a - b */
+        ZSL_MTX_BINARY_OP_MULT,                 /**< a * b */
+        ZSL_MTX_BINARY_OP_DIV,                  /**< a / b */
+        ZSL_MTX_BINARY_OP_EXPON,                /**< a ^ b */
+        ZSL_MTX_BINARY_OP_MIN,                  /**< min(a, b) */
+        ZSL_MTX_BINARY_OP_MAX,                  /**< max(a, b) */
+        ZSL_MTX_BINARY_OP_EQUAL,                /**< a == b */
+        ZSL_MTX_BINARY_OP_NEQUAL,               /**< a != b */
+        ZSL_MTX_BINARY_OP_LESS,                 /**< a < b */
+        ZSL_MTX_BINARY_OP_GREAT,                /**< a > b */
+        ZSL_MTX_BINARY_OP_LEQ,                  /**< a <= b */
+        ZSL_MTX_BINARY_OP_GEQ,                  /**< a >= b */
+} zsl_mtx_binary_op_t;
+
 /**
- * Function prototype called when applying a unary operation to a matrix via
- * `zsl_mtx_unary_func`.
+ * Function prototype called when applying a set of component-wise unary
+ * operations to a matrix via `zsl_mtx_unary_func`.
  *
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to write (0-based).
@@ -88,6 +106,21 @@ typedef enum zsl_mtx_unary_op {
  * @return 0 on success, and non-zero error code on failure
  */
 typedef int (*zsl_mtx_unary_fn_t)(struct zsl_mtx *m, size_t i, size_t j);
+
+/**
+ * Function prototype called when applying a set of component-wise binary
+ * operations using a pair of symmetrical matrices via `zsl_mtx_binary_func`.
+ *
+ * @param ma    Pointer to first zsl_mtx to use in the binary operation.
+ * @param mb    Pointer to second zsl_mtx to use in the binary operation.
+ * @param mc    Pointer to output zsl_mtx used to store results.
+ * @param i     The row number to write (0-based).
+ * @param j     The column number to write (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+typedef int (*zsl_mtx_binary_fn_t)(struct zsl_mtx *ma, struct zsl_mtx *mb,
+        struct zsl_mtx *mc, size_t i, size_t j);
 
 /**
  * Function prototype called when populating a matrix via `zsl_mtx_init`.
@@ -255,18 +288,49 @@ int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_unary(struct zsl_mtx *m, zsl_mtx_unary_op_t op);
+int zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op);
 
 /**
  * Applies a unary function on every coefficient in matrix 'm', using the
  * specified 'zsl_mtx_apply_unary_fn_t' instance.
  *
  * @param m         Pointer to the zsl_mtx to use.
- * @param unary_fn  The zsl_mtx_unary_fn_t instance to call.
+ * @param fn        The zsl_mtx_unary_fn_t instance to call.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t unary_fn);
+int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn);
+
+/**
+ * Applies a component-wise binary operation on every coefficient in
+ * symmetrical matrices 'ma' and 'mb', with the results being stored in the
+ * identically shaped `mc` matrix.
+ *
+ * @param ma        Pointer to first zsl_mtx to use in the binary operation.
+ * @param mb        Pointer to second zsl_mtx to use in the binary operation.
+ * @param mc        Pointer to output zsl_mtx used to store results.
+ * @param op        The binary operation to apply to each coefficient.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc,
+        zsl_mtx_binary_op_t op);
+
+/**
+ * Applies a component-wise binary operztion on every coefficient in
+ * symmetrical matrices 'ma' and 'mb', with the results  being stored in the
+ * identically shaped 'mc' matrix. The actual binary operation is executed
+ * using the specified 'zsl_mtx_binary_fn_t' callback.
+ *
+ * @param ma        Pointer to first zsl_mtx to use in the binary operation.
+ * @param mb        Pointer to second zsl_mtx to use in the binary operation.
+ * @param mc        Pointer to output zsl_mtx used to store results.
+ * @param fn        The zsl_mtx_binary_fn_t instance to call.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
+        struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
 
 /**
  * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.

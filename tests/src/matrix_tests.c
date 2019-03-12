@@ -177,12 +177,22 @@ void test_matrix_get_set_col(void)
 
 }
 
-void test_matrix_unary(void)
+void test_matrix_unary_op(void)
 {
 
 }
 
 void test_matrix_unary_func(void)
+{
+
+}
+
+void test_matrix_binary_op(void)
+{
+
+}
+
+void test_matrix_binary_func(void)
 {
 
 }

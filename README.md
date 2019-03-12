@@ -97,7 +97,6 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Subtract
 - Multiply
 - Scalar multiply
-- Unary operations (round, log, sqrt, increment, etc.)
 - Transpose
 - Adjoint (3x3 and nxn)
 - Determinant (3x3 and nxn)
@@ -107,6 +106,51 @@ of microcontrollers commonly used on low-cost sensor endnodes.
 - Min/max value or index
 - Equality check
 - Not negative check
+
+##### Unary matrix operations
+
+The following component-wise unary operations can be executed on a matrix:
+
+- Increment (`++`)
+- Decrement (`--`)
+- Negative (`-`)
+- Logical negation (`!`)
+- Sizeof
+- Round
+- Abs
+- Floor
+- Ceiling
+- Exponent
+- Natural log
+- Log10
+- Square root
+- Sin, cos, tan
+- Asin, acos, atan
+- Sinh, cosh, tanh
+
+##### Binary matrix operations
+
+The following component-wise binary operations can be executed on a pair
+of symmetric matrices:
+
+- Add (`a + b`)
+- Subtract (`a - b`)
+- Multiply (`a * b`)
+- Divide (`a / b`)
+- Exponent (`a^b`)
+- Min (`min(a, b)`)
+- Max (`max(a, b)`)
+- Equal (`a == b`)
+- Not equal (`a != b`)
+- Less than (`a < b`)
+- Greater than (`a > b`)
+- Less than or equal to (`a <= b`)
+- Greater than or equal to (`a >= b`)
+
+> **NOTE**: Component-wise **unary** and **binary** matrix operations can also
+  make use of user-defined functions at the application level if the existing
+  operand list is not sufficient. See `zsl_mtx_unary_func` and
+  `zsl_mtx_binary_func` for details.
 
 ## Planned Features
 
