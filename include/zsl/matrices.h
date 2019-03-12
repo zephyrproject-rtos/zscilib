@@ -58,7 +58,6 @@ typedef enum zsl_mtx_unary_op {
         ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
         ZSL_MTX_UNARY_OP_NEGATIVE,              /**< - */
         ZSL_MTX_UNARY_OP_LOGICAL_NEGATION,      /**< ! */
-        ZSL_MTX_UNARY_OP_SIZEOF,                /**< sizeof(x) */
         ZSL_MTX_UNARY_OP_ROUND,
         ZSL_MTX_UNARY_OP_ABS,
         ZSL_MTX_UNARY_OP_FLOOR,

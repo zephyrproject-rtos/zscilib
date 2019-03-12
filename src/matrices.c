@@ -217,9 +217,6 @@ zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
                 case ZSL_MTX_UNARY_OP_LOGICAL_NEGATION:
                         m->data[i] = !m->data[i];
                         break;
-                case ZSL_MTX_UNARY_OP_SIZEOF:
-                        m->data[i] = sizeof(m->data[i]);
-                        break;
                 case ZSL_MTX_UNARY_OP_ROUND:
                 case ZSL_MTX_UNARY_OP_ABS:
                 case ZSL_MTX_UNARY_OP_FLOOR:

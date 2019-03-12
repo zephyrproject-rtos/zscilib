@@ -115,7 +115,6 @@ The following component-wise unary operations can be executed on a matrix:
 - Decrement (`--`)
 - Negative (`-`)
 - Logical negation (`!`)
-- Sizeof
 - Round
 - Abs
 - Floor
