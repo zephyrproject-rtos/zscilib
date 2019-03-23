@@ -28,6 +28,7 @@
 #define ZEPHYR_INCLUDE_ZSL_H_
 
 #include <math.h>
+#include <stdbool.h>
 #include <zsl/consts.h>
 
 #ifdef __cplusplus

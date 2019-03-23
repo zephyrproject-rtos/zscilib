@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr.h>
+#include <errno.h>
+#include <stdbool.h>
 #include <string.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
@@ -112,9 +113,10 @@ zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
         return -EINVAL;
     }
 
+    sz_last = v[0]->sz;
+
 #if CONFIG_ZSL_BOUNDS_CHECKS
     /* Make sure all vectors have the same size. */
-    sz_last = v[0]->sz;
     for (size_t i = 0; i < n; i++) {
         if (sz_last != v[i]->sz) {
             return -EINVAL;

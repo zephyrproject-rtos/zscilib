@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr.h>
 #include <zsl/zsl.h>
 
 const char * zsl_version = ZSL_VERSION;

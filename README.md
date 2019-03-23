@@ -140,6 +140,7 @@ of symmetric matrices:
 - Subtract (`a - b`)
 - Multiply (`a * b`)
 - Divide (`a / b`)
+- Mean (`mean(a, b`)
 - Exponent (`a^b`)
 - Min (`min(a, b)`)
 - Max (`max(a, b)`)

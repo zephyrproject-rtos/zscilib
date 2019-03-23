@@ -83,6 +83,7 @@ typedef enum zsl_mtx_binary_op {
         ZSL_MTX_BINARY_OP_SUB,                  /**< a - b */
         ZSL_MTX_BINARY_OP_MULT,                 /**< a * b */
         ZSL_MTX_BINARY_OP_DIV,                  /**< a / b */
+        ZSL_MTX_BINARY_OP_MEAN,                 /**< mean(a, b) */
         ZSL_MTX_BINARY_OP_EXPON,                /**< a ^ b */
         ZSL_MTX_BINARY_OP_MIN,                  /**< min(a, b) */
         ZSL_MTX_BINARY_OP_MAX,                  /**< max(a, b) */

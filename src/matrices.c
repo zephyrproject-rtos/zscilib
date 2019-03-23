@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr.h>
+#include <errno.h>
+#include <stdbool.h>
 #include <string.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
@@ -293,6 +294,7 @@ zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc,
                                 mc->data[i] = ma->data[i] / mb->data[i];
                         }
                         break;
+                case ZSL_MTX_BINARY_OP_MEAN:
                 case ZSL_MTX_BINARY_OP_EXPON:
                 case ZSL_MTX_BINARY_OP_MIN:
                 case ZSL_MTX_BINARY_OP_MAX:
