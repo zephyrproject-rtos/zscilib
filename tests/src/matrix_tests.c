@@ -174,6 +174,8 @@ void test_matrix_get_set_row(void)
     zsl_real_t v[] = { 1.0, 2.0, 3.0 };
     ZSL_MATRIX_DEF(m, 3, 3);
 
+    /* TODO: Test get method! */
+
     /* Set row 0 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_row(&m, 0, v);
     zassert_equal(rc, 0, NULL);
@@ -189,6 +191,14 @@ void test_matrix_get_set_row(void)
     zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
     rc = zsl_mtx_get(&m, 0, 2, &x);
     zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+
+    /* Verify row 1 (should be all zeroes). */
+    rc = zsl_mtx_get(&m, 1, 0, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 1, 0, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 1, 0, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
 
     /* Verify row 2. */
     rc = zsl_mtx_get(&m, 2, 0, &x);
@@ -206,6 +216,8 @@ void test_matrix_get_set_col(void)
     zsl_real_t v[] = { 1.0, 2.0, 3.0 };
     ZSL_MATRIX_DEF(m, 3, 3);
 
+    /* TODO: Test get method! */
+
     /* Set col 0 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_col(&m, 0, v);
     zassert_equal(rc, 0, NULL);
@@ -221,6 +233,14 @@ void test_matrix_get_set_col(void)
     zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
     rc = zsl_mtx_get(&m, 2, 0, &x);
     zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+
+    /* Verify col 1 (should be all zeroes). */
+    rc = zsl_mtx_get(&m, 0, 1, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 1, 1, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 2, 1, &x);
+    zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
 
     /* Verify col 2. */
     rc = zsl_mtx_get(&m, 0, 2, &x);
