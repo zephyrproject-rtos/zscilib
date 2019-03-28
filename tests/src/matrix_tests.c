@@ -7,6 +7,7 @@
 #include <ztest.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
+#include <zsl/vectors.h>
 #include "floatcheck.h"
 
 /**
@@ -180,7 +181,7 @@ void test_matrix_get_set_row(void)
     rc = zsl_mtx_set_row(&m, 0, v);
     zassert_equal(rc, 0, NULL);
 
-    /* Set row 2 in m with the values in 3-vectgor v. */
+    /* Set row 2 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_row(&m, 2, v);
     zassert_equal(rc, 0, NULL);
 
@@ -222,7 +223,7 @@ void test_matrix_get_set_col(void)
     rc = zsl_mtx_set_col(&m, 0, v);
     zassert_equal(rc, 0, NULL);
 
-    /* Set col 2 in m with the values in 3-vectgor v. */
+    /* Set col 2 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_col(&m, 2, v);
     zassert_equal(rc, 0, NULL);
 
@@ -249,6 +250,32 @@ void test_matrix_get_set_col(void)
     zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
     rc = zsl_mtx_get(&m, 2, 2, &x);
     zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+}
+
+void test_matrix_row_from_vec(void)
+{
+    int rc;
+    zsl_real_t x;
+    ZSL_VECTOR_DEF(v, 3);
+    ZSL_MATRIX_DEF(m, 3, 3);
+
+
+    /* Assign some values to the vector. */
+    v.data[0] = 1.0;
+    v.data[0] = 2.0;
+    v.data[0] = 3.0;
+
+    /* Now assign the vector to matrix row 1 via the .data field. */
+    rc = zsl_mtx_set_row(&m, 1, v.data);
+    zassert_true(rc == 0, NULL);
+
+    /* Make sure the row assignment worked. */
+    rc = zsl_mtx_get(&m, 1, 0, &x);
+    zassert_true(val_is_equal(x, v.data[0], 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 1, 1, &x);
+    zassert_true(val_is_equal(x, v.data[1], 1E-5), NULL);
+    rc = zsl_mtx_get(&m, 1, 2, &x);
+    zassert_true(val_is_equal(x, v.data[2], 1E-5), NULL);
 }
 
 void test_matrix_unary_op(void)

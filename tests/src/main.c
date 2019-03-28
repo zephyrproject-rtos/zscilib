@@ -12,6 +12,7 @@ extern void test_matrix_get(void);
 extern void test_matrix_set(void);
 extern void test_matrix_get_set_row(void);
 extern void test_matrix_get_set_col(void);
+extern void test_matrix_row_from_vec(void);
 extern void test_matrix_unary_op(void);
 extern void test_matrix_unary_func(void);
 extern void test_matrix_binary_op(void);
@@ -64,6 +65,7 @@ void test_main(void)
         ztest_unit_test(test_matrix_set),
         ztest_unit_test(test_matrix_get_set_row),
         ztest_unit_test(test_matrix_get_set_col),
+        ztest_unit_test(test_matrix_row_from_vec),
         ztest_unit_test(test_matrix_unary_op),
         ztest_unit_test(test_matrix_unary_func),
         ztest_unit_test(test_matrix_binary_op),
