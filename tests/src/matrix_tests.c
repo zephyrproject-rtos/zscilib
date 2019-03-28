@@ -276,6 +276,14 @@ void test_matrix_row_from_vec(void)
     zassert_true(val_is_equal(x, v.data[1], 1E-5), NULL);
     rc = zsl_mtx_get(&m, 1, 2, &x);
     zassert_true(val_is_equal(x, v.data[2], 1E-5), NULL);
+
+    /* Now read one back. */
+    rc = zsl_mtx_get_row(&m, 0, v.data);
+    zassert_true(rc == 0, NULL);
+    /* Vector values should have changed to all be 0.0 now. */
+    zassert_true(val_is_equal(v.data[0], 0.0, 1E-5), NULL);
+    zassert_true(val_is_equal(v.data[1], 0.0, 1E-5), NULL);
+    zassert_true(val_is_equal(v.data[2], 0.0, 1E-5), NULL);
 }
 
 void test_matrix_unary_op(void)
