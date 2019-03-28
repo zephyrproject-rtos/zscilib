@@ -259,11 +259,10 @@ void test_matrix_row_from_vec(void)
     ZSL_VECTOR_DEF(v, 3);
     ZSL_MATRIX_DEF(m, 3, 3);
 
-
     /* Assign some values to the vector. */
     v.data[0] = 1.0;
-    v.data[0] = 2.0;
-    v.data[0] = 3.0;
+    v.data[1] = 2.0;
+    v.data[2] = 3.0;
 
     /* Now assign the vector to matrix row 1 via the .data field. */
     rc = zsl_mtx_set_row(&m, 1, v.data);
