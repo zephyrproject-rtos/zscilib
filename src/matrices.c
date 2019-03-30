@@ -329,15 +329,27 @@ zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc,
                         }
                         break;
                 case ZSL_MTX_BINARY_OP_MEAN:
+                        mc->data[i] = (ma->data[i] + mb->data[i]) / 2.0;
                 case ZSL_MTX_BINARY_OP_EXPON:
+                        mc->data[i] = ZSL_POW(ma->data[i], mb->data[i]);
                 case ZSL_MTX_BINARY_OP_MIN:
+                        mc->data[i] = ma->data[i] < mb->data[i] ?
+                                      ma->data[i] : mb->data[i];
                 case ZSL_MTX_BINARY_OP_MAX:
+                        mc->data[i] = ma->data[i] > mb->data[i] ?
+                                      ma->data[i] : mb->data[i];
                 case ZSL_MTX_BINARY_OP_EQUAL:
+                        mc->data[i] = ma->data[i] == mb->data[i] ? 1.0 : 0.0;
                 case ZSL_MTX_BINARY_OP_NEQUAL:
+                        mc->data[i] = ma->data[i] != mb->data[i] ? 1.0 : 0.0;
                 case ZSL_MTX_BINARY_OP_LESS:
+                        mc->data[i] = ma->data[i] < mb->data[i] ? 1.0 : 0.0;
                 case ZSL_MTX_BINARY_OP_GREAT:
+                        mc->data[i] = ma->data[i] > mb->data[i] ? 1.0 : 0.0;
                 case ZSL_MTX_BINARY_OP_LEQ:
+                        mc->data[i] = ma->data[i] <= mb->data[i] ? 1.0 : 0.0;
                 case ZSL_MTX_BINARY_OP_GEQ:
+                        mc->data[i] = ma->data[i] >= mb->data[i] ? 1.0 : 0.0;
                 default:
                         /* Not yet implemented! */
                         return -ENOSYS;
