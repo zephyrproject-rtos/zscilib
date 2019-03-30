@@ -61,6 +61,53 @@ typedef float zsl_real_t;
 typedef double zsl_real_t;
 #endif
 
+/* Map math functions based on single or double precision. */
+/* TODO: Add an option for fast approximations of trig operations. */
+#if CONFIG_ZSL_SINGLE_PRECISION
+#define ZSL_CEIL       ceilf
+#define ZSL_FLOOR      floorf
+#define ZSL_ROUND      roundf
+#define ZSL_ABS        fabsf
+#define ZSL_MIN        fminf
+#define ZSL_MAX        fmaxf
+#define ZSL_POW        powf
+#define ZSL_EXP        expf
+#define ZSL_LOG        logf
+#define ZSL_LOG10      log10f
+#define ZSL_SQRT       sqrtf
+#define ZSL_SIN        sinf
+#define ZSL_COS        cosf
+#define ZSL_TAN        tanf
+#define ZSL_ASIN       asinf
+#define ZSL_ACOS       acosf
+#define ZSL_ATAN       atanf
+#define ZSL_SINH       sinhf
+#define ZSL_COSH       coshf
+#define ZSL_TANH       tanhf
+#else
+#define ZSL_CEIL       ceil
+#define ZSL_FLOOR      floor
+#define ZSL_ROUND      round
+#define ZSL_ABS        fabs
+#define ZSL_MIN        fmin
+#define ZSL_MAX        fmax
+#define ZSL_POW        pow
+#define ZSL_EXP        exp
+#define ZSL_LOG        log
+#define ZSL_LOG10      log10
+#define ZSL_SQRT       sqrt
+#define ZSL_SIN        sin
+#define ZSL_COS        cos
+#define ZSL_TAN        tan
+#define ZSL_ASIN       asin
+#define ZSL_ACOS       acos
+#define ZSL_ATAN       atan
+#define ZSL_SINH       sinh
+#define ZSL_COSH       cosh
+#define ZSL_TANH       tanh
+#endif
+
+
 /* TODO: Define common errors like shape mismatch, etc. */
 
 #ifdef __cplusplus

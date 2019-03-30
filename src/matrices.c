@@ -219,22 +219,56 @@ zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
                         m->data[i] = !m->data[i];
                         break;
                 case ZSL_MTX_UNARY_OP_ROUND:
+                        m->data[i] = ZSL_ROUND(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_ABS:
+                        m->data[i] = ZSL_ABS(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_FLOOR:
+                        m->data[i] = ZSL_FLOOR(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_CEIL:
+                        m->data[i] = ZSL_CEIL(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_EXP:
+                        m->data[i] = ZSL_EXP(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_LOG:
+                        m->data[i] = ZSL_LOG(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_LOG10:
+                        m->data[i] = ZSL_LOG10(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_SQRT:
+                        m->data[i] = ZSL_SQRT(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_SIN:
+                        m->data[i] = ZSL_SIN(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_COS:
+                        m->data[i] = ZSL_COS(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_TAN:
+                        m->data[i] = ZSL_TAN(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_ASIN:
+                        m->data[i] = ZSL_ASIN(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_ACOS:
+                        m->data[i] = ZSL_ACOS(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_ATAN:
+                        m->data[i] = ZSL_ATAN(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_SINH:
+                        m->data[i] = ZSL_SINH(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_COSH:
+                        m->data[i] = ZSL_COSH(m->data[i]);
+                        break;
                 case ZSL_MTX_UNARY_OP_TANH:
+                        m->data[i] = ZSL_TANH(m->data[i]);
+                        break;
                 default:
                         /* Not yet implemented! */
                         return -ENOSYS;
