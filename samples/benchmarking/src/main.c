@@ -11,7 +11,7 @@
 #include <zsl/vectors.h>
 #include <tc_util.h>
 
-/** The number of times to executed the code under test. */
+/** The number of times to execute the code under test. */
 #define BENCH_LOOPS (10000U)
 
 /* High-precision kernel clock. */
@@ -20,12 +20,11 @@ u32_t stop_time;
 u32_t cycles_spent;
 u32_t nanoseconds_spent;
 
-char sline[256];
-
 void print_settings(void)
 {
     printk("BOARD:                       %s\n", CONFIG_BOARD);
-    printk("ZSL VERSION:                 %s\n", ZSL_VERSION);
+    printk("ZSL VERSION:                 %s (%s)\n", ZSL_VERSION,
+        ZSL_VERSION_DATE);
 
     printk("CONFIG_ZSL_PLATFORM_OPT:     %i\n", CONFIG_ZSL_PLATFORM_OPT);
 #if CONFIG_ZSL_SINGLE_PRECISION
