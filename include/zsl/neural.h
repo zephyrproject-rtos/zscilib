@@ -75,7 +75,7 @@ extern "C" {
  *
  * @return 0 on success, and non-zero error code on failure
  */
-typedef int (*zsl_nn_activ_fn_t)(zsl_reql_t *s, zsl_real_t *out);
+typedef int (*zsl_nn_activ_fn_t)(zsl_real_t *s, zsl_real_t *out);
 
 /**
  * @brief Implementation of the sigmoid activation function.
@@ -85,13 +85,13 @@ typedef int (*zsl_nn_activ_fn_t)(zsl_reql_t *s, zsl_real_t *out);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_nn_activ_fn_sigmoid(zsl_reql_t *s, zsl_real_t *out));
+int zsl_nn_activ_fn_sigmoid(zsl_real_t *s, zsl_real_t *out));
 
 /** @brief Represents a neuron in a neural network. */
 struct zsl_nn_neuron {
     /** The number of inputs available in 'inputs'. */
     size_t num_inputs;
-    /** The array of input valuess for the neuron. */
+    /** The array of input values for the neuron. */
     zsl_real_t **inputs;
     /** The weight coefficient applied to each input value. */
     zsl_real_t **input_weight;
