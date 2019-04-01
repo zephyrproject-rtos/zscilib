@@ -6,16 +6,54 @@ context of resource constrained embedded devices or 'end nodes'.
 
 ## Quick Start
 
-### Adding zscilib to your Zephyr project
+### Adding zscilib to your project via `west`
 
-**TODO**: Setup Instructions based on `west`.
+For project that have been setup using `west`, you can add a local copy of
+zscilib by adding the following sections to `zephyr/west.yml`:
+
+1. In the `manifest/remotes` section add:
+
+```
+remotes:
+  - name: zscilib
+    url-base: https://github.com/zscilib
+```
+
+2. In the `manifest/projects` section add:
+
+```
+- name: zscilib
+  remote: zscilib
+  path: modules/lib/zscilib
+  revision: master
+```
+
+3. Save the file, and run `west update` from the project root to retrieve the
+latest version of zscilib from Github, or whatever `revision` was specified
+above.
+
+### Running the benchmark sample
+
+To run the benchmark sample using qemu, run the following commands:
+
+> Be sure to run `source zephyr/zephyr-env.sh`  before the commands below!
+
+```
+$ cd modules/lib/zscilib/samples/benchmarking
+$ mkdir b && cd b
+$ cmake -GNinja -DBOARD=qemu_cortex_m3 ..
+$ ninja
+$ ninja run
+```
+
+Press **`CTRL+A`** then **`x`** to quit qemu.
 
 ### Running Unit Tests
 
 To run the unit tests for this library, run the following command:
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T ext/lib/zsl/tests/
+$ sanitycheck -p qemu_cortex_m3 -T tests
 ```
 
 See the `tests` folder for further details.
