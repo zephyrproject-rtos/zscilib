@@ -8,6 +8,7 @@
 
 extern void test_matrix_init(void);
 extern void test_matrix_from_arr(void);
+extern void test_matrix_copy(void);
 extern void test_matrix_get(void);
 extern void test_matrix_set(void);
 extern void test_matrix_get_set_row(void);
@@ -31,6 +32,8 @@ extern void test_matrix_trans(void);
 extern void test_matrix_adj(void);
 extern void test_matrix_deter(void);
 extern void test_matrix_inv(void);
+extern void test_matrix_inv_nxn(void);
+extern void test_matrix_eigen(void);
 extern void test_matrix_min(void);
 extern void test_matrix_max(void);
 extern void test_matrix_min_idx(void);
@@ -64,6 +67,8 @@ void test_main(void)
 {
 	ztest_test_suite(zsl_tests,
         ztest_unit_test(test_matrix_init),
+        ztest_unit_test(test_matrix_from_arr),
+        ztest_unit_test(test_matrix_copy),
         ztest_unit_test(test_matrix_get),
         ztest_unit_test(test_matrix_set),
         ztest_unit_test(test_matrix_get_set_row),
@@ -87,6 +92,8 @@ void test_main(void)
         ztest_unit_test(test_matrix_adj),
         ztest_unit_test(test_matrix_deter),
         ztest_unit_test(test_matrix_inv),
+        ztest_unit_test(test_matrix_inv_nxn),
+        ztest_unit_test(test_matrix_eigen),
         ztest_unit_test(test_matrix_min),
         ztest_unit_test(test_matrix_max),
         ztest_unit_test(test_matrix_min_idx),

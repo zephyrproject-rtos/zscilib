@@ -97,6 +97,37 @@ void test_matrix_from_arr(void)
 }
 
 /**
+ * @brief zsl_mtx_copy and zsl_mtx_is_equal unit tests.
+ *
+ * This test verifies the zsl_mtx_copy and zsl_mtx_is_equal functions.
+ */
+void test_matrix_copy(void)
+{
+    int rc;
+
+    /* Source array. */
+    zsl_real_t data[9] = { 1.0, 0.0, 0.0,
+                           0.0, 0.5, 0.0,
+                           0.0, 0.0, 0.1 };
+
+    /* Destination matrix. */
+    ZSL_MATRIX_DEF(m, 3, 3);
+    zsl_mtx_init(&m, NULL);
+
+    /* Source matrix. */
+    ZSL_MATRIX_DEF(msrc, 3, 3);
+    rc = zsl_mtx_from_arr(&msrc, data);
+    zassert_true(rc == 0, NULL);
+
+    /* Copy msrc to m. */
+    rc = zsl_mtx_copy(&m, &msrc);
+    zassert_true(rc == 0, NULL);
+
+    /* Verify copy using zsl_mtx_is_equal. */
+    zassert_true(zsl_mtx_is_equal(&m, &msrc), NULL);
+}
+
+/**
  * @brief zsl_mtx_get unit tests.
  *
  * This test verifies the zsl_mtx_get function.
@@ -323,7 +354,24 @@ void test_matrix_row_from_vec(void)
 
 void test_matrix_unary_op(void)
 {
+    int rc;
 
+    zsl_real_t data[9] = { 1.0, 0.0, 0.0,
+                           0.0, 0.5, 0.0,
+                           0.0, 0.0, 0.1 };
+
+    struct zsl_mtx m = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data
+    };
+
+    rc = zsl_mtx_unary_op(&m, ZSL_MTX_UNARY_OP_INCREMENT);
+    zassert_true(rc == 0, NULL);
+    zassert_true(val_is_equal(m.data[0], 2.0, 1E-5), NULL);
+    zassert_true(val_is_equal(m.data[8], 1.1, 1E-5), NULL);
+
+    /* TODO: Test other operands! */
 }
 
 void test_matrix_unary_func(void)
@@ -333,7 +381,39 @@ void test_matrix_unary_func(void)
 
 void test_matrix_binary_op(void)
 {
+    int rc;
 
+    ZSL_MATRIX_DEF(mc, 3, 3);
+
+    zsl_real_t data_a[9] = { 1.0, 0.0, 0.0,
+                             0.0, 0.5, 0.0,
+                             0.0, 0.0, 0.1 };
+
+    zsl_real_t data_b[9] = { 1.0, 0.0, 0.0,
+                             0.0, 0.5, 0.0,
+                             0.0, 0.0, 0.1 };
+
+    struct zsl_mtx ma = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data_a
+    };
+
+    struct zsl_mtx mb = {
+        .sz_rows = 3,
+        .sz_cols = 3,
+        .data = data_b
+    };
+
+    /* Init matrix mc. */
+    zsl_mtx_init(&mc, NULL);
+
+    rc = zsl_mtx_binary_op(&ma, &mb, &mc, ZSL_MTX_BINARY_OP_ADD);
+    zassert_true(rc == 0, NULL);
+    zassert_true(val_is_equal(mc.data[0], ma.data[0]+mb.data[0], 1E-5), NULL);
+    zassert_true(val_is_equal(mc.data[8], ma.data[8]+mb.data[8], 1E-5), NULL);
+
+    /* TODO: Test other operands! */
 }
 
 void test_matrix_binary_func(void)
@@ -612,6 +692,16 @@ void test_matrix_inv(void)
     zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6), NULL);
     zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6), NULL);
     zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), NULL);
+}
+
+void test_matrix_inv_nxn(void)
+{
+
+}
+
+void test_matrix_eigen(void)
+{
+
 }
 
 void test_matrix_min(void)
