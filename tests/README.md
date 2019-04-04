@@ -9,7 +9,7 @@ To run these units tests, make sure that you have previously run
 execute the following command to start the test-runner:
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T ext/lib/zsl/tests/
+$ sanitycheck -p qemu_cortex_m3 -T [zscilib_tests_folder]
 ```
 
 > **Tip**: If you wish to have **verbose output** to see any errors in

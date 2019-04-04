@@ -696,7 +696,40 @@ void test_matrix_inv(void)
 
 void test_matrix_inv_nxn(void)
 {
+    int rc = 0;
 
+    ZSL_MATRIX_DEF(mi, 5, 5);
+
+    /* Input matrix. */
+    zsl_real_t data[25] = { 1.0, 1.0, 2.0, 2.0, 1.0,
+                            0.0, 0.0, 0.0, 1.0, 2.0,
+                            0.0, 0.0, 1.0, 2.0, 2.0,
+                            0.0, 0.0, 1.0, 1.0, 2.0,
+                            0.0, 1.0, 1.0, 2.0, 1.0 };
+    struct zsl_mtx m = {
+        .sz_rows = 5,
+        .sz_cols = 5,
+        .data = data
+    };
+
+    /* The inverse of data for test purposes. */
+    zsl_real_t dtst[25] = {  1.0,  1.0,  0.0, -1.0, -1.0,
+                             0.0,  0.5, -1.5,  0.5,  1.0,
+                             0.0, -1.0,  0.0,  1.0,  0.0,
+                            -0.0, -0.0,  1.0, -1.0, -0.0,
+                            -0.0,  0.5, -0.5,  0.5, -0.0 };
+    struct zsl_mtx mtst = {
+        .sz_rows = 5,
+        .sz_cols = 5,
+        .data = dtst
+    };
+
+    /* Init matrix mi. */
+    zsl_mtx_init(&mi, NULL);
+
+    rc = zsl_mtx_inv(&m, &mi);
+    zassert_equal(rc, 0, NULL);
+    zassert_true(zsl_mtx_is_equal(&mi, &mtst), NULL);
 }
 
 void test_matrix_eigen(void)
