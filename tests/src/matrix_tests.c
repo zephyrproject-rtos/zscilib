@@ -72,6 +72,8 @@ void test_matrix_from_arr(void)
                            0.0, 0.5, 0.0,
                            0.0, 0.0, 0.1 };
 
+    /* Init matrix m. */
+    zsl_mtx_init(&m, NULL);
 
     /* Initialise the matrix with the default (empty) entry_fn. */
     rc = zsl_mtx_from_arr(&m, data);
@@ -141,6 +143,9 @@ void test_matrix_set(void)
     zsl_real_t x;
     ZSL_MATRIX_DEF(m, 3, 3);
 
+    /* Init matrix m. */
+    zsl_mtx_init(&m, NULL);
+
     /* Set values in matrix m. */
     rc = zsl_mtx_set(&m, 0, 0, 1.0);
     zassert_equal(rc, 0, NULL);
@@ -175,6 +180,9 @@ void test_matrix_get_set_row(void)
     zsl_real_t v[] = { 1.0, 2.0, 3.0 };
     ZSL_MATRIX_DEF(m, 3, 3);
     ZSL_VECTOR_DEF(v2, 3);
+
+    /* Init matrix m. */
+    zsl_mtx_init(&m, NULL);
 
     /* Set row 0 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_row(&m, 0, v);
@@ -230,6 +238,9 @@ void test_matrix_get_set_col(void)
 
     /* TODO: Test get method! */
 
+    /* Init matrix m. */
+    zsl_mtx_init(&m, NULL);
+
     /* Set col 0 in m with the values in 3-vector v. */
     rc = zsl_mtx_set_col(&m, 0, v);
     zassert_equal(rc, 0, NULL);
@@ -280,6 +291,9 @@ void test_matrix_row_from_vec(void)
     zsl_real_t x;
     ZSL_VECTOR_DEF(v, 3);
     ZSL_MATRIX_DEF(m, 3, 3);
+
+    /* Init matrix m. */
+    zsl_mtx_init(&m, NULL);
 
     /* Assign some values to the vector. */
     v.data[0] = 1.0;
@@ -337,6 +351,16 @@ void test_matrix_add_d(void)
 
 }
 
+void test_matrix_sum_rows(void)
+{
+
+}
+
+void test_matrix_sum_rows_scaled(void)
+{
+
+}
+
 void test_matrix_sub(void)
 {
 
@@ -377,6 +401,9 @@ void test_matrix_mult_sq(void)
         .data = data_b
     };
 
+    /* Init matrix mc. */
+    zsl_mtx_init(&mc, NULL);
+
     /* Output reference matrix (for comparison). */
     zsl_real_t data_ref[9] = { 300.0,  360.0,  420.0,
                                660.0,  810.0,  960.0,
@@ -411,6 +438,10 @@ void test_matrix_mult_rect(void)
     int rc = 0;
     ZSL_MATRIX_DEF(mc, 4, 3);
     ZSL_MATRIX_DEF(merr, 5, 3);
+
+    /* Init matrix mc, merr */
+    zsl_mtx_init(&mc, NULL);
+    zsl_mtx_init(&merr, NULL);
 
     /* Input matrix a (4x2). */
     zsl_real_t data_a[8] = { 2.0, 3.0,
@@ -497,6 +528,11 @@ void test_matrix_scalar_mult(void)
     zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), NULL);
 }
 
+void test_matrix_scalar_mult_row(void)
+{
+
+}
+
 /**
  * @brief zsl_mtx_scalar_trans unit tests.
  *
@@ -518,6 +554,9 @@ void test_matrix_trans(void)
         .sz_cols = 2,
         .data = data
     };
+
+    /* Init matrix mt. */
+    zsl_mtx_init(&mt, NULL);
 
     rc = zsl_mtx_trans(&m, &mt);
     zassert_equal(rc, 0, NULL);
@@ -558,6 +597,9 @@ void test_matrix_inv(void)
         .sz_cols = 3,
         .data = data
     };
+
+    /* Init matrix mi. */
+    zsl_mtx_init(&mi, NULL);
 
     rc = zsl_mtx_inv(&m, &mi);
     zassert_equal(rc, 0, NULL);

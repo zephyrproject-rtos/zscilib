@@ -43,9 +43,14 @@ struct zsl_mtx {
     zsl_real_t *data;
 };
 
-/** Macro to declare a matrix of shape m*n. */
+/**
+ * Macro to declare a matrix of shape m*n.
+ *
+ * Be sure to also call 'zsl_mtx_init' on the matrix after this macro, since
+ * matrices declared on the stack may have non-zero values by default!
+ */
 #define ZSL_MATRIX_DEF(name, m, n)\
-  zsl_real_t name##_mtx[m*n] = { 0 };\
+  zsl_real_t name##_mtx[m*n];\
   struct zsl_mtx name = {\
       .sz_rows      = m,\
       .sz_cols      = n,\
@@ -197,6 +202,16 @@ int zsl_mtx_init(struct zsl_mtx *m, zsl_mtx_init_entry_fn_t entry_fn);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a);
+
+/**
+ * @brief Copies the contents of matrix 'msrc' into matrix 'mdest'.
+ *
+ * @param mdest Pointer to the destination matrix data will be copied to.
+ * @param msrc  Pointer to the source matrix data will be copied from.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc);
 
 /**
  * @brief Gets a single value from the specified row (i) and column (j).
@@ -361,6 +376,35 @@ int zsl_mtx_add(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 int zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 /**
+ * @brief Adds the values of row 'j' to row 'i' in matrix 'm'. This operation
+ *        is destructive for row 'i'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param i     The first row number to add (0-based).
+ * @param j     The second row number to add (0-based).
+ *
+ * @return  0 if everything executed correctly, or -EINVAL on an out of
+ *          bounds error.
+ */
+int zsl_mtx_sum_rows(struct zsl_mtx *m, size_t i, size_t j);
+
+/**
+ * @brief This function takes the coefficients of row 'j' and multiplies them
+ *        by scalar 's', then adds the resulting coefficient to the parallel
+ *        element in row 'i'. Row 'i' will be modified in this operation.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param i     The row number to update (0-based).
+ * @param j     The row number to scale and then add to 'i' (0-based).
+ * @param s     The scalar value to apply to the values in row 'j'.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_sum_rows_scaled(struct zsl_mtx *m, size_t i, size_t j,
+    zsl_real_t s);
+
+/**
  * @brief Subtracts matrices 'mb' from 'ma', assigning the output to 'mc'.
  *        Matrices 'ma', 'mb' and 'mc' must all be identically shaped.
  *
@@ -404,7 +448,7 @@ int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
 /**
- * @brief Multiplies all elements in vector 'm' by scalar value 's'.
+ * @brief Multiplies all elements in matrix 'm' by scalar value 's'.
  *
  * @param m     Pointer to the zsl_mtz to adjust.
  * @param s     The scalar value to multiply elements in matrix 'm' with.
@@ -413,6 +457,18 @@ int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  *          error code.
  */
 int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
+
+/**
+ * @brief Multiplies the elements of row 'i' in matrix 'm' by scalar 's'.
+ *
+ * @param m     Pointer to the zsl_mtx to use.
+ * @param i     The row number to multiply by scalar 's' (0-based).
+ * @param j     The scalar to use when multiplying elements of row 'i'.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL on an out of
+ *          bounds error.
+ */
+int zsl_mtx_scalar_mult_row(struct zsl_mtx *m, size_t i, zsl_real_t s);
 
 /**
  * @brief Transposes the matrix 'ma' into matrix 'mb'. Note that output
@@ -471,6 +527,37 @@ int zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d);
 int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
 
 /**
+ * @brief Given the element (i,j) in matrix 'm', this function performs
+ *        gaussian elimination by adding row 'i' to the other rows until
+ *        all of the elements in column 'j' are equal to 0.0, aside from the
+ *        element at position (i, j). The result of this process will be
+ *        assigned to matrix 'mg'.
+ *
+ * @param m     Pointer to first zsl_mtx to use.
+ * @param mg    Pointer to the output (simplified) zsl_mtx.
+ * @param i     The row number of the element to use (0-based).
+ * @param j     The column number of the element to use (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
+    size_t i, size_t j);
+
+/**
+ * @brief Normalises elements in matrix m such that the element at position
+ *        (i, j) is equal to 1.0.
+ *
+ * @param m     Pointer to first zsl_mtx to use.
+ * @param mg    Pointer to the output zsl_mtx.
+ * @param i     The row number of the element to use (0-based).
+ * @param j     The column number of the element to use (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
+    size_t i, size_t j);
+
+/**
  * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of
  *        'm' is zero, an identity matrix will be returned via 'mi'.
  *
@@ -479,6 +566,21 @@ int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          3x3 matrix.
+ */
+
+ /* Given a nxn matrix m, this function creates a (n-1)x(n-1) matrix without the column j and the row j of m. I should implement a line of code to make sure
+ that the matrix mr is exactly (n-1)x(n-1) matrix, but by the moment it works well*/
+
+int zsl_mtx_red(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j);
+
+/**
+ * @brief Calculates the inverse of 3x3 matrix 'm'.
+ *
+ * @param m     The input 3x3 matrix to use.
+ * @param a     The output inverse 3x3 matrix.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          square matrix.
  */
 int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
 
