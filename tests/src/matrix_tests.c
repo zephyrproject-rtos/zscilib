@@ -431,12 +431,12 @@ void test_matrix_add_d(void)
 
 }
 
-void test_matrix_sum_rows(void)
+void test_matrix_sum_rows_d(void)
 {
 
 }
 
-void test_matrix_sum_rows_scaled(void)
+void test_matrix_sum_rows_scaled_d(void)
 {
 
 }
@@ -576,11 +576,11 @@ void test_matrix_mult_rect(void)
 }
 
 /**
- * @brief zsl_mtx_scalar_mult unit tests.
+ * @brief zsl_mtx_scalar_mult_d unit tests.
  *
- * This test verifies the zsl_mtx_scalar_mult function.
+ * This test verifies the zsl_mtx_scalar_mult_d function.
  */
-void test_matrix_scalar_mult(void)
+void test_matrix_scalar_mult_d(void)
 {
     int rc = 0;
     zsl_real_t s = 10.0;
@@ -596,7 +596,7 @@ void test_matrix_scalar_mult(void)
         .data = data
     };
 
-    rc = zsl_mtx_scalar_mult(&m, s);
+    rc = zsl_mtx_scalar_mult_d(&m, s);
     zassert_equal(rc, 0, NULL);
     zassert_true(val_is_equal(m.data[0], 20.0, 1E-5), NULL);
     zassert_true(val_is_equal(m.data[1], 30.0, 1E-5), NULL);
@@ -608,7 +608,7 @@ void test_matrix_scalar_mult(void)
     zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), NULL);
 }
 
-void test_matrix_scalar_mult_row(void)
+void test_matrix_scalar_mult_row_d(void)
 {
 
 }

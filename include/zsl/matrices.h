@@ -386,7 +386,7 @@ int zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
-int zsl_mtx_sum_rows(struct zsl_mtx *m, size_t i, size_t j);
+int zsl_mtx_sum_rows_d(struct zsl_mtx *m, size_t i, size_t j);
 
 /**
  * @brief This function takes the coefficients of row 'j' and multiplies them
@@ -401,7 +401,7 @@ int zsl_mtx_sum_rows(struct zsl_mtx *m, size_t i, size_t j);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_sum_rows_scaled(struct zsl_mtx *m, size_t i, size_t j,
+int zsl_mtx_sum_rows_scaled_d(struct zsl_mtx *m, size_t i, size_t j,
     zsl_real_t s);
 
 /**
@@ -456,7 +456,7 @@ int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
+int zsl_mtx_scalar_mult_d(struct zsl_mtx *m, zsl_real_t s);
 
 /**
  * @brief Multiplies the elements of row 'i' in matrix 'm' by scalar 's'.
@@ -468,7 +468,7 @@ int zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s);
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
-int zsl_mtx_scalar_mult_row(struct zsl_mtx *m, size_t i, zsl_real_t s);
+int zsl_mtx_scalar_mult_row_d(struct zsl_mtx *m, size_t i, zsl_real_t s);
 
 /**
  * @brief Transposes the matrix 'ma' into matrix 'mb'. Note that output

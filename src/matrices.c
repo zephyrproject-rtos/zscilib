@@ -387,7 +387,7 @@ zsl_mtx_add_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 }
 
 int
-zsl_mtx_sum_rows(struct zsl_mtx *m, size_t i, size_t j)
+zsl_mtx_sum_rows_d(struct zsl_mtx *m, size_t i, size_t j)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
     if ((i >= m->sz_rows) || (j >= m->sz_rows)) {
@@ -403,7 +403,7 @@ zsl_mtx_sum_rows(struct zsl_mtx *m, size_t i, size_t j)
     return 0;
 }
 
-int zsl_mtx_sum_rows_scaled(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t s)
+int zsl_mtx_sum_rows_scaled_d(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t s)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
     if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
@@ -422,13 +422,13 @@ int zsl_mtx_sum_rows_scaled(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t s)
 int
 zsl_mtx_sub(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 {
-        return zsl_mtx_binary_op(ma, mb, mc, ZSL_MTX_BINARY_OP_SUB);
+    return zsl_mtx_binary_op(ma, mb, mc, ZSL_MTX_BINARY_OP_SUB);
 }
 
 int
 zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
 {
-        return zsl_mtx_binary_op(ma, mb, ma, ZSL_MTX_BINARY_OP_SUB);
+    return zsl_mtx_binary_op(ma, mb, ma, ZSL_MTX_BINARY_OP_SUB);
 }
 
 int
@@ -461,7 +461,7 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 }
 
 int
-zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s)
+zsl_mtx_scalar_mult_d(struct zsl_mtx *m, zsl_real_t s)
 {
     for (size_t i = 0; i < m->sz_rows * m->sz_cols; i++) {
         m->data[i] *= s;
@@ -471,7 +471,7 @@ zsl_mtx_scalar_mult(struct zsl_mtx *m, zsl_real_t s)
 }
 
 int
-zsl_mtx_scalar_mult_row(struct zsl_mtx *m, size_t i, zsl_real_t s)
+zsl_mtx_scalar_mult_row_d(struct zsl_mtx *m, size_t i, zsl_real_t s)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
     if (i >= m->sz_rows) {
@@ -701,12 +701,12 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
 		if(x != 0.0) {
 #if 1
             /* TODO: Why are we modifying input matrix 'm' here ?!? */
-            rc = zsl_mtx_sum_rows_scaled(m, p, i, -(x / y));
+            rc = zsl_mtx_sum_rows_scaled_d(m, p, i, -(x / y));
             if (rc) {
                 return -EINVAL;
             }
 #endif
-            rc = zsl_mtx_sum_rows_scaled(mg, p, i, -(x / y));
+            rc = zsl_mtx_sum_rows_scaled_d(mg, p, i, -(x / y));
             if (rc) {
                 return -EINVAL;
             }
@@ -735,13 +735,13 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
 
 #if 1
     /* TODO: Why are we modifying input matrix 'm' here ?!? */
-    rc = zsl_mtx_scalar_mult_row(m, i, (1.0/x));
+    rc = zsl_mtx_scalar_mult_row_d(m, i, (1.0/x));
     if (rc) {
         return -EINVAL;
     }
 #endif
 
-    rc = zsl_mtx_scalar_mult_row(mi, i, (1.0/x));
+    rc = zsl_mtx_scalar_mult_row_d(mi, i, (1.0/x));
     if (rc) {
         return -EINVAL;
     }
@@ -790,7 +790,7 @@ zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi)
     /* Scale the output using the determinant. */
     if (d != 0) {
         s = 1.0 / d;
-        rc = zsl_mtx_scalar_mult(mi, s);
+        rc = zsl_mtx_scalar_mult_d(mi, s);
     } else {
         /* Provide an identity matrix if the determinant is zero. */
         rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_diagonal);
@@ -864,9 +864,9 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 			}
 #if 1
             /* TODO: Why are we editing both m and mi? */
-            zsl_mtx_sum_rows(m, k, j);
+            zsl_mtx_sum_rows_d(m, k, j);
 #endif
-            zsl_mtx_sum_rows(mi, k, j);
+            zsl_mtx_sum_rows_d(mi, k, j);
 		}
         zsl_mtx_gauss_elim(m, mi, k, k);
         zsl_mtx_norm_elem(m, mi, k, k);

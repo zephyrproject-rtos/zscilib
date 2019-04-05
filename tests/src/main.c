@@ -20,14 +20,14 @@ extern void test_matrix_binary_op(void);
 extern void test_matrix_binary_func(void);
 extern void test_matrix_add(void);
 extern void test_matrix_add_d(void);
-extern void test_matrix_sum_rows(void);
-extern void test_matrix_sum_rows_scaled(void);
+extern void test_matrix_sum_rows_d(void);
+extern void test_matrix_sum_rows_scaled_d(void);
 extern void test_matrix_sub(void);
 extern void test_matrix_sub_d(void);
 extern void test_matrix_mult_sq(void);
 extern void test_matrix_mult_rect(void);
-extern void test_matrix_scalar_mult(void);
-extern void test_matrix_scalar_mult_row(void);
+extern void test_matrix_scalar_mult_d(void);
+extern void test_matrix_scalar_mult_row_d(void);
 extern void test_matrix_trans(void);
 extern void test_matrix_adj(void);
 extern void test_matrix_deter(void);
@@ -80,14 +80,14 @@ void test_main(void)
         ztest_unit_test(test_matrix_binary_func),
         ztest_unit_test(test_matrix_add),
         ztest_unit_test(test_matrix_add_d),
-        ztest_unit_test(test_matrix_sum_rows),
-        ztest_unit_test(test_matrix_sum_rows_scaled),
+        ztest_unit_test(test_matrix_sum_rows_d),
+        ztest_unit_test(test_matrix_sum_rows_scaled_d),
         ztest_unit_test(test_matrix_sub),
         ztest_unit_test(test_matrix_sub_d),
         ztest_unit_test(test_matrix_mult_sq),
         ztest_unit_test(test_matrix_mult_rect),
-        ztest_unit_test(test_matrix_scalar_mult),
-        ztest_unit_test(test_matrix_scalar_mult_row),
+        ztest_unit_test(test_matrix_scalar_mult_d),
+        ztest_unit_test(test_matrix_scalar_mult_row_d),
         ztest_unit_test(test_matrix_trans),
         ztest_unit_test(test_matrix_adj),
         ztest_unit_test(test_matrix_deter),
