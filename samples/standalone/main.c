@@ -3,7 +3,7 @@
 #include "zsl/matrices.h"
 #include "zsl/vectors.h"
 
-/* Input 3x3 matrix used for various tests in this module. */
+/* Input matrix used in this module. */
 zsl_real_t data[25] = { 1.0, 1.0, 2.0, 2.0, 1.0,
                         0.0, 0.0, 0.0, 1.0, 2.0,
                         0.0, 0.0, 1.0, 2.0, 2.0,
