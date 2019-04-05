@@ -328,8 +328,8 @@ int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc,
-        zsl_mtx_binary_op_t op);
+int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
+    struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
 
 /**
  * Applies a component-wise binary operztion on every coefficient in
@@ -579,16 +579,6 @@ int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          3x3 matrix.
- */
-
-/**
- * @brief Calculates the inverse of 3x3 matrix 'm'.
- *
- * @param m     The input 3x3 matrix to use.
- * @param a     The output inverse 3x3 matrix.
- *
- * @return  0 if everything executed correctly, or -EINVAL if this isn't a
- *          square matrix.
  */
 int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
 
