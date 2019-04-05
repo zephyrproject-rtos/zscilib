@@ -5,32 +5,11 @@
  */
 
 #include <errno.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
-
-int
-zsl_mtx_red(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
-{
-	size_t u = 0.0;
-	zsl_real_t x;
-	size_t h = m->sz_rows;
-	zsl_real_t v[16];  /* TODO: Make dynamic value! */
-
-	for(size_t k = 0; k < h; k++) {
-		for(size_t g = 0; g < h; g++) {
-			if(k != i && g != j) {
-				zsl_mtx_get(m, k, g, &x);
-				v[u] = x;
-				u++;
-			}
-		}
-	}
-	zsl_mtx_from_arr(mr, v);
-
-	return 0;
-}
 
 /*
  * WARNING: Work in progress!
@@ -434,7 +413,7 @@ int zsl_mtx_sum_rows_scaled(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t s)
 
     /* Set the values in row 'i' to 'i[n] += j[n] * s' . */
     for(size_t x = 0; x < m->sz_cols; x++) {
-        m->data[(i * m->sz_cols) + x] += m->data[(j * m->sz_cols) + x] * s;
+        m->data[(i * m->sz_cols) + x] += (m->data[(j * m->sz_cols) + x] * s);
     }
 
     return 0;
@@ -579,6 +558,40 @@ zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
 }
 
 int
+zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
+{
+	size_t u = 0.0;
+	zsl_real_t x;
+	zsl_real_t v[mr->sz_rows * mr->sz_rows];
+
+    #if CONFIG_ZSL_BOUNDS_CHECKS
+        /* Make sure mr is 1 less than m. */
+        if (mr->sz_rows != m->sz_rows - 1) {
+            return -EINVAL;
+        }
+        if (mr->sz_cols != m->sz_cols - 1) {
+            return -EINVAL;
+        }
+        if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
+            return -EINVAL;
+        }
+    #endif
+
+	for(size_t k = 0; k < m->sz_rows; k++) {
+		for(size_t g = 0; g < m->sz_rows; g++) {
+			if(k != i && g != j) {
+				zsl_mtx_get(m, k, g, &x);
+				v[u] = x;
+				u++;
+			}
+		}
+	}
+	zsl_mtx_from_arr(mr, v);
+
+	return 0;
+}
+
+int
 zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d)
 {
     /* Make sure this is a square matrix. */
@@ -608,9 +621,6 @@ zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d)
     return 0;
 }
 
-
-/*NOT FINISHED YET*/
-
 int
 zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 {
@@ -619,21 +629,45 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
         return zsl_mtx_deter_3x3(m, d);
     }
 
-    /* Longer calculations required for non 3x3 matrices. */
-    int cols = m->sz_cols - 1;
-    ZSL_MATRIX_DEF(mr, cols, cols);
-    size_t h = m->sz_rows;
-	zsl_real_t x;
-    zsl_real_t y;
+#if CONFIG_ZSL_BOUNDS_CHECKS
+    /* Make sure this is a square matrix. */
+    if (m->sz_rows != m->sz_cols) {
+        return -EINVAL;
+    }
+#endif
+
+    /* Full calculation required for non 3x3 matrices. */
+    int rc;
+    zsl_real_t dtmp;
+    zsl_real_t cur;
+    zsl_real_t sign = 1.0;
+    ZSL_MATRIX_DEF(mr, (m->sz_rows - 1), (m->sz_rows - 1));
+
+    /* Clear determinant output before starting. */
     *d = 0.0;
 
-	for(size_t g = 0; g < h; g++) {
-		zsl_mtx_get(m, 0, g, &x);
-        /* Set matrix contents to 0.0. */
-        zsl_mtx_init(&mr, NULL);
-		zsl_mtx_red(m, &mr, 0, g);
-		zsl_mtx_deter(&mr, &y);
-		*d+=y;
+    /*
+     * Iterate across row 0, removing columns one by one.
+     * Note that these calls are recursive until we reach a 3x3 matrix,
+     * which will be calculated using the shortcut at the top of this
+     * function.
+     */
+	for (size_t g = 0; g < m->sz_cols; g++) {
+		zsl_mtx_get(m, 0, g, &cur);           /* Get value at (0, g). */
+        zsl_mtx_init(&mr, NULL);              /* Clear mr. */
+		zsl_mtx_reduce(m, &mr, 0, g);         /* Remove row 0, column g. */
+		rc = zsl_mtx_deter(&mr, &dtmp);       /* Calc. determinant of mr. */
+        if (rc) {
+            return -EINVAL;
+        }
+
+        /* Uneven elements are negative. */
+		if (g % 2 != 0) {
+			sign = -1.0;
+		}
+
+        /* Add current determinant to final output value. */
+		*d += dtmp * cur * sign;
 	}
 
     return 0;
@@ -657,7 +691,7 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
     }
 
     /* Cycle through the matrix row by row. */
-    for(size_t p = 0; p < m->sz_rows; p++) {
+    for (size_t p = 0; p < m->sz_rows; p++) {
         /* Skip row 'i'. */
 		if (p == i) {
 			p++;
@@ -665,12 +699,14 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
         /* Get the value of (p, j), aborting if value is zero. */
 		zsl_mtx_get(m, p, j, &x);
 		if(x != 0.0) {
+#if 1
             /* TODO: Why are we modifying input matrix 'm' here ?!? */
-            rc = zsl_mtx_sum_rows_scaled(m, p, i, -(x/y));
+            rc = zsl_mtx_sum_rows_scaled(m, p, i, -(x / y));
             if (rc) {
                 return -EINVAL;
             }
-            rc = zsl_mtx_sum_rows_scaled(mg, p, i, -(x/y));
+#endif
+            rc = zsl_mtx_sum_rows_scaled(mg, p, i, -(x / y));
             if (rc) {
                 return -EINVAL;
             }
@@ -680,10 +716,8 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
     return 0;
 }
 
-/* Was 'zsl_mtx_row_norm_mi'. */
 int
-zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
-    size_t i, size_t j)
+zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
 {
     int rc;
     zsl_real_t x;
@@ -699,11 +733,13 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
         return 0;
     }
 
+#if 1
     /* TODO: Why are we modifying input matrix 'm' here ?!? */
     rc = zsl_mtx_scalar_mult_row(m, i, (1.0/x));
     if (rc) {
         return -EINVAL;
     }
+#endif
 
     rc = zsl_mtx_scalar_mult_row(mi, i, (1.0/x));
     if (rc) {
@@ -773,7 +809,9 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 {
     int rc;
 	size_t j = 0;
+    zsl_real_t d = 0.0;
     zsl_real_t v[m->sz_rows];
+    zsl_real_t w[(m->sz_rows) * (m->sz_rows)];
 
     /* Shortcut for 3x3 matrices. */
     if (m->sz_rows == 3) {
@@ -801,25 +839,40 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         return -EINVAL;
     }
 
+    /* Make sure the determinant of 'm' is not zero. */
+	zsl_mtx_deter(m, &d);
+
+	if (d==0){
+		return 0;
+	}
+
+	for (size_t g = 0; g < (m->sz_rows) * (m->sz_rows); g++) {
+		w[g] = m->data[g];
+	}
+
     /* Use Gauss-Jordan elimination for nxn matrices. */
-	for(size_t k = 0; k < m->sz_rows; k++) {
+	for (size_t k = 0; k < m->sz_rows; k++) {
 		zsl_real_t x;
 		zsl_mtx_get(m, k, k, &x);
-		if(x == 0.0) {
+		if (x == 0.0) {
 			zsl_mtx_get_col(m, k, v);
-			for(size_t q = k + 1; q < m->sz_rows; q++) {
+			for (size_t q = k + 1; q < m->sz_rows; q++) {
 				j = q;
-				if(v[j] != 0) {
+				if (v[j] != 0) {
 					break;
 				}
 			}
+#if 1
             /* TODO: Why are we editing both m and mi? */
             zsl_mtx_sum_rows(m, k, j);
+#endif
             zsl_mtx_sum_rows(mi, k, j);
 		}
         zsl_mtx_gauss_elim(m, mi, k, k);
         zsl_mtx_norm_elem(m, mi, k, k);
 	}
+
+	zsl_mtx_from_arr(m, w);
 
 	return 0;
 }
@@ -928,4 +981,26 @@ zsl_mtx_is_notneg(struct zsl_mtx *m)
     }
 
     return true;
+}
+
+int
+zsl_mtx_print(struct zsl_mtx *m)
+{
+	int rc;
+	zsl_real_t x;
+
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		for (size_t j = 0; j < m->sz_cols; j++ ) {
+			rc = zsl_mtx_get(m, i, j, &x);
+			if (rc) {
+				printf("Error reading (%zu,%zu)!\n", i, j);
+				return -EINVAL;
+			}
+			/* Print the current floating-point value. */
+			printf("%f ", x);
+		}
+		printf("\n");
+	}
+
+	return 0;
 }

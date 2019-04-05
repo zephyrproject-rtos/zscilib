@@ -505,13 +505,26 @@ int zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma);
 int zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma);
 
 /**
+ * @brief Removes row 'i' and column 'j' from matrix 'm', assigning the
+ *        remaining elements in the matrix to 'mr'.
+ *
+ * @param m     The input nxn matrix to use.
+ * @param mr    The output n-1xn-1 matrix.
+ * @param i     The row number to remove (0-based).
+ * @param j     The column number to remove (0-based).
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if this isn't a
+ *          3x3 matrix.
+ */
+int zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j);
+
+/**
  * @brief Calculates the determinant of the input 3x3 matrix 'm'.
  *
  * @param m     The input 3x3 matrix to use.
  * @param d     The determinant of 3x3 matrix m.
  *
- * @return  0 if everything executed correctly, or -EINVAL if this isn't a
- *          3x3 matrix.
+ * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d);
 
@@ -567,11 +580,6 @@ int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          3x3 matrix.
  */
-
- /* Given a nxn matrix m, this function creates a (n-1)x(n-1) matrix without the column j and the row j of m. I should implement a line of code to make sure
- that the matrix mr is exactly (n-1)x(n-1) matrix, but by the moment it works well*/
-
-int zsl_mtx_red(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j);
 
 /**
  * @brief Calculates the inverse of 3x3 matrix 'm'.
@@ -671,6 +679,16 @@ bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
  *         otherwise false.
  */
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);
+
+/**
+ * @brief Printf the supplied matrix using printf in a human-readable manner.
+ *
+ * @param m     Pointer to the matrix to print.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_print(struct zsl_mtx *m);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 
