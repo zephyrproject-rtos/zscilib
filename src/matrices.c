@@ -757,9 +757,10 @@ zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi)
         rc = zsl_mtx_scalar_mult(mi, s);
     } else {
         /* Provide an identity matrix if the determinant is zero. */
-        mi->data[0] = 1.0;
-        mi->data[4] = 1.0;
-        mi->data[8] = 1.0;
+        rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_diagonal);
+		if (rc) {
+			return -EINVAL;
+		}
     }
 
     return 0;
