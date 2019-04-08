@@ -78,13 +78,13 @@ zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a)
 int
 zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc)
 {
-    #if CONFIG_ZSL_BOUNDS_CHECKS
+#if CONFIG_ZSL_BOUNDS_CHECKS
         /* Ensure that msrc and mdest have the same shape. */
         if ((mdest->sz_rows != msrc->sz_cols) ||
             (mdest->sz_cols != msrc->sz_rows)) {
                 return -EINVAL;
         }
-    #endif
+#endif
 
         /* Make a copy of matrix 'msrc'. */
         mdest->sz_rows = msrc->sz_rows;
@@ -516,12 +516,12 @@ zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma)
                 return -EINVAL;
         }
 
-    #if CONFIG_ZSL_BOUNDS_CHECKS
+#if CONFIG_ZSL_BOUNDS_CHECKS
         /* Make sure this is a 3x3 matrix. */
         if ((m->sz_rows != 3) || (ma->sz_rows != 3)) {
                 return -EINVAL;
         }
-    #endif
+#endif
 
         /*
          * 3x3 matrix element to array table:
@@ -566,7 +566,7 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
         zsl_real_t x;
         zsl_real_t v[mr->sz_rows * mr->sz_rows];
 
-    #if CONFIG_ZSL_BOUNDS_CHECKS
+#if CONFIG_ZSL_BOUNDS_CHECKS
         /* Make sure mr is 1 less than m. */
         if (mr->sz_rows != m->sz_rows - 1) {
                 return -EINVAL;
@@ -577,7 +577,7 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
         if ((i >= m->sz_rows) || (j >= m->sz_cols)) {
                 return -EINVAL;
         }
-    #endif
+#endif
 
         for(size_t k = 0; k < m->sz_rows; k++) {
                 for(size_t g = 0; g < m->sz_rows; g++) {
