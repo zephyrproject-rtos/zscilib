@@ -47,17 +47,17 @@ extern "C" {
  * - Linear (i.e. identity)
  */
 
- /**
-  * TODO: Implement the following optimisers:
-  *
-  * - Stochastic gradient descent
-  * - RMS prop.
-  * - Adagrad
-  * - Adadelta
-  * - Adam
-  * - Adamax
-  * - Nesterov adam (Nadam)
-  */
+/**
+ * TODO: Implement the following optimisers:
+ *
+ * - Stochastic gradient descent
+ * - RMS prop.
+ * - Adagrad
+ * - Adadelta
+ * - Adam
+ * - Adamax
+ * - Nesterov adam (Nadam)
+ */
 
 /**
  * TODO: Implement the following loss calculation methods:
@@ -89,30 +89,30 @@ int zsl_nn_activ_fn_sigmoid(zsl_real_t *s, zsl_real_t *out));
 
 /** @brief Represents a neuron in a neural network. */
 struct zsl_nn_neuron {
-    /** The number of inputs available in 'inputs'. */
-    size_t num_inputs;
-    /** The array of input values for the neuron. */
-    zsl_real_t **inputs;
-    /** The weight coefficient applied to each input value. */
-    zsl_real_t **input_weight;
-    /** The bias used when adding all weight inputs together. */
-    zsl_real_t bias;
-    /** The activation function the sum of weighted values is passed through. */
-    zsl_nn_activ_fn_t activ_fn;
-    /** The neuron's output value. */
-    zsl_real_t *output;
+        /** The number of inputs available in 'inputs'. */
+        size_t num_inputs;
+        /** The array of input values for the neuron. */
+        zsl_real_t **inputs;
+        /** The weight coefficient applied to each input value. */
+        zsl_real_t **input_weight;
+        /** The bias used when adding all weight inputs together. */
+        zsl_real_t bias;
+        /** Activation function the sum of weighted values is passed through. */
+        zsl_nn_activ_fn_t activ_fn;
+        /** The neuron's output value. */
+        zsl_real_t *output;
 };
 
 int
 zsl_nn_feedfwd(void)
 {
-    return 0,
+        return 0,
 }
 
 int
 zsl_nn_train(void)
 {
-    return 0;
+        return 0;
 }
 
 

@@ -35,19 +35,19 @@ extern "C" {
 
 /** @brief Represents a vector. */
 struct zsl_vec {
-    /** The number of elements in the vector. */
-    size_t sz;
-    /** The array of real number values assigned to the vector. */
-    zsl_real_t *data;
+        /** The number of elements in the vector. */
+        size_t sz;
+        /** The array of real number values assigned to the vector. */
+        zsl_real_t *data;
 };
 
 /** Macro to declare a vector of size `n`. */
-#define ZSL_VECTOR_DEF(name, n)\
-  zsl_real_t name##_vec[n] = { 0 };\
-  struct zsl_vec name = {\
-      .sz   = n,\
-      .data = name##_vec\
-  }
+#define ZSL_VECTOR_DEF(name, n) \
+        zsl_real_t name ## _vec[n] = { 0 }; \
+        struct zsl_vec name = { \
+                .sz   = n, \
+                .data = name ## _vec \
+        }
 
 /**
  * Initialises vector 'v' with 0.0 values.
@@ -88,7 +88,7 @@ int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
  * @return 0 on success, -EINVAL on a size of index error.
  */
 int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
-    struct zsl_vec* vsub);
+                       struct zsl_vec* vsub);
 
 /**
  * @brief Adds corresponding vector elements in 'v' and 'w', saving to 'x'.

@@ -35,12 +35,12 @@ extern "C" {
 
 /** @brief Represents a m x n matrix, with data stored in row-major order. */
 struct zsl_mtx {
-    /** The number of rows in the matrix (typically denoted as 'm'). */
-    size_t sz_rows;
-    /** The number of columns in the matrix (typically denoted as 'n'). */
-    size_t sz_cols;
-    /** The data assigned to the matrix, in row-major order (left to right). */
-    zsl_real_t *data;
+        /** The number of rows in the matrix (typically denoted as 'm'). */
+        size_t sz_rows;
+        /** The number of columns in the matrix (typically denoted as 'n'). */
+        size_t sz_cols;
+        /** Data assigned to the matrix, in row-major order (left to right). */
+        zsl_real_t *data;
 };
 
 /**
@@ -49,13 +49,13 @@ struct zsl_mtx {
  * Be sure to also call 'zsl_mtx_init' on the matrix after this macro, since
  * matrices declared on the stack may have non-zero values by default!
  */
-#define ZSL_MATRIX_DEF(name, m, n)\
-  zsl_real_t name##_mtx[m*n];\
-  struct zsl_mtx name = {\
-      .sz_rows      = m,\
-      .sz_cols      = n,\
-      .data         = name##_mtx\
-  }
+#define ZSL_MATRIX_DEF(name, m, n) \
+        zsl_real_t name ## _mtx[m*n]; \
+        struct zsl_mtx name = { \
+                .sz_rows      = m, \
+                .sz_cols      = n, \
+                .data         = name ## _mtx \
+        }
 
 /* Component-wise unary operations. */
 typedef enum zsl_mtx_unary_op {
@@ -125,7 +125,7 @@ typedef int (*zsl_mtx_unary_fn_t)(struct zsl_mtx *m, size_t i, size_t j);
  * @return 0 on success, and non-zero error code on failure
  */
 typedef int (*zsl_mtx_binary_fn_t)(struct zsl_mtx *ma, struct zsl_mtx *mb,
-        struct zsl_mtx *mc, size_t i, size_t j);
+                                   struct zsl_mtx *mc, size_t i, size_t j);
 
 /**
  * Function prototype called when populating a matrix via `zsl_mtx_init`.
@@ -329,7 +329,7 @@ int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
-    struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
+                      struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
 
 /**
  * Applies a component-wise binary operztion on every coefficient in
@@ -345,7 +345,7 @@ int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
-        struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
+                        struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
 
 /**
  * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.
@@ -402,7 +402,7 @@ int zsl_mtx_sum_rows_d(struct zsl_mtx *m, size_t i, size_t j);
  *          error code.
  */
 int zsl_mtx_sum_rows_scaled_d(struct zsl_mtx *m, size_t i, size_t j,
-    zsl_real_t s);
+                              zsl_real_t s);
 
 /**
  * @brief Subtracts matrices 'mb' from 'ma', assigning the output to 'mc'.
@@ -554,7 +554,7 @@ int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
-    size_t i, size_t j);
+                       size_t i, size_t j);
 
 /**
  * @brief Normalises elements in matrix m such that the element at position
@@ -568,7 +568,7 @@ int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
-    size_t i, size_t j);
+                      size_t i, size_t j);
 
 /**
  * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of
