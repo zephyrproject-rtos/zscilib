@@ -1,10 +1,17 @@
+![zscilib](doc/img/zscilib_logo_200px.png)
+
 # Zephyr Scientific Library (zscilib)
 
-The **Zephyr scientific library (zscilib)** is an attempt to provide a set of functions
-useful for scientific computing, data analysis and data manipulation in the
-context of resource constrained embedded devices or 'end nodes'.
+The **Zephyr Scientific Library (zscilib)** is an attempt to provide a set of
+functions useful for scientific computing, data analysis and data manipulation
+in the context of resource constrained embedded hardware devices.
 
-## Quick Start
+It is written entirely in C, and while the main development target for the
+library is the [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr),
+it tries to be as portable as possible, and a standalone reference project
+is included to use this library in non-Zephyr-based projects.
+
+## Quick Start: Zephyr
 
 ### Adding zscilib to your project via `west`
 
@@ -57,6 +64,26 @@ $ sanitycheck -p qemu_cortex_m3 -T tests
 ```
 
 See the `tests` folder for further details.
+
+## Quickstart: Standalone
+
+A standard makefile-based project is included in `samples/standalone` showing
+how zscilib can be built with GCC.
+
+If you already have an appropriate GNU toolchain and build tools (`make`, etc.) installed, you can simply execute the following commands:
+
+```
+$ cd samples/standalone
+$ make
+  Compiling obj/main.o
+  Compiling obj/matrices.o
+  Compiling obj/vectors.o
+  Compiling obj/zsl.o
+  gcc  obj/main.o obj/matrices.o obj/vectors.o obj/zsl.o  -o bin/zscilib -Wall -I. -I../../include -lm
+$ bin/zscilib
+  Hello, zscilib!
+  ...
+```
 
 ## Current Features
 
