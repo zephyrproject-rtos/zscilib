@@ -78,7 +78,8 @@ these threads uses floating-point operations, you should also enable the
 [Shared FP registers mode][2]. In this mode, the floating point registers are
 saved and restored during each context switch, even when the associated threads
 are not using them. This feature comes at the expense of an extra 72 bytes of
-stack memory per stack frame.
+stack memory per stack frame (`s0..s15` + `FPCSR`, plus an alignment word
+to ensure that the stack pointer is double-word aligned).
 
 [1]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
 [2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
