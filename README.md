@@ -65,6 +65,24 @@ $ sanitycheck -p qemu_cortex_m3 -T tests
 
 See the `tests` folder for further details.
 
+### Note: Float Stack Usage in Zephyr
+
+The sample code in this library typically has the `CONFIG_FLOAT` option set,
+meaning that floating-point support is configured for
+[Unshared FP registers mode][1]. This mode is used when the application
+has a **single thread** that uses floating point registers.
+
+If your application makes use of **multiple threads**, and more than one of
+these threads uses floating-point operations, you should also enable the
+`CONFIG_FP_SHARING` config flag, which configures the kernel for
+[Shared FP registers mode][2]. In this mode, the floating point registers are
+saved and restored during each context switch, even when the associated threads
+are not using them. This feature comes at the expense of an extra 72 bytes of
+stack memory per stack frame.
+
+[1]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
+[2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
+
 ## Quickstart: Standalone
 
 A standard makefile-based project is included in `samples/standalone` showing
@@ -315,7 +333,7 @@ accommodated if necessary or useful.
 
 ## Contributing
 
-TODO: Note on how to contribute, and what it most needed at present.
+TODO: Note on how to contribute, and what is most needed at present.
 
 ## License
 
