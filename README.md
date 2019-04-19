@@ -45,6 +45,14 @@ To run the benchmark sample using qemu, run the following commands:
 
 > Be sure to run `source zephyr/zephyr-env.sh`  before the commands below!
 
+#### Using `west`
+
+```
+$ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
+```
+
+#### Using `cmake` and `ninja`
+
 ```
 $ cd modules/lib/zscilib/samples/benchmarking
 $ mkdir b && cd b
@@ -84,10 +92,10 @@ to ensure that the stack pointer is double-word aligned).
 [1]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
 [2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
 
-## Quickstart: Standalone
+## Quick Start: Standalone
 
 A standard makefile-based project is included in `samples/standalone` showing
-how zscilib can be built with GCC.
+how zscilib can be built by itself with GCC (without using Zephyr).
 
 If you already have an appropriate GNU toolchain and build tools (`make`, etc.) installed, you can simply execute the following commands:
 
@@ -98,7 +106,7 @@ $ make
   Compiling obj/matrices.o
   Compiling obj/vectors.o
   Compiling obj/zsl.o
-  gcc  obj/main.o obj/matrices.o obj/vectors.o obj/zsl.o  -o bin/zscilib -Wall -I. -I../../include -lm
+  gcc obj/main.o obj/matrices.o obj/vectors.o obj/zsl.o  -o bin/zscilib -Wall -I. -I../../include -lm
 $ bin/zscilib
   Hello, zscilib!
   ...
