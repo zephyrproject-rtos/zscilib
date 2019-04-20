@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Zephyr Scientific Library (zscilib): Data Selection</title>
+<title>Zephyr Scientific Library (zscilib): Training</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,73 +64,38 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Data Selection<div class="ingroups"><a class="el" href="group___v_e_c_t_o_r_s.html">Vectors</a></div></div>  </div>
+<div class="title">Training<div class="ingroups"><a class="el" href="group___n_e_u_r_a_l.html">Neural Networks</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions used to access subsets of the vector.  
+<p>Training functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga970c2ce3eaef471ffd0b8a41f19819bd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_e_l_e_c_t_i_o_n.html#ga970c2ce3eaef471ffd0b8a41f19819bd">zsl_vec_get_subset</a> (struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *v, size_t offset, size_t len, struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *vsub)</td></tr>
-<tr class="memdesc:ga970c2ce3eaef471ffd0b8a41f19819bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a subset of source vector 'v' in 'vsub'..  <a href="#ga970c2ce3eaef471ffd0b8a41f19819bd">More...</a><br /></td></tr>
-<tr class="separator:ga970c2ce3eaef471ffd0b8a41f19819bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8856fb49fc7cef010d1c68e947c8b1b4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_n___t_r_a_i_n_i_n_g.html#ga8856fb49fc7cef010d1c68e947c8b1b4">zsl_nn_train</a> (void)</td></tr>
+<tr class="separator:ga8856fb49fc7cef010d1c68e947c8b1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions used to access subsets of the vector. </p>
+<p>Training functions. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga970c2ce3eaef471ffd0b8a41f19819bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga970c2ce3eaef471ffd0b8a41f19819bd">&#9670;&nbsp;</a></span>zsl_vec_get_subset()</h2>
+<a id="ga8856fb49fc7cef010d1c68e947c8b1b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8856fb49fc7cef010d1c68e947c8b1b4">&#9670;&nbsp;</a></span>zsl_nn_train()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int zsl_vec_get_subset </td>
+          <td class="memname">int zsl_nn_train </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>offset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *&#160;</td>
-          <td class="paramname"><em>vsub</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a subset of source vector 'v' in 'vsub'.. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>The parent vector to read a subset of. </td></tr>
-    <tr><td class="paramname">offset</td><td>The starting index (zero-based) foor the data subset. </td></tr>
-    <tr><td class="paramname">len</td><td>The number of values to read, starting at offset. </td></tr>
-    <tr><td class="paramname">vsub</td><td>The subset vector, which must have a buffer of at least size 'len'. If the data buffer isn't sufficiently large, this function will return -EINVAL.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success, -EINVAL on a size of index error. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="vectors_8c_source.html#l00030">30</a> of file <a class="el" href="vectors_8c_source.html">vectors.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="neural_8h_source.html#l00135">135</a> of file <a class="el" href="neural_8h_source.html">neural.h</a>.</p>
 
 </div>
 </div>

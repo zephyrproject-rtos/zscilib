@@ -64,42 +64,42 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Comparison<div class="ingroups"><a class="el" href="group___m_a_t_r_i_c_e_s.html">Matrices</a></div></div>  </div>
+<div class="title">Comparison<div class="ingroups"><a class="el" href="group___v_e_c_t_o_r_s.html">Vectors</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions used to compare or verify matrices.  
+<p>Functions used to compare or verify vectors.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9f8c743f0d3b7d0efdcbc16145a1f92b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_o_m_p_a_r_i_s_o_n.html#ga9f8c743f0d3b7d0efdcbc16145a1f92b">zsl_mtx_is_equal</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *ma, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mb)</td></tr>
-<tr class="memdesc:ga9f8c743f0d3b7d0efdcbc16145a1f92b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two matrices are identical in shape and content.  <a href="#ga9f8c743f0d3b7d0efdcbc16145a1f92b">More...</a><br /></td></tr>
-<tr class="separator:ga9f8c743f0d3b7d0efdcbc16145a1f92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f281b6490db543966ec38b03195f130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_o_m_p_a_r_i_s_o_n.html#ga1f281b6490db543966ec38b03195f130">zsl_mtx_is_notneg</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m)</td></tr>
-<tr class="memdesc:ga1f281b6490db543966ec38b03195f130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all elements in matrix m are &gt;= zero and non-null.  <a href="#ga1f281b6490db543966ec38b03195f130">More...</a><br /></td></tr>
-<tr class="separator:ga1f281b6490db543966ec38b03195f130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga038e22bc84c7aa72c6a18008f18229d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_e_c___c_o_m_p_a_r_e.html#ga038e22bc84c7aa72c6a18008f18229d3">zsl_vec_is_equal</a> (struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *v, struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *w)</td></tr>
+<tr class="memdesc:ga038e22bc84c7aa72c6a18008f18229d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two vectors are identical in size and content.  <a href="#ga038e22bc84c7aa72c6a18008f18229d3">More...</a><br /></td></tr>
+<tr class="separator:ga038e22bc84c7aa72c6a18008f18229d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ed1b1110057fa96e521350a93516d65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_e_c___c_o_m_p_a_r_e.html#ga3ed1b1110057fa96e521350a93516d65">zsl_vec_is_nonneg</a> (struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *v)</td></tr>
+<tr class="memdesc:ga3ed1b1110057fa96e521350a93516d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all elements in vector v are &gt;= zero and non-null.  <a href="#ga3ed1b1110057fa96e521350a93516d65">More...</a><br /></td></tr>
+<tr class="separator:ga3ed1b1110057fa96e521350a93516d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions used to compare or verify matrices. </p>
+<p>Functions used to compare or verify vectors. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga9f8c743f0d3b7d0efdcbc16145a1f92b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9f8c743f0d3b7d0efdcbc16145a1f92b">&#9670;&nbsp;</a></span>zsl_mtx_is_equal()</h2>
+<a id="ga038e22bc84c7aa72c6a18008f18229d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga038e22bc84c7aa72c6a18008f18229d3">&#9670;&nbsp;</a></span>zsl_vec_is_equal()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool zsl_mtx_is_equal </td>
+          <td class="memname">bool zsl_vec_is_equal </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
-          <td class="paramname"><em>ma</em>, </td>
+          <td class="paramtype">struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
-          <td class="paramname"><em>mb</em>&#160;</td>
+          <td class="paramtype">struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -109,46 +109,46 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if two matrices are identical in shape and content. </p>
+<p>Checks if two vectors are identical in size and content. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ma</td><td>The first matrix. </td></tr>
-    <tr><td class="paramname">mb</td><td>The second matrix.</td></tr>
+    <tr><td class="paramname">v</td><td>The first vector. </td></tr>
+    <tr><td class="paramname">w</td><td>The second vector.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the two matrices have the same shape and values, otherwise false. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the two vectors have the same size and the same values, otherwise false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00978">978</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vectors_8c_source.html#l00321">321</a> of file <a class="el" href="vectors_8c_source.html">vectors.c</a>.</p>
 
 </div>
 </div>
-<a id="ga1f281b6490db543966ec38b03195f130"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f281b6490db543966ec38b03195f130">&#9670;&nbsp;</a></span>zsl_mtx_is_notneg()</h2>
+<a id="ga3ed1b1110057fa96e521350a93516d65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3ed1b1110057fa96e521350a93516d65">&#9670;&nbsp;</a></span>zsl_vec_is_nonneg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool zsl_mtx_is_notneg </td>
+          <td class="memname">bool zsl_vec_is_nonneg </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
-          <td class="paramname"><em>m</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if all elements in matrix m are &gt;= zero and non-null. </p>
+<p>Checks if all elements in vector v are &gt;= zero and non-null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">m</td><td>The matrix to check.</td></tr>
+    <tr><td class="paramname">v</td><td>The vector to check.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the all matrix elements are zero, positive and non-null, otherwise false. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the all vector elements are zero, positive and non-null, otherwise false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00994">994</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vectors_8c_source.html#l00335">335</a> of file <a class="el" href="vectors_8c_source.html">vectors.c</a>.</p>
 
 </div>
 </div>
