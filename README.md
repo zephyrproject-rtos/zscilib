@@ -143,6 +143,7 @@ To be determined.
 
 ### Matrix Operations
 
+- Copy
 - Add
 - Subtract
 - Multiply
@@ -289,8 +290,8 @@ computation can be done on the endnode itself. This allows for more of the
 (data aggregation, statistical analysis, etc.) to be done in less time,
 using less data storage, and at a lower overall processing cost.
 
-> **A key goal of zscilib is to allow more data processing to happen on the
-  endnode**.
+> A key goal of zscilib is to allow more data processing to happen on the
+  endnode.
 
 By generating immediately actionable and scientifically-relevant data points
 (standard SI units, pre-filtered data, etc.) directly on the endnode, zscilib

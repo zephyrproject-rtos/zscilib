@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup QUATERNIONS Quaternions
+ *
+ * @brief Quaternion unit math.
+ */
+
+/**
  * @file
  * @brief API header file for quaternions in zscilib.
  *
@@ -38,3 +44,5 @@ extern "C" {
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_ */
+
+/** @} */ /* End of quaternions group */

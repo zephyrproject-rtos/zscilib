@@ -16,6 +16,33 @@ struct zsl_mtx m = {
         .data = data
 };
 
+
+
+
+
+int
+my_rec_func(int iter)
+{
+    /* No further recursion required, abort. */
+    if (iter == 0) {
+        return 0;
+    }
+
+    /* Do something */
+    printf("%d\n", iter);
+
+    /* Perform another recursive call. */
+    my_rec_func(iter - 1);
+
+    return 0;
+}
+
+// my_rec_func(10);
+
+
+
+
+
 int
 zsl_mtx_test_inv_nxn(void)
 {
@@ -85,6 +112,8 @@ int
 main(void)
 {
         printf("Hello, zscilib!\n\n");
+
+        my_rec_func(10);
 
         printf("--- nxn inverse tester --------------------\n");
         zsl_mtx_test_inv_nxn();

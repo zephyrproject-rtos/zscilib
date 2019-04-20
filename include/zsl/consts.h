@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup CONSTANTS Constants
+ *
+ * @brief Constant values used by or with zscilib.
+ */
+
+/**
  * @file
  * @brief Constant values for zscilib.
  *
@@ -36,3 +42,5 @@ extern "C" {
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_CONSTS_H_ */
+
+/** @} */ /* End of constants group */

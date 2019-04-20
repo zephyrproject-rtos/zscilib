@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup STATISTICS Statistics
+ *
+ * @brief Statistics-related functions.
+ */
+
+/**
  * @file
  * @brief API header file for statistics in zscilib.
  *
@@ -38,3 +44,5 @@ extern "C" {
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_STATISTICS_H_ */
+
+/** @} */ /* End of statistics group */

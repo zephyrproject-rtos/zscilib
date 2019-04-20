@@ -18,6 +18,14 @@
  */
 
 /**
+ * \defgroup MATRICES Matrices
+ *
+ * @brief Various mxn matrices functions.
+ *
+ * TODO: Expand with examples, better high-level documentation, etc.
+ */
+
+/**
  * @file
  * @brief API header file for matrices in zscilib.
  *
@@ -32,6 +40,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @addtogroup STRUCTS Structs, Enums and Macros
+ *
+ * @brief Common structs, enums and macros for working with matrices.
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /** @brief Represents a m x n matrix, with data stored in row-major order. */
 struct zsl_mtx {
@@ -57,11 +73,11 @@ struct zsl_mtx {
                 .data         = name ## _mtx \
         }
 
-/* Component-wise unary operations. */
+/** @brief Component-wise unary operations. */
 typedef enum zsl_mtx_unary_op {
         ZSL_MTX_UNARY_OP_INCREMENT,             /**< ++ */
         ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
-        ZSL_MTX_UNARY_OP_NEGATIVE,              /**< - */
+        ZSL_MTX_UNARY_OP_NEGATIVE,
         ZSL_MTX_UNARY_OP_LOGICAL_NEGATION,      /**< ! */
         ZSL_MTX_UNARY_OP_ROUND,
         ZSL_MTX_UNARY_OP_ABS,
@@ -82,7 +98,7 @@ typedef enum zsl_mtx_unary_op {
         ZSL_MTX_UNARY_OP_TANH,
 } zsl_mtx_unary_op_t;
 
-/** Component-wise binary operations. */
+/** @brief Component-wise binary operations. */
 typedef enum zsl_mtx_binary_op {
         ZSL_MTX_BINARY_OP_ADD,                  /**< a + b */
         ZSL_MTX_BINARY_OP_SUB,                  /**< a - b */
@@ -100,8 +116,18 @@ typedef enum zsl_mtx_binary_op {
         ZSL_MTX_BINARY_OP_GEQ,                  /**< a >= b */
 } zsl_mtx_binary_op_t;
 
+/** @} */ /* End of STRUCTS group */
+
 /**
- * Function prototype called when applying a set of component-wise unary
+ * @addtogroup INIT Initialisation
+ *
+ * @brief Functions used to initialise matrices.
+ *
+ * \ingroup MATRICES
+ *  @{ */
+
+/**
+ * @brief Function prototype called when applying a set of component-wise unary
  * operations to a matrix via `zsl_mtx_unary_func`.
  *
  * @param m     Pointer to the zsl_mtx to use.
@@ -113,7 +139,7 @@ typedef enum zsl_mtx_binary_op {
 typedef int (*zsl_mtx_unary_fn_t)(struct zsl_mtx *m, size_t i, size_t j);
 
 /**
- * Function prototype called when applying a set of component-wise binary
+ * @brief Function prototype called when applying a set of component-wise binary
  * operations using a pair of symmetrical matrices via `zsl_mtx_binary_func`.
  *
  * @param ma    Pointer to first zsl_mtx to use in the binary operation.
@@ -128,7 +154,7 @@ typedef int (*zsl_mtx_binary_fn_t)(struct zsl_mtx *ma, struct zsl_mtx *mb,
                                    struct zsl_mtx *mc, size_t i, size_t j);
 
 /**
- * Function prototype called when populating a matrix via `zsl_mtx_init`.
+ * @brief Function prototype called when populating a matrix via `zsl_mtx_init`.
  *
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to write (0-based).
@@ -173,7 +199,7 @@ int zsl_mtx_entry_fn_diagonal(struct zsl_mtx *m, size_t i, size_t j);
 int zsl_mtx_entry_fn_random(struct zsl_mtx *m, size_t i, size_t j);
 
 /**
- * Initialises matrix 'm' using the specified entry function to
+ * @brief Initialises matrix 'm' using the specified entry function to
  * assign values.
  *
  * @param m         Pointer to the zsl_mtx to use.
@@ -185,11 +211,12 @@ int zsl_mtx_entry_fn_random(struct zsl_mtx *m, size_t i, size_t j);
 int zsl_mtx_init(struct zsl_mtx *m, zsl_mtx_init_entry_fn_t entry_fn);
 
 /**
- * @brief Converts an array of values into a matrix. The number of elements in
- *        array 'a' must match the number of elements in matrix 'm'
- *        (m.sz_rows * m.sz_cols). As such, 'm' should be a previously
- *        initialised matrix with appropriate values assigned to m.sz_rows
- *        and m.sz_cols. Assumes array values are in row-major order.
+ * @brief Converts an array of values into a matrix.
+ *
+ * The number of elements in array 'a' must match the number of elements in
+ * matrix 'm' (m.sz_rows * m.sz_cols). As such, 'm' should be a previously
+ * initialised matrix with appropriate values assigned to m.sz_rows and
+ * m.sz_cols. Assumes array values are in row-major order.
  *
  * @param m The matrix that the contents of array 'a' should be assigned to.
  *          The m.sz_rows and m.sz_cols dimensions must match the number of
@@ -212,6 +239,17 @@ int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc);
+
+/** @} */ /* End of INIT group */
+
+/**
+ * @addtogroup DATACCESS Data Access
+ *
+ * @brief Functions used to access or modify matrix rows, columns or
+ *        coefficients.
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /**
  * @brief Gets a single value from the specified row (i) and column (j).
@@ -258,7 +296,7 @@ int zsl_mtx_get_row(struct zsl_mtx *m, size_t i, zsl_real_t *v);
  *        found in array 'v'.
  *
  * @param m     Pointer to the zsl_mtx to use.
- * @param j     The row number to write to (0-based).
+ * @param i     The row number to write to (0-based).
  * @param v     Pointer to the array where the row vector data is stored.
  *              Must be at least m->sz_cols elements long!
  *
@@ -295,8 +333,19 @@ int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
  */
 int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 
+/** @} */ /* End of DATAACCESS group */
+
 /**
- * Applies a unary operand on every coefficient in matrix 'm'.
+ * @addtogroup OPERANDS Operands
+ *
+ * @brief Unary and binary operands that can be performed on matrix
+ *        coefficients.
+ *
+ * \ingroup MATRICES
+ *  @{ */
+
+/**
+ * @brief Applies a unary operand on every coefficient in matrix 'm'.
  *
  * @param m         Pointer to the zsl_mtx to use.
  * @param op        The unary operation to apply to each coefficient.
@@ -306,7 +355,7 @@ int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 int zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op);
 
 /**
- * Applies a unary function on every coefficient in matrix 'm', using the
+ * @brief Applies a unary function on every coefficient in matrix 'm', using the
  * specified 'zsl_mtx_apply_unary_fn_t' instance.
  *
  * @param m         Pointer to the zsl_mtx to use.
@@ -317,7 +366,7 @@ int zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op);
 int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn);
 
 /**
- * Applies a component-wise binary operation on every coefficient in
+ * @brief Applies a component-wise binary operation on every coefficient in
  * symmetrical matrices 'ma' and 'mb', with the results being stored in the
  * identically shaped `mc` matrix.
  *
@@ -332,7 +381,7 @@ int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
                       struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
 
 /**
- * Applies a component-wise binary operztion on every coefficient in
+ * @brief Applies a component-wise binary operztion on every coefficient in
  * symmetrical matrices 'ma' and 'mb', with the results  being stored in the
  * identically shaped 'mc' matrix. The actual binary operation is executed
  * using the specified 'zsl_mtx_binary_fn_t' callback.
@@ -346,6 +395,16 @@ int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
  */
 int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
                         struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
+
+/** @} */ /* End of OPERANDS group */
+
+/**
+ * @addtogroup BASICMATH Basic Math
+ *
+ * @brief Basic mathematical operations for matrices (add, substract, etc.).
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /**
  * @brief Adds matrices 'ma' and 'mb', assigning the output to 'mc'.
@@ -392,6 +451,9 @@ int zsl_mtx_sum_rows_d(struct zsl_mtx *m, size_t i, size_t j);
  * @brief This function takes the coefficients of row 'j' and multiplies them
  *        by scalar 's', then adds the resulting coefficient to the parallel
  *        element in row 'i'. Row 'i' will be modified in this operation.
+ *
+ * This function implements a key mechanism of Gauss–Jordan elimination, as can
+ * be seen in @ref zsl_mtx_gauss_elim.
  *
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to update (0-based).
@@ -463,12 +525,23 @@ int zsl_mtx_scalar_mult_d(struct zsl_mtx *m, zsl_real_t s);
  *
  * @param m     Pointer to the zsl_mtx to use.
  * @param i     The row number to multiply by scalar 's' (0-based).
- * @param j     The scalar to use when multiplying elements of row 'i'.
+ * @param s     The scalar to use when multiplying elements of row 'i'.
  *
  * @return  0 if everything executed correctly, or -EINVAL on an out of
  *          bounds error.
  */
 int zsl_mtx_scalar_mult_row_d(struct zsl_mtx *m, size_t i, zsl_real_t s);
+
+/** @} */ /* End of BASICMATH group */
+
+/**
+ * @addtogroup TRANSFORMATIONS Transformation
+ *
+ * @brief Transformation functions for matrices (transpose, inverse, guassian
+ *        elimination, etc.).
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /**
  * @brief Transposes the matrix 'ma' into matrix 'mb'. Note that output
@@ -486,7 +559,7 @@ int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
  * @brief Calculates the ajoint matrix, based on the input 3x3 matrix 'm'.
  *
  * @param m     The input 3x3 matrix to use.
- * @param a     The output 3x3 matrix the adjoint values will be assigned to.
+ * @param ma    The output 3x3 matrix the adjoint values will be assigned to.
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          3x3 matrix.
@@ -497,7 +570,7 @@ int zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma);
  * @brief Calculates the ajoint matrix, based on the input square matrix 'm'.
  *
  * @param m     The input square matrix to use.
- * @param a     The output square matrix the adjoint values will be assigned to.
+ * @param ma    The output square matrix the adjoint values will be assigned to.
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          square matrix.
@@ -579,7 +652,7 @@ int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
  *        (i, j) is equal to 1.0.
  *
  * @param m     Pointer to input zsl_mtx to use.
- * @param m     Pointer to normalised output zsl_mtx.
+ * @param mn    Pointer to normalised output zsl_mtx.
  * @param mi    Pointer to the output identity zsl_mtx.
  * @param i     The row number of the element to use (0-based).
  * @param j     The column number of the element to use (0-based).
@@ -609,7 +682,7 @@ int zsl_mtx_norm_elem_d(struct zsl_mtx *m, struct zsl_mtx *mi,
  *        'm' is zero, an identity matrix will be returned via 'mi'.
  *
  * @param m     The input 3x3 matrix to use.
- * @param a     The output inverse 3x3 matrix.
+ * @param mi    The output inverse 3x3 matrix.
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          3x3 matrix.
@@ -620,7 +693,7 @@ int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
  * @brief Calculates the inverse of square matrix 'm'.
  *
  * @param m     The input square matrix to use.
- * @param a     The output inverse square matrix.
+ * @param mi    The output inverse square matrix.
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
  *          square matrix.
@@ -628,6 +701,16 @@ int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
+
+/** @} */ /* End of TRANSFORMATIOPNS group */
+
+/**
+ * @addtogroup LIMITS Limits
+ *
+ * @brief Min/max helpers to determine the range of the matrice's coefficients.
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /**
  * @brief Traverses the matrix elements to find the minimum element value.
@@ -683,6 +766,16 @@ int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j);
  */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
 
+/** @} */ /* End of LIMITS group */
+
+/**
+ * @addtogroup COMPARISON Comparison
+ *
+ * @brief Functions used to compare or verify matrices.
+ *
+ * \ingroup MATRICES
+ *  @{ */
+
 /**
  * @brief Checks if two matrices are identical in shape and content.
  *
@@ -704,6 +797,16 @@ bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
  */
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);
 
+/** @} */ /* End of COMPARISON group */
+
+/**
+ * @addtogroup DISPLAY Display
+ *
+ * @brief Functions used to present matrices in a user-friendly format.
+ *
+ * \ingroup MATRICES
+ *  @{ */
+
 /**
  * @brief Printf the supplied matrix using printf in a human-readable manner.
  *
@@ -716,8 +819,12 @@ int zsl_mtx_print(struct zsl_mtx *m);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 
+/** @} */ /* End of DISPLAY group */
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_MATRICES_H_ */
+
+/** @} */ /* End of matrices group */

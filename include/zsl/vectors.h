@@ -17,6 +17,14 @@
  * under the License.
  */
 
+ /**
+  * \defgroup VECTORS Vectors
+  *
+  * @brief Vectors functions
+  *
+  * TODO: Expand with examples, better high-level documentation, etc.
+  */
+
 /**
  * @file
  * @brief API header file for vectors in zscilib.
@@ -33,6 +41,14 @@
 extern "C" {
 #endif
 
+/**
+ * @addtogroup STRUCTS Structs, Enums and Macros
+ *
+ * @brief Various struct, enums and macros related to vectors.
+ *
+ * \ingroup VECTORS
+ *  @{ */
+
 /** @brief Represents a vector. */
 struct zsl_vec {
         /** The number of elements in the vector. */
@@ -48,6 +64,16 @@ struct zsl_vec {
                 .sz   = n, \
                 .data = name ## _vec \
         }
+
+/** @} */ /* End of STRUCTS group */
+
+/**
+ * @addtogroup INIT Initialisation
+ *
+ * @brief Vector initisialisation.
+ *
+ * \ingroup VECTORS
+ *  @{ */
 
 /**
  * Initialises vector 'v' with 0.0 values.
@@ -75,6 +101,16 @@ int zsl_vec_init(struct zsl_vec *v);
  */
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
+/** @} */ /* End of INIT group */
+
+/**
+ * @addtogroup SELECTION Data Selection
+ *
+ * @brief Functions used to access subsets of the vector.
+ *
+ * \ingroup VECTORS
+ *  @{ */
+
 /**
  * @brief Returns a subset of source vector 'v' in 'vsub'..
  *
@@ -89,6 +125,16 @@ int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
  */
 int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
                        struct zsl_vec* vsub);
+
+/** @} */ /* End of SELECTION group */
+
+/**
+ * @addtogroup BASICMATH Basic Math
+ *
+ * @brief Basic mathematical operations (add, sum, magnitude, etc.).
+ *
+ * \ingroup VECTORS
+ *  @{ */
 
 /**
  * @brief Adds corresponding vector elements in 'v' and 'w', saving to 'x'.
@@ -282,6 +328,16 @@ int zsl_vec_ar_mean(struct zsl_vec *v, zsl_real_t *m);
  */
 int zsl_vec_rev(struct zsl_vec *v);
 
+/** @} */ /* End of BASICMATH group */
+
+/**
+ * @addtogroup COMPARE Comparison
+ *
+ * @brief Functions used to compare or verify vectors.
+ *
+ * \ingroup VECTORS
+ *  @{ */
+
 /**
  * @brief Checks if two vectors are identical in size and content.
  *
@@ -303,8 +359,12 @@ bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w);
  */
 bool zsl_vec_is_nonneg(struct zsl_vec *v);
 
+/** @} */ /* End of COMPARE group */
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_VECTORS_H_ */
+
+/** @} */ /* End of vectors group */

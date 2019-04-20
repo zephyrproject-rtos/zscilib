@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup PROBABILITY Probability
+ *
+ * @brief Probability-related functions.
+ */
+
+/**
  * @file
  * @brief API header file for probability in zscilib.
  *
@@ -38,3 +44,5 @@ extern "C" {
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_PROBABILITY_H_ */
+
+/** @} */ /* End of probability group */

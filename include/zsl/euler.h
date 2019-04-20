@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup EULER Euler Angles
+ *
+ * @brief Euler angle manipulation.
+ */
+
+/**
  * @file
  * @brief API header file for euler angles in zscilib.
  *
@@ -38,3 +44,5 @@ extern "C" {
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_EULER_H_ */
+
+/** @} */ /* End of euler group */

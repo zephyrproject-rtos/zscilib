@@ -18,6 +18,12 @@
  */
 
 /**
+ * \defgroup NEURAL Neural Networks
+ *
+ * @brief Simple neural network functions.
+ */
+
+/**
  * @file
  * @brief API header file for neural networks in zscilib.
  *
@@ -34,6 +40,10 @@ extern "C" {
 #endif
 
 /**
+ * @addtogroup ACTIVATION Activation Functions
+ *
+ * @brief Various neuron activation functions.
+ *
  * TODO: Implement the following activation functions:
  *
  * - Softmax
@@ -45,27 +55,9 @@ extern "C" {
  * - Hyperbolic tangent
  * - Exponential (base e)
  * - Linear (i.e. identity)
- */
-
-/**
- * TODO: Implement the following optimisers:
  *
- * - Stochastic gradient descent
- * - RMS prop.
- * - Adagrad
- * - Adadelta
- * - Adam
- * - Adamax
- * - Nesterov adam (Nadam)
- */
-
-/**
- * TODO: Implement the following loss calculation methods:
- *
- * - Mean squared error (MSE)
- * - Cross-entropy loss (CEL)
- * - ???
- */
+ * \ingroup NEURAL
+ *  @{ */
 
 /**
  * Activation function for a neuron.
@@ -87,6 +79,16 @@ typedef int (*zsl_nn_activ_fn_t)(zsl_real_t *s, zsl_real_t *out);
  */
 int zsl_nn_activ_fn_sigmoid(zsl_real_t *s, zsl_real_t *out));
 
+/** @} */ /* End of TRANSFORMATIOPNS group */
+
+/**
+ * @addtogroup STRUCTS Structs, Enums and Macros
+ *
+ * @brief Various struct, enums and macros related to neural networks.
+ *
+ * \ingroup VECTORS
+ *  @{ */
+
 /** @brief Represents a neuron in a neural network. */
 struct zsl_nn_neuron {
         /** The number of inputs available in 'inputs'. */
@@ -103,11 +105,31 @@ struct zsl_nn_neuron {
         zsl_real_t *output;
 };
 
+/** @} */ /* End of STRUCTS group */
+
+/**
+ * @addtogroup FEED Feeding
+ *
+ * @brief Feed functions.
+ *
+ * \ingroup NEURAL
+ *  @{ */
+
 int
 zsl_nn_feedfwd(void)
 {
         return 0,
 }
+
+/** @} */ /* End of FEED group */
+
+/**
+ * @addtogroup TRAINING Training
+ *
+ * @brief Training functions.
+ *
+ * \ingroup NEURAL
+ *  @{ */
 
 int
 zsl_nn_train(void)
@@ -115,9 +137,48 @@ zsl_nn_train(void)
         return 0;
 }
 
+/** @} */ /* End of TRAINING group */
+
+/**
+ * @addtogroup OPTIMISERS Optimisers
+ *
+ * @brief Optimiser functions.
+ *
+ * TODO: Implement the following optimisers:
+ *
+ * - Stochastic gradient descent
+ * - RMS prop.
+ * - Adagrad
+ * - Adadelta
+ * - Adam
+ * - Adamax
+ * - Nesterov adam (Nadam)
+ *
+ * \ingroup NEURAL
+ *  @{ */
+
+/** @} */ /* End of TRAINING group */
+
+/**
+ * @addtogroup LOSS Loss Calculation
+ *
+ * @brief Loss functions.
+ *
+ * TODO: Implement the following loss calculation methods:
+ *
+ * - Mean squared error (MSE)
+ * - Cross-entropy loss (CEL)
+ * - ???
+ *
+ * \ingroup NEURAL
+ *  @{ */
+
+/** @} */ /* End of TRAINING group */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_NEURAL_H_ */
+
+/** @} */ /* End of neural group */
