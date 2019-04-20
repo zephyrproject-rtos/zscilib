@@ -48,6 +48,7 @@ To run the benchmark sample using qemu, run the following commands:
 #### Using `west`
 
 ```
+$ rm -rf build
 $ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
 ```
 
