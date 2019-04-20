@@ -34,10 +34,6 @@ zsl_mtx_test_inv_nxn(void)
         /* Calculate the inverse of 'm', placing the values in 'mi'. */
         zsl_mtx_inv(&m, &mi);
 
-        /* Display the m matrix. It should be the identity. */
-        printf("\nDiagonal:\n");
-        zsl_mtx_print(&m);
-
         /* Display the inverse (mi). */
         printf("\nInverse:\n");
         zsl_mtx_print(&mi);

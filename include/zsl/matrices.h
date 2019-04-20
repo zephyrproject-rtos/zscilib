@@ -546,29 +546,63 @@ int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
  *        element at position (i, j). The result of this process will be
  *        assigned to matrix 'mg'.
  *
- * @param m     Pointer to first zsl_mtx to use.
- * @param mg    Pointer to the output (simplified) zsl_mtx.
+ * @param m     Pointer to input zsl_mtx to use.
+ * @param mg    Pointer to gaussian form output matrix.
+ * @param mi    Pointer to the identity output matrix.
  * @param i     The row number of the element to use (0-based).
  * @param j     The column number of the element to use (0-based).
  *
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
-                       size_t i, size_t j);
+                       struct zsl_mtx *mi, size_t i, size_t j);
 
 /**
- * @brief Normalises elements in matrix m such that the element at position
- *        (i, j) is equal to 1.0.
+ * @brief Given the element (i,j) in matrix 'm', this function performs
+ *        gaussian elimination by adding row 'i' to the other rows until
+ *        all of the elements in column 'j' are equal to 0.0, aside from the
+ *        element at position (i, j). This function is destructive and will
+ *        modify the contents of m.
  *
- * @param m     Pointer to first zsl_mtx to use.
- * @param mg    Pointer to the output zsl_mtx.
+ * @param m     Pointer to zsl_mtx to use.
+ * @param mi    Pointer to the identity output matrix.
  * @param i     The row number of the element to use (0-based).
  * @param j     The column number of the element to use (0-based).
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi,
+int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
+                         size_t i, size_t j);
+
+/**
+ * @brief Normalises elements in matrix m such that the element at position
+ *        (i, j) is equal to 1.0.
+ *
+ * @param m     Pointer to input zsl_mtx to use.
+ * @param m     Pointer to normalised output zsl_mtx.
+ * @param mi    Pointer to the output identity zsl_mtx.
+ * @param i     The row number of the element to use (0-based).
+ * @param j     The column number of the element to use (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
                       size_t i, size_t j);
+
+/**
+ * @brief Normalises elements in matrix m such that the element at position
+ *        (i, j) is equal to 1.0. This function is destructive and will
+ *        modify the contents of m.
+ *
+ * @param m     Pointer to zsl_mtx to use.
+ * @param mi    Pointer to the output identity zsl_mtx.
+ * @param i     The row number of the element to use (0-based).
+ * @param j     The column number of the element to use (0-based).
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_norm_elem_d(struct zsl_mtx *m, struct zsl_mtx *mi,
+                    size_t i, size_t j);
 
 /**
  * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of

@@ -676,13 +676,20 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 }
 
 int
-zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
+zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
+        size_t i, size_t j)
 {
         int rc;
         zsl_real_t x, y;
 
+        /* Make a copy of matrix m. */
+        rc = zsl_mtx_copy(mg, m);
+        if (rc) {
+                return -EINVAL;
+        }
+
         /* Get the value of the element at position (i, j). */
-        rc = zsl_mtx_get(m, i, j, &y);
+        rc = zsl_mtx_get(mg, i, j, &y);
         if (rc) {
                 return rc;
         }
@@ -693,22 +700,19 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
         }
 
         /* Cycle through the matrix row by row. */
-        for (size_t p = 0; p < m->sz_rows; p++) {
+        for (size_t p = 0; p < mg->sz_rows; p++) {
                 /* Skip row 'i'. */
                 if (p == i) {
                         p++;
                 }
                 /* Get the value of (p, j), aborting if value is zero. */
-                zsl_mtx_get(m, p, j, &x);
+                zsl_mtx_get(mg, p, j, &x);
                 if(x != 0.0) {
-#if 1
-                        /* TODO: Why are we modifying input matrix 'm' ?!? */
-                        rc = zsl_mtx_sum_rows_scaled_d(m, p, i, -(x / y));
+                        rc = zsl_mtx_sum_rows_scaled_d(mg, p, i, -(x / y));
                         if (rc) {
                                 return -EINVAL;
                         }
-#endif
-                        rc = zsl_mtx_sum_rows_scaled_d(mg, p, i, -(x / y));
+                        rc = zsl_mtx_sum_rows_scaled_d(mi, p, i, -(x / y));
                         if (rc) {
                                 return -EINVAL;
                         }
@@ -719,13 +723,26 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, size_t i, size_t j)
 }
 
 int
-zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
+zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
+{
+    return zsl_mtx_gauss_elim(m, m, mi, i, j);
+}
+
+int
+zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
+        size_t i, size_t j)
 {
         int rc;
         zsl_real_t x;
 
+        /* Make a copy of matrix m. */
+        rc = zsl_mtx_copy(mn, m);
+        if (rc) {
+                return -EINVAL;
+        }
+
         /* Get the value to normalise. */
-        rc = zsl_mtx_get(m, i, j, &x);
+        rc = zsl_mtx_get(mn, i, j, &x);
         if (rc) {
                 return rc;
         }
@@ -735,13 +752,10 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
                 return 0;
         }
 
-#if 1
-        /* TODO: Why are we modifying input matrix 'm' here ?!? */
-        rc = zsl_mtx_scalar_mult_row_d(m, i, (1.0/x));
+        rc = zsl_mtx_scalar_mult_row_d(mn, i, (1.0/x));
         if (rc) {
                 return -EINVAL;
         }
-#endif
 
         rc = zsl_mtx_scalar_mult_row_d(mi, i, (1.0/x));
         if (rc) {
@@ -749,6 +763,12 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
         }
 
         return 0;
+}
+
+int
+zsl_mtx_norm_elem_d(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
+{
+        return zsl_mtx_norm_elem(m, m, mi, i, j);
 }
 
 int
@@ -813,7 +833,6 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         size_t j = 0;
         zsl_real_t d = 0.0;
         zsl_real_t v[m->sz_rows];
-        zsl_real_t w[(m->sz_rows) * (m->sz_rows)];
 
         /* Shortcut for 3x3 matrices. */
         if (m->sz_rows == 3) {
@@ -835,6 +854,13 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         }
 #endif
 
+        /* Make a copy of matrix m on the stack to avoid modifying it. */
+        ZSL_MATRIX_DEF(m_tmp, mi->sz_rows, mi->sz_cols);
+        rc = zsl_mtx_copy(&m_tmp, m);
+        if (rc) {
+                return -EINVAL;
+        }
+
         /* Initialise 'mi' as an identity matrix. */
         rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_diagonal);
         if (rc) {
@@ -846,10 +872,6 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 
         if (d==0) {
                 return 0;
-        }
-
-        for (size_t g = 0; g < (m->sz_rows) * (m->sz_rows); g++) {
-                w[g] = m->data[g];
         }
 
         /* Use Gauss-Jordan elimination for nxn matrices. */
@@ -864,17 +886,12 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
                                         break;
                                 }
                         }
-#if 1
-                        /* TODO: Why are we editing both m and mi? */
-                        zsl_mtx_sum_rows_d(m, k, j);
-#endif
+                        zsl_mtx_sum_rows_d(&m_tmp, k, j);
                         zsl_mtx_sum_rows_d(mi, k, j);
                 }
-                zsl_mtx_gauss_elim(m, mi, k, k);
-                zsl_mtx_norm_elem(m, mi, k, k);
+                zsl_mtx_gauss_elim_d(&m_tmp, mi, k, k);
+                zsl_mtx_norm_elem_d(&m_tmp, mi, k, k);
         }
-
-        zsl_mtx_from_arr(m, w);
 
         return 0;
 }
