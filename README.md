@@ -342,7 +342,20 @@ accommodated if necessary or useful.
 
 ## Contributing
 
-TODO: Note on how to contribute, and what is most needed at present.
+If you wish to contribute to this library, you can raise a PR as follows:
+
+1. For the repository: https://github.com/zscilib/zscilib/fork
+2. `git clone` your forked repository.
+3. Update your local repo and commit changes to your fork
+4. Navigate to https://github.com/zscilib/zscilib and to the
+   right of the **Branch** menu click **New pull request**.
+5. Fill out the form that is presented.
+6. Click the **Create Pull Request** button to submit the PR.
+
+Also have a look at the [Issues][1] page to see if there is any outstanding
+work or issues that you might be able to help with!
+
+[1]: https://github.com/zscilib/zscilib/issues
 
 ## License
 
