@@ -4,7 +4,7 @@
 
 [![API Documentation](doc/img/badge_api.svg)][1]
 
-[1]: https://https://zscilib.github.io/zscilib/
+[1]: https://zscilib.github.io/zscilib/
 
 The **Zephyr Scientific Library (zscilib)** is an attempt to provide a set of
 functions useful for scientific computing, data analysis and data manipulation
