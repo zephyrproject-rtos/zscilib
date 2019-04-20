@@ -40,7 +40,7 @@ extern "C" {
 #endif
 
 /**
- * @addtogroup ACTIVATION Activation Functions
+ * @addtogroup NN_ACTIVATION Activation Functions
  *
  * @brief Various neuron activation functions.
  *
@@ -79,14 +79,14 @@ typedef int (*zsl_nn_activ_fn_t)(zsl_real_t *s, zsl_real_t *out);
  */
 int zsl_nn_activ_fn_sigmoid(zsl_real_t *s, zsl_real_t *out));
 
-/** @} */ /* End of TRANSFORMATIOPNS group */
+/** @} */ /* End of NN_ACTIVATION group */
 
 /**
- * @addtogroup STRUCTS Structs, Enums and Macros
+ * @addtogroup NN_STRUCTS Structs, Enums and Macros
  *
  * @brief Various struct, enums and macros related to neural networks.
  *
- * \ingroup VECTORS
+ * \ingroup NEURAL
  *  @{ */
 
 /** @brief Represents a neuron in a neural network. */
@@ -105,10 +105,10 @@ struct zsl_nn_neuron {
         zsl_real_t *output;
 };
 
-/** @} */ /* End of STRUCTS group */
+/** @} */ /* End of NN_STRUCTS group */
 
 /**
- * @addtogroup FEED Feeding
+ * @addtogroup NN_FEED Feeding
  *
  * @brief Feed functions.
  *
@@ -121,10 +121,10 @@ zsl_nn_feedfwd(void)
         return 0,
 }
 
-/** @} */ /* End of FEED group */
+/** @} */ /* End of NN_FEED group */
 
 /**
- * @addtogroup TRAINING Training
+ * @addtogroup NN_TRAINING Training
  *
  * @brief Training functions.
  *
@@ -137,10 +137,10 @@ zsl_nn_train(void)
         return 0;
 }
 
-/** @} */ /* End of TRAINING group */
+/** @} */ /* End of NN_TRAINING group */
 
 /**
- * @addtogroup OPTIMISERS Optimisers
+ * @addtogroup NN_OPTIMISERS Optimisers
  *
  * @brief Optimiser functions.
  *
@@ -157,10 +157,10 @@ zsl_nn_train(void)
  * \ingroup NEURAL
  *  @{ */
 
-/** @} */ /* End of TRAINING group */
+/** @} */ /* End of NN_TRAINING group */
 
 /**
- * @addtogroup LOSS Loss Calculation
+ * @addtogroup NN_LOSS Loss Calculation
  *
  * @brief Loss functions.
  *
@@ -173,7 +173,7 @@ zsl_nn_train(void)
  * \ingroup NEURAL
  *  @{ */
 
-/** @} */ /* End of TRAINING group */
+/** @} */ /* End of NN_TRAINING group */
 
 #ifdef __cplusplus
 }

@@ -42,9 +42,9 @@ extern "C" {
 #endif
 
 /**
- * @addtogroup STRUCTS Structs, Enums and Macros
+ * @addtogroup MTX_STRUCTS Structs and Macros
  *
- * @brief Common structs, enums and macros for working with matrices.
+ * @brief Common structs and macros for working with matrices.
  *
  * \ingroup MATRICES
  *  @{ */
@@ -72,6 +72,17 @@ struct zsl_mtx {
                 .sz_cols      = n, \
                 .data         = name ## _mtx \
         }
+
+/** @} */ /* End of MTX_STRUCTS group */
+
+/**
+ * @addtogroup MTX_OPERANDS Operands
+ *
+ * @brief Unary and binary operands that can be performed on matrix
+ *        coefficients.
+ *
+ * \ingroup MATRICES
+ *  @{ */
 
 /** @brief Component-wise unary operations. */
 typedef enum zsl_mtx_unary_op {
@@ -116,10 +127,10 @@ typedef enum zsl_mtx_binary_op {
         ZSL_MTX_BINARY_OP_GEQ,                  /**< a >= b */
 } zsl_mtx_binary_op_t;
 
-/** @} */ /* End of STRUCTS group */
+/** @} */ /* End of MTX_OPERANDS group */
 
 /**
- * @addtogroup INIT Initialisation
+ * @addtogroup MTX_INIT Initialisation
  *
  * @brief Functions used to initialise matrices.
  *
@@ -240,10 +251,10 @@ int zsl_mtx_from_arr(struct zsl_mtx *m, zsl_real_t *a);
  */
 int zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc);
 
-/** @} */ /* End of INIT group */
+/** @} */ /* End of MTX_INIT group */
 
 /**
- * @addtogroup DATACCESS Data Access
+ * @addtogroup MTX_DATACCESS Data Access
  *
  * @brief Functions used to access or modify matrix rows, columns or
  *        coefficients.
@@ -333,15 +344,10 @@ int zsl_mtx_get_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
  */
 int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 
-/** @} */ /* End of DATAACCESS group */
+/** @} */ /* End of MTX_DATAACCESS group */
 
 /**
- * @addtogroup OPERANDS Operands
- *
- * @brief Unary and binary operands that can be performed on matrix
- *        coefficients.
- *
- * \ingroup MATRICES
+ * \ingroup MTX_OPERANDS
  *  @{ */
 
 /**
@@ -396,10 +402,10 @@ int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
 int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
                         struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
 
-/** @} */ /* End of OPERANDS group */
+/** @} */ /* End of MTX_OPERANDS group */
 
 /**
- * @addtogroup BASICMATH Basic Math
+ * @addtogroup MTX_BASICMATH Basic Math
  *
  * @brief Basic mathematical operations for matrices (add, substract, etc.).
  *
@@ -532,10 +538,10 @@ int zsl_mtx_scalar_mult_d(struct zsl_mtx *m, zsl_real_t s);
  */
 int zsl_mtx_scalar_mult_row_d(struct zsl_mtx *m, size_t i, zsl_real_t s);
 
-/** @} */ /* End of BASICMATH group */
+/** @} */ /* End of MTX_BASICMATH group */
 
 /**
- * @addtogroup TRANSFORMATIONS Transformation
+ * @addtogroup MTX_TRANSFORMATIONS Transformation
  *
  * @brief Transformation functions for matrices (transpose, inverse, guassian
  *        elimination, etc.).
@@ -702,10 +708,10 @@ int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
-/** @} */ /* End of TRANSFORMATIOPNS group */
+/** @} */ /* End of MTX_TRANSFORMATIOPNS group */
 
 /**
- * @addtogroup LIMITS Limits
+ * @addtogroup MTX_LIMITS Limits
  *
  * @brief Min/max helpers to determine the range of the matrice's coefficients.
  *
@@ -766,10 +772,10 @@ int zsl_mtx_min_idx(struct zsl_mtx *m, size_t *i, size_t *j);
  */
 int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
 
-/** @} */ /* End of LIMITS group */
+/** @} */ /* End of MTX_LIMITS group */
 
 /**
- * @addtogroup COMPARISON Comparison
+ * @addtogroup MTX_COMPARISON Comparison
  *
  * @brief Functions used to compare or verify matrices.
  *
@@ -797,10 +803,10 @@ bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
  */
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);
 
-/** @} */ /* End of COMPARISON group */
+/** @} */ /* End of MTX_COMPARISON group */
 
 /**
- * @addtogroup DISPLAY Display
+ * @addtogroup MTX_DISPLAY Display
  *
  * @brief Functions used to present matrices in a user-friendly format.
  *
@@ -819,7 +825,7 @@ int zsl_mtx_print(struct zsl_mtx *m);
 
 //int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 
-/** @} */ /* End of DISPLAY group */
+/** @} */ /* End of MTX_DISPLAY group */
 
 #ifdef __cplusplus
 }

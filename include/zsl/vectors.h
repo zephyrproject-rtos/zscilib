@@ -42,7 +42,7 @@ extern "C" {
 #endif
 
 /**
- * @addtogroup STRUCTS Structs, Enums and Macros
+ * @addtogroup VEC_STRUCTS Structs, Enums and Macros
  *
  * @brief Various struct, enums and macros related to vectors.
  *
@@ -65,10 +65,10 @@ struct zsl_vec {
                 .data = name ## _vec \
         }
 
-/** @} */ /* End of STRUCTS group */
+/** @} */ /* End of VEC_STRUCTS group */
 
 /**
- * @addtogroup INIT Initialisation
+ * @addtogroup VEC_INIT Initialisation
  *
  * @brief Vector initisialisation.
  *
@@ -101,10 +101,10 @@ int zsl_vec_init(struct zsl_vec *v);
  */
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
-/** @} */ /* End of INIT group */
+/** @} */ /* End of VEC_INIT group */
 
 /**
- * @addtogroup SELECTION Data Selection
+ * @addtogroup VEC_SELECTION Data Selection
  *
  * @brief Functions used to access subsets of the vector.
  *
@@ -126,10 +126,10 @@ int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
                        struct zsl_vec* vsub);
 
-/** @} */ /* End of SELECTION group */
+/** @} */ /* End of VEC_SELECTION group */
 
 /**
- * @addtogroup BASICMATH Basic Math
+ * @addtogroup VEC_BASICMATH Basic Math
  *
  * @brief Basic mathematical operations (add, sum, magnitude, etc.).
  *
@@ -328,10 +328,10 @@ int zsl_vec_ar_mean(struct zsl_vec *v, zsl_real_t *m);
  */
 int zsl_vec_rev(struct zsl_vec *v);
 
-/** @} */ /* End of BASICMATH group */
+/** @} */ /* End of VEC_BASICMATH group */
 
 /**
- * @addtogroup COMPARE Comparison
+ * @addtogroup VEC_COMPARE Comparison
  *
  * @brief Functions used to compare or verify vectors.
  *
@@ -359,7 +359,7 @@ bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w);
  */
 bool zsl_vec_is_nonneg(struct zsl_vec *v);
 
-/** @} */ /* End of COMPARE group */
+/** @} */ /* End of VEC_COMPARE group */
 
 #ifdef __cplusplus
 }
