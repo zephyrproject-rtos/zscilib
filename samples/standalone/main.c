@@ -16,33 +16,6 @@ struct zsl_mtx m = {
         .data = data
 };
 
-
-
-
-
-int
-my_rec_func(int iter)
-{
-    /* No further recursion required, abort. */
-    if (iter == 0) {
-        return 0;
-    }
-
-    /* Do something */
-    printf("%d\n", iter);
-
-    /* Perform another recursive call. */
-    my_rec_func(iter - 1);
-
-    return 0;
-}
-
-// my_rec_func(10);
-
-
-
-
-
 int
 zsl_mtx_test_inv_nxn(void)
 {
@@ -82,29 +55,6 @@ zsl_mtx_test_inv_nxn(void)
         return 0;
 }
 
-int
-zsl_mtx_test_red(void)
-{
-        /* Display the input matrix. */
-        printf("Input:\n");
-        zsl_mtx_print(&m);
-
-        /* Create an (n-1)x(n-1) matrix to store the reduced matrix. */
-        ZSL_MATRIX_DEF(mr,4,4);
-        zsl_mtx_init(&mr,NULL);
-
-        /* Calculate the reduced matrix of 'm', placing the values in 'mr'. */
-        zsl_mtx_reduce(&m, &mr, 0, 0);
-
-        /* Display the reduced matrix (mr). */
-        printf("\nOutput:\n");
-
-        zsl_mtx_print(&mr);
-
-
-        return 0;
-}
-
 /**
  * Program entry point.
  */
@@ -112,8 +62,6 @@ int
 main(void)
 {
         printf("Hello, zscilib!\n\n");
-
-        my_rec_func(10);
 
         printf("--- nxn inverse tester --------------------\n");
         zsl_mtx_test_inv_nxn();
