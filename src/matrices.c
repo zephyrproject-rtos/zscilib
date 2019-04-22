@@ -642,7 +642,7 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
         int rc;
         zsl_real_t dtmp;
         zsl_real_t cur;
-        zsl_real_t sign = 1.0;
+        zsl_real_t sign;
         ZSL_MATRIX_DEF(mr, (m->sz_rows - 1), (m->sz_rows - 1));
 
         /* Clear determinant output before starting. */
@@ -659,6 +659,7 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
                 zsl_mtx_init(&mr, NULL);      /* Clear mr. */
                 zsl_mtx_reduce(m, &mr, 0, g); /* Remove row 0, column g. */
                 rc = zsl_mtx_deter(&mr, &dtmp); /* Calc. determinant of mr. */
+                sign = 1.0;
                 if (rc) {
                         return -EINVAL;
                 }
@@ -877,9 +878,9 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         /* Use Gauss-Jordan elimination for nxn matrices. */
         for (size_t k = 0; k < m->sz_rows; k++) {
                 zsl_real_t x;
-                zsl_mtx_get(m, k, k, &x);
+                zsl_mtx_get(&m_temp, k, k, &x);
                 if (x == 0.0) {
-                        zsl_mtx_get_col(m, k, v);
+                        zsl_mtx_get_col(&m_temp, k, v);
                         for (size_t q = k + 1; q < m->sz_rows; q++) {
                                 j = q;
                                 if (v[j] != 0) {
