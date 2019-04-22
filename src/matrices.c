@@ -878,9 +878,9 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         /* Use Gauss-Jordan elimination for nxn matrices. */
         for (size_t k = 0; k < m->sz_rows; k++) {
                 zsl_real_t x;
-                zsl_mtx_get(&m_temp, k, k, &x);
+                zsl_mtx_get(&m_tmp, k, k, &x);
                 if (x == 0.0) {
-                        zsl_mtx_get_col(&m_temp, k, v);
+                        zsl_mtx_get_col(&m_tmp, k, v);
                         for (size_t q = k + 1; q < m->sz_rows; q++) {
                                 j = q;
                                 if (v[j] != 0) {
