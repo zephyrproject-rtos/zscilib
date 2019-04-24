@@ -63,6 +63,9 @@ void test_vec_add(void)
         zsl_vec_from_arr(&va, a);
         zsl_vec_from_arr(&vb, b);
 
+        /* Init vc with zero values. */
+        zsl_vec_init(&vc);
+
         /* Perform the add operation, tracking start and end times. */
         start_time = k_cycle_get_32();
         for (u32_t i = 0; i < BENCH_LOOPS; i++) {

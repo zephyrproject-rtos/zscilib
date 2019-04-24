@@ -172,6 +172,12 @@ void test_vector_sum(void)
     ZSL_VECTOR_DEF(vc, 3);
     ZSL_VECTOR_DEF(vsum, 3);
 
+    /* Set all vectors to zero. */
+    zsl_vec_init(&va);
+    zsl_vec_init(&vb);
+    zsl_vec_init(&vc);
+    zsl_vec_init(&vsum);
+
     struct zsl_vec *vlist[3] = { &va, &vb, &vc };
 
     /* Assign values to vectors. */
@@ -290,6 +296,11 @@ void test_vector_is_equal(void)
     ZSL_VECTOR_DEF(v, 3);
     ZSL_VECTOR_DEF(w, 3);
     ZSL_VECTOR_DEF(x, 2);
+
+    /* Set all vectors to zero. */
+    zsl_vec_init(&v);
+    zsl_vec_init(&w);
+    zsl_vec_init(&x);
 
     /* Test arrays. */
     zsl_real_t a[3] = { 0.0, 1.0, 2.0 };

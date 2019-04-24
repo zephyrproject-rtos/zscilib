@@ -57,9 +57,13 @@ struct zsl_vec {
         zsl_real_t *data;
 };
 
-/** Macro to declare a vector of size `n`. */
+/** Macro to declare a vector of size `n`.
+*
+* Be sure to also call 'zsl_vec_init' on the vector after this macro, since
+* matrices declared on the stack may have non-zero values by default!
+*/
 #define ZSL_VECTOR_DEF(name, n) \
-        zsl_real_t name ## _vec[n] = { 0 }; \
+        zsl_real_t name ## _vec[n]; \
         struct zsl_vec name = { \
                 .sz   = n, \
                 .data = name ## _vec \
