@@ -365,14 +365,14 @@ bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t eps);
 bool zsl_vec_is_nonneg(struct zsl_vec *v);
 
 /**
- * @brief Checks if vector v contains #val, returning the number of occurences.
+ * @brief Checks if vector v contains val, returning the number of occurences.
  *
  * @param v     The vector to check.
  * @param val   The value to check all coefficients for.
  * @param eps   The margin for floating-point equality (ex. '1E-5').
  *
- * @return The number of occurences of #val withing #eps range, or 0 if no
- *         matching occurences were found.
+ * @return The number of occurences of val withing range eps, 0 if no
+ *         matching occurences were found, or a negative error code.
  */
 int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
 

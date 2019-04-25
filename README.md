@@ -144,6 +144,7 @@ To be determined.
 - Reverse
 - Equality check (size and values)
 - Not-negative check
+- Contains (occurrences of 'x')
 
 ### Matrix Operations
 
@@ -156,7 +157,10 @@ To be determined.
 - Adjoint (3x3 and nxn)
 - Determinant (3x3 and nxn)
 - Inverse (3x3 and nxn)
-- Eigenvalues and eigenvectors
+- Eigenvectors/values
+- Gauss-Jordan elimination
+- Singular value decomposition (SVD)
+- Pseudoinverse (AKA Moore-Penrose inverse)
 - Get/set row/column vector
 - Min/max value or index
 - Equality test (shape and values)
@@ -222,8 +226,7 @@ features listed below have been defined as key goals.
 
 #### Matrix Operations
 
-- Singular value decomposition (SVD)
-- Pseudoinverse (AKA Moore-Penrose inverse)
+- TBD
 
 #### Statistics Operations
 
