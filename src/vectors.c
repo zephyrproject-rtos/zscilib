@@ -318,13 +318,16 @@ int zsl_vec_rev(struct zsl_vec *v) {
         return 0;
 }
 
-bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w) {
+bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t eps) {
+        zsl_real_t c;
+
         if (v->sz != w->sz) {
                 return false;
         }
 
         for (size_t i = 0; i < v->sz; i++) {
-                if (v->data[i] != w->data[i]) {
+                c = v->data[i] - w->data[i];
+                if (c >= eps || -c >= eps) {
                         return false;
                 }
         }

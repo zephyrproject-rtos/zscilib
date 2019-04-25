@@ -41,7 +41,7 @@ extern "C" {
  *
  * @param a         The value to check
  * @param b         The value to compare against
- * @param b         The +/- margin for equality
+ * @param epsilon   The +/- margin for equality
  *
  * @return  True if value 'a' is equal to 'b', otherwise false.
  */

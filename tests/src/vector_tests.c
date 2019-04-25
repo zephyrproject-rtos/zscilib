@@ -7,7 +7,6 @@
 #include <ztest.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
-#include "floatcheck.h"
 
 /**
  * @brief zsl_vec_from_arr unit tests.
@@ -307,11 +306,11 @@ void test_vector_is_equal(void)
     zsl_real_t b[3] = { 0.0, 1.0, 2.0 };
 
     /* Check for unequal size. */
-    eq = zsl_vec_is_equal(&v, &x);
+    eq = zsl_vec_is_equal(&v, &x, 1E-5);
     zassert_false(eq, NULL);
 
     /* Check equality for zero value vectors. */
-    eq = zsl_vec_is_equal(&v, &w);
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
     zassert_true(eq, NULL);
 
     /* Assign the array a to vector v. */
@@ -321,12 +320,12 @@ void test_vector_is_equal(void)
     zassert_true(rc == 0, NULL);
 
     /* Check equality for array value vectors. */
-    eq = zsl_vec_is_equal(&v, &w);
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
     zassert_true(eq, NULL);
 
     /* Check for inequality. */
     v.data[0] = 1.0;
-    eq = zsl_vec_is_equal(&v, &w);
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
     zassert_false(eq, NULL);
 }
 

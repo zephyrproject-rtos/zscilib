@@ -345,13 +345,14 @@ int zsl_vec_rev(struct zsl_vec *v);
 /**
  * @brief Checks if two vectors are identical in size and content.
  *
- * @param v The first vector.
- * @param w The second vector.
+ * @param v     The first vector.
+ * @param w     The second vector.
+ * @param eps   The margin for floating-point equality (ex. '1E-5').
  *
  * @return true if the two vectors have the same size and the same values,
  *         otherwise false.
  */
-bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w);
+bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t eps);
 
 /**
  * @brief Checks if all elements in vector v are >= zero and non-null.
