@@ -366,3 +366,29 @@ void test_vector_is_notneg(void)
 {
 
 }
+
+void test_vector_contains(void)
+{
+    int count;
+
+    ZSL_VECTOR_DEF(v, 5);
+
+    /* Set all vectors to zero. */
+    zsl_vec_init(&v);
+
+    /* Test arrays. */
+    v.data[0] = 0.0;
+    v.data[1] = 1.0;
+    v.data[2] = 2.0;
+    v.data[3] = 2.0;
+    v.data[4] = 1.0;
+
+    count = zsl_vec_contains(&v, 0.0, 1E-5);
+    zassert_equal(count, 1, NULL);
+    count = zsl_vec_contains(&v, 1.0, 1E-5);
+    zassert_equal(count, 2, NULL);
+    count = zsl_vec_contains(&v, 2.0, 1E-5);
+    zassert_equal(count, 2, NULL);
+    count = zsl_vec_contains(&v, 3.0, 1E-5);
+    zassert_equal(count, 0, NULL);
+}

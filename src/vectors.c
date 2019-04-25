@@ -344,3 +344,17 @@ bool zsl_vec_is_nonneg(struct zsl_vec *v) {
 
         return true;
 }
+
+int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps) {
+        zsl_real_t c;
+        int count = 0;
+
+        for (size_t i = 0; i < v->sz; i++) {
+                c = v->data[i] - val;
+                if (c < eps && -c < eps) {
+                        count++;
+                }
+        }
+
+        return count;
+}

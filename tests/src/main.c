@@ -62,6 +62,7 @@ extern void test_vector_ar_mean(void);
 extern void test_vector_rev(void);
 extern void test_vector_is_equal(void);
 extern void test_vector_is_notneg(void);
+extern void test_vector_contains(void);
 
 void test_main(void)
 {
@@ -121,7 +122,8 @@ void test_main(void)
         ztest_unit_test(test_vector_ar_mean),
         ztest_unit_test(test_vector_rev),
         ztest_unit_test(test_vector_is_equal),
-        ztest_unit_test(test_vector_is_notneg)
+        ztest_unit_test(test_vector_is_notneg),
+        ztest_unit_test(test_vector_contains)
 	);
 
 	ztest_run_test_suite(zsl_tests);
