@@ -327,6 +327,39 @@ void test_vector_is_equal(void)
     v.data[0] = 1.0;
     eq = zsl_vec_is_equal(&v, &w, 1E-5);
     zassert_false(eq, NULL);
+
+    /* Check for inequality < epsilon (should still pass). */
+    v.data[0] = 1.0;
+    v.data[1] = 2.0;
+    v.data[2] = 3.0;
+    w.data[0] = 0.999999;
+    w.data[1] = 2.0;
+    w.data[2] = 3.0;
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
+    zassert_true(eq, NULL);
+
+    /* Check for inequality > epsilon (should fail). */
+    w.data[0] = 0.99998;
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
+    zassert_false(eq, NULL);
+
+    /* Check for negative inequality < epsilon (should pass). */
+    v.data[0] = -1.0;
+    w.data[0] = -0.999999;
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
+    zassert_true(eq, NULL);
+
+    /* Check for negative inequality > epsilon (should fail). */
+    v.data[0] = -1.0;
+    w.data[0] = -0.99998;
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
+    zassert_false(eq, NULL);
+
+    /* Check for negative inequality > epsilon (should fail). */
+    v.data[0] = -1.0;
+    w.data[0] = -1.00001;
+    eq = zsl_vec_is_equal(&v, &w, 1E-5);
+    zassert_false(eq, NULL);
 }
 
 void test_vector_is_notneg(void)
