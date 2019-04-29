@@ -13,6 +13,17 @@ format to the console.
 It can be used to determine the effect different compiler or device settings
 have on code execution on the same or different platforms.
 
+Accuracy
+********
+
+When running the benchmarking sample app on an actual ARM Cortex-M3 or M4
+core with the **DWT** peripheral block present, you will get reasonably
+accurate benchmark data.
+
+Using ``qemu_cortex_m3`` or non M3/M4 hardware, the high-precision kernel clock
+is used to track execution time, so the benchmark data is approximate and not
+comparable across devices.
+
 Requirements
 ************
 
@@ -31,25 +42,18 @@ the result to the console:
 
 .. code-block:: console
 
-    $ cd samples/benchmarking
-    $ mkdir b && cd b
-    $ cmake -GNinja -DBOARD=qemu_cortex_m3 ..
-    $ ninja
-    $ ninja run
+    $ west build -b qemu_cortex_m3 samples/benchmarking/ -t run
 
 To run the application on real HW, typically outputting the results to the
-serial port, you can try a variant of the following, adjusting ``-DBOARD``
+serial port, you can try a variant of the following, adjusting ``-b``
 as appropriate.
 
 The **nRF52840 PCA10056** from Nordic Semiconductors is used below:
 
 .. code-block:: console
 
-    $ cd samples/benchmarking
-    $ mkdir b && cd b
-    $ cmake -GNinja -DBOARD=nrf52840_pca10056 ..
-    $ ninja
-    $ ninja flash
+    $ west build -b nrf52840_pca10056 samples/benchmarking/
+    $ west flash
 
 Sample Output
 *************
@@ -58,4 +62,17 @@ The benchmark application will normally output text resembling the following:
 
 .. code-block:: console
 
-    TODO
+    ***** Booting Zephyr OS zephyr-v1.14.0-39-ge03905354671 *****
+    zscilib benchmark
+
+    BOARD:                       nrf52840_pca10056
+    ZSL VERSION:                 0.1.0-prerelease (Apr 29 2019)
+    CONFIG_ZSL_PLATFORM_OPT:     2
+    CONFIG_ZSL_SINGLE_PRECISION: False
+    CONFIG_ZSL_VECTOR_INLINE:    False
+    CONFIG_ZSL_MATRIX_INLINE:    False
+    CONFIG_ZSL_BOUNDS_CHECKS:    True
+
+    zsl_vec_add : 333 cycles
+    zsl_vec_add : 339 cycles
+    zsl_vec_add : 339 cycles
