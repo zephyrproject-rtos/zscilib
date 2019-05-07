@@ -82,20 +82,20 @@ See the `tests` folder for further details.
 
 The sample code in this library typically has the `CONFIG_FLOAT` option set,
 meaning that floating-point support is configured for
-[Unshared FP registers mode][1]. This mode is used when the application
+[Unshared FP registers mode][2]. This mode is used when the application
 has a **single thread** that uses floating point registers.
 
 If your application makes use of **multiple threads**, and more than one of
 these threads uses floating-point operations, you should also enable the
 `CONFIG_FP_SHARING` config flag, which configures the kernel for
-[Shared FP registers mode][2]. In this mode, the floating point registers are
+[Shared FP registers mode][3]. In this mode, the floating point registers are
 saved and restored during each context switch, even when the associated threads
 are not using them. This feature comes at the expense of an extra 72 bytes of
 stack memory per stack frame (`s0..s15` + `FPCSR`, plus an alignment word
 to ensure that the stack pointer is double-word aligned).
 
-[1]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
-[2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
+[2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
+[3]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
 
 ## Quick Start: Standalone
 
@@ -122,6 +122,10 @@ $ bin/zscilib
 ### Scalar Operations
 
 To be determined.
+
+### Complex Numbers
+
+- Add
 
 ### Vector Operations
 
@@ -362,10 +366,10 @@ If you wish to contribute to this library, you can raise a PR as follows:
 6. Fill out the form that is presented.
 7. Click the **Create Pull Request** button to submit the PR.
 
-Also have a look at the [Issues][1] page to see if there is any outstanding
+Also have a look at the [Issues][4] page to see if there is any outstanding
 work or issues that you might be able to help with!
 
-[1]: https://github.com/zscilib/zscilib/issues
+[4]: https://github.com/zscilib/zscilib/issues
 
 ## License
 
