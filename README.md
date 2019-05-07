@@ -125,7 +125,7 @@ To be determined.
 
 ### Complex Numbers
 
-- Add
+- Standard C99 support via [complex.h](https://en.wikichip.org/wiki/c/complex.h)
 
 ### Vector Operations
 

@@ -9,6 +9,11 @@
 #include <zsl/zsl.h>
 #include "floatcheck.h"
 
+/**
+ * For details on complex number support in C99 andd C11 see;
+ * https://en.wikichip.org/wiki/c/complex.h
+ */
+
 #ifdef __STDC_NO_COMPLEX__
 #error "C99 Complex number support not available."
 #endif
