@@ -5,7 +5,6 @@ zephyr_include_directories(include)
 
 zephyr_library()
 zephyr_library_sources(
-    src/complex.c
     src/matrices.c
     src/vectors.c
     src/zsl.c

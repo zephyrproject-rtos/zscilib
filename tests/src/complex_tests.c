@@ -4,25 +4,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <complex.h>    /* C99 complex number support. */
 #include <ztest.h>
 #include <zsl/zsl.h>
-#include <zsl/complex.h>
 #include "floatcheck.h"
 
-/**
- * @brief zsl_com_add unit tests.
- *
- * This test verifies the zsl_com_add function.
- */
+#ifdef __STDC_NO_COMPLEX__
+#error "C99 Complex number support not available."
+#endif
+
 void test_complex_add(void)
 {
-    int rc;
-    ZSL_COMPLEX_DEF(a, 1.0, 0.4);
-    ZSL_COMPLEX_DEF(b, 1.0, 0.4);
-    ZSL_COMPLEX_DEF(c, 0.0, 0.0);
+        /* NOTE: zsl_real_t typedef can't be used with C99 complex numbers. */
+#if CONFIG_ZSL_SINGLE_PRECISION
+        double complex a = 1.0 + 0.4 * I;
+        double complex b = 1.0 + 0.5 * I;
+        double complex c = 0.0;
+#else
+        float complex a = 1.0 + 0.4 * I;
+        float complex b = 1.0 + 0.5 * I;
+        float complex c = 0.0;
+#endif
 
-    rc = zsl_com_add(&a, &b, &c);
-    zassert_equal(rc, 0, NULL);
-    zassert_true(val_is_equal(c.r, a.r + b.r, 1E-5), NULL);
-    zassert_true(val_is_equal(c.i, a.i + b.i, 1E-5), NULL);
+        c = a + b;
+        zassert_true(val_is_equal(creal(c), creal(a) + creal(b), 1E-5), NULL);
+        zassert_true(val_is_equal(cimag(c), cimag(a) + cimag(b), 1E-5), NULL);
 }
