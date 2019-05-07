@@ -6,6 +6,8 @@
 
 #include <ztest.h>
 
+extern void test_complex_add(void);
+
 extern void test_matrix_init(void);
 extern void test_matrix_from_arr(void);
 extern void test_matrix_copy(void);
@@ -67,6 +69,8 @@ extern void test_vector_contains(void);
 void test_main(void)
 {
 	ztest_test_suite(zsl_tests,
+        ztest_unit_test(test_complex_add),
+        
         ztest_unit_test(test_matrix_init),
         ztest_unit_test(test_matrix_from_arr),
         ztest_unit_test(test_matrix_copy),
