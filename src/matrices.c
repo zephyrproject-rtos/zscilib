@@ -32,7 +32,7 @@ zsl_mtx_entry_fn_empty(struct zsl_mtx *m, size_t i, size_t j)
 }
 
 int
-zsl_mtx_entry_fn_diagonal(struct zsl_mtx *m, size_t i, size_t j)
+zsl_mtx_entry_fn_identity(struct zsl_mtx *m, size_t i, size_t j)
 {
         return zsl_mtx_set(m, i, j, i == j ? 1.0 : 0);
 }
@@ -816,7 +816,7 @@ zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi)
                 rc = zsl_mtx_scalar_mult_d(mi, s);
         } else {
                 /* Provide an identity matrix if the determinant is zero. */
-                rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_diagonal);
+                rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_identity);
                 if (rc) {
                         return -EINVAL;
                 }
@@ -863,7 +863,7 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         }
 
         /* Initialise 'mi' as an identity matrix. */
-        rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_diagonal);
+        rc = zsl_mtx_init(mi, zsl_mtx_entry_fn_identity);
         if (rc) {
                 return -EINVAL;
         }

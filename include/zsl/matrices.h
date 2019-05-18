@@ -196,7 +196,7 @@ int zsl_mtx_entry_fn_empty(struct zsl_mtx *m, size_t i, size_t j);
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_entry_fn_diagonal(struct zsl_mtx *m, size_t i, size_t j);
+int zsl_mtx_entry_fn_identity(struct zsl_mtx *m, size_t i, size_t j);
 
 /**
  * @brief Sets the value to a random number between -1.0 and 1.0.
