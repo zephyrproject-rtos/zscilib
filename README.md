@@ -119,14 +119,6 @@ $ bin/zscilib
 
 ## Current Features
 
-### Scalar Operations
-
-To be determined.
-
-### Complex Numbers
-
-- Standard C99 support via [complex.h](https://en.wikichip.org/wiki/c/complex.h)
-
 ### Vector Operations
 
 - Add
@@ -492,7 +484,7 @@ TODO: Where to classify these?
   - Atomic mass
   - Ionic charge
 
-### Domain-Specific Operations
+### Misc. Domain-Specific Operations
 
 #### Motion and Orientation
 
