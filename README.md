@@ -234,10 +234,6 @@ features listed below have been defined as key goals.
 
 - Fast trigonometry approximations
 
-#### Matrix Operations
-
-- TBD
-
 #### Statistics Operations
 
 - Mean
@@ -279,9 +275,222 @@ features listed below have been defined as key goals.
 - Simplistic training of models
 - Feeding data through a trained network
 
-### Calibration Management
+### Physics
 
-- A framework to persist, retrieve and apply calibration coefficients.
+#### Kinematics
+
+- Change in distance (initial velocity, time, acceleration)
+- Change in time (initial and final velocity, acceleration)
+- Instantaneous velocity (initial velocity, time, acceleration)
+- Velocity (initial velocity, distance, acceleration)
+- Average velocity (distance, time)
+- Acceleration (initial and final velocity, time)
+- Centripetal acceleration (radius, period, via radius/speed or radius/period)
+
+#### Projectiles
+
+- Horizontal and vertical velocity components (initial velocity, theta)
+- Total time of flight
+  - Formula 1: gravity, y2, y1, Vy
+  - Formula 2: initial and final vertical velocity and gravity
+- Vertical motion: position at time (Vy, gravity, time, initial height)
+- Horizontal motion: horizontal change of distance at time
+- Velocity (overall velocity from vertical and horizontal components)
+- Theta (and between vertical and horizontal velocity)
+- Range (distance travelled from ground using initial velocity, gravity, angle)
+
+#### Dynamics
+
+- Newton's second law
+- Mass-acceleration relationship
+- Friction (Fn, uK/s)
+- Normal force on an incline (in newtons based on mass, gravity, angle)
+
+#### Work
+
+- Work done over an interval of distance and constant applied force
+- Work done cosine (as above but with x-component or on an incline)
+- Work done sine (as above but with y-component or on an incline)
+- Work-KE theorem
+
+#### Energy
+
+- Kinetic energy
+- Elastic potential energy
+- Gravitational potential energy
+- Power (work/energy over time)
+- Energy lost to friction
+- Energy of a photon
+- Mechanical energy of a system
+- Total energy of a system
+
+#### Momentum
+
+- Calculate momentum (mass, velocity)
+- Impulse (force, time)
+- Change in momentum/force (mass, initial and final velocity)
+- Elastic collision (when two objects collide and bounce)
+- Inelastic collision (when two objects collide and stick)
+
+#### Gravitation
+
+- Orbital period
+- Escape velocity
+- Gravitational acceleration
+- Orbital velocity
+- Gravitational force
+- Gravitational potential energy
+
+#### Rotation
+
+- Change in theta (analog to distance in kinematics)
+- Change in time (analog to time in kinematics)
+- Instantaneous angular velocity
+- Angular velocity
+- Average angular velocity
+- Angular acceleration
+- Rotational kinetic energy
+- Power (torque multiplied by angular velocity)
+
+#### Waves
+
+TBD
+
+#### Sound
+
+- Pressure amplitude
+- Decibels (sound level between two intensities of the same frequency)
+- Intensity (pressure amplitude, bulk modulus, density)
+- Shock wave angle (speed of sound and velocity through medium)
+- Doppler effect
+- Beats (frequency resulting from overlap of two similar frequencies)
+
+#### Gases
+
+- Kinetic theory of gases
+- Ideal gas law
+- Combined gas law (relationship of pressure, volume, temperature)
+- Boyle's law (relationship of pressure, volume)
+- Charles/Gay-Lussac law (relationship of pressure, volume)
+
+#### Fluids
+
+- Density (of substance in Kg/m^2)
+- Simple pressure (force, area)
+- Pressure in a fluid (at a certain height/depth, gravity, density, surf. pres.)
+- Fluid flow rate proportion
+- Fluid force rate proportion
+- Bernoulli's equation
+  - To known pressure
+  - Calculate pressure and equate
+- Volume flow rate
+
+#### Thermodynamics
+
+- Temperature conversion (fahrenheit, celsius, kelvin)
+- Latent heat of fusion/vaporisation
+- Heat (in joules of a material based on mass, specific heat and delta temp)
+- Linear expansion of metal (length, alpha constant, change in temperature)
+- Average velocity of molecules (RMS velocity of molecules in a gas)
+- Mean free path
+- Efficiency of a heat engine (based on energy of hot and cold chambers)
+- Carnot engine proportion
+
+#### Center of Mass
+
+- Calculate the CoM of a group of objects based on their mass and distance from
+  an arbitrary point
+
+#### Electric
+
+- Coulomb's law
+- Charge density
+- Potential energy
+- Electric field
+- Coulombs potential
+- Electric flux
+- Force from a charge
+
+#### Electricity
+
+- Current (charge per second)
+- Resistors in series/parallel
+- Capacitors in series/parallel
+- Resistivity of wire
+  - Include constants like aluminium, copper, steel, silicon, etc.
+- Ohm's law
+- Power
+  - Current, voltage
+  - Voltage, resistance
+  - Current, resistance
+
+#### Electrical Components
+
+- Capacitance
+  - Charge, voltage
+  - Area, distance
+- Energy stored in capacitor
+- Energy stored in inductor
+- Transformer turns to voltage
+- Resistor/inductor/capacitor voltage relationship
+- Resistor/capacitor charge/discharge
+  - Current during charge
+  - Current during discharge
+  - Charge (in coulombs) during charge
+  - Charge (in coulombs) during discharge
+- Inductor/capacitor energising/de-energising
+  - Energising
+  - De-energising
+
+#### Magnetics
+
+- Magnetic force
+- Force on current carrying wire
+- Torque on current loop
+- Potential energy from a dipole
+- Orbital radius in magnetic field
+- Magnetic flux
+- Magnetic moment
+
+#### Optics
+
+- TBD
+
+#### Relativity
+
+- Time dilatation
+- Lorentz contraction
+- Relativistic momentum
+- Kinetic energy
+- Mass to energy
+- Lorenz velocity transformation
+- Relativistic doppler affect
+
+#### Atomic
+
+- Nuclear radius
+- Radioactive decay
+- Bohr orbital radius
+- Bohr orbital velocity
+- Bohr orbital energy
+- Bragg's law
+
+#### Misc.
+
+TODO: Where to classify these?
+
+- Percent error (statistics?)
+- Efficiency
+- Quadratic formula
+
+### Chemistry
+
+- Periodic table data including:
+  - Full name
+  - Abbreviation
+  - Atomic number
+  - Atomic mass
+  - Ionic charge
 
 ### Domain-Specific Operations
 
@@ -290,7 +499,7 @@ features listed below have been defined as key goals.
 - Acceleration/magnetic field -> orientation
 - Sensor fusion (accel/mag/gyro -> quaternion)
 - Euler/Quaternion conversion
-- Functions for acceleration, time/distance, etc.
+- Functions for acceleration, time/distance, etc. (see `Physics` above)
 - Frame of reference conversion (Aerospace, Android, etc.)
 
 #### Spectrometry
