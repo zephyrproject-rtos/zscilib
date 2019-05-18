@@ -43,6 +43,11 @@ extern void test_matrix_scalar_mult_row_d(void);
 extern void test_matrix_trans(void);
 extern void test_matrix_adj(void);
 extern void test_matrix_deter(void);
+extern void test_matrix_gauss_elim(void);
+extern void test_matrix_gauss_elim_d(void);
+extern void test_matrix_gauss_reduc(void);
+extern void test_matrix_norm_elem(void);
+extern void test_matrix_norm_elem_d(void);
 extern void test_matrix_inv(void);
 extern void test_matrix_inv_nxn(void);
 extern void test_matrix_eigen(void);
@@ -117,6 +122,11 @@ void test_main(void)
         ztest_unit_test(test_matrix_trans),
         ztest_unit_test(test_matrix_adj),
         ztest_unit_test(test_matrix_deter),
+        ztest_unit_test(test_matrix_gauss_elim),
+        ztest_unit_test(test_matrix_gauss_elim_d),
+        ztest_unit_test(test_matrix_gauss_reduc),
+        ztest_unit_test(test_matrix_norm_elem),
+        ztest_unit_test(test_matrix_norm_elem_d),
         ztest_unit_test(test_matrix_inv),
         ztest_unit_test(test_matrix_inv_nxn),
         ztest_unit_test(test_matrix_eigen),

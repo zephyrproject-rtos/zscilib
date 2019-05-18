@@ -662,6 +662,31 @@ void test_matrix_deter(void)
 
 }
 
+void test_matrix_gauss_elim(void)
+{
+
+}
+
+void test_matrix_gauss_elim_d(void)
+{
+
+}
+
+void test_matrix_gauss_reduc(void)
+{
+
+}
+
+void test_matrix_norm_elem(void)
+{
+
+}
+
+void test_matrix_norm_elem_d(void)
+{
+
+}
+
 void test_matrix_inv(void)
 {
         int rc = 0;

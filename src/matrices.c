@@ -682,7 +682,7 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
 {
         int rc;
         zsl_real_t x, y;
-        zsl_real_t epsilon = 1E-4;
+        zsl_real_t epsilon = 1E-6;
 
         /* Make a copy of matrix m. */
         rc = zsl_mtx_copy(mg, m);
@@ -739,7 +739,7 @@ zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
                     struct zsl_mtx *mi)
 {
         zsl_real_t v[m->sz_rows];
-        zsl_real_t epsilon = 1E-4;
+        zsl_real_t epsilon = 1E-6;
 
         zsl_mtx_copy(mi, m);
 
@@ -771,7 +771,7 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
 {
         int rc;
         zsl_real_t x;
-        zsl_real_t epsilon = 1E-4;
+        zsl_real_t epsilon = 1E-6;
 
         /* Make a copy of matrix m. */
         rc = zsl_mtx_copy(mn, m);
