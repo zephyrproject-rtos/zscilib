@@ -217,8 +217,8 @@ of symmetric matrices:
 
 ### Interpolation
 
-- Nearest neighbour (`piecewise constant`)
-- Linear (AKA `piecewise linear`)
+- Nearest neighbour (AKA 'piecewise constant')
+- Linear (AKA 'piecewise linear')
 - Natural cubic spline
 
 ## Planned Features
