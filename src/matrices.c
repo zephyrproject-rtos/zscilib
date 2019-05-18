@@ -678,10 +678,11 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 
 int
 zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
-        size_t i, size_t j)
+                   size_t i, size_t j)
 {
         int rc;
         zsl_real_t x, y;
+        zsl_real_t epsilon = 1E-4;
 
         /* Make a copy of matrix m. */
         rc = zsl_mtx_copy(mg, m);
@@ -696,7 +697,7 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
         }
 
         /* If this is a zero value, don't do anything. */
-        if (y == 0.0) {
+        if ((y >= 0 && y < epsilon) || (y <= 0 && y > -epsilon)) {
                 return 0;
         }
 
@@ -706,10 +707,14 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
                 if (p == i) {
                         p++;
                 }
+				if (p == mg->sz_rows){
+					break;
+				}
                 /* Get the value of (p, j), aborting if value is zero. */
                 zsl_mtx_get(mg, p, j, &x);
-                if(x != 0.0) {
+                if((x >= 0 && x > epsilon) || (x <= 0 && x < -epsilon)) {
                         rc = zsl_mtx_sum_rows_scaled_d(mg, p, i, -(x / y));
+
                         if (rc) {
                                 return -EINVAL;
                         }
@@ -726,15 +731,47 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
 int
 zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi, size_t i, size_t j)
 {
-    return zsl_mtx_gauss_elim(m, m, mi, i, j);
+        return zsl_mtx_gauss_elim(m, m, mi, i, j);
+}
+
+int
+zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
+                    struct zsl_mtx *mi)
+{
+        zsl_real_t v[m->sz_rows];
+        zsl_real_t epsilon = 1E-4;
+
+        zsl_mtx_copy(mi, m);
+
+        /* TODO: Properly comment this code block! */
+        for (size_t k = 0; k < m->sz_rows; k++) {
+                zsl_real_t x;
+                zsl_mtx_get(mi, k, k, &x);
+                if ((x >= 0 && x < epsilon) || (x <= 0 && x > -epsilon)) {
+                        zsl_mtx_get_col(mi, k, v);
+                        for (size_t q = k + 1; q < m->sz_rows; q++) {
+                                if ((v[q] >= epsilon) || (v[q] <= -epsilon)) {
+                                        zsl_mtx_sum_rows_d(mi, k, q);
+                                        zsl_mtx_sum_rows_d(mid, k, q);
+                                        break;
+                                }
+                        }
+                }
+                zsl_mtx_gauss_elim_d(mi, mid, k, k);
+                zsl_mtx_norm_elem_d(mi, mid, k, k);
+
+        }
+
+        return 0;
 }
 
 int
 zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
-        size_t i, size_t j)
+                  size_t i, size_t j)
 {
         int rc;
         zsl_real_t x;
+        zsl_real_t epsilon = 1E-4;
 
         /* Make a copy of matrix m. */
         rc = zsl_mtx_copy(mn, m);
@@ -749,7 +786,7 @@ zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
         }
 
         /* If the value is 0.0, abort. */
-        if (x == 0.0) {
+        if ((x >= 0 && x < epsilon) || (x <= 0 && x > -epsilon)) {
                 return 0;
         }
 
@@ -831,9 +868,7 @@ int
 zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 {
         int rc;
-        size_t j = 0;
         zsl_real_t d = 0.0;
-        zsl_real_t v[m->sz_rows];
 
         /* Shortcut for 3x3 matrices. */
         if (m->sz_rows == 3) {
@@ -876,23 +911,7 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
         }
 
         /* Use Gauss-Jordan elimination for nxn matrices. */
-        for (size_t k = 0; k < m->sz_rows; k++) {
-                zsl_real_t x;
-                zsl_mtx_get(&m_tmp, k, k, &x);
-                if (x == 0.0) {
-                        zsl_mtx_get_col(&m_tmp, k, v);
-                        for (size_t q = k + 1; q < m->sz_rows; q++) {
-                                j = q;
-                                if (v[j] != 0) {
-                                        break;
-                                }
-                        }
-                        zsl_mtx_sum_rows_d(&m_tmp, k, j);
-                        zsl_mtx_sum_rows_d(mi, k, j);
-                }
-                zsl_mtx_gauss_elim_d(&m_tmp, mi, k, k);
-                zsl_mtx_norm_elem_d(&m_tmp, mi, k, k);
-        }
+        zsl_mtx_gauss_reduc(m, mi, &m_tmp);
 
         return 0;
 }

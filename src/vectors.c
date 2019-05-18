@@ -5,6 +5,7 @@
  */
 
 #include <errno.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <zsl/vectors.h>
@@ -23,6 +24,15 @@ int zsl_vec_init(struct zsl_vec *v) {
 
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a) {
         memcpy(v->data, a, v->sz * sizeof(zsl_real_t));
+
+        return 0;
+}
+
+int zsl_vec_copy(struct zsl_vec *vdest, struct zsl_vec *vsrc)
+{
+        vdest->sz = vsrc->sz;
+        memcpy(vdest->data, vsrc->data, sizeof(zsl_real_t) *
+               vdest->sz);
 
         return 0;
 }
@@ -357,4 +367,13 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps) {
         }
 
         return count;
+}
+
+int zsl_vec_print(struct zsl_vec *v)
+{
+        for(size_t g = 0; g < v->sz; g++) {
+                printf("%lf ", v->data[g]);
+        }
+
+        return 0;
 }

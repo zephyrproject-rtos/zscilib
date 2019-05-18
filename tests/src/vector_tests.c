@@ -35,6 +35,11 @@ void test_vector_from_arr(void)
         }
 }
 
+void test_vector_copy(void)
+{
+    
+}
+
 void test_vector_get_subset(void)
 {
         int rc;

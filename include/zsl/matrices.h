@@ -654,6 +654,19 @@ int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
                          size_t i, size_t j);
 
 /**
+ * @brief Given matrix 'm', puts the matrix into echelon form using
+ *        Gauss-Jordan reduction.
+ *
+ * @param m     Pointer to the input zsl_mtx.
+ * @param mid   TODO
+ * @param mi    TODO
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
+                        struct zsl_mtx *mi);
+
+/**
  * @brief Normalises elements in matrix m such that the element at position
  *        (i, j) is equal to 1.0.
  *
@@ -681,7 +694,7 @@ int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_norm_elem_d(struct zsl_mtx *m, struct zsl_mtx *mi,
-                    size_t i, size_t j);
+                        size_t i, size_t j);
 
 /**
  * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of

@@ -105,6 +105,16 @@ int zsl_vec_init(struct zsl_vec *v);
  */
 int zsl_vec_from_arr(struct zsl_vec *v, zsl_real_t *a);
 
+/**
+ * @brief Copies the contents of vector 'vsrc' into vector 'vdest'.
+ *
+ * @param vdest Pointer to the destination vector data will be copied to.
+ * @param vsrc  Pointer to the source vector data will be copied from.
+ *
+ * @return 0 on success, and non-zero error code on failure
+ */
+int zsl_vec_copy(struct zsl_vec *vdest, struct zsl_vec *vsrc);
+
 /** @} */ /* End of VEC_INIT group */
 
 /**
@@ -377,6 +387,28 @@ bool zsl_vec_is_nonneg(struct zsl_vec *v);
 int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
 
 /** @} */ /* End of VEC_COMPARE group */
+
+/**
+ * @addtogroup VEC_DISPLAY Display
+ *
+ * @brief Functions used to present vectors in a user-friendly format.
+ *
+ * \ingroup VECTORS
+ *  @{ */
+
+/**
+ * @brief Print the supplied vector using printf in a human-readable manner.
+ *
+ * @param m     Pointer to the vector to print.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_vec_print(struct zsl_vec *v);
+
+//int      zsl_vec_fprint(FILE *stream, zsl_vec *v);
+
+/** @} */ /* End of VEC_DISPLAY group */
 
 #ifdef __cplusplus
 }

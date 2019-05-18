@@ -54,6 +54,7 @@ extern void test_matrix_is_equal(void);
 extern void test_matrix_is_notneg(void);
 
 extern void test_vector_from_arr(void);
+extern void test_vector_copy(void);
 extern void test_vector_get_subset(void);
 extern void test_vector_add(void);
 extern void test_vector_sub(void);
@@ -127,6 +128,7 @@ void test_main(void)
         ztest_unit_test(test_matrix_is_notneg),
 
         ztest_unit_test(test_vector_from_arr),
+        ztest_unit_test(test_vector_copy),
         ztest_unit_test(test_vector_get_subset),
         ztest_unit_test(test_vector_add),
         ztest_unit_test(test_vector_sub),
