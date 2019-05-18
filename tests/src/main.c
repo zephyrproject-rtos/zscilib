@@ -8,6 +8,16 @@
 
 extern void test_complex_add(void);
 
+extern void test_interp_lerp(void);
+extern void test_interp_find_x_asc(void);
+extern void test_interp_find_x_desc(void);
+extern void test_interp_nn(void);
+extern void test_interp_nn_arr(void);
+extern void test_interp_lin_y(void);
+extern void test_interp_lin_y_arr(void);
+extern void test_interp_lin_x(void);
+extern void test_interp_cubic_arr(void);
+
 extern void test_matrix_init(void);
 extern void test_matrix_from_arr(void);
 extern void test_matrix_copy(void);
@@ -70,7 +80,17 @@ void test_main(void)
 {
 	ztest_test_suite(zsl_tests,
         ztest_unit_test(test_complex_add),
-        
+
+        ztest_unit_test(test_interp_lerp),
+        ztest_unit_test(test_interp_find_x_asc),
+        ztest_unit_test(test_interp_find_x_desc),
+        ztest_unit_test(test_interp_nn),
+        ztest_unit_test(test_interp_nn_arr),
+        ztest_unit_test(test_interp_lin_y),
+        ztest_unit_test(test_interp_lin_y_arr),
+        ztest_unit_test(test_interp_lin_x),
+        ztest_unit_test(test_interp_cubic_arr),
+
         ztest_unit_test(test_matrix_init),
         ztest_unit_test(test_matrix_from_arr),
         ztest_unit_test(test_matrix_copy),

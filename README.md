@@ -215,6 +215,12 @@ of symmetric matrices:
   operand list is not sufficient. See `zsl_mtx_unary_func` and
   `zsl_mtx_binary_func` for details.
 
+### Interpolation
+
+- Nearest neighbour (`piecewise constant`)
+- Linear (AKA `piecewise linear`)
+- Natural cubic spline
+
 ## Planned Features
 
 The Zephyr scientific library is still in very early planning, but the
@@ -245,6 +251,7 @@ features listed below have been defined as key goals.
 - Standard deviation
 - Interquartile range
 - Covariance
+- Covariance Matrix
 - Correlation
 - Error
 
