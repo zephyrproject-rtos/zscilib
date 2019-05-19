@@ -216,7 +216,17 @@ of symmetric matrices:
 ## Planned Features
 
 The Zephyr scientific library is still in very early planning, but the
-features listed below have been defined as key goals.
+features listed below have been defined as key future goals.
+
+Contributions to this project can take the form of any of the following
+requirements around these planned features and functions:
+
+- Function implementation in C
+- Optimised function implementation (ARM ASM, etc.) where appropriate
+- Unit tests to ensure reliable execution
+- Meaningful documentation (doxygen and `doc/topic.md` as appropriate)
+- Sample project(s) showing how these functions can be used in the real world
+
 
 > Any suggested additions to this list are highly welcome at this early stage.
 
