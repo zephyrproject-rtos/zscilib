@@ -1,6 +1,6 @@
 # ARM Assembly Primer
 
-While it's impossible to give a meaningful overview of ARM Assembly in a single
+While it's impossible to give a meaningful overview of ARM assembly in a single
 brief document, this primer aims to serve as a crash course or reminder of some
 of the key concepts in ARM Thumb or Thumb-2 assembly language programming.
 
@@ -13,13 +13,15 @@ depending on the device selected:
 | ARMv6-M (Thumb)    | ARM Cortex M0, ARM Cortex-M0+   |
 | ARMv7-M (Thumb-2)  | ARM Cortex-M3                   |
 | ARMv7E-M (Thumb-2) | ARM Cortex M4(F), ARM Cortex M7 |
+| ARMv8-M (Thumb-2)  | ARM Cortex M23, ARM Cortex M33  |
 
 For technical resources on the various architectures see:
 
 - [ARM v6-M Architecture Reference Manual](https://static.docs.arm.com/ddi0419/d/DDI0419D_armv6m_arm.pdf)
 - [ARM v7-M Architecture Reference Manual](https://static.docs.arm.com/ddi0403/eb/DDI0403E_B_armv7m_arm.pdf)
+- [ARM v8-M Architecture Reference Manual](https://static.docs.arm.com/ddi0553/a/DDI0553A_e_armv8m_arm.pdf)
 
-For a more comprehensive or accessible treatment on the subject see:
+For a comprehensive treatment on the subject see:
 
 - [Modern Assembly Language Programming with the ARM Processor](https://www.elsevier.com/books/modern-assembly-language-programming-with-the-arm-processor/pyeatt/978-0-12-803698-3),
 Larry D. Pyeatt (Newnes, 2016)
@@ -49,11 +51,11 @@ and three special-purpose 32-bit registers (`r13-r15`):
 |R8| General-purpose register 8 |
 |R9| General-purpose register 9 |
 |R10| General-purpose register 10 |
-|R11 (fp)| General-purpose register 11 / Frame pointer|
-|R12 (ip)| General-purpose register 12 / Inter-procedure scratch register|
-|R13 (sp)| Stack pointer |
-|R14 (lr)| Link register |
-|R15 (pc)| Program counter |
+|R11 (`fp`)| General-purpose register 11 / Frame pointer|
+|R12 (`ip`)| General-purpose register 12 / Inter-procedure scratch register|
+|R13 (`sp`)| Stack pointer |
+|R14 (`lr`)| Link register |
+|R15 (`pc`)| Program counter |
 
 The three special purpose registers are:
 
@@ -71,7 +73,7 @@ The three special purpose registers are:
   of the stack (though logically it seems like the bottom since the stack
   'grows' downward).
 
-Additionally, there are two registers that used by high-level languages by
+Additionally, there are two registers that are used by high-level languages by
 convention, though this isn't mandatory in assembly:
 
 - The **inter-procedure scratch register** (`R12`) is used by the C library

@@ -38,23 +38,24 @@ The second section in the inline assembly is the **output operand list**, which
 allows the C and inline assembly code to share **output** operands.
 
 - Multiple output operands should be **comma separated**.
-- The **symbolic name** of the operancd should be enclosed in square brackets
-  `[]`, followed by the **constraint string** enclosed in double quotes,
+- The **symbolic name** of the operand should be enclosed in square brackets
+  `[]`, followed by the **constraint string** enclosed in double quotes `""`,
   followed by the **C expression** enclosed in parentheses `()`.
 
 > For a list of possible **constraint string** values, see ARM Thumb Constraint
 Modifiers/Codes further below.
 
-For example, the following output operand list:
+For example, the output operand list:
+
+```
+    : [dptr] "+l" (result)
+```
 
 - Declares the asm symbolic name `dptr` (accessible as `%[dptr]` in asm code).
 - Adds a readwrite constraint (`+l`) with use of Thumb state core registers
   **R0-R7**.
 - Associates it with the `result` C expression.
 
-```
-    : [dptr] "+l" (result)
-```
 
 ### input operand list
 
@@ -63,16 +64,17 @@ allows the C and inline assembly code to share **input** operands.
 
 This uses the same syntax as the list of output operands.
 
-For example, the following input operand list:
+For example, the input operand list:
+
+```
+    : [value] "l" (x)
+```
 
 - Declares the asm symbolic name `value` (accessible as `%[value]` in the asm
   code).
 - Indicates that the thumb state general purpose registers should be used
 - Associates it with the `x` C expression.
 
-```
-    : [value] "l" (x)
-```
 
 ### clobber list
 
@@ -146,12 +148,14 @@ Possible ARM Thumb constraint codes are:
 
 TODO: Add link to ARM document on function argument usage in assembly.
 
+The table below lists core registers for ARM devices and their usage:
+
 | Register   | Usage |
 |------------|-------|
-| R0         | First function argument, Integer function result, Scratch register |
-| R1         | Second function argument, Scratch register |
-| R2         | Third function argument, Scratch register |
-| R3         | Fourth function argument, Scratch register |
+| R0         | First function argument, Integer function result, Scratch reg. |
+| R1         | Second function argument, Scratch reg. |
+| R2         | Third function argument, Scratch reg. |
+| R3         | Fourth function argument, Scratch reg. |
 | R4         | Register variable |
 | R5         | Register variable |
 | R6         | Register variable |
