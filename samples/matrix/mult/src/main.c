@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <stdio.h>
 #include <zephyr.h>
-#include <misc/printk.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
 
@@ -40,17 +40,17 @@ void test_mtx_mult_demo(void)
         /* Multiple ma x mb. */
         rc = zsl_mtx_mult(&ma, &mb, &mc);
         if (rc) {
-                printk("Error performing matrix multuplication: %d\n", rc);
+                printf("Error performing matrix multuplication: %d\n", rc);
                 return;
         }
 
-        printk("mtx multuply output:\n\n");
+        printf("mtx multiply output:\n\n");
         zsl_mtx_print(&mc);
 }
 
 void main(void)
 {
-        printk("zscilib matrix mult demo\n\n");
+        printf("zscilib matrix mult demo\n\n");
 
         test_mtx_mult_demo();
 
