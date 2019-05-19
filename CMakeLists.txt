@@ -5,6 +5,28 @@ zephyr_include_directories(include)
 
 zephyr_library()
 zephyr_library_sources(
+    src/physics/atomic.c
+    src/physics/dynamics.c
+    src/physics/eleccomp.c
+    src/physics/electric.c
+    src/physics/energy.c
+    src/physics/fluids.c
+    src/physics/gases.c
+    src/physics/gravitation.c
+    src/physics/kinematics.c
+    src/physics/magnetics.c
+    src/physics/mass.c
+    src/physics/misc.c
+    src/physics/momentum.c
+    src/physics/optics.c
+    src/physics/projectiles.c
+    src/physics/relativity.c
+    src/physics/rotation.c
+    src/physics/sound.c
+    src/physics/thermo.c
+    src/physics/waves.c
+    src/physics/work.c
+    src/chemistry.c
     src/interp.c
     src/matrices.c
     src/vectors.c
