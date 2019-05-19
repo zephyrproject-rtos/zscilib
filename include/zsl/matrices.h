@@ -721,7 +721,7 @@ int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
 int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
 
-/** @} */ /* End of MTX_TRANSFORMATIOPNS group */
+/** @} */ /* End of MTX_TRANSFORMATIONS group */
 
 /**
  * @addtogroup MTX_LIMITS Limits

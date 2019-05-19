@@ -1,5 +1,5 @@
 sample:
-  name: zscilib SVD (singular value decomposition)
+  name: zscilib matrix multiply
 tests:
   test:
     tags: zscilib
