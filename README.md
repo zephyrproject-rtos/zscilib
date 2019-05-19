@@ -490,9 +490,9 @@ TODO: Where to classify these?
 - Periodic table data including:
   - Full name
   - Abbreviation
-  - Atomic number
-  - Atomic mass
-  - Ionic charge
+  - Atomic number (done)
+  - Standard atomic weight (done)
+  - TBD
 
 ### Misc. Domain-Specific Operations
 

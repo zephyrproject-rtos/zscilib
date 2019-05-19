@@ -174,6 +174,8 @@ enum zsl_chem_elements {
  * For the thirteen chemical elements with a range of values (hydrogen,
  * nitrogen, etc.), the CIAAW single-number 'conventional atomic weight' is
  * given.
+ *
+ * Source: https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl
  */
 extern const zsl_real_t zsl_chem_atom_weight[119];
 

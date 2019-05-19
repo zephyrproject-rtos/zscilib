@@ -54,7 +54,7 @@ const zsl_real_t zsl_chem_atom_weight[119] = {
         91.224,     /* Zirconium, Zr        40 */
         92.9064,    /* Niobium, Nb          41 */
         95.94,      /* Molybdenum, Mo       42 */
-        0.0,        /* Technetium, Tc       43 */
+        98.0,       /* Technetium, Tc       43 */
         101.07,     /* Ruthenium, Ru        44 */
         102.9055,   /* Rhodium, Rh          45 */
         106.42,     /* Palladium, Pd        46 */
@@ -72,7 +72,7 @@ const zsl_real_t zsl_chem_atom_weight[119] = {
         140.116,    /* Cerium, Ce           58 */
         140.9077,   /* Praseodymium, Pr     59 */
         144.24,     /* Neodymium, Nd        60 */
-        0.0,        /* Promethium, Pm       61 */
+        145.0,      /* Promethium, Pm       61 */
         150.36,     /* Samarium, Sm         62 */
         151.964,    /* Europium, Eu         63 */
         157.25,     /* Gadolinium, Gd       64 */
@@ -95,17 +95,17 @@ const zsl_real_t zsl_chem_atom_weight[119] = {
         204.3833,   /* Thallium, Tl         81 */
         207.2,      /* Lead, Pb             82 */
         208.9804,   /* Bismuth, Bi          83 */
-        0.0,        /* Polonium, Po         84 */
-        0.0,        /* Astatine, At         85 */
-        0.0,        /* Radon, Rn            86 */
-        0.0,        /* Francium, Fr         87 */
-        0.0,        /* Radium, Ra           88 */
-        0.0,        /* Actinium, Ac         89 */
+        209.0,      /* Polonium, Po         84 */
+        210.0,      /* Astatine, At         85 */
+        222.0,      /* Radon, Rn            86 */
+        223.0,      /* Francium, Fr         87 */
+        226.0,      /* Radium, Ra           88 */
+        227.0,      /* Actinium, Ac         89 */
         232.0381,   /* Thorium, Th          90 */
         231.0359,   /* Protactinium, Pa     91 */
         238.0289,   /* Uranium, U           92 */
-        0.0,        /* Neptunium, Np        93 */
-        0.0,        /* Plutonium, Pu        94 */
+        237.0,      /* Neptunium, Np        93 */
+        244.0,      /* Plutonium, Pu        94 */
         0.0,        /* Americium, Am        95 */
         0.0,        /* Curium, Cm           96 */
         0.0,        /* Berkelium, Bk        97 */
