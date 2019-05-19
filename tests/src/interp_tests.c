@@ -56,7 +56,6 @@ void test_interp_find_x_asc(void)
         zsl_real_t x;
         struct interp_xy xy[6];
 
-
         /* (x:-1, y:-3.0) */
         xy[0].x = -1;
         xy[0].y = -3.0f;

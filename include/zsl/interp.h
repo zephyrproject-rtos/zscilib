@@ -94,10 +94,13 @@ struct interp_xyc {
  * calculate the new position as follows:
  *
  * @code
- * x = interp_lerp(x, finalX, 0.05f);
- * y = interp_lerp(y, finalY, 0.05);
+ * zsl_real_t x, y;
+ * x = y = 0.0;
+ * // Increment x 5% towards 1.0 (new value = 0.05)
+ * interp_lerp(x, 1.0, 0.05, &x);
+ * // Increment y 5% towards 1.5 (new value = 0.075)
+ * interp_lerp(y, 1.5, 0.05, &y);
  * @endcode
- *
  */
 int interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v);
 
