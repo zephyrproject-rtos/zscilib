@@ -47,23 +47,12 @@ above.
 
 To run the benchmark sample using qemu, run the following commands:
 
-> Be sure to run `source zephyr/zephyr-env.sh`  before the commands below!
-
-#### Using `west`
+> Be sure to run `source zephyr/zephyr-env.sh` (OS X or Linux) or
+  `.\zephyr\zephyr-env.cmd` (Windows) before the commands below!
 
 ```
 $ rm -rf build
 $ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
-```
-
-#### Using `cmake` and `ninja`
-
-```
-$ cd modules/lib/zscilib/samples/benchmarking
-$ mkdir b && cd b
-$ cmake -GNinja -DBOARD=qemu_cortex_m3 ..
-$ ninja
-$ ninja run
 ```
 
 Press **`CTRL+A`** then **`x`** to quit qemu.
