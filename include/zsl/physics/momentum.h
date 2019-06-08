@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup MOMENTUM Momentum
+ * @addtogroup MOMENTUM Momentum
  *
  * @brief Momentum functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

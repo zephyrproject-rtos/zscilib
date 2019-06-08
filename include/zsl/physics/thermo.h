@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup THERMODYNAMICS Thermo-dynamics
+ * @addtogroup THERMODYNAMICS Thermo-dynamics
  *
  * @brief Thermo-dynamic functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup ATOMIC Atomic
+ * @addtogroup ATOMIC Atomic
  *
  * @brief Atomic functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

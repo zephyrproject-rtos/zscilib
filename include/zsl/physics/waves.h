@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup WAVES Waves
+ * @addtogroup WAVES Waves
  *
  * @brief Wave functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

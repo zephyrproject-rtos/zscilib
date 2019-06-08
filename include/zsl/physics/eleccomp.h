@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup ELECTTRICAL_COMPS Electrical components.
+ * @addtogroup ELECTTRICAL_COMPS Electrical components.
  *
- * @brief Elecgrical component functions.
- */
+ * @brief Electrical component functions.
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

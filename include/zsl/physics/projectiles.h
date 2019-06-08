@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup PROJECTILES Projectiles
+ * @addtogroup PROJECTILES Projectiles
  *
  * @brief Projectile functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

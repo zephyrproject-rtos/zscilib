@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup SOUND Sounds
+ * @addtogroup SOUND Sounds
  *
  * @brief Sound functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

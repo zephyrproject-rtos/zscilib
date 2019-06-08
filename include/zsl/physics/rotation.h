@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup ROTATION Rotation
+ * @addtogroup ROTATION Rotation
  *
  * @brief Rotation functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

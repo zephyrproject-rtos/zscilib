@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup FLUIDS Fluids
+ * @addtogroup FLUIDS Fluids
  *
  * @brief Fluids functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

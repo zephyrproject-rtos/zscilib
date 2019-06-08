@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup DYNAMICS Dynamics
+ * @addtogroup DYNAMICS Dynamics
  *
  * @brief Dynamics functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

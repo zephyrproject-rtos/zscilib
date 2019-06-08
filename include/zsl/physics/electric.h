@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup ELECTRIC Electric
+ * @addtogroup ELECTRIC Electric
  *
  * @brief Electric functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

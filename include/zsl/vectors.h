@@ -399,7 +399,7 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
 /**
  * @brief Print the supplied vector using printf in a human-readable manner.
  *
- * @param m     Pointer to the vector to print.
+ * @param v     Pointer to the vector to print.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.

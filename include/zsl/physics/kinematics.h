@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup KINEMATICS Kinematics
+ * @addtogroup KINEMATICS Kinematics
  *
  * @brief Kinematics functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

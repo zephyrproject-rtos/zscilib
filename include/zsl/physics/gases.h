@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup GASES Gases
+ * @addtogroup GASES Gases
  *
  * @brief Gas functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

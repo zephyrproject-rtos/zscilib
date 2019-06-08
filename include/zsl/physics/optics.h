@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup OPTICS Optics
+ * @addtogroup OPTICS Optics
  *
  * @brief Optics functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

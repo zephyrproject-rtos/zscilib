@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup MAGNETICS Magnetics
+ * @addtogroup MAGNETICS Magnetics
  *
  * @brief Magnetics functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

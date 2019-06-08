@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup CENTER_OF_MASS Center of mass
+ * @addtogroup CENTER_OF_MASS Center of mass
  *
  * @brief Center of mass functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

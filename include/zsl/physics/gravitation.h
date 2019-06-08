@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup GRAVITATION Gravitation
+ * @addtogroup GRAVITATION Gravitation
  *
  * @brief Gravitation functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup WORK Work
+ * @addtogroup WORK Work
  *
  * @brief Work functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

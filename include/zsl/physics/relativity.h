@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup RELATIVITY Relativity
+ * @addtogroup RELATIVITY Relativity
  *
  * @brief Relativity functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file

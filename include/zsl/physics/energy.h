@@ -18,10 +18,12 @@
  */
 
 /**
- * \defgroup ENERGY Energy
+ * @addtogroup ENERGY Energy
  *
  * @brief Energy functions.
- */
+ *
+ * \ingroup PHYSICS
+ *  @{ */
 
 /**
  * @file
