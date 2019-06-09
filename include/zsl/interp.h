@@ -50,13 +50,13 @@ extern "C" {
  *  @{ */
 
 /** @brief XY struct for nearest neighbour and linear interpolation. */
-struct interp_xy {
+struct zsl_interp_xy {
         zsl_real_t x;
         zsl_real_t y;
 };
 
 /** @brief XY struct for cubic spline interpolation. */
-struct interp_xyc {
+struct zsl_interp_xyc {
         zsl_real_t x;
         zsl_real_t y;
         zsl_real_t y2; /**< @brief Second derivative from the spline. */
@@ -88,7 +88,7 @@ struct interp_xyc {
  * This can be used for alpha-blending or easing of motion, amongst
  * other things.
  *
- * For example, you can use interp_lerp to move an object between two points
+ * For example, you can use zsl_interp_lerp to move an object between two points
  * in 5% increments, creating a smooth animation that slows down as you
  * approach the second point. For each 'step' between the two points you can
  * calculate the new position as follows:
@@ -97,15 +97,15 @@ struct interp_xyc {
  * zsl_real_t x, y;
  * x = y = 0.0;
  * // Increment x 5% towards 1.0 (new value = 0.05)
- * interp_lerp(x, 1.0, 0.05, &x);
+ * zsl_interp_lerp(x, 1.0, 0.05, &x);
  * // Increment y 5% towards 1.5 (new value = 0.075)
- * interp_lerp(y, 1.5, 0.05, &y);
+ * izsl_nterp_lerp(y, 1.5, 0.05, &y);
  * @endcode
  */
-int interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v);
+int zsl_interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v);
 
 /**
- * @brief Uses bisection to search the interp_xy array for the closest array
+ * @brief Uses bisection to search the zsl_interp_xy array for the closest array
  * position to 'x', assigning the matching index value to the 'idx' pointer.
  * The array must be monotonic, but can be either increasing or decreasing
  * between xy[0] and xy[n].
@@ -117,8 +117,8 @@ int interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v);
  *
  * @return 0 on success, error code on error.
  */
-int interp_find_x(struct interp_xy xy[], size_t n, zsl_real_t x,
-                  int *idx);
+int zsl_interp_find_x(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
+                      int *idx);
 
 /**
  * @brief Nearest neighbour (AKA 'piecewise constant') interpolation based on
@@ -131,8 +131,8 @@ int interp_find_x(struct interp_xy xy[], size_t n, zsl_real_t x,
  *
  * @return 0 on success, error code on error.
  */
-int interp_nn(struct interp_xy *xy1, struct interp_xy *xy3,
-              zsl_real_t x2, zsl_real_t *y2);
+int zsl_interp_nn(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
+                  zsl_real_t x2, zsl_real_t *y2);
 
 /**
  * @brief Nearest neighbour (AKA 'piecewise constant') interpolation based on
@@ -145,8 +145,8 @@ int interp_nn(struct interp_xy *xy1, struct interp_xy *xy3,
  *
  * @return 0 on success, error code on error.
  */
-int interp_nn_arr(struct interp_xy xy[], size_t n, zsl_real_t x,
-                  zsl_real_t *y);
+int zsl_interp_nn_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
+                      zsl_real_t *y);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for Y between two
@@ -159,8 +159,8 @@ int interp_nn_arr(struct interp_xy xy[], size_t n, zsl_real_t x,
  *
  * @return 0 on success, error code on error.
  */
-int interp_lin_y(struct interp_xy *xy1, struct interp_xy *xy3,
-                 zsl_real_t x2, zsl_real_t *y2);
+int zsl_interp_lin_y(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
+                     zsl_real_t x2, zsl_real_t *y2);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for Y between two
@@ -173,8 +173,8 @@ int interp_lin_y(struct interp_xy *xy1, struct interp_xy *xy3,
  *
  * @return 0 on success, error code on error.
  */
-int interp_lin_y_arr(struct interp_xy xy[], size_t n, zsl_real_t x,
-                     zsl_real_t *y);
+int zsl_interp_lin_y_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
+                         zsl_real_t *y);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for X between two
@@ -187,8 +187,8 @@ int interp_lin_y_arr(struct interp_xy xy[], size_t n, zsl_real_t x,
  *
  * @return 0 on success, error code on error.
  */
-int interp_lin_x(struct interp_xy *xy1, struct interp_xy *xy3,
-                 zsl_real_t y2, zsl_real_t *x2);
+int zsl_interp_lin_x(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
+                     zsl_real_t y2, zsl_real_t *x2);
 
 /**
  * @brief Calculates xyc[n].y2 for natural cubic spline interpolation, based
@@ -199,10 +199,10 @@ int interp_lin_x(struct interp_xy *xy1, struct interp_xy *xy3,
  * @param yp1 1st derivative at 1. Set to >= 1e30 for natural spline.
  * @param ypn 1st derivative at n'th point. Set to >= 1e30 for natural spline.
  *
- * NOTE: This function must be called BEFORE using interp_cubic_arr.
+ * NOTE: This function must be called BEFORE using zsl_interp_cubic_arr.
  */
-int interp_cubic_calc (struct interp_xyc xyc[], size_t n,
-                       zsl_real_t yp1, zsl_real_t ypn);
+int zsl_interp_cubic_calc (struct zsl_interp_xyc xyc[], size_t n,
+                           zsl_real_t yp1, zsl_real_t ypn);
 
 /**
  * @brief Natural cubic spline interpolation between two points, based on
@@ -215,8 +215,8 @@ int interp_cubic_calc (struct interp_xyc xyc[], size_t n,
  *
  * @return 0 on success, error code on error.
  */
-int interp_cubic_arr(struct interp_xyc xyc[], size_t n,
-                     zsl_real_t x, zsl_real_t *y);
+int zsl_interp_cubic_arr(struct zsl_interp_xyc xyc[], size_t n,
+                         zsl_real_t x, zsl_real_t *y);
 
 /** @} */ /* End of INTERP_FUNCS group */
 
