@@ -248,7 +248,7 @@ qemu_cortex_m3    zsl.core.thumb2.double        FAILED: handler_crash
   test implemenation itself.
 
 ```
-qemu_cortex_m3    zsl.core.thumb2.double        FAILED: handler_crash
+qemu_cortex_m3    zsl.core.thumb2.double        FAILED: failed
         see: sanity-out/qemu_cortex_m3/zsl.core.thumb2.double/handler.log
 ```
 

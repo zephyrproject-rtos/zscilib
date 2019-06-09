@@ -37,6 +37,12 @@
 extern "C" {
 #endif
 
+/**
+ * The permitivity of free space (a vacuum), AKA vacuum permitivity or
+ * electric constant, in farads per meter.
+ */
+#define ZSL_PERM_FREE_SPACE                             (8.85E-12)
+
 #ifdef __cplusplus
 }
 #endif
