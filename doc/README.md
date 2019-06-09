@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-TODO
+- [Add functions to zscilib](adding_funcs.md)
 
 ## API Documentation
 
