@@ -6,7 +6,19 @@
 
 ## API Documentation
 
-TODO
+API documentation is based on inline [doxygen](http://www.doxygen.nl/)
+comment blocks.
+
+To build the documentation, make sure you have a recent version of
+doxygen installed and run the following command from the command
+line:
+
+```
+$ doxygen Doxyfile
+```
+
+This will produce an HTML version of the API documentation, with the
+root page at `doxygen/html/index.html`.
 
 ## Platform-Specific Optimisation
 
