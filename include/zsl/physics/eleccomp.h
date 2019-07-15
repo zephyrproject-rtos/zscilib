@@ -18,7 +18,7 @@
  */
 
 /**
- * @addtogroup ELECTTRICAL_COMPS Electrical components.
+ * @addtogroup ELECTRICAL_COMPS Electrical components.
  *
  * @brief Electrical component functions.
  *

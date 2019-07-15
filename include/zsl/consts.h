@@ -43,6 +43,24 @@ extern "C" {
  */
 #define ZSL_PERM_FREE_SPACE                             (8.85E-12)
 
+/**
+ * The universal gravitational constant or Newtonian constant of gravitation,
+ * in meters cubed per kilogram and second squared.
+ */
+#define ZSL_UNIV_GRAV                                   (6.67408E-11)
+
+/**
+ * The irrational number Pi, defined as the ratio between the perimeter and the
+ * diameter of a circle.
+ */
+#define ZSL_PI                                          (3.14159265359)
+
+/**
+ * The gravitational acceleration at the surface of the Earth, in meters per
+ * second squared.
+ */
+#define ZSL_GRAV_EARTH                                  (9.807)
+
 #ifdef __cplusplus
 }
 #endif

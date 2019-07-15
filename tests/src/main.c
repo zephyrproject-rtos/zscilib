@@ -82,6 +82,16 @@ extern void test_vector_is_equal(void);
 extern void test_vector_is_notneg(void);
 extern void test_vector_contains(void);
 
+extern void test_phy_grav_orb_period(void);
+extern void test_phy_grav_esc_vel(void);
+extern void test_phy_grav_acc(void);
+extern void test_phy_grav_orb_vel(void);
+extern void test_phy_grav_force(void);
+
+extern void test_phy_proj_init_vel(void);
+extern void test_phy_proj_time(void);
+extern void test_phy_proj_time2(void);
+
 extern void test_phy_ecmp_capac_cpv(void);
 extern void test_phy_ecmp_capac_ad(void);
 
@@ -164,9 +174,20 @@ void test_main(void)
         ztest_unit_test(test_vector_is_equal),
         ztest_unit_test(test_vector_is_notneg),
         ztest_unit_test(test_vector_contains),
+                     
+        ztest_unit_test(test_phy_grav_orb_period),
+        ztest_unit_test(test_phy_grav_esc_vel),
+        ztest_unit_test(test_phy_grav_acc),
+        ztest_unit_test(test_phy_grav_orb_vel),
+        ztest_unit_test(test_phy_grav_force),
+                     
+        ztest_unit_test(test_phy_proj_init_vel),
+        ztest_unit_test(test_phy_proj_time),
+        ztest_unit_test(test_phy_proj_time2),
 
         ztest_unit_test(test_phy_ecmp_capac_cpv),
         ztest_unit_test(test_phy_ecmp_capac_ad)
+        
 	);
 
 	ztest_run_test_suite(zsl_tests);
