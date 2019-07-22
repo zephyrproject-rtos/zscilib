@@ -372,7 +372,7 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps) {
 int zsl_vec_print(struct zsl_vec *v)
 {
         for(size_t g = 0; g < v->sz; g++) {
-                printf("%lf ", v->data[g]);
+                printf("%f ", v->data[g]);
         }
 
         return 0;
