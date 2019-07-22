@@ -36,6 +36,7 @@
 #define ZEPHYR_INCLUDE_ZSL_MATRICES_H_
 
 #include <zsl/zsl.h>
+#include <zsl/vectors.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,12 +52,12 @@ extern "C" {
 
 /** @brief Represents a m x n matrix, with data stored in row-major order. */
 struct zsl_mtx {
-        /** The number of rows in the matrix (typically denoted as 'm'). */
-        size_t sz_rows;
-        /** The number of columns in the matrix (typically denoted as 'n'). */
-        size_t sz_cols;
-        /** Data assigned to the matrix, in row-major order (left to right). */
-        zsl_real_t *data;
+	/** The number of rows in the matrix (typically denoted as 'm'). */
+	size_t sz_rows;
+	/** The number of columns in the matrix (typically denoted as 'n'). */
+	size_t sz_cols;
+	/** Data assigned to the matrix, in row-major order (left to right). */
+	zsl_real_t *data;
 };
 
 /**
@@ -65,13 +66,13 @@ struct zsl_mtx {
  * Be sure to also call 'zsl_mtx_init' on the matrix after this macro, since
  * matrices declared on the stack may have non-zero values by default!
  */
-#define ZSL_MATRIX_DEF(name, m, n) \
-        zsl_real_t name ## _mtx[m*n]; \
-        struct zsl_mtx name = { \
-                .sz_rows      = m, \
-                .sz_cols      = n, \
-                .data         = name ## _mtx \
-        }
+#define ZSL_MATRIX_DEF(name, m, n)	\
+	zsl_real_t name ## _mtx[m * n];	\
+	struct zsl_mtx name = {		\
+		.sz_rows = m,		\
+		.sz_cols = n,		\
+		.data = name ## _mtx	\
+	}
 
 /** @} */ /* End of MTX_STRUCTS group */
 
@@ -86,45 +87,45 @@ struct zsl_mtx {
 
 /** @brief Component-wise unary operations. */
 typedef enum zsl_mtx_unary_op {
-        ZSL_MTX_UNARY_OP_INCREMENT,             /**< ++ */
-        ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
-        ZSL_MTX_UNARY_OP_NEGATIVE,
-        ZSL_MTX_UNARY_OP_LOGICAL_NEGATION,      /**< ! */
-        ZSL_MTX_UNARY_OP_ROUND,
-        ZSL_MTX_UNARY_OP_ABS,
-        ZSL_MTX_UNARY_OP_FLOOR,
-        ZSL_MTX_UNARY_OP_CEIL,
-        ZSL_MTX_UNARY_OP_EXP,
-        ZSL_MTX_UNARY_OP_LOG,
-        ZSL_MTX_UNARY_OP_LOG10,
-        ZSL_MTX_UNARY_OP_SQRT,
-        ZSL_MTX_UNARY_OP_SIN,
-        ZSL_MTX_UNARY_OP_COS,
-        ZSL_MTX_UNARY_OP_TAN,
-        ZSL_MTX_UNARY_OP_ASIN,
-        ZSL_MTX_UNARY_OP_ACOS,
-        ZSL_MTX_UNARY_OP_ATAN,
-        ZSL_MTX_UNARY_OP_SINH,
-        ZSL_MTX_UNARY_OP_COSH,
-        ZSL_MTX_UNARY_OP_TANH,
+	ZSL_MTX_UNARY_OP_INCREMENT,             /**< ++ */
+	ZSL_MTX_UNARY_OP_DECREMENT,             /**< -- */
+	ZSL_MTX_UNARY_OP_NEGATIVE,
+	ZSL_MTX_UNARY_OP_LOGICAL_NEGATION,      /**< ! */
+	ZSL_MTX_UNARY_OP_ROUND,
+	ZSL_MTX_UNARY_OP_ABS,
+	ZSL_MTX_UNARY_OP_FLOOR,
+	ZSL_MTX_UNARY_OP_CEIL,
+	ZSL_MTX_UNARY_OP_EXP,
+	ZSL_MTX_UNARY_OP_LOG,
+	ZSL_MTX_UNARY_OP_LOG10,
+	ZSL_MTX_UNARY_OP_SQRT,
+	ZSL_MTX_UNARY_OP_SIN,
+	ZSL_MTX_UNARY_OP_COS,
+	ZSL_MTX_UNARY_OP_TAN,
+	ZSL_MTX_UNARY_OP_ASIN,
+	ZSL_MTX_UNARY_OP_ACOS,
+	ZSL_MTX_UNARY_OP_ATAN,
+	ZSL_MTX_UNARY_OP_SINH,
+	ZSL_MTX_UNARY_OP_COSH,
+	ZSL_MTX_UNARY_OP_TANH,
 } zsl_mtx_unary_op_t;
 
 /** @brief Component-wise binary operations. */
 typedef enum zsl_mtx_binary_op {
-        ZSL_MTX_BINARY_OP_ADD,                  /**< a + b */
-        ZSL_MTX_BINARY_OP_SUB,                  /**< a - b */
-        ZSL_MTX_BINARY_OP_MULT,                 /**< a * b */
-        ZSL_MTX_BINARY_OP_DIV,                  /**< a / b */
-        ZSL_MTX_BINARY_OP_MEAN,                 /**< mean(a, b) */
-        ZSL_MTX_BINARY_OP_EXPON,                /**< a ^ b */
-        ZSL_MTX_BINARY_OP_MIN,                  /**< min(a, b) */
-        ZSL_MTX_BINARY_OP_MAX,                  /**< max(a, b) */
-        ZSL_MTX_BINARY_OP_EQUAL,                /**< a == b */
-        ZSL_MTX_BINARY_OP_NEQUAL,               /**< a != b */
-        ZSL_MTX_BINARY_OP_LESS,                 /**< a < b */
-        ZSL_MTX_BINARY_OP_GREAT,                /**< a > b */
-        ZSL_MTX_BINARY_OP_LEQ,                  /**< a <= b */
-        ZSL_MTX_BINARY_OP_GEQ,                  /**< a >= b */
+	ZSL_MTX_BINARY_OP_ADD,                  /**< a + b */
+	ZSL_MTX_BINARY_OP_SUB,                  /**< a - b */
+	ZSL_MTX_BINARY_OP_MULT,                 /**< a * b */
+	ZSL_MTX_BINARY_OP_DIV,                  /**< a / b */
+	ZSL_MTX_BINARY_OP_MEAN,                 /**< mean(a, b) */
+	ZSL_MTX_BINARY_OP_EXPON,                /**< a ^ b */
+	ZSL_MTX_BINARY_OP_MIN,                  /**< min(a, b) */
+	ZSL_MTX_BINARY_OP_MAX,                  /**< max(a, b) */
+	ZSL_MTX_BINARY_OP_EQUAL,                /**< a == b */
+	ZSL_MTX_BINARY_OP_NEQUAL,               /**< a != b */
+	ZSL_MTX_BINARY_OP_LESS,                 /**< a < b */
+	ZSL_MTX_BINARY_OP_GREAT,                /**< a > b */
+	ZSL_MTX_BINARY_OP_LEQ,                  /**< a <= b */
+	ZSL_MTX_BINARY_OP_GEQ,                  /**< a >= b */
 } zsl_mtx_binary_op_t;
 
 /** @} */ /* End of MTX_OPERANDS group */
@@ -162,7 +163,7 @@ typedef int (*zsl_mtx_unary_fn_t)(struct zsl_mtx *m, size_t i, size_t j);
  * @return 0 on success, and non-zero error code on failure
  */
 typedef int (*zsl_mtx_binary_fn_t)(struct zsl_mtx *ma, struct zsl_mtx *mb,
-                                   struct zsl_mtx *mc, size_t i, size_t j);
+				   struct zsl_mtx *mc, size_t i, size_t j);
 
 /**
  * @brief Function prototype called when populating a matrix via `zsl_mtx_init`.
@@ -384,7 +385,7 @@ int zsl_mtx_unary_func(struct zsl_mtx *m, zsl_mtx_unary_fn_t fn);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
-                      struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
+		      struct zsl_mtx *mc, zsl_mtx_binary_op_t op);
 
 /**
  * @brief Applies a component-wise binary operztion on every coefficient in
@@ -400,7 +401,7 @@ int zsl_mtx_binary_op(struct zsl_mtx *ma, struct zsl_mtx *mb,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
-                        struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
+			struct zsl_mtx *mc, zsl_mtx_binary_fn_t fn);
 
 /** @} */ /* End of MTX_OPERANDS group */
 
@@ -470,7 +471,7 @@ int zsl_mtx_sum_rows_d(struct zsl_mtx *m, size_t i, size_t j);
  *          error code.
  */
 int zsl_mtx_sum_rows_scaled_d(struct zsl_mtx *m, size_t i, size_t j,
-                              zsl_real_t s);
+			      zsl_real_t s);
 
 /**
  * @brief Subtracts matrices 'mb' from 'ma', assigning the output to 'mc'.
@@ -634,7 +635,7 @@ int zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d);
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
-                       struct zsl_mtx *mi, size_t i, size_t j);
+		       struct zsl_mtx *mi, size_t i, size_t j);
 
 /**
  * @brief Given the element (i,j) in matrix 'm', this function performs
@@ -651,7 +652,7 @@ int zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
-                         size_t i, size_t j);
+			 size_t i, size_t j);
 
 /**
  * @brief Given matrix 'm', puts the matrix into echelon form using
@@ -664,7 +665,9 @@ int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
-                        struct zsl_mtx *mi);
+			struct zsl_mtx *mi);
+
+int zsl_mtx_cols_norm(struct zsl_mtx *m, struct zsl_mtx *mnorm);
 
 /**
  * @brief Normalises elements in matrix m such that the element at position
@@ -679,7 +682,7 @@ int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
-                      size_t i, size_t j);
+		      size_t i, size_t j);
 
 /**
  * @brief Normalises elements in matrix m such that the element at position
@@ -694,7 +697,7 @@ int zsl_mtx_norm_elem(struct zsl_mtx *m, struct zsl_mtx *mn, struct zsl_mtx *mi,
  * @return 0 on success, and non-zero error code on failure
  */
 int zsl_mtx_norm_elem_d(struct zsl_mtx *m, struct zsl_mtx *mi,
-                        size_t i, size_t j);
+			size_t i, size_t j);
 
 /**
  * @brief Calculates the inverse of 3x3 matrix 'm'. If the determinant of
@@ -719,7 +722,18 @@ int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
  */
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
-int zsl_mtx_eigen(struct zsl_mtx *m, zsl_real_t *val, struct zsl_mtx *vec);
+int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *mout);
+int zsl_mtx_augm_diag(struct zsl_mtx *m, struct zsl_mtx *maug);
+int zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred);
+int zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r);
+int zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter);
+int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
+int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
+int zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter);
+int zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter);
+int zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
+		struct zsl_mtx *vt, size_t iter);
+int zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter);
 
 /** @} */ /* End of MTX_TRANSFORMATIONS group */
 
@@ -836,7 +850,7 @@ bool zsl_mtx_is_notneg(struct zsl_mtx *m);
  */
 int zsl_mtx_print(struct zsl_mtx *m);
 
-//int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
+// int      zsl_mtx_fprint(FILE *stream, zsl_mtx *m);
 
 /** @} */ /* End of MTX_DISPLAY group */
 

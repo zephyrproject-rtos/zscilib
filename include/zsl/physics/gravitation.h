@@ -118,7 +118,7 @@ int zsl_phy_grav_force(zsl_real_t m1, zsl_real_t m2, zsl_real_t r,
 /**
  * @brief Calculates the gravitational potential energy between two objects in
  *        joules based on their masses (m1 and m2) and the distance they are
- *        separeted (r).
+ *        separated (r).
  *
  * @param m1        Mass of the first object in kilograms.
  * @param m2        Mass of the second object in kilograms.

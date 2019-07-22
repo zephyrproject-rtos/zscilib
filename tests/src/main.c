@@ -50,7 +50,6 @@ extern void test_matrix_norm_elem(void);
 extern void test_matrix_norm_elem_d(void);
 extern void test_matrix_inv(void);
 extern void test_matrix_inv_nxn(void);
-extern void test_matrix_eigen(void);
 extern void test_matrix_min(void);
 extern void test_matrix_max(void);
 extern void test_matrix_min_idx(void);
@@ -143,7 +142,6 @@ void test_main(void)
         ztest_unit_test(test_matrix_norm_elem_d),
         ztest_unit_test(test_matrix_inv),
         ztest_unit_test(test_matrix_inv_nxn),
-        ztest_unit_test(test_matrix_eigen),
         ztest_unit_test(test_matrix_min),
         ztest_unit_test(test_matrix_max),
         ztest_unit_test(test_matrix_min_idx),
@@ -174,20 +172,20 @@ void test_main(void)
         ztest_unit_test(test_vector_is_equal),
         ztest_unit_test(test_vector_is_notneg),
         ztest_unit_test(test_vector_contains),
-                     
+
         ztest_unit_test(test_phy_grav_orb_period),
         ztest_unit_test(test_phy_grav_esc_vel),
         ztest_unit_test(test_phy_grav_acc),
         ztest_unit_test(test_phy_grav_orb_vel),
         ztest_unit_test(test_phy_grav_force),
-                     
+
         ztest_unit_test(test_phy_proj_init_vel),
         ztest_unit_test(test_phy_proj_time),
         ztest_unit_test(test_phy_proj_time2),
 
         ztest_unit_test(test_phy_ecmp_capac_cpv),
         ztest_unit_test(test_phy_ecmp_capac_ad)
-        
+
 	);
 
 	ztest_run_test_suite(zsl_tests);
