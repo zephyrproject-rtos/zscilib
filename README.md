@@ -51,8 +51,7 @@ To run the benchmark sample using qemu, run the following commands:
   `.\zephyr\zephyr-env.cmd` (Windows) before the commands below!
 
 ```
-$ rm -rf build
-$ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
+$ west build -p -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
 ```
 
 Press **`CTRL+A`** then **`x`** to quit qemu.
@@ -62,7 +61,7 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T tests
+$ sanitycheck -p qemu_cortex_m3 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
