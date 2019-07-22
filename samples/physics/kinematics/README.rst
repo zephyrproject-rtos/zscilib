@@ -37,6 +37,5 @@ below:
 
 .. code-block:: console
 
-    $ rm -rf build
     $ west build -p -b nrf52840_pca10056 modules/lib/zscilib/samples/physics/kinematics/
     $ west flash
