@@ -559,6 +559,24 @@ Initial optimisation will target the **ARM Cortex-M** family of devices and the
 **Thumb** and **Thumb-2** instruction sets, though other architectures can be
 accommodated if necessary or useful.
 
+## Code Style
+
+Since the primary target of this codebase is running as a module in
+[Zephyr OS][CS0], it follows the same [coding style][CS1], which is itself
+based on the [Linux kernel coding style][CS2].
+
+You can format the source code to match this style automatically using the
+[uncrustify][CS3] command line tool, which has plugins available for many
+common text editors (Atom Beautify, for example).
+
+- [Crustify rules file][CS4]
+
+[CS0]: https://www.zephyrproject.org/
+[CS1]: https://docs.zephyrproject.org/latest/contribute/index.html#coding-style
+[CS2]: https://kernel.org/doc/html/latest/process/coding-style.html
+[CS3]: http://uncrustify.sourceforge.net/
+[CS4]: https://github.com/zephyrproject-rtos/zephyr/blob/master/.uncrustify.cfg
+
 ## Contributing
 
 If you wish to contribute to this library, you can raise a PR as follows:
