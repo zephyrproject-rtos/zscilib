@@ -151,13 +151,23 @@ int
 zsl_phy_proj_range(zsl_real_t vih, zsl_real_t viv, zsl_real_t xi,
 		   zsl_real_t yi, zsl_real_t *dist)
 {
+        int rc;
 	zsl_real_t t, xf;
 
-	zsl_phy_proj_time(viv, yi, 0.0, &t);
+	rc = zsl_phy_proj_time(viv, yi, 0.0, &t);
+        if (rc) {
+                goto err;
+        }
 
-	zsl_phy_proj_hor_motion(vih, t, xi, &xf);
+	rc = zsl_phy_proj_hor_motion(vih, t, xi, &xf);
+        if (rc) {
+                goto err;
+        }
 
 	*dist = xf - xi;
 
-	return 0;
+        return 0;
+err:
+        *dist = NAN;
+        return rc;
 }

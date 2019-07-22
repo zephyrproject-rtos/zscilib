@@ -16,18 +16,12 @@ void test_phy_atom_nucl_radius(void)
 	int rc;
 	zsl_real_t r;
 
-	rc = zsl_phy_atom_nucl_radius(5.0, &r);
+	rc = zsl_phy_atom_nucl_radius(5, &r);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(r, 2.137469933E-15, 1E-6), NULL);
 
 	/* Example for zero mass number. */
-	rc = zsl_phy_atom_nucl_radius(0.0, &r);
-	zassert_true(rc == -EINVAL, NULL);
-	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(r != r, NULL);
-
-	/* Example for negative mass number. */
-	rc = zsl_phy_atom_nucl_radius(-3.0, &r);
+	rc = zsl_phy_atom_nucl_radius(0, &r);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(r != r, NULL);

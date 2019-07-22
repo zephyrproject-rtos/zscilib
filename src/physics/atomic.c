@@ -11,14 +11,14 @@
 #include <zsl/physics/atomic.h>
 
 int
-zsl_phy_atom_nucl_radius(zsl_real_t A, zsl_real_t *r)
+zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r)
 {
-	if (A <= 0) {
-		*r = NAN;
-		return -EINVAL;
-	}
+        if (!a) {
+                *r = NAN;
+                return -EINVAL;
+        }
 
-	*r = ZSL_NUCL_RADIUS * pow(A, 1 / 3);
+	*r = ZSL_NUCL_RADIUS * pow((zsl_real_t)a, 1.0 / 3.0);
 
 	return 0;
 }
@@ -62,7 +62,7 @@ zsl_phy_atom_bohr_orb_ener(zsl_real_t Z, zsl_real_t n, zsl_real_t *e)
 	}
 
 	*e = -pow((Z * ZSL_COULOMB * ZSL_E_CHARGE * ZSL_E_CHARGE) /
-		  (n * ZSL_RED_PLANCK), 2) * 0.5 * ZSL_E_MASS;
+		  (n * ZSL_RED_PLANCK), 2.0) * 0.5 * ZSL_E_MASS;
 
 	return 0;
 }
@@ -90,7 +90,7 @@ zsl_phy_atom_bragg(zsl_real_t n, zsl_real_t theta, zsl_real_t lambda,
 		return -EINVAL;
 	}
 
-	*d = (n * lambda) / (2 * sin(theta));
+	*d = (n * lambda) / (2.0 * sin(theta));
 
 	return 0;
 }

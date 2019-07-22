@@ -43,15 +43,15 @@ extern "C" {
 
 /**
  * @brief Calculates an approximation of the nuclear radius of an atom of mass
- *        number 'A'.
+ *        number 'a' in femtometers (1E-15).
  *
- * @param A      Mass number of the atom.
- * @param r      Pointer to the output radius in meters. Will be set to
- *               NAN if the mass number is less than one.
+ * @param a      Mass number of the atom.
+ * @param r      Pointer to the output radius in femtometers. Will be set to
+ *               NAN if the input mass number is equal to zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_nucl_radius(zsl_real_t A, zsl_real_t *r);
+int zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r);
 
 /**
  * @brief Calculates the radius of the orbit of an electron in the n-th orbit
