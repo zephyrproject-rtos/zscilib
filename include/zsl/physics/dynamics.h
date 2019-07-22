@@ -41,6 +41,45 @@
 extern "C" {
 #endif
 
+/**
+ * @brief Calculates the force in newtons that experiments a body based on its
+ *        mass (m) and acceleration (accel).
+ *
+ * @param m      Mass of the body in kilograms.
+ * @param accel  Acceleration in meters per second squared.
+ * @param f      Pointer to the output force in newtons. Will be set to NAN if
+ *               the mass of the body is negative.
+ *
+ * @return 0 if everything executed properly, error code on failure.
+ */
+int zsl_phy_dyn_newton(zsl_real_t m, zsl_real_t accel, zsl_real_t *f);
+
+/**
+ * @brief Calculates the friction force experimented by a body moving in a
+ *        surface with a friction coefficient 'mu'.
+ *
+ * @param n     Normal force that the surface exerts to the body, in newtons.
+ * @param mu    Friction coefficient, that ranges from zero to one.
+ * @param f     Pointer to the output friction force in newtons. Will be set to
+ *              NAN if 'mu' is less than zero or greater than 1.
+ *
+ * @return 0 if everything executed properly, error code on failure.
+ */
+int zsl_phy_dyn_fric(zsl_real_t n, zsl_real_t mu, zsl_real_t *f);
+
+/**
+ * @brief Calculates the normal force in newtons exerted by plane inclined
+ *        'theta' radians on a body of mass 'm'.
+ *
+ * @param m      Mass of the body in kilograms.
+ * @param theta  Angle of inclination in radians.
+ * @param n      Pointer to the output normal force in newtons. Will be set to
+ *               NAN if the value of the body's mass is negative.
+ *
+ * @return 0 if everything executed properly, error code on failure.
+ */
+int zsl_phy_dyn_normal(zsl_real_t m, zsl_real_t theta, zsl_real_t *n);
+
 #ifdef __cplusplus
 }
 #endif

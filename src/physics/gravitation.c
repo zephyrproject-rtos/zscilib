@@ -38,7 +38,6 @@ zsl_phy_grav_esc_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v)
 	return 0;
 }
 
-
 int
 zsl_phy_grav_acc(zsl_real_t m, zsl_real_t r, zsl_real_t *a)
 {
@@ -52,7 +51,6 @@ zsl_phy_grav_acc(zsl_real_t m, zsl_real_t r, zsl_real_t *a)
 	return 0;
 }
 
-
 int
 zsl_phy_grav_orb_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v)
 {
@@ -65,7 +63,6 @@ zsl_phy_grav_orb_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v)
 
 	return 0;
 }
-
 
 int
 zsl_phy_grav_force(zsl_real_t m1, zsl_real_t m2, zsl_real_t r, zsl_real_t *f)

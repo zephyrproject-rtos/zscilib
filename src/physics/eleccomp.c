@@ -31,7 +31,7 @@ zsl_phy_ecmp_capac_ad(zsl_real_t a, zsl_real_t d, zsl_real_t *c)
 		return -EINVAL;
 	}
 
-        *c = ZSL_PERM_FREE_SPACE * (a / d);
+	*c = ZSL_PERM_FREE_SPACE * (a / d);
 
-        return 0;
+	return 0;
 }

@@ -44,7 +44,7 @@ extern "C" {
 /**
  * @brief Calculates capacitance in farads based on charge (q) and voltage (v).
  *
- * @param q     Charge in coulombs
+ * @param q     Charge in coulombs.
  * @param v     Voltage in volts
  * @param c     Pointer to the output capacitance in farad. Will be set to
  *              NAN if v = 0.

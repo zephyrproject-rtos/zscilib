@@ -89,7 +89,32 @@ extern void test_phy_grav_force(void);
 
 extern void test_phy_proj_init_vel(void);
 extern void test_phy_proj_time(void);
+extern void test_phy_proj_time_first(void);
 extern void test_phy_proj_time2(void);
+extern void test_phy_proj_ver_motion(void);
+extern void test_phy_proj_ver_vel(void);
+extern void test_phy_proj_hor_motion(void);
+extern void test_phy_proj_trajectory(void);
+extern void test_phy_proj_vel(void);
+extern void test_phy_proj_angle(void);
+extern void test_phy_proj_range(void);
+
+extern void test_phy_kin_dist(void);
+extern void test_phy_kin_time(void);
+extern void test_phy_kin_vel(void);
+extern void test_phy_kin_vel2(void);
+extern void test_phy_kin_av_vel(void);
+extern void test_phy_kin_accel(void);
+extern void test_phy_kin_ener(void);
+
+extern void test_phy_mass_center(void);
+
+extern void test_phy_atom_nucl_radius(void);
+extern void test_phy_atom_bohr_orb_radius(void);
+extern void test_phy_atom_bohr_orb_vel(void);
+extern void test_phy_atom_bohr_orb_ener(void);
+extern void test_phy_atom_rad_decay(void);
+extern void test_phy_atom_bragg(void);
 
 extern void test_phy_ecmp_capac_cpv(void);
 extern void test_phy_ecmp_capac_ad(void);
@@ -181,7 +206,32 @@ void test_main(void)
 
         ztest_unit_test(test_phy_proj_init_vel),
         ztest_unit_test(test_phy_proj_time),
+	ztest_unit_test(test_phy_proj_time_first),
         ztest_unit_test(test_phy_proj_time2),
+	ztest_unit_test(test_phy_proj_ver_motion),
+	ztest_unit_test(test_phy_proj_ver_vel),
+	ztest_unit_test(test_phy_proj_hor_motion),
+	ztest_unit_test(test_phy_proj_trajectory),
+	ztest_unit_test(test_phy_proj_vel),
+	ztest_unit_test(test_phy_proj_angle),
+	ztest_unit_test(test_phy_proj_range),
+
+	ztest_unit_test(test_phy_kin_dist),
+	ztest_unit_test(test_phy_kin_time),
+	ztest_unit_test(test_phy_kin_vel),
+	ztest_unit_test(test_phy_kin_vel2),
+	ztest_unit_test(test_phy_kin_av_vel),
+	ztest_unit_test(test_phy_kin_accel),
+	ztest_unit_test(test_phy_kin_ener),
+
+	ztest_unit_test(test_phy_mass_center),
+
+	ztest_unit_test(test_phy_atom_nucl_radius),
+	ztest_unit_test(test_phy_atom_bohr_orb_radius),
+	ztest_unit_test(test_phy_atom_bohr_orb_vel),
+	ztest_unit_test(test_phy_atom_bohr_orb_ener),
+	ztest_unit_test(test_phy_atom_rad_decay),
+	ztest_unit_test(test_phy_atom_bragg),
 
         ztest_unit_test(test_phy_ecmp_capac_cpv),
         ztest_unit_test(test_phy_ecmp_capac_ad)

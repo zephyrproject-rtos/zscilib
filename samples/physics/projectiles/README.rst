@@ -1,12 +1,12 @@
-.. _zscilib-kinematics-sample:
+.. _zscilib-projectiles-sample:
 
-Kinematics
-##########
+Projectiles
+###########
 
 Overview
 ********
 
-This sample application shows how to use various kinematics functions in
+This sample application shows how to use various projectile functions in
 zscilib. The results will be sent to the console for verification.
 
 Requirements
@@ -28,7 +28,7 @@ the result to the console:
 .. code-block:: console
 
     $ rm -rf build
-    $ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/physics/kinematics/ -t run
+    $ west build -b qemu_cortex_m3 modules/lib/zscilib/samples/physics/projectiles/ -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b BOARD``
@@ -38,5 +38,5 @@ below:
 .. code-block:: console
 
     $ rm -rf build
-    $ west build -p -b nrf52840_pca10056 modules/lib/zscilib/samples/physics/kinematics/
+    $ west build -p -b nrf52840_pca10056 modules/lib/zscilib/samples/physics/projectiles/
     $ west flash
