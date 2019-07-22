@@ -16,37 +16,67 @@ void test_phy_mass_center(void)
 	int rc;
 	zsl_real_t mx, my, mz;
 
-	/* Example with 3 objects. */
-	zsl_real_t m[3] = { 1.0, 2.0, 3.0 };
-	zsl_real_t x[3] = { 0.0, 3.0, 0.0 };
-	zsl_real_t y[3] = { -1.0, 0.5, 0.1 };
-	zsl_real_t z[3] = { 3.0, 1.5, 2.0 };
+        ZSL_VECTOR_DEF(m1, 3);
+        ZSL_VECTOR_DEF(x1, 3);
+        ZSL_VECTOR_DEF(y1, 3);
+        ZSL_VECTOR_DEF(z1, 3);
 
-	rc = zsl_phy_mass_center(3, m, x, y, z, &mx, &my, &mz);
+	/* Example with 3 objects. */
+	zsl_real_t md1[3] = { 1.0, 2.0, 3.0 };
+	zsl_real_t xd1[3] = { 0.0, 3.0, 0.0 };
+	zsl_real_t yd1[3] = { -1.0, 0.5, 0.1 };
+	zsl_real_t zd1[3] = { 3.0, 1.5, 2.0 };
+
+        zsl_vec_from_arr(&m1, md1);
+        zsl_vec_from_arr(&x1, xd1);
+        zsl_vec_from_arr(&y1, yd1);
+        zsl_vec_from_arr(&z1, zd1);
+
+	rc = zsl_phy_mass_center(&m1, &x1, &y1, &z1, &mx, &my, &mz);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(mx, 1.0, 1E-6), NULL);
 	zassert_true(val_is_equal(my, 0.05, 1E-6), NULL);
 	zassert_true(val_is_equal(mz, 2.0, 1E-6), NULL);
 
-	/* Examle with 6 objects. */
-	zsl_real_t m1[6] = { 6.0, 1.0, 3.5, 7.0, 4.2, 1.7 };
-	zsl_real_t x1[6] = { 5.0, -3.0, -2.1, 4.9, 5.3, -1.1 };
-	zsl_real_t y1[6] = { -1.0, 0.5, 0.1, 0.7, 4.4, -0.3 };
-	zsl_real_t z1[6] = { 3.0, -1.5, 2.0, 8.1, 2.4, -5.5 };
+	/* Example with 6 objects. */
+        ZSL_VECTOR_DEF(m2, 6);
+        ZSL_VECTOR_DEF(x2, 6);
+        ZSL_VECTOR_DEF(y2, 6);
+        ZSL_VECTOR_DEF(z2, 6);
 
-	rc = zsl_phy_mass_center(6, m1, x1, y1, z1, &mx, &my, &mz);
+	zsl_real_t md2[6] = { 6.0, 1.0, 3.5, 7.0, 4.2, 1.7 };
+	zsl_real_t xd2[6] = { 5.0, -3.0, -2.1, 4.9, 5.3, -1.1 };
+	zsl_real_t yd2[6] = { -1.0, 0.5, 0.1, 0.7, 4.4, -0.3 };
+	zsl_real_t zd2[6] = { 3.0, -1.5, 2.0, 8.1, 2.4, -5.5 };
+
+        zsl_vec_from_arr(&m2, md2);
+        zsl_vec_from_arr(&x2, xd2);
+        zsl_vec_from_arr(&y2, yd2);
+        zsl_vec_from_arr(&z2, zd2);
+
+	rc = zsl_phy_mass_center(&m2, &x2, &y2, &z2, &mx, &my, &mz);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(mx, 3.176923077, 1E-6), NULL);
 	zassert_true(val_is_equal(my, 0.7572649573, 1E-6), NULL);
 	zassert_true(val_is_equal(mz, 3.458547009, 1E-6), NULL);
 
 	/* Example in which some of the objects have negative mass. */
-	zsl_real_t m2[3] = { -2.0, -1.0, 3.0 };
-	zsl_real_t x2[3] = { 0.0, 3.0, 0.0 };
-	zsl_real_t y2[3] = { -1.0, 0.5, 0.1 };
-	zsl_real_t z2[3] = { 3.0, 1.5, 2.0 };
+        ZSL_VECTOR_DEF(m3, 3);
+        ZSL_VECTOR_DEF(x3, 3);
+        ZSL_VECTOR_DEF(y3, 3);
+        ZSL_VECTOR_DEF(z3, 3);
 
-	rc = zsl_phy_mass_center(3, m2, x2, y2, z2, &mx, &my, &mz);
+	zsl_real_t md3[3] = { -2.0, -1.0, 3.0 };
+	zsl_real_t xd3[3] = { 0.0, 3.0, 0.0 };
+	zsl_real_t yd3[3] = { -1.0, 0.5, 0.1 };
+	zsl_real_t zd3[3] = { 3.0, 1.5, 2.0 };
+
+        zsl_vec_from_arr(&m3, md3);
+        zsl_vec_from_arr(&x3, xd3);
+        zsl_vec_from_arr(&y3, yd3);
+        zsl_vec_from_arr(&z3, zd3);
+
+	rc = zsl_phy_mass_center(&m3, &x3, &y3, &z3, &mx, &my, &mz);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(mx != mx, NULL);
@@ -54,12 +84,22 @@ void test_phy_mass_center(void)
 	zassert_true(mz != mz, NULL);
 
 	/* Example in which the total mass is zero. */
-	zsl_real_t m3[3] = { 0.0, 0.0, 0.0 };
-	zsl_real_t x3[3] = { 0.0, 3.0, 0.0 };
-	zsl_real_t y3[3] = { -1.0, 0.5, 0.1 };
-	zsl_real_t z3[3] = { 3.0, 1.5, 2.0 };
+        ZSL_VECTOR_DEF(m4, 3);
+        ZSL_VECTOR_DEF(x4, 3);
+        ZSL_VECTOR_DEF(y4, 3);
+        ZSL_VECTOR_DEF(z4, 3);
 
-	rc = zsl_phy_mass_center(3, m3, x3, y3, z3, &mx, &my, &mz);
+	zsl_real_t md4[3] = { 0.0, 0.0, 0.0 };
+	zsl_real_t xd4[3] = { 0.0, 3.0, 0.0 };
+	zsl_real_t yd4[3] = { -1.0, 0.5, 0.1 };
+	zsl_real_t zd4[3] = { 3.0, 1.5, 2.0 };
+
+        zsl_vec_from_arr(&m4, md4);
+        zsl_vec_from_arr(&x4, xd4);
+        zsl_vec_from_arr(&y4, yd4);
+        zsl_vec_from_arr(&z4, zd4);
+
+	rc = zsl_phy_mass_center(&m4, &x4, &y4, &z4, &mx, &my, &mz);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(mx != mx, NULL);

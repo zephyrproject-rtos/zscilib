@@ -10,41 +10,52 @@
 #include <zsl/zsl.h>
 #include <zsl/physics/mass.h>
 
+
 int
-zsl_phy_mass_center(size_t n, zsl_real_t m[n], zsl_real_t x[n], zsl_real_t y[n],
-		    zsl_real_t z[n], zsl_real_t *mx, zsl_real_t *my,
-		    zsl_real_t *mz)
+zsl_phy_mass_center(struct zsl_vec *m, struct zsl_vec *x,
+		    struct zsl_vec *y, struct zsl_vec *z, zsl_real_t *mx,
+		    zsl_real_t *my, zsl_real_t *mz)
 {
 	/* TO DO: Check if the number of arguments in m, x, y and z
 	 * is equal to n. */
 
+        int rc;
 	zsl_real_t mt = 0.0;
 	zsl_real_t mtx = 0.0;
 	zsl_real_t mty = 0.0;
 	zsl_real_t mtz = 0.0;
 
-	for (size_t g = 0; g < n; g++) {
-		if (m[g] < 0) {
-			*mx = NAN;
-			*my = NAN;
-			*mz = NAN;
-			return -EINVAL;
-		}
-		x[g] *= m[g];
-		y[g] *= m[g];
-		z[g] *= m[g];
-		mt += m[g];
-		mtx += x[g];
-		mty += y[g];
-		mtz += z[g];
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Ensure that all vectors have the same size. */
+	if ((m->sz != x->sz) || (x->sz != y->sz) || (y->sz != z->sz)) {
+		return -EINVAL;
 	}
+#endif
 
-	if (mt == 0) {
-		*mx = NAN;
+        rc = zsl_vec_dot(m, x, &mtx);
+        rc = zsl_vec_dot(m, y, &mty);
+        rc = zsl_vec_dot(m, z, &mtz);
+
+        /* Calculate arithematic mean of all masses in vector m. */
+        rc = zsl_vec_ar_mean(m, &mt);
+
+        /* Ensure there are no negative values for mass. */
+        if (zsl_vec_is_nonneg(m) == false) {
+                *mx = NAN;
+                *my = NAN;
+                *mz = NAN;
+                return -EINVAL;
+        }
+
+        mt *= m->sz;
+
+        /* Avoid divide by zero errors. */
+        if (mt == 0.0) {
+                *mx = NAN;
 		*my = NAN;
 		*mz = NAN;
 		return -EINVAL;
-	}
+        }
 
 	*mx = mtx / mt;
 	*my = mty / mt;

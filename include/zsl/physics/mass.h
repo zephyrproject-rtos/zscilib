@@ -36,6 +36,7 @@
 #define ZEPHYR_INCLUDE_ZSL_CMASS_H_
 
 #include <zsl/zsl.h>
+#include <zsl/vectors.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,8 +58,8 @@ extern "C" {
  * @return 0 if everything executed properly, -EINVAL if any of the masses has
  *         a negative value or the total mass is zero.
  */
-int zsl_phy_mass_center(size_t n, zsl_real_t m[n], zsl_real_t x[n],
-			zsl_real_t y[n], zsl_real_t z[n], zsl_real_t *mx,
+int zsl_phy_mass_center(struct zsl_vec *m, struct zsl_vec *x,
+			struct zsl_vec *y, struct zsl_vec *z, zsl_real_t *mx,
 			zsl_real_t *my, zsl_real_t *mz);
 
 #ifdef __cplusplus
