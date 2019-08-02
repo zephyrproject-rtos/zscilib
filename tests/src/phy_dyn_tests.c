@@ -16,13 +16,17 @@ void test_phy_dyn_newton(void)
 	int rc;
 	zsl_real_t f;
 
-// 	rc = zsl_phy_dyn_newton(5.1, 4.2, &f);
-// 	zassert_true(rc == 0, NULL);
-// 	zassert_true(val_is_equal(f, 21.42, 1E-6), NULL);
-	
+ 	rc = zsl_phy_dyn_newton(5.1, 4.2, &f);
+ 	zassert_true(rc == 0, NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+ 	zassert_true(val_is_equal(f, 21.42, 1E-5), NULL);
+#else
+        zassert_true(val_is_equal(f, 21.42, 1E-8), NULL);
+#endif
+
 	rc = zsl_phy_dyn_newton(5.0, 4.0, &f);
 	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(f, 20.0, 1E-6), NULL);
+	zassert_true(val_is_equal(f, 20.0, 1E-8), NULL);
 
 	/* Example for negative mass. */
 	rc = zsl_phy_dyn_newton(-5.1, 4.2, &f);
@@ -45,7 +49,7 @@ void test_phy_dyn_fric(void)
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(f != f, NULL);
-	
+
 	/* Example for mu greater than one. */
 	rc = zsl_phy_dyn_fric(3.3, 6.7, &f);
 	zassert_true(rc == -EINVAL, NULL);
