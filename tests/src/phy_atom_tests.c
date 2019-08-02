@@ -25,9 +25,6 @@ void test_phy_atom_nucl_radius(void)
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(r != r, NULL);
-	
-	/* Example for non-natural mass number. */
-	// rc = zsl_phy_atom_nucl_radius(3.45, &r);
 }
 
 void test_phy_atom_bohr_orb_radius(void)
@@ -39,17 +36,11 @@ void test_phy_atom_bohr_orb_radius(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(r, 0.4409810014, 1E-6), NULL);
 
-	/* Example for non-natural n. */
-	// rc = zsl_phy_atom_bohr_orb_radius(3, 5.67, &r);
-
 	/* Example for zero Z. */
 	rc = zsl_phy_atom_bohr_orb_radius(0, 5, &r);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(r != r, NULL);
-	
-	/* Example for non-natural Z. */
-	// rc = zsl_phy_atom_bohr_orb_radius(0.4, 5, &r);
 }
 
 void test_phy_atom_bohr_orb_vel(void)
@@ -61,17 +52,11 @@ void test_phy_atom_bohr_orb_vel(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(v, 1312.6147793774928, 1E-6), NULL);
 
-	/* Example for non-natural n. */
-	// rc = zsl_phy_atom_bohr_orb_vel(3, 82.33, &v);
-
 	/* Example for zero Z. */
 	rc = zsl_phy_atom_bohr_orb_vel(0, 5, &v);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(v != v, NULL);
-	
-	/* Example for non-natural Z. */
-	// rc = zsl_phy_atom_bohr_orb_vel(31.2, 3, &v);
 }
 
 void test_phy_atom_bohr_orb_ener(void)
@@ -83,17 +68,11 @@ void test_phy_atom_bohr_orb_ener(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(e, -4.8980496069, 1E-6), NULL);
 
-	/* Example for non-natural n. */
-	// rc = zsl_phy_atom_bohr_orb_ener(3, 8.234, &e);
-
 	/* Example for zero Z. */
 	rc = zsl_phy_atom_bohr_orb_ener(0, 5, &e);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(e != e, NULL);
-	
-	/* Example for non-natural Z. */
-	// rc = zsl_phy_atom_bohr_orb_ener(178.45, 5, &e);
 }
 
 void test_phy_atom_rad_decay(void)
@@ -144,7 +123,4 @@ void test_phy_atom_bragg(void)
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(d != d, NULL);
-
-	/* Example for non-natural n. */
-	// rc = zsl_phy_atom_bragg(6.54, 5.9, 500.0, &d);
 }
