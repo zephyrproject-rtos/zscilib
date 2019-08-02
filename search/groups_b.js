@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['probability',['Probability',['../group___p_r_o_b_a_b_i_l_i_t_y.html',1,'']]]
+  ['neural_20networks',['Neural Networks',['../group___n_e_u_r_a_l.html',1,'']]]
 ];

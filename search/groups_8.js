@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matrices',['Matrices',['../group___m_a_t_r_i_c_e_s.html',1,'']]]
+  ['kinematics',['Kinematics',['../group___k_i_n_e_m_a_t_i_c_s.html',1,'']]]
 ];

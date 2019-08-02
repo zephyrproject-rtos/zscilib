@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['input_5fweight',['input_weight',['../structzsl__nn__neuron.html#a91b99e658022025a11c0cdde7fa91534',1,'zsl_nn_neuron']]],
-  ['inputs',['inputs',['../structzsl__nn__neuron.html#a40896d03c7af7816507388d4efb97b17',1,'zsl_nn_neuron']]],
-  ['initialisation',['Initialisation',['../group___m_t_x___i_n_i_t.html',1,'']]],
-  ['initialisation',['Initialisation',['../group___v_e_c___i_n_i_t.html',1,'']]]
+  ['gases',['Gases',['../group___g_a_s_e_s.html',1,'']]],
+  ['gases_2eh',['gases.h',['../gases_8h.html',1,'']]],
+  ['gravitation',['Gravitation',['../group___g_r_a_v_i_t_a_t_i_o_n.html',1,'']]],
+  ['gravitation_2eh',['gravitation.h',['../gravitation_8h.html',1,'']]]
 ];

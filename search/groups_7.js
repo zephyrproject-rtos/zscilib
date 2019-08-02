@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['limits',['Limits',['../group___m_t_x___l_i_m_i_t_s.html',1,'']]],
-  ['loss_20calculation',['Loss Calculation',['../group___n_n___l_o_s_s.html',1,'']]]
+  ['interpolation',['Interpolation',['../group___i_n_t_e_r_p_o_l_a_t_e.html',1,'']]],
+  ['initialisation',['Initialisation',['../group___m_t_x___i_n_i_t.html',1,'']]],
+  ['initialisation',['Initialisation',['../group___v_e_c___i_n_i_t.html',1,'']]]
 ];

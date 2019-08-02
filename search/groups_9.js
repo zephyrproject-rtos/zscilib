@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['neural_20networks',['Neural Networks',['../group___n_e_u_r_a_l.html',1,'']]]
+  ['limits',['Limits',['../group___m_t_x___l_i_m_i_t_s.html',1,'']]],
+  ['loss_20calculation',['Loss Calculation',['../group___n_n___l_o_s_s.html',1,'']]]
 ];

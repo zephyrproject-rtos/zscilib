@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['statistics_2eh',['statistics.h',['../statistics_8h.html',1,'']]]
+  ['kinematics_2eh',['kinematics.h',['../kinematics_8h.html',1,'']]]
 ];
