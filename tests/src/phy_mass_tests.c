@@ -105,4 +105,27 @@ void test_phy_mass_center(void)
 	zassert_true(mx != mx, NULL);
 	zassert_true(my != my, NULL);
 	zassert_true(mz != mz, NULL);
+	
+	/* Example in which the dimension of the vectors is not the same. */
+        ZSL_VECTOR_DEF(m5, 4);
+        ZSL_VECTOR_DEF(x5, 3);
+        ZSL_VECTOR_DEF(y5, 3);
+        ZSL_VECTOR_DEF(z5, 3);
+
+	zsl_real_t md5[4] = { 2.0, 3.0, 8.0, 5.0 };
+	zsl_real_t xd5[3] = { 0.0, 3.0, 0.0 };
+	zsl_real_t yd5[3] = { -1.0, 0.5, 0.1 };
+	zsl_real_t zd5[3] = { 3.0, 1.5, 2.0 };
+
+        zsl_vec_from_arr(&m5, md5);
+        zsl_vec_from_arr(&x5, xd5);
+        zsl_vec_from_arr(&y5, yd5);
+        zsl_vec_from_arr(&z5, zd5);
+
+	rc = zsl_phy_mass_center(&m5, &x5, &y5, &z5, &mx, &my, &mz);
+	zassert_true(rc == -EINVAL, NULL);
+	/* IEEE standard states that x != x is true only for NAN values. */
+	zassert_true(mx != mx, NULL);
+	zassert_true(my != my, NULL);
+	zassert_true(mz != mz, NULL);
 }

@@ -6,7 +6,6 @@
 
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/kinematics.h>
 
@@ -98,7 +97,7 @@ zsl_phy_kin_accel(zsl_real_t vi, zsl_real_t vf, zsl_real_t time,
 int
 zsl_phy_kin_ener(zsl_real_t v, zsl_real_t m, zsl_real_t *ke)
 {
-	if (m <= 0) {
+	if (m < 0) {
 		*ke = NAN;
 		return -EINVAL;
 	}

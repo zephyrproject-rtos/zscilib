@@ -6,7 +6,6 @@
 
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/mass.h>
 
@@ -19,7 +18,7 @@ zsl_phy_mass_center(struct zsl_vec *m, struct zsl_vec *x,
 	/* TO DO: Check if the number of arguments in m, x, y and z
 	 * is equal to n. */
 
-        int rc;
+	int rc;
 	zsl_real_t mt = 0.0;
 	zsl_real_t mtx = 0.0;
 	zsl_real_t mty = 0.0;
@@ -28,34 +27,37 @@ zsl_phy_mass_center(struct zsl_vec *m, struct zsl_vec *x,
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Ensure that all vectors have the same size. */
 	if ((m->sz != x->sz) || (x->sz != y->sz) || (y->sz != z->sz)) {
+		*mx = NAN;
+		*my = NAN;
+		*mz = NAN;
 		return -EINVAL;
 	}
 #endif
 
-        rc = zsl_vec_dot(m, x, &mtx);
-        rc = zsl_vec_dot(m, y, &mty);
-        rc = zsl_vec_dot(m, z, &mtz);
+	rc = zsl_vec_dot(m, x, &mtx);
+	rc = zsl_vec_dot(m, y, &mty);
+	rc = zsl_vec_dot(m, z, &mtz);
 
-        /* Calculate arithematic mean of all masses in vector m. */
-        rc = zsl_vec_ar_mean(m, &mt);
+	/* Calculate arithematic mean of all masses in vector m. */
+	rc = zsl_vec_ar_mean(m, &mt);
 
-        /* Ensure there are no negative values for mass. */
-        if (zsl_vec_is_nonneg(m) == false) {
-                *mx = NAN;
-                *my = NAN;
-                *mz = NAN;
-                return -EINVAL;
-        }
-
-        mt *= m->sz;
-
-        /* Avoid divide by zero errors. */
-        if (mt == 0.0) {
-                *mx = NAN;
+	/* Ensure there are no negative values for mass. */
+	if (zsl_vec_is_nonneg(m) == false) {
+		*mx = NAN;
 		*my = NAN;
 		*mz = NAN;
 		return -EINVAL;
-        }
+	}
+
+	mt *= m->sz;
+
+	/* Avoid divide by zero errors. */
+	if (mt == 0.0) {
+		*mx = NAN;
+		*my = NAN;
+		*mz = NAN;
+		return -EINVAL;
+	}
 
 	*mx = mtx / mt;
 	*my = mty / mt;

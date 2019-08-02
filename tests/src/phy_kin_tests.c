@@ -132,12 +132,6 @@ void test_phy_kin_ener(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(ke, 55.0, 1E-6), NULL);
 
-	/* Case for zero mass. */
-	rc = zsl_phy_kin_ener(10.0, 0.0, &ke);
-	zassert_true(rc == -EINVAL, NULL);
-	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(ke != ke, NULL);
-
 	/* Case for negative mass. */
 	rc = zsl_phy_kin_ener(10.0, -1.1, &ke);
 	zassert_true(rc == -EINVAL, NULL);

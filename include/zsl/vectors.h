@@ -267,6 +267,19 @@ int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d);
 zsl_real_t zsl_vec_norm(struct zsl_vec *v);
 
 /**
+ * @brief   Calculates the projection of vector 'u' over vector 'v', placing
+ *          the results in vector 'w'.
+ *
+ * @param u Pointer to the first input vector.
+ * @param v Pointer to the second input vector.
+ * @param w Pointer to the output vector where the proj. results are stored.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
+
+/**
  * @brief Converts vector 'v' to a unit vector (a vector of length 1).
  *        This is accomploished by dividing each element by the it's norm.
  *
@@ -385,6 +398,18 @@ bool zsl_vec_is_nonneg(struct zsl_vec *v);
  *         matching occurences were found, or a negative error code.
  */
 int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
+
+/**
+ * @brief Rearranges the input vector to place any zero-values at the end.
+ * 
+ * @param v   The input vector to rearrange.
+ * 
+ * @warning   This function is destructive to 'v'!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_vec_zte(struct zsl_vec *v);
 
 /** @} */ /* End of VEC_COMPARE group */
 

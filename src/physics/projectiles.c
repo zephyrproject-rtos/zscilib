@@ -6,7 +6,6 @@
 
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/projectiles.h>
 
@@ -24,7 +23,7 @@ int
 zsl_phy_proj_time(zsl_real_t viv, zsl_real_t yi, zsl_real_t yf,
 		  zsl_real_t *t)
 {
-	zsl_real_t disc = viv * viv + 2 * ZSL_GRAV_EARTH * (yi - yf);
+	zsl_real_t disc = viv * viv + 2.0 * ZSL_GRAV_EARTH * (yi - yf);
 
 	if (disc < 0) {
 		*t = NAN;
@@ -39,7 +38,7 @@ zsl_phy_proj_time(zsl_real_t viv, zsl_real_t yi, zsl_real_t yf,
 int zsl_phy_proj_time_first(zsl_real_t viv, zsl_real_t yi, zsl_real_t yf,
 			    zsl_real_t *t)
 {
-	zsl_real_t disc = viv * viv + 2 * ZSL_GRAV_EARTH * (yi - yf);
+	zsl_real_t disc = viv * viv + 2.0 * ZSL_GRAV_EARTH * (yi - yf);
 
 	if (disc < 0) {
 		*t = NAN;
@@ -78,7 +77,7 @@ zsl_phy_proj_ver_motion(zsl_real_t viv, zsl_real_t t, zsl_real_t yi,
 		return -EINVAL;
 	}
 
-	*yf = yi + viv * t - (ZSL_GRAV_EARTH * t * t) / 2;
+	*yf = yi + viv * t - (ZSL_GRAV_EARTH * t * t) / 2.0;
 
 	return 0;
 }
@@ -138,7 +137,7 @@ int
 zsl_phy_proj_angle(zsl_real_t vfh, zsl_real_t vfv, zsl_real_t *theta)
 {
 	if (vfh == 0) {
-		*theta = ZSL_PI / 2;
+		*theta = ZSL_PI / 2.0;
 		return 0;
 	}
 
@@ -151,23 +150,13 @@ int
 zsl_phy_proj_range(zsl_real_t vih, zsl_real_t viv, zsl_real_t xi,
 		   zsl_real_t yi, zsl_real_t *dist)
 {
-        int rc;
 	zsl_real_t t, xf;
 
-	rc = zsl_phy_proj_time(viv, yi, 0.0, &t);
-        if (rc) {
-                goto err;
-        }
+	zsl_phy_proj_time(viv, yi, 0.0, &t);
 
-	rc = zsl_phy_proj_hor_motion(vih, t, xi, &xf);
-        if (rc) {
-                goto err;
-        }
+	zsl_phy_proj_hor_motion(vih, t, xi, &xf);
 
 	*dist = xf - xi;
 
-        return 0;
-err:
-        *dist = NAN;
-        return rc;
+	return 0;
 }

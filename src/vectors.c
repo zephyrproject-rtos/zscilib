@@ -11,6 +11,11 @@
 #include <zsl/vectors.h>
 #include <zsl/zsl.h>
 
+#ifndef EPSILON
+/* Define EPSILON for floating point comparisons. */
+#define EPSILON 1e-6
+#endif
+
 /* Enable optimised ARM Thumb/Thumb2 functions if available. */
 #if (CONFIG_ZSL_PLATFORM_OPT == 1 || CONFIG_ZSL_PLATFORM_OPT == 2)
 #include <zsl/asm/arm/asm_arm_vectors.h>
@@ -216,6 +221,19 @@ zsl_real_t zsl_vec_norm(struct zsl_vec *v) {
         return sqrt(sum);
 }
 
+int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w)
+{
+        zsl_real_t p;
+        zsl_real_t t;
+
+        zsl_vec_copy(w,u);
+        zsl_vec_dot(v, u, &p);
+        zsl_vec_dot(u, u, &t);
+        zsl_vec_scalar_mult(w, p/t);
+
+        return 0;
+}
+
 int zsl_vec_to_unit(struct zsl_vec *v) {
         zsl_real_t mag = zsl_vec_norm(v);
 
@@ -369,6 +387,24 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps) {
         return count;
 }
 
+int zsl_vec_zte(struct zsl_vec *v)
+{
+        size_t x = 0;
+
+        for(size_t g = 0; g < v->sz; g++) {
+                if((v->data[g-x] >= 0.0 && v->data[g-x] < EPSILON) ||
+                   (v->data[g-x] <= 0.0 && v->data[g-x] > EPSILON)) {
+                        for (size_t p = g - x; p <( v->sz - 1); p++) {
+                                v->data[p] = v->data[p + 1];
+                        }
+                        v->data[v->sz - 1] = 0.0;
+                        x++;
+                }
+        }
+
+        return 0;
+}
+
 int zsl_vec_print(struct zsl_vec *v)
 {
         for(size_t g = 0; g < v->sz; g++) {
@@ -377,3 +413,4 @@ int zsl_vec_print(struct zsl_vec *v)
 
         return 0;
 }
+

@@ -64,7 +64,8 @@ int zsl_phy_kin_dist(zsl_real_t vi, zsl_real_t time, zsl_real_t accel,
  * @param vf    Final velocity in meters per second.
  * @param accel Acceleration in meters per second squared.
  * @param time  Pointer to the placeholder for calculated time in seconds. Will
- *              be set to NAN if the time is negative or the acceleration is 0.
+ *              be set to NAN if the time is negative or if the acceleration
+ *              is zero.
  *
  * @return 0 on success, and non-zero error code on failure.
  */
@@ -132,13 +133,13 @@ int zsl_phy_kin_accel(zsl_real_t vi, zsl_real_t vf, zsl_real_t time,
 		      zsl_real_t *accel);
 
 /**
- * @brief Calculates the kinetic energy of a moving body in joules based on its
+ * @brief Calculates the kinetic energy in joules of a moving body based on its
  *        velocity (v) and mass (m).
  *
  * @param v     Velocity of the object in meters per second.
  * @param m     Mass of the object in kilograms.
  * @param ke    Pointer to the output kinetic energy in joules. Will be set to
- *              NAN if the mass is negative or zero.
+ *              NAN if the mass is negative.
  *
  * @return 0 on success, and non-zero error code on failure.
  */

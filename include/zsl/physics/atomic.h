@@ -43,11 +43,11 @@ extern "C" {
 
 /**
  * @brief Calculates an approximation of the nuclear radius of an atom of mass
- *        number 'a' in femtometers (1E-15).
+ *        number 'a'.
  *
  * @param a      Mass number of the atom.
  * @param r      Pointer to the output radius in femtometers. Will be set to
- *               NAN if the input mass number is equal to zero.
+ *               NAN if the mass number is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
@@ -55,43 +55,44 @@ int zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r);
 
 /**
  * @brief Calculates the radius of the orbit of an electron in the n-th orbit
- *        of an atom with 'Z' atomic number, according to the atomic Bohr model.
+ *        of an atom with 'z' atomic number, according to the atomic Bohr model.
  *
- * @param Z      Atomic number of the atom.
+ * @param z      Atomic number of the atom.
  * @param n      Number of the orbit.
- * @param r      Pointer to the output radius in meters. Will be set to
- *               NAN if either the atomic number or n are less than one.
+ * @param r      Pointer to the output radius in nanometers. Will be set to
+ *               NAN if the atomic is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_radius(zsl_real_t Z, zsl_real_t n, zsl_real_t *r);
+int zsl_phy_atom_bohr_orb_radius(u8_t z, u8_t n, zsl_real_t *r);
 
 /**
- * @brief Calculates the velocity in meters per second of an electron in the
- *        n-th orbit of an atom with 'Z' atomic number, according to the Bohr
+ * @brief Calculates the velocity in kilometers per second of an electron in the
+ *        n-th orbit of an atom with 'z' atomic number, according to the Bohr
  *        model of the atom.
  *
- * @param Z      Atomic number of the atom.
+ * @param z      Atomic number of the atom.
  * @param n      Number of the orbit.
- * @param v      Pointer to the output velocity in meters per second. Will be
- *               set to NAN if either the atomic number or n are less than one.
+ * @param v      Pointer to the output velocity in kilometers per second. Will
+ *               be set to NAN if the atomic number is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_vel(zsl_real_t Z, zsl_real_t n, zsl_real_t *v);
+int zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v);
 
 /**
- * @brief Calculates the energy in joules of an electron in the n-th orbit of an
- *        atom with 'Z' atomic number, according to the Bohr model of the atom.
+ * @brief Calculates the energy in electronvolts of an electron in the n-th
+ *        orbit of an atom with 'z' atomic number, according to the Bohr model
+ *        of the atom.
  *
- * @param Z      Atomic number of the atom.
+ * @param z      Atomic number of the atom.
  * @param n      Number of the orbit.
- * @param v      Pointer to the output energy in joules. Will be set to NAN
- *               if either the atomic number or n are less than one.
+ * @param v      Pointer to the output energy in electronvolts. Will be set to
+ *               NAN if the atomic number is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_ener(zsl_real_t Z, zsl_real_t n, zsl_real_t *e);
+int zsl_phy_atom_bohr_orb_ener(u8_t z, u8_t n, zsl_real_t *e);
 
 /**
  * @brief Calculates the radioactive activity in becquerels of a sample of
@@ -118,13 +119,13 @@ int zsl_phy_atom_rad_decay(zsl_real_t qi, zsl_real_t t, zsl_real_t lambda,
  * @param n       Positive integer.
  * @param theta   Angle of incision in radians.
  * @param lambda  Wavelenght in meters.
- * @param d       Pointer to the output distance in meters. Will be
- *                set to NAN if lambda is negative or if sin(theta) is negative
+ * @param d       Pointer to the output distance in meters. Will be set to 
+ *                NAN if lambda is negative or if sin(theta) is negative
  *                or zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bragg(zsl_real_t n, zsl_real_t theta, zsl_real_t lambda,
+int zsl_phy_atom_bragg(u8_t n, zsl_real_t theta, zsl_real_t lambda,
 		       zsl_real_t *d);
 
 #ifdef __cplusplus

@@ -17,7 +17,7 @@ void projectiles_demo(void)
 	printf("Physics projectile API demo\n");
 	printf("---------------------------\n\n");
 
-	/* Enter the initial values: */
+	/* Initial values: */
 	zsl_real_t vi = 12.4;   /* Initial velocity */
 	zsl_real_t theta = 1.1; /* Angle */
 	zsl_real_t xi = 2.2;    /* Initial horizontal position */

@@ -6,7 +6,6 @@
 
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/rotation.h>
 
@@ -39,7 +38,7 @@ zsl_phy_rot_dist(zsl_real_t phi, zsl_real_t r, zsl_real_t *dist)
 int
 zsl_phy_rot_turn(zsl_real_t phi, zsl_real_t *turn)
 {
-	*turn = phi / (2 * ZSL_PI);
+	*turn = phi / (2.0 * ZSL_PI);
 
 	return 0;
 }
@@ -73,7 +72,7 @@ zsl_phy_rot_omega(zsl_real_t oi, zsl_real_t time, zsl_real_t a, zsl_real_t *of)
 int
 zsl_phy_rot_omega2(zsl_real_t oi, zsl_real_t phi, zsl_real_t a, zsl_real_t *of)
 {
-	zsl_real_t of2 = oi * oi + 2 * a * phi;
+	zsl_real_t of2 = oi * oi + 2.0 * a * phi;
 
 	if (of2 < 0) {
 		*of = NAN;
@@ -141,7 +140,7 @@ zsl_phy_rot_accel(zsl_real_t a, zsl_real_t r, zsl_real_t *accel)
 int
 zsl_phy_rot_ener(zsl_real_t omega, zsl_real_t i, zsl_real_t *rke)
 {
-	if (i <= 0) {
+	if (i < 0) {
 		*rke = NAN;
 		return -EINVAL;
 	}
@@ -159,7 +158,7 @@ zsl_phy_rot_period(zsl_real_t omega, zsl_real_t *t)
 		return -EINVAL;
 	}
 
-	*t = (2 * ZSL_PI) / omega;
+	*t = (2.0 * ZSL_PI) / omega;
 
 	return 0;
 }
@@ -172,7 +171,7 @@ zsl_phy_rot_frequency(zsl_real_t omega, zsl_real_t *f)
 		return -EINVAL;
 	}
 
-	*f = omega / (2 * ZSL_PI);
+	*f = omega / (2.0 * ZSL_PI);
 
 	return 0;
 }
@@ -198,7 +197,7 @@ zsl_phy_rot_cent_accel2(zsl_real_t t, zsl_real_t r, zsl_real_t *ca)
 		return -EINVAL;
 	}
 
-	*ca = (4 * ZSL_PI * ZSL_PI * r) / (t * t);
+	*ca = (4.0 * ZSL_PI * ZSL_PI * r) / (t * t);
 
 	return 0;
 }

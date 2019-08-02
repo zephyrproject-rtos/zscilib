@@ -42,6 +42,11 @@
 extern "C" {
 #endif
 
+/** The number of eigenvectors is less than the matrice's dimension. */
+#define EEIGENSIZE   (100)
+/** Occurs when the input matrix has complex eigenvalues. */
+#define ECOMPLEXVAL  (101)
+
 /**
  * @addtogroup MTX_STRUCTS Structs and Macros
  *
@@ -565,11 +570,12 @@ int zsl_mtx_trans(struct zsl_mtx *ma, struct zsl_mtx *mb);
 /**
  * @brief Calculates the ajoint matrix, based on the input 3x3 matrix 'm'.
  *
- * @param m     The input 3x3 matrix to use.
- * @param ma    The output 3x3 matrix the adjoint values will be assigned to.
+ * @param m     The input 3x3 square matrix to use.
+ * @param ma    The output 3x3 square matrix the adjoint values will be
+ *              assigned to.
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
- *          3x3 matrix.
+ *          3x3 square matrix.
  */
 int zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma);
 
@@ -585,26 +591,55 @@ int zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma);
 int zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma);
 
 /**
- * @brief Removes row 'i' and column 'j' from matrix 'm', assigning the
+ * @brief Removes row 'i' and column 'j' from square matrix 'm', assigning the
  *        remaining elements in the matrix to 'mr'.
  *
- * @param m     The input nxn matrix to use.
- * @param mr    The output n-1xn-1 matrix.
+ * @param m     The input nxn square matrix to use.
+ * @param mr    The output (n-1)x(n-1) square matrix.
  * @param i     The row number to remove (0-based).
  * @param j     The column number to remove (0-based).
  *
  * @return  0 if everything executed correctly, or -EINVAL if this isn't a
- *          3x3 matrix.
+ *          square matrix.
  */
 int zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j);
+
+/* NOTE: This is used for household method/QR. Should it be in the main lib? */
+/**
+ * @brief   Reduces the number of rows/columns in the input square matrix 'm'
+ *          to match the shape of 'mred', where mred < m. Rows/cols will be
+ *          removed starting on the left and upper vectors.
+ *
+ * @param m     Pointer to the input square matrix.
+ * @param mred  Pointer the the reduced output square matrix.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred);
+
+/* NOTE: This is used for household method/QR. Should it be in the main lib? */
+/**
+ * @brief Augments the input square matrix with additional rows and columns,
+ *        based on the size 'diff' between m and maug (where maug > m). New rows
+ *        and columns are assigned values based on an identity matrix, meaning
+ *        1.0 on the new diagonal values and 0.0 above and below the diagonal.
+ *
+ * @param m     Pointer to the input square matrix.
+ * @param maug  Pointer the the augmented output square matrix.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_augm_diag(struct zsl_mtx *m, struct zsl_mtx *maug);
 
 /**
  * @brief Calculates the determinant of the input 3x3 matrix 'm'.
  *
- * @param m     The input 3x3 matrix to use.
- * @param d     The determinant of 3x3 matrix m.
+ * @param m     The input 3x3 square matrix to use.
+ * @param d     The determinant of 3x3 square matrix m.
  *
- * @return 0 on success, and non-zero error code on failure
+ * @return  0 on success, or -EINVAL if this isn't a 3x3 square matrix.
  */
 int zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d);
 
@@ -658,15 +693,26 @@ int zsl_mtx_gauss_elim_d(struct zsl_mtx *m, struct zsl_mtx *mi,
  * @brief Given matrix 'm', puts the matrix into echelon form using
  *        Gauss-Jordan reduction.
  *
- * @param m     Pointer to the input zsl_mtx.
- * @param mid   TODO
- * @param mi    TODO
+ * @param m     Pointer to the input square matrix to use.
+ * @param mi    Pointer to the identity output matrix.
+ * @param mg    Pointer to the output square matrix in echelon form.
  *
  * @return 0 on success, and non-zero error code on failure
  */
-int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mid,
-			struct zsl_mtx *mi);
+int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mi,
+			struct zsl_mtx *mg);
 
+/**
+ * @brief Updates the values of every column vector in input matrix 'm' to have
+ *        unitary values.
+ *
+ * @param m      Pointer to the input matrix.
+ * @param mnorm  Pointer to the output matrix where the columns are unitary
+ *               vectors.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_cols_norm(struct zsl_mtx *m, struct zsl_mtx *mnorm);
 
 /**
@@ -722,17 +768,144 @@ int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
  */
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
-int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *mout);
-int zsl_mtx_augm_diag(struct zsl_mtx *m, struct zsl_mtx *maug);
-int zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred);
+/**
+ * @brief Performs the householder transformation on matrix 'm'. Used as part
+ *        of QR decomposition.
+ *
+ * @param m     Pointer to the input square matrix to use.
+ * @param h     Pointer to the output square matrix where the transformation
+ *              results should be assigned.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h);
+
+/**
+ * @brief QR decomposition, which is a factorisation of matrix 'm' into
+ *        an orthogonal matrix (q) and an upper triangular matrix (r). This
+ *        function uses the householder method.
+ *
+ * This function makes use of the householder method to perform the
+ * QR decomposition, which introduces the zeros below the diagonal of
+ * matrix 'r'. Other algorithms exist, such as the Gram-Schmidt process,
+ * but they tend to be less stable than the householder method for a similar
+ * computational cost.
+ *
+ * @param m     Pointer to the input square matrix.
+ * @param q     Pointer to the output orthoogonal square matrix.
+ * @param r     Pointer to the output upper triangular square matrix.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r);
+
+// TODO: Should this be 'recursive' or 'iterative'???
+/**
+ * @brief Computes recursively the QR decompisition method to put the input
+ *        square matrix into upper triangular form.
+ *
+ * @param m     The input square matrix to use when performing the QR
+ *              decomposition.
+ * @param mout  The output upper triangular square matrix where the results
+ *              should be stored.
+ * @param iter  The number of times that 'zsl_mtx_qrd' should be called.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter);
-int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
-int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
+
+/**
+ * @brief   Calculates the eigenvalues for input matrix 'm' using QR
+ *          decomposition recursively. The output vector will only contain real
+ *          eigenvalues, even if the input matrix has complex eigenvalues.
+ *
+ * @param m     The input square matrix to use.
+ * @param v     The placeholder for the output vector where the real eigenvalues
+ *              should be stored.
+ * @param iter  The number of times that 'zsl_mtx_qrd' should be called
+ *              during the QR decomposition phase.
+ *
+ * NOTE: Large values required more iterations to get precise results, and
+ * some trial and error may be required to find the right balance of
+ * iterations versus processing time.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code. If -ECOMPLEXVAL is returned, it means that complex
+ *          numbers were detected in the output eigenvalues.
+ */
 int zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter);
-int zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter);
+
+/**
+ * @brief Performs the Gram-Schmidt algorithm on the set of column vectors in
+ *        matrix 'm'. This algorithm calculates a set of orthogonal vectors in
+ *        the same vectorial space as the original vectors.
+ *
+ * @param m     Pointer to the input matrix containing the vector data.
+ * @param mort  Pointer to the output matrix containing the orthogonal vector
+ *              data.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
+
+/**
+ * @brief Calcualtes the set of eigenvectors for input matrix 'm', using the
+ *        specified number of iterations to find a balance between precision and
+ *        processing effort. Optionally, the output eigenvectors can be
+ *        orthonormalised.
+ *
+ * @param m             The input square matrix to use.
+ * @param mev           The placeholder for the output square matrix where the
+ *                      eigenvectors should be stored as column vectors.
+ * @param iter          The number of times that 'zsl_mtx_qrd' should be called.
+ *                      during the QR decomposition phase.
+ * @param orthonormal   If set to true, the output matrix 'mev' will be
+ *                      orthonormalised.
+ *
+ * NOTE: Large values required more iterations to get precise results, and
+ * some trial and error may be required to find the right balance of
+ * iterations versus processing time.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code. If the number of calcualted eigenvectors is less
+ *          than the columns in 'm', EEIGENSIZE will be returned.
+ */
+int zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
+                         bool orthonormal);
+
+/**
+ * @brief Performs singular value decomposition, converting input matrix 'm'
+ *        into matrices 'u', 'e', and 'v'.
+ *
+ * @param m     The input mxn matrix to use.
+ * @param u     The placeholder for the output mxm matrix u.
+ * @param v     The placeholder for the output mxn matrix sigma.
+ * @param u     The placeholder for the output nxn matrix v.
+ * @param iter  The number of times that 'zsl_mtx_qrd' should be called.
+ *              during the QR decomposition phase.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
-		struct zsl_mtx *vt, size_t iter);
+		struct zsl_mtx *v, size_t iter);
+
+/**
+ * @brief   Performs the pseudo-inverse (aka pinv or Moore-Penrose inverse)
+ *          on input matrix 'm'.
+ *
+ * @param m     The input mxn matrix to use.
+ * @param pinv  The placeholder for the output pseudo inverse nxm matrix.
+ * @param iter  The number of times that 'zsl_mtx_qrd' should be called.
+ *              during the QR decomposition phase.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
 int zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter);
 
 /** @} */ /* End of MTX_TRANSFORMATIONS group */

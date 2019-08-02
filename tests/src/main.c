@@ -116,6 +116,12 @@ extern void test_phy_atom_bohr_orb_ener(void);
 extern void test_phy_atom_rad_decay(void);
 extern void test_phy_atom_bragg(void);
 
+extern void test_phy_dyn_newton(void);
+extern void test_phy_dyn_fric(void);
+extern void test_phy_dyn_normal(void);
+
+extern void test_phy_rot_angle(void);
+
 extern void test_phy_ecmp_capac_cpv(void);
 extern void test_phy_ecmp_capac_ad(void);
 
@@ -225,13 +231,19 @@ void test_main(void)
 	ztest_unit_test(test_phy_kin_ener),
 
 	ztest_unit_test(test_phy_mass_center),
-
+			
 	ztest_unit_test(test_phy_atom_nucl_radius),
 	ztest_unit_test(test_phy_atom_bohr_orb_radius),
 	ztest_unit_test(test_phy_atom_bohr_orb_vel),
 	ztest_unit_test(test_phy_atom_bohr_orb_ener),
 	ztest_unit_test(test_phy_atom_rad_decay),
 	ztest_unit_test(test_phy_atom_bragg),
+			 
+	ztest_unit_test(test_phy_dyn_newton),
+	ztest_unit_test(test_phy_dyn_fric),
+	ztest_unit_test(test_phy_dyn_normal),
+	
+	ztest_unit_test(test_phy_rot_angle),
 
         ztest_unit_test(test_phy_ecmp_capac_cpv),
         ztest_unit_test(test_phy_ecmp_capac_ad)
