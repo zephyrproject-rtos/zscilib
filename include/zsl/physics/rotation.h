@@ -40,7 +40,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 /**
  * @brief Calculates the change in the angle based on initial angular velocity,
  *        time and acceleration.
@@ -57,11 +57,11 @@ int zsl_phy_rot_angle(zsl_real_t oi, zsl_real_t time, zsl_real_t a,
 		      zsl_real_t *phi);
 
 /**
- * @brief Calculates the distance in meters done by an object under circular
- *        motion given the angle it has run (phi) and the radius of its
- *        trajectory (r).
+ * @brief Calculates the distance travelled in meters by an object under
+ *        circular motion given the change in angle in radians (phi) and the
+ *        radius of its trajectory (r).
  *
- * @param phi   Angle run by the object in radians.
+ * @param phi   Total change in angle by the object in radians.
  * @param r     Radius of the circular trajectory in meters.
  * @param dist  Pointer to the output distance in meters. Will be set to NAN
  *              if r is a negative value.
@@ -71,10 +71,11 @@ int zsl_phy_rot_angle(zsl_real_t oi, zsl_real_t time, zsl_real_t a,
 int zsl_phy_rot_dist(zsl_real_t phi, zsl_real_t r, zsl_real_t *dist);
 
 /**
- * @brief Calculates the number of turns arround a circle an object under
- *        circular motion has done given the angle it has run (phi).
+ * @brief Calculates the number of rotations around a circle by an object under
+ *        circular motion, based on the total change in angle it has travelled
+ *        in radians (phi).
  *
- * @param phi   Angle run by the object in radians.
+ * @param phi   Total change in angle travelled by the object in radians.
  * @param turn  Pointer to the output number of turns.
  *
  * @return 0 on success, and non-zero error code on failure.
@@ -83,7 +84,7 @@ int zsl_phy_rot_turn(zsl_real_t phi, zsl_real_t *turn);
 
 /**
  * @brief Calculates the time in seconds that it takes an object to change its
- *        angular velocity from oi to of under a constant angular
+ *        angular velocity from 'oi' to 'of' under a constant angular
  *        acceleration (a).
  *
  * @param oi    Initial angular velocity in radians per second.
@@ -98,7 +99,7 @@ int zsl_phy_rot_time(zsl_real_t oi, zsl_real_t of, zsl_real_t a,
 		     zsl_real_t *time);
 
 /**
- * @brief Calculates the final angular velocity in radians per second of an 
+ * @brief Calculates the final angular velocity in radians per second of an
  *        object under a constant angular acceleration (a) based on its initial
  *        angular velocity (oi) and the time passed since it started
  *        moving (time).
@@ -115,7 +116,7 @@ int zsl_phy_rot_omega(zsl_real_t oi, zsl_real_t time, zsl_real_t a,
 		      zsl_real_t *of);
 
 /**
- * @brief Calculates the final angular velocity in radians per second of an 
+ * @brief Calculates the final angular velocity in radians per second of an
  *        object under a constant angular acceleration (a) based on its initial
  *        angular velocity (oi) and the angle it has run (phy).
  *
@@ -177,7 +178,7 @@ int zsl_phy_rot_ang_accel(zsl_real_t oi, zsl_real_t of, zsl_real_t time,
 
 /**
  * @brief Calculates the module of the acceleration tangent to the circular
- *        trajectory of an object under circular motion, based on its 
+ *        trajectory of an object under circular motion, based on its
  *        angular acceleration (a) and the radius of its trajectory (r).
  *
  * @param a      Angular acceleration in radians per second squared.
@@ -221,7 +222,7 @@ int zsl_phy_rot_period(zsl_real_t omega, zsl_real_t *t);
  *        given its angular velocity (omega).
  *
  * @param omega  Angular velocity in radians per second.
- * @param f      Pointer to the output frequency in herzs. Will be set to NAN 
+ * @param f      Pointer to the output frequency in herzs. Will be set to NAN
  *               if the angular velocity is negative.
  *
  * @return 0 on success, and non-zero error code on failure.
