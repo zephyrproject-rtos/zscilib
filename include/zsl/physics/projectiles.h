@@ -176,6 +176,7 @@ int zsl_phy_proj_hor_motion(zsl_real_t vih, zsl_real_t t, zsl_real_t xi,
  * @param viv    Initial vertical velocity of the object in meters per second.
  * @param xi     Horizontal initial position of the object in meters.
  * @param yi     Vertical initial position of the object in meters.
+ * @param xf     Horizontal final position of the object in meters.
  * @param yf     Pointer to the output height in meters. If the horizontal
  *               velocity is zero it will be set to NAN.
  *

@@ -93,7 +93,7 @@ void test_phy_grav_pot_ener(void)
 
 	rc = zsl_phy_grav_pot_ener(1E15, 200.0, 500.0, &u);
 	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(u, -26696.32, 1E-6), NULL);
+	zassert_true(val_is_equal(u, -26.69632, 1E-6), NULL);
 
 	rc = zsl_phy_grav_pot_ener(1E15, 200.0, 0.0, &u);
 	zassert_true(rc == -EINVAL, NULL);

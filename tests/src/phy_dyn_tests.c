@@ -21,7 +21,7 @@ void test_phy_dyn_newton(void)
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
  	zassert_true(val_is_equal(f, 21.42, 1E-5), NULL);
 #else
-        zassert_true(val_is_equal(f, 21.42, 1E-8), NULL);
+	zassert_true(val_is_equal(f, 21.42, 1E-8), NULL);
 #endif
 
 	rc = zsl_phy_dyn_newton(5.0, 4.0, &f);

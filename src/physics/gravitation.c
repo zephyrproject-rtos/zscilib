@@ -85,7 +85,7 @@ zsl_phy_grav_pot_ener(zsl_real_t m1, zsl_real_t m2, zsl_real_t r,
 		return -EINVAL;
 	}
 
-	*u = (-ZSL_UNIV_GRAV * m1 * m2) / r;
+	*u = (-ZSL_UNIV_GRAV * m1 * m2) / (r * 1E3);
 
 	return 0;
 }

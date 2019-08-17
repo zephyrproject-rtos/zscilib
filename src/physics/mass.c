@@ -35,11 +35,25 @@ zsl_phy_mass_center(struct zsl_vec *m, struct zsl_vec *x,
 #endif
 
 	rc = zsl_vec_dot(m, x, &mtx);
+	if (rc) {
+		return -EINVAL;
+	}
+	
 	rc = zsl_vec_dot(m, y, &mty);
+	if (rc) {
+		return -EINVAL;
+	}
+	
 	rc = zsl_vec_dot(m, z, &mtz);
+	if (rc) {
+		return -EINVAL;
+	}
 
 	/* Calculate arithematic mean of all masses in vector m. */
 	rc = zsl_vec_ar_mean(m, &mt);
+	if (rc) {
+		return -EINVAL;
+	}
 
 	/* Ensure there are no negative values for mass. */
 	if (zsl_vec_is_nonneg(m) == false) {

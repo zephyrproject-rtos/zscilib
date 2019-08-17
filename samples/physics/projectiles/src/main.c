@@ -18,15 +18,15 @@ void projectiles_demo(void)
 	printf("---------------------------\n\n");
 
 	/* Initial values: */
-	zsl_real_t vi = 12.4;   /* Initial velocity */
-	zsl_real_t theta = 1.1; /* Angle */
-	zsl_real_t xi = 2.2;    /* Initial horizontal position */
-	zsl_real_t yi = 15;     /* Initial height */
+	zsl_real_t vi = 12.4;   /* Initial velocity. */
+	zsl_real_t theta = 1.1; /* Angle. */
+	zsl_real_t xi = 2.2;    /* Initial horizontal position. */
+	zsl_real_t yi = 15;     /* Initial height. */
 
-	printf("A rock is lauched from a %f-meter-tall building with a\n", yi);
-	printf("velocity of %f and an angle of %f. Consider the\n", vi, theta);
-	printf("x coordinate zero to be %f meters behind the launching\n", xi);
-	printf("point.\n\n");
+	printf("A rock is lauched from a %.2f meter tall building with\n", yi);
+	printf("a velocity of %f and an angle of %f. Consider\n", vi, theta);
+	printf("the origin x coordinate to be %f meters behind the\n", xi);
+	printf("launching point.\n\n");
 
 	printf("(a) Decompose the initial velocity into its components.\n");
 
@@ -37,8 +37,8 @@ void projectiles_demo(void)
 	printf("The horizontal component is: %f.\n", vih);
 	printf("The vertical component is: %f.\n\n", viv);
 
-	printf("(b) Calculate the time it takes the rock to reach a height\n"
-	       "of 20 meters on its ascending phase.\n\n");
+	printf("(b) Calculate the time it takes the rock to reach a height\n");
+	printf("of 20 meters on its ascending phase.\n\n");
 
 	zsl_real_t t;
 
@@ -53,43 +53,42 @@ void projectiles_demo(void)
 
 	printf("It takes the rock %f seconds to reach the ground.\n\n", t);
 
-	printf("(d) How much time has transcurred when it reaches the\n");
+	printf("(d) How much time has elapsed when it reaches the\n");
 	printf("maximum height?\n\n");
 
 	/* At maximum height the vertical velocity is zero: */
 	zsl_phy_proj_time2(viv, 0.0, &t);
 
-	printf("It takes the rock %f seconds to reach the top.\n\n", t);
+	printf("It takes the rock %f seconds to reach the peak height.\n\n", t);
 
 	printf("(e) Calculate its position and total velocity 2 seconds\n");
-	printf("after the launchment. What's the angle between its velocity\n");
-	printf("and the ground at this moment?\n\n");
+	printf("after being launched. What's the angle between its velocity\n");
+	printf("and the ground at that instant?\n\n");
 
 	zsl_real_t xf, yf, vfv, vf, thetaf;
 
-	/* Calculates the position (xf, yf) at t = 2 seconds. */
+	/* Calculate the position (xf, yf) at t = 2 seconds. */
 	zsl_phy_proj_hor_motion(vih, 2.0, xi, &xf);
 	zsl_phy_proj_ver_motion(viv, 2.0, yi, &yf);
 
-	/* Calculates the vertical velocity at t = 2 seconds. */
+	/* Calculate the vertical velocity at t = 2 seconds. */
 	zsl_phy_proj_ver_vel(viv, 2.0, &vfv);
 
-	/* Calculates the total velocity at t = 2 seconds. */
+	/* Calculate the total velocity at t = 2 seconds. */
 	zsl_phy_proj_vel(vih, vfv, &vf);
 
-	/* Calculates the angle at t = 2 seconds. */
+	/* Calculate the angle at t = 2 seconds. */
 	zsl_phy_proj_angle(vih, vfv, &thetaf);
 
 	printf("The position is (%f, %f) meters. The total\n", xf, yf);
 	printf("velocity is %f meters per second and the angle is\n", vf);
 	printf("%f radians.\n\n", thetaf);
 
-	printf("(f) When the rock is 13.2 meters from the launcher, what is\n");
-	printf("its height?\n\n");
+	printf("(f) When the rock is 13.2 meters from the launch position,\n");
+	printf("what is its height?\n\n");
 
 	/* 13.2 meters from the point of launch means 13.2 + 2.2 = 15.4 meters
 	 * from the origin. */
-
 	zsl_phy_proj_trajectory(vih, viv, xi, yi, 15.4, &yf);
 
 	printf("The height is %f meters.\n\n", yf);
@@ -105,7 +104,7 @@ void projectiles_demo(void)
 
 void main(void)
 {
-	printf("zscilib projectiles demo\n\n");
+	printf("\n\nzscilib projectiles demo\n\n");
 
 	projectiles_demo();
 

@@ -122,7 +122,7 @@ int zsl_phy_kin_av_vel(zsl_real_t dist, zsl_real_t time, zsl_real_t *vel);
  *        squared based on its initial (vi) and final (vf) velocities and time.
  *
  * @param vi    Initial velocity in meters per second.
- * @param vi    Final velocity in meters per second.
+ * @param vf    Final velocity in meters per second.
  * @param time  Time in seconds.
  * @param accel Pointer to the output acceleration in meters per second
  *              squared. Will be set to NAN if the time is negative or zero.

@@ -71,7 +71,7 @@ struct zsl_mtx {
  * Be sure to also call 'zsl_mtx_init' on the matrix after this macro, since
  * matrices declared on the stack may have non-zero values by default!
  */
-#define ZSL_MATRIX_DEF(name, m, n)	\
+#define ZSL_MATRIX_DEF(name, m, n);	\
 	zsl_real_t name ## _mtx[m * n];	\
 	struct zsl_mtx name = {		\
 		.sz_rows = m,		\
@@ -769,39 +769,57 @@ int zsl_mtx_inv_3x3(struct zsl_mtx *m, struct zsl_mtx *mi);
 int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
 /**
- * @brief Performs the householder transformation on matrix 'm'. Used as part
- *        of QR decomposition.
+ * @brief Balances the square matrix 'm', a process in which the eigenvalues of
+ *        the output matrix are the same as the eigenvalues of the input matrix.
  *
- * @param m     Pointer to the input square matrix to use.
- * @param h     Pointer to the output square matrix where the transformation
- *              results should be assigned.
+ * @param m     The input square matrix to use.
+ * @param mout  The output balanced matrix.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h);
+int zsl_mtx_balance(struct zsl_mtx *m, struct zsl_mtx *mout);
 
 /**
- * @brief QR decomposition, which is a factorisation of matrix 'm' into
- *        an orthogonal matrix (q) and an upper triangular matrix (r). This
- *        function uses the householder method.
+ * @brief Calculates the householder reflection of 'm'. Used as part of QR
+ *        decomposition. When 'hessenberg' is active, it calculates the
+ *        householder reflection but without using the first line of 'm'.
  *
- * This function makes use of the householder method to perform the
- * QR decomposition, which introduces the zeros below the diagonal of
- * matrix 'r'. Other algorithms exist, such as the Gram-Schmidt process,
+ * @param m            Pointer to the input matrix to use.
+ * @param hessenberg   If set to true, the first line in 'm' is ignored.
+ * @param h            Pointer to the output square matrix where the
+ *                     values of the householder reflection should be assigned.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h, bool hessenberg);
+
+/**
+ * @brief If 'hessenberg' is set to false, this function performs the QR
+ *        decomposition, which is a factorisation of matrix 'm' into an
+ *        orthogonal matrix (q) and an upper triangular matrix (r). If
+ *        'hessenberg' is set to true, this function puts the matrix 'm' into
+ *        hessenberg form. This function uses the householder reflections.
+ *
+ * One of the uses of this function is to make use of the householder method to
+ * perform the QR decomposition, which introduces the zeros below the diagonal
+ * of matrix 'r'. Other algorithms exist, such as the Gram-Schmidt process,
  * but they tend to be less stable than the householder method for a similar
  * computational cost.
  *
  * @param m     Pointer to the input square matrix.
  * @param q     Pointer to the output orthoogonal square matrix.
- * @param r     Pointer to the output upper triangular square matrix.
+ * @param r     Pointer to the output upper triangular square matrix or
+ *              hessenberg matrix if set to true.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r);
+int zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r,
+		bool hessenberg);
 
-// TODO: Should this be 'recursive' or 'iterative'???
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief Computes recursively the QR decompisition method to put the input
  *        square matrix into upper triangular form.
@@ -816,7 +834,9 @@ int zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r);
  *          error code.
  */
 int zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter);
+#endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief   Calculates the eigenvalues for input matrix 'm' using QR
  *          decomposition recursively. The output vector will only contain real
@@ -837,6 +857,7 @@ int zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter);
  *          numbers were detected in the output eigenvalues.
  */
 int zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter);
+#endif
 
 /**
  * @brief Performs the Gram-Schmidt algorithm on the set of column vectors in
@@ -852,6 +873,7 @@ int zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter);
  */
 int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief Calcualtes the set of eigenvectors for input matrix 'm', using the
  *        specified number of iterations to find a balance between precision and
@@ -876,15 +898,17 @@ int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
  */
 int zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
                          bool orthonormal);
+#endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief Performs singular value decomposition, converting input matrix 'm'
  *        into matrices 'u', 'e', and 'v'.
  *
  * @param m     The input mxn matrix to use.
  * @param u     The placeholder for the output mxm matrix u.
- * @param v     The placeholder for the output mxn matrix sigma.
- * @param u     The placeholder for the output nxn matrix v.
+ * @param e     The placeholder for the output mxn matrix sigma.
+ * @param v     The placeholder for the output nxn matrix v.
  * @param iter  The number of times that 'zsl_mtx_qrd' should be called.
  *              during the QR decomposition phase.
  *
@@ -893,7 +917,9 @@ int zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
  */
 int zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
 		struct zsl_mtx *v, size_t iter);
+#endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief   Performs the pseudo-inverse (aka pinv or Moore-Penrose inverse)
  *          on input matrix 'm'.
@@ -907,6 +933,7 @@ int zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
  *          error code.
  */
 int zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter);
+#endif
 
 /** @} */ /* End of MTX_TRANSFORMATIONS group */
 
@@ -994,14 +1021,23 @@ int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
 bool zsl_mtx_is_equal(struct zsl_mtx *ma, struct zsl_mtx *mb);
 
 /**
- * @brief Checks if all elements in matrix m are >= zero and non-null.
+ * @brief Checks if all elements in matrix m are >= zero.
  *
  * @param m The matrix to check.
  *
- * @return true if the all matrix elements are zero, positive and non-null,
+ * @return true if the all matrix elements are zero or positive,
  *         otherwise false.
  */
 bool zsl_mtx_is_notneg(struct zsl_mtx *m);
+
+/**
+ * @brief Checks if the square input matrix is symmetric.
+ *
+ * @param m The matrix to check.
+ *
+ * @return true if the matrix is symmetric, otherwise false.
+ */
+bool zsl_mtx_is_sym(struct zsl_mtx *m);
 
 /** @} */ /* End of MTX_COMPARISON group */
 

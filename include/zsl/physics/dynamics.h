@@ -42,7 +42,7 @@ extern "C" {
 #endif
 
 /**
- * @brief Calculates the force in newtons that experiments a body based on its
+ * @brief Calculates the force in newtons that experiences a body based on its
  *        mass (m) and acceleration (accel).
  *
  * @param m      Mass of the body in kilograms.
@@ -55,7 +55,7 @@ extern "C" {
 int zsl_phy_dyn_newton(zsl_real_t m, zsl_real_t accel, zsl_real_t *f);
 
 /**
- * @brief Calculates the friction force experimented by a body moving in a
+ * @brief Calculates the friction force experienced by a body moving in a
  *        surface with a friction coefficient 'mu'.
  *
  * @param n     Normal force that the surface exerts to the body, in newtons.

@@ -100,6 +100,11 @@ extern "C" {
  */
 #define ZSL_E_MASS                                      (9.1093835611E-31)
 
+/**
+ * The speed of light in vacuum, in meters per second.
+ */
+#define ZSL_LIGHT_SPEED                                 (299792458.0)
+
 #ifdef __cplusplus
 }
 #endif

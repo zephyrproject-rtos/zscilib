@@ -87,7 +87,7 @@ int zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v);
  *
  * @param z      Atomic number of the atom.
  * @param n      Number of the orbit.
- * @param v      Pointer to the output energy in electronvolts. Will be set to
+ * @param e      Pointer to the output energy in electronvolts. Will be set to
  *               NAN if the atomic number is zero.
  *
  * @return 0 if everything executed properly, error code on failure.

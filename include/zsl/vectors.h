@@ -145,7 +145,7 @@ int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
 /**
  * @addtogroup VEC_BASICMATH Basic Math
  *
- * @brief Basic mathematical operations (add, sum, magnitude, etc.).
+ * @brief Basic mathematical operations (add, sum, norm, etc.).
  *
  * \ingroup VECTORS
  *  @{ */
@@ -194,15 +194,6 @@ int zsl_vec_neg(struct zsl_vec *v);
 int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w);
 
 /**
- * @brief Computes the magnitude of a vector.
- *
- * @param v The vector to use.
- *
- * @return The magnitude of vector 'v'.
- */
-zsl_real_t zsl_vec_magn(struct zsl_vec *v);
-
-/**
  * @brief Adds a scalar to each element in a vector.
  *
  * @param v The vector to scale.
@@ -234,12 +225,12 @@ int zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s);
 
 /**
  * @brief Calculates the distance between two vectors, which is equal to the
- *        magnitude of vector v - vector w.
+ *        norm of vector v - vector w.
  *
  * @param v The first vector.
  * @param w The second vector.
  *
- * @return The magnitude of vector v - vector w, or NAN is there was a
+ * @return The norm of vector v - vector w, or NAN is there was a
  *         size mismatch between vectors v and w.
  */
 zsl_real_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
@@ -306,7 +297,7 @@ int zsl_vec_to_unit(struct zsl_vec *v);
  * from one another, i.e. are not linearly independent) or if either one has
  * zero length, then their cross product is zero.
  *
- * The magnitude of the cross product equals the area of a parallelogram
+ * The norm of the cross product equals the area of a parallelogram
  * with vectors v and w for sides.
  *
  * For a discusson of geometric and algebraic applications, see:
@@ -355,6 +346,18 @@ int zsl_vec_ar_mean(struct zsl_vec *v, zsl_real_t *m);
  */
 int zsl_vec_rev(struct zsl_vec *v);
 
+/**
+ * @brief Rearranges the input vector to place any zero-values at the end.
+ *
+ * @param v   The input vector to rearrange.
+ *
+ * @warning   This function is destructive to 'v'!
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_vec_zte(struct zsl_vec *v);
+
 /** @} */ /* End of VEC_BASICMATH group */
 
 /**
@@ -378,12 +381,11 @@ int zsl_vec_rev(struct zsl_vec *v);
 bool zsl_vec_is_equal(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t eps);
 
 /**
- * @brief Checks if all elements in vector v are >= zero and non-null.
+ * @brief Checks if all elements in vector v are >= zero.
  *
  * @param v The vector to check.
  *
- * @return true if the all vector elements are zero, positive and non-null,
- *         otherwise false.
+ * @return true if all elements in 'v' are zero or positive, otherwise false.
  */
 bool zsl_vec_is_nonneg(struct zsl_vec *v);
 
@@ -398,18 +400,6 @@ bool zsl_vec_is_nonneg(struct zsl_vec *v);
  *         matching occurences were found, or a negative error code.
  */
 int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
-
-/**
- * @brief Rearranges the input vector to place any zero-values at the end.
- * 
- * @param v   The input vector to rearrange.
- * 
- * @warning   This function is destructive to 'v'!
- *
- * @return  0 if everything executed correctly, otherwise an appropriate
- *          error code.
- */
-int zsl_vec_zte(struct zsl_vec *v);
 
 /** @} */ /* End of VEC_COMPARE group */
 

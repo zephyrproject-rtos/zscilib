@@ -11,26 +11,6 @@
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
 
-#ifndef EPSILON
-/* Define EPSILON for floating point comparisons. */
-#define EPSILON 1e-6
-#endif
-
-/* Comment this line out to only use stack memory (HUGE!) */
-/* TODO: Replace scratch memory area handling. */
-//#define USE_SCRATCH
-
-#ifdef USE_SCRATCH
-/* To avoid declaring multiple matrices on the stack, several chunks of
- * statically declared memory are made available here for reuse in recursive
- * functions. */
-#define SCRATCH_ELEMS (100)
-static zsl_real_t scrd_1[SCRATCH_ELEMS];
-static zsl_real_t scrd_2[SCRATCH_ELEMS];
-#define SCRATCH_1_CLEAR (memset(scrd_1, 0, SCRATCH_ELEMS * sizeof(zsl_real_t)))
-#define SCRATCH_2_CLEAR (memset(scrd_2, 0, SCRATCH_ELEMS * sizeof(zsl_real_t)))
-#endif
-
 /*
  * WARNING: Work in progress!
  *
@@ -618,35 +598,35 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 int
 zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred)
 {
-        /* TODO: Properly check if matrix is square. */
-        if (m->sz_rows == mred->sz_rows) {
-                zsl_mtx_copy(mred, m);
-                return 0;
-        }
+	/* TODO: Properly check if matrix is square. */
+	if (m->sz_rows == mred->sz_rows) {
+		zsl_mtx_copy(mred, m);
+		return 0;
+	}
 
-        ZSL_MATRIX_DEF(my, (m->sz_rows - 1), (m->sz_cols - 1));
-        zsl_mtx_reduce(m, &my, 0, 0);
-        zsl_mtx_reduce_iter(&my,mred);
+	ZSL_MATRIX_DEF(my, (m->sz_rows - 1), (m->sz_cols - 1));
+	zsl_mtx_reduce(m, &my, 0, 0);
+	zsl_mtx_reduce_iter(&my, mred);
 
-        return 0;
+	return 0;
 }
 
 int
 zsl_mtx_augm_diag(struct zsl_mtx *m, struct zsl_mtx *maug)
 {
-        zsl_real_t x;
-        /* TODO: Properly check if matrix is square, and diff > 0. */
-        size_t diff = (maug->sz_rows) - (m->sz_rows);
+	zsl_real_t x;
+	/* TODO: Properly check if matrix is square, and diff > 0. */
+	size_t diff = (maug->sz_rows) - (m->sz_rows);
 
-        zsl_mtx_init(maug, zsl_mtx_entry_fn_identity);
-        for (size_t i = 0; i < m->sz_rows; i++) {
-                for (size_t j = 0; j < m->sz_rows; j++) {
-                        zsl_mtx_get(m, i, j, &x);
-                        zsl_mtx_set(maug, i + diff, j + diff, x);
-                }
-        }
+	zsl_mtx_init(maug, zsl_mtx_entry_fn_identity);
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		for (size_t j = 0; j < m->sz_rows; j++) {
+			zsl_mtx_get(m, i, j, &x);
+			zsl_mtx_set(maug, i + diff, j + diff, x);
+		}
+	}
 
-        return 0;
+	return 0;
 }
 
 int
@@ -768,7 +748,7 @@ zsl_mtx_gauss_elim(struct zsl_mtx *m, struct zsl_mtx *mg, struct zsl_mtx *mi,
 		}
 		/* Get the value of (p, j), aborting if value is zero. */
 		zsl_mtx_get(mg, p, j, &x);
-		if ((x >= 0 && x > epsilon) || (x <= 0 && x < -epsilon)) {
+		if ((x >= 1E-6) || (x <= -1E-6)) {
 			rc = zsl_mtx_sum_rows_scaled_d(mg, p, i, -(x / y));
 
 			if (rc) {
@@ -796,26 +776,50 @@ zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mi,
 {
 	zsl_real_t v[m->sz_rows];
 	zsl_real_t epsilon = 1E-6;
+	zsl_real_t x;
+	zsl_real_t y;
 
+	/* Copy the input matrix into 'mg' so all the changes will be done to
+	 * 'mg' and the input matrix will not be destroyed. */
 	zsl_mtx_copy(mg, m);
 
-	/* TODO: Properly comment this code block! */
 	for (size_t k = 0; k < m->sz_rows; k++) {
-		zsl_real_t x;
+
+		/* Get every element in the diagonal. */
 		zsl_mtx_get(mg, k, k, &x);
+
+		/* If the diagonal element is zero, find another value in the
+		 * same column that isn't zero and add the row containing
+		 * the non-zero element to the diagonal element's row. */
 		if ((x >= 0 && x < epsilon) || (x <= 0 && x > -epsilon)) {
 			zsl_mtx_get_col(mg, k, v);
-			for (size_t q = k + 1; q < m->sz_rows; q++) {
+			for (size_t q = 0; q < m->sz_rows; q++) {
+				zsl_mtx_get(mg, q, q, &y);
 				if ((v[q] >= epsilon) || (v[q] <= -epsilon)) {
-					zsl_mtx_sum_rows_d(mg, k, q);
-					zsl_mtx_sum_rows_d(mi, k, q);
-					break;
+
+					/* If the non-zero element found is
+					 * above the diagonal, only add its row
+					 * if the diagonal element in this row
+					 * is zero, to avoid undoing previous
+					 * steps. */
+					if (q < k && ((y >= epsilon)
+						      || (y <= -epsilon))) {
+					} else {
+						zsl_mtx_sum_rows_d(mg, k, q);
+						zsl_mtx_sum_rows_d(mi, k, q);
+						break;
+					}
 				}
 			}
 		}
-		zsl_mtx_gauss_elim_d(mg, mi, k, k);
-		zsl_mtx_norm_elem_d(mg, mi, k, k);
 
+		/* Perform the gaussian elimination in the column of the
+		 * diagonal element to get rid of all the values in the column
+		 * except for the diagonal one. */
+		zsl_mtx_gauss_elim_d(mg, mi, k, k);
+
+		/* Divide the diagonal element's row by the diagonal element. */
+		zsl_mtx_norm_elem_d(mg, mi, k, k);
 	}
 
 	return 0;
@@ -824,15 +828,15 @@ zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mi,
 int
 zsl_mtx_cols_norm(struct zsl_mtx *m, struct zsl_mtx *mnorm)
 {
-        ZSL_VECTOR_DEF(v, m->sz_rows);
+	ZSL_VECTOR_DEF(v, m->sz_rows);
 
-        for (size_t g = 0; g <m->sz_cols; g++) {
-                zsl_mtx_get_col(m, g, v.data);
-                zsl_vec_to_unit(&v);
-                zsl_mtx_set_col(mnorm, g, v.data);
-        }
+	for (size_t g = 0; g < m->sz_cols; g++) {
+		zsl_mtx_get_col(m, g, v.data);
+		zsl_vec_to_unit(&v);
+		zsl_mtx_set_col(mnorm, g, v.data);
+	}
 
-        return 0;
+	return 0;
 }
 
 int
@@ -987,168 +991,288 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 }
 
 int
-zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h)
+zsl_mtx_balance(struct zsl_mtx *m, struct zsl_mtx *mout)
 {
+	int rc;
+	bool done = false;
+	zsl_real_t sum;
+	zsl_real_t row, row2;
+	zsl_real_t col, col2;
 
-	ZSL_VECTOR_DEF(v, m->sz_rows);
-        ZSL_VECTOR_DEF(e1, m->sz_rows);
+	/* Make sure we have square matrices. */
+	if ((m->sz_rows != m->sz_cols) || (mout->sz_rows != mout->sz_cols)) {
+		return -EINVAL;
+	}
 
-        ZSL_MATRIX_DEF(mv, m->sz_rows, 1);
-        ZSL_MATRIX_DEF(mvt, 1, m->sz_rows);
-        ZSL_MATRIX_DEF(id, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(vvt, m->sz_rows, m->sz_rows);
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure 'm' and 'mout' have the same shape. */
+	if (m->sz_rows != mout->sz_rows) {
+		return -EINVAL;
+	}
+	if (m->sz_cols != mout->sz_cols) {
+		return -EINVAL;
+	}
+#endif
+
+	rc = zsl_mtx_copy(mout, m);
+	if (rc) {
+		goto err;
+	}
+
+	while (!done) {
+		done = true;
+
+		for (size_t i = 0; i < m->sz_rows; i++) {
+			/* Calculate sum of components of each row, column. */
+			for (size_t j = 0; j < m->sz_cols; j++) {
+				row += fabs(mout->data[(i * m->sz_rows) + j]);
+				col += fabs(mout->data[(j * m->sz_rows) + i]);
+			}
+
+			/* TODO: Extend with a check against epsilon? */
+			if (col != 0.0 && row != 0.0) {
+				row2 = row / 2.0;
+				col2 = 1.0;
+				sum = col + row;
+
+				while (col < row2) {
+					col2 *= 2.0;
+					col *= 4.0;
+				}
+
+				row2 = row * 2.0;
+
+				while (col > row2) {
+					col2 /= 2.0;
+					col /= 4.0;
+				}
+
+				if ((col + row) / col2 < 0.95 * sum) {
+					done = false;
+					row2 = 1.0 / col2;
+
+					for (int k = 0; k < m->sz_rows; k++) {
+						mout->data[(i * m->sz_rows) + k]
+							*= row2;
+						mout->data[(k * m->sz_rows) + i]
+							*= col2;
+					}
+				}
+			}
+
+			row = 0.0;
+			col = 0.0;
+		}
+	}
+
+err:
+	return rc;
+}
+
+int
+zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h, bool hessenberg)
+{
+	size_t size = m->sz_rows;
+
+	if (hessenberg == true) {
+		size--;
+	}
+
+	ZSL_VECTOR_DEF(v, size);
+	ZSL_VECTOR_DEF(v2, m->sz_rows);
+	ZSL_VECTOR_DEF(e1, size);
+
+	ZSL_MATRIX_DEF(mv, size, 1);
+	ZSL_MATRIX_DEF(mvt, 1, size);
+	ZSL_MATRIX_DEF(id, size, size);
+	ZSL_MATRIX_DEF(vvt, size, size);
+	ZSL_MATRIX_DEF(h2, size, size);
 
 	/* Create the e1 vector, i.e. the vector (1, 0, 0, ...). */
-        zsl_vec_init(&e1);
-        e1.data[0] = 1.0;
+	zsl_vec_init(&e1);
+	e1.data[0] = 1.0;
 
 	/* Get the first column of the input matrix. */
-        zsl_mtx_get_col(m, 0, v.data);
+	zsl_mtx_get_col(m, 0, v2.data);
+	if (hessenberg == true) {
+		zsl_vec_get_subset(&v2, 1, size, &v);
+	} else {
+		zsl_vec_copy(&v, &v2);
+	}
 
-
-	/* Change the "sign" value according to the sign of the first
+	/* Change the 'sign' value according to the sign of the first
 	 * coefficient of the matrix. */
 	zsl_real_t sign = 1.0;
 	if (v.data[0] < 0) {
 		sign = -1.0;
 	}
 
-	/* Calculate the vector "v" that will later be used to calculate the
+	/* Calculate the vector 'v' that will later be used to calculate the
 	 * Householder matrix. */
-        zsl_vec_scalar_mult(&e1, sign * zsl_vec_norm(&v));
-        zsl_vec_add(&v, &e1, &v);
-        zsl_vec_scalar_div(&v, zsl_vec_norm(&v));
+	zsl_vec_scalar_mult(&e1, -sign * zsl_vec_norm(&v));
 
-	/* Calculate the "h" householder matrix by doing:
-	 * h = IDENTITY - 2 * v * v^t. */
-        zsl_mtx_from_arr(&mv, v.data);
-        zsl_mtx_trans(&mv, &mvt);
-        zsl_mtx_mult(&mv, &mvt, &vvt);
-        zsl_mtx_init(&id, zsl_mtx_entry_fn_identity);
-        zsl_mtx_scalar_mult_d(&vvt, -2);
-	zsl_mtx_add(&id, &vvt, h);
+	zsl_vec_add(&v, &e1, &v);
 
-        return 0;
+	zsl_vec_scalar_div(&v, zsl_vec_norm(&v));
+
+	/* Calculate the H householder matrix by doing:
+	 * H = IDENTITY - 2 * v * v^t. */
+	zsl_mtx_from_arr(&mv, v.data);
+	zsl_mtx_trans(&mv, &mvt);
+	zsl_mtx_mult(&mv, &mvt, &vvt);
+	zsl_mtx_init(&id, zsl_mtx_entry_fn_identity);
+	zsl_mtx_scalar_mult_d(&vvt, -2);
+	zsl_mtx_add(&id, &vvt, &h2);
+
+	/* If Hessenberg set to true, augment the output to the size of 'm'.
+	 * If Hessenberg set to false, this line of code will do nothing but
+	 * copy the matrix 'h2' into the output matrix 'h', */
+	zsl_mtx_augm_diag(&h2, h);
+
+	return 0;
 }
 
 int
-zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r)
+zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r,
+	    bool hessenberg)
 {
-        ZSL_MATRIX_DEF(h, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(h_total, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(qt, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(r2, m->sz_rows, m->sz_cols);
+	ZSL_MATRIX_DEF(hess, m->sz_rows, m->sz_cols);
+	ZSL_MATRIX_DEF(h, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(h2, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(qt, m->sz_rows, m->sz_rows);
 
 	zsl_mtx_init(&h, NULL);
-        zsl_mtx_init(&qt, zsl_mtx_entry_fn_identity);
-        zsl_mtx_copy(r, m);
+	zsl_mtx_init(&qt, zsl_mtx_entry_fn_identity);
+	zsl_mtx_copy(r, m);
 
-        for (size_t g = 0; g < (m->sz_rows - 1); g++) {
+	for (size_t g = 0; g < (m->sz_rows - 1); g++) {
 
-		/* Reduce the matrix by "g" rows and columns each time. */
-                ZSL_MATRIX_DEF(mred, (m->sz_rows - g), (m->sz_cols - g));
-                zsl_mtx_reduce_iter(r, &mred);
+		/* Reduce the matrix by 'g' rows and columns each time. */
+		ZSL_MATRIX_DEF(mred, (m->sz_rows - g), (m->sz_cols - g));
+		ZSL_MATRIX_DEF(hred, (m->sz_rows - g), (m->sz_rows - g));
+		zsl_mtx_reduce_iter(r, &mred);
 
-		/* Calculate the "g"th reduced Householder matrix "hred". */
-		zsl_mtx_householder(&mred, &mred);
+		/* Calculate the reduced Householder matrix 'hred'. */
+		if (hessenberg == true) {
+			zsl_mtx_householder(&mred, &hred, true);
+		} else {
+			zsl_mtx_householder(&mred, &hred, false);
+		}
 
-                /* Augment the Householder matrix to the input matrix size. */
-                zsl_mtx_augm_diag(&mred, &h);
+		/* Augment the Householder matrix to the input matrix size. */
+		zsl_mtx_augm_diag(&hred, &h);
+		zsl_mtx_mult(&h, r, &r2);
 
 		/* Multiply this Householder matrix by the previous ones,
-		 * stacked in "qt". */
-		zsl_mtx_mult(&h, &qt, &h_total);
-                zsl_mtx_copy(&qt, &h_total);
+		 * stacked in 'qt'. */
+		zsl_mtx_mult(&h, &qt, &h2);
+		zsl_mtx_copy(&qt, &h2);
+		if (hessenberg == true) {
+			zsl_mtx_mult(&r2, &h, &hess);
+			zsl_mtx_copy(r, &hess);
+		} else {
+			zsl_mtx_copy(r, &r2);
+		}
+	}
 
-		/* Multiply all the Householder matrices by "m" and repeat
-		 * the process. */
-		zsl_mtx_mult(&qt, m, r);
-        }
+	/* Calculate the 'q' matrix by transposing 'qt'. */
+	zsl_mtx_trans(&qt, q);
 
-	/* Calculate the "q" matrix by transposing "qt". */
-        zsl_mtx_trans(&qt, q);
-
-        return 0;
+	return 0;
 }
 
-
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 int
 zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter)
 {
-        if (iter == 0) {
-                return 0;
-        }
+	int rc;
 
-#ifdef USE_SCRATCH
-        /* Use scratch memory to avoid stack overflow when these functions
-         * are called recursively. */
-        SCRATCH_1_CLEAR;
-        struct zsl_mtx q = {
-                .sz_rows      = m->sz_rows,
-                .sz_cols      = m->sz_rows,
-                .data         = scrd_1
-        };
+	ZSL_MATRIX_DEF(q, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(r, m->sz_rows, m->sz_rows);
 
-        SCRATCH_2_CLEAR;
-        struct zsl_mtx r = {
-                .sz_rows      = m->sz_rows,
-                .sz_cols      = m->sz_rows,
-                .data         = scrd_2
-        };
-#else
-        /* Use stack ... this will get HUGE though!!! */
-        ZSL_MATRIX_DEF(q, m->sz_rows, m->sz_rows);
-    	ZSL_MATRIX_DEF(r, m->sz_rows, m->sz_rows);
+	/* Make a copy of 'm'. */
+	rc = zsl_mtx_copy(mout, m);
+	if (rc) {
+		return -EINVAL;
+	}
+
+	for (size_t g = 1; g <= iter; g++) {
+		/* Perform the QR decomposition. */
+		zsl_mtx_qrd(mout, &q, &r, false);
+
+		/* Multiply the results of the QR decomposition together but
+		 * changing its order. */
+		zsl_mtx_mult(&r, &q, mout);
+	}
+
+	return 0;
+}
 #endif
 
-        /* Perform the QR decomposition. */
-        zsl_mtx_qrd(m, &q, &r);
-
-        /* Multiply the results of the QR decomposition together but changing
-	 * its order. */
-        zsl_mtx_mult(&r, &q, mout);
-
-        /* Call this function again if we haven't executed n iterations. */
-        zsl_mtx_qrd_iter(mout, mout, iter - 1);
-
-        return 0;
-}
-
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 int
 zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter)
 {
-        zsl_real_t diag;
+	zsl_real_t diag;
 	zsl_real_t sdiag;
 	size_t real = 0;
+
+	/* Epsilon is used to check 0 values in the subdiagonal, to determine
+	 * if any coimplekx values were found. Increasing the number of
+	 * iterations will move these values closer to 0, but when using
+	 * single-precision floats the numbers can still be quite large, so
+	 * we need to set a delta of +/- 0.001 in this case. */
+
 	zsl_real_t epsilon = 1E-6;
 
-        ZSL_MATRIX_DEF(mout, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(mout, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(mtemp, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(mtemp2, m->sz_rows, m->sz_rows);
+
+	/* Balance the matrix. */
+	zsl_mtx_balance(m, &mtemp);
+
+	/* Put the balanced matrix into hessenberg form. */
+	zsl_mtx_qrd(&mtemp, &mout, &mtemp2, true);
 
 	/* Calculate the upper triangular matrix by using the recursive QR
 	 * decomposition method. */
-        zsl_mtx_qrd_iter(m, &mout, iter);
+	zsl_mtx_qrd_iter(&mtemp2, &mout, iter);
 
-        zsl_vec_init(v);
+	zsl_vec_init(v);
 
-        /*
-         * If any value just below the diagonal is non-zero, it means that the
-         * numbers above and to the right of the non-zero value are a pair of
+	/* If the matrix is symmetric, then it will always have real
+	 * eigenvalues, so treat this case appart. */
+	if (zsl_mtx_is_sym(m) == true) {
+		for (size_t g = 0; g < m->sz_rows; g++) {
+			zsl_mtx_get(&mout, g, g, &diag);
+			v->data[g] = diag;
+		}
+
+		return 0;
+	}
+
+	/*
+	 * If any value just below the diagonal is non-zero, it means that the
+	 * numbers above and to the right of the non-zero value are a pair of
 	 * complex values, a complex number and its conjugate.
-         *
-         * SVD will always return real numbers so this can be ignored, but if
-         * you are calculating eigenvalues outside the SVD method, you may
-         * get complex numbers, which will be indicated with the return error
-         * code '-ECOMPLEXVAL'.
+	 *
+	 * SVD will always return real numbers so this can be ignored, but if
+	 * you are calculating eigenvalues outside the SVD method, you may
+	 * get complex numbers, which will be indicated with the return error
+	 * code '-ECOMPLEXVAL'.
 	 *
 	 * If the imput matrix has complex eigenvalues, then these will be
 	 * ignored and the output vector will not include them.
-         *
-         * NOTE: The real and imaginary parts of the complex numbers are not
+	 *
+	 * NOTE: The real and imaginary parts of the complex numbers are not
 	 * available. This only checks if there are any complex eigenvalues and
 	 * returns an appropriate error code to alert the user that there are
 	 * non-real eigenvalues present.
-         */
+	 */
 
-        for (size_t g = 0; g < (m->sz_rows - 1); g++) {
+	for (size_t g = 0; g < (m->sz_rows - 1); g++) {
 		/* Check if any element just below the diagonal isn't zero. */
 		zsl_mtx_get(&mout, g + 1, g, &sdiag);
 		if ((sdiag >= epsilon) || (sdiag <= -epsilon)) {
@@ -1162,7 +1286,8 @@ zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter)
 			v->data[real] = diag;
 			real++;
 		}
-        }
+	}
+
 
 	/* Since it's not possible to check the coefficient below the last
 	 * diagonal element, then check the element to its left. */
@@ -1180,123 +1305,139 @@ zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter)
 	/* If the number of real eigenvalues ('real' coefficient) is less than
 	 * the matrix dimensions, then there must be complex eigenvalues. */
 	v->sz = real;
-	if (real != m->sz_rows){
+	if (real != m->sz_rows) {
 		return -ECOMPLEXVAL;
 	}
 
 	/* Put the zeros to the end. */
-        zsl_vec_zte(v);
+	zsl_vec_zte(v);
 
-        return 0;
+	return 0;
 }
+#endif
 
 int
 zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort)
 {
-        ZSL_VECTOR_DEF(v, m->sz_rows);
-        ZSL_VECTOR_DEF(w, m->sz_rows);
-        ZSL_VECTOR_DEF(q, m->sz_rows);
+	ZSL_VECTOR_DEF(v, m->sz_rows);
+	ZSL_VECTOR_DEF(w, m->sz_rows);
+	ZSL_VECTOR_DEF(q, m->sz_rows);
 
-        for(size_t t = 0; t < m->sz_cols; t++) {
-                zsl_vec_init(&q);
-                zsl_mtx_get_col(m, t, v.data);
-                for(size_t g = 0; g < t; g++) {
-                        zsl_mtx_get_col(mort, g, w.data);
+	for (size_t t = 0; t < m->sz_cols; t++) {
+		zsl_vec_init(&q);
+		zsl_mtx_get_col(m, t, v.data);
+		for (size_t g = 0; g < t; g++) {
+			zsl_mtx_get_col(mort, g, w.data);
 
 			/* Calculate the projection of every column vector
-			 * before "g" on the "t"th column. */
+			 * before 'g' on the 't'th column. */
 			zsl_vec_project(&w, &v, &w);
-                        zsl_vec_add(&q, &w, &q);
-                }
+			zsl_vec_add(&q, &w, &q);
+		}
 
-		/* Substract the sum of the projections on the "t"th column from
-		 * the "t"th column and set this vector as the "t"th column of
+		/* Substract the sum of the projections on the 't'th column from
+		 * the 't'th column and set this vector as the 't'th column of
 		 * the output matrix. */
 		zsl_vec_sub(&v, &q, &v);
-                zsl_mtx_set_col(mort, t, v.data);
-        }
-
-        return 0;
-}
-
-int
-zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
-                     bool orthonormal)
-{
-        size_t b = 0;
-        size_t eval = 0;
-        size_t count = 0;
-        size_t ga = 0;
-	zsl_real_t epsilon = 1E-6;
-
-        zsl_real_t x;
-        ZSL_VECTOR_DEF(k, m->sz_rows);
-        ZSL_VECTOR_DEF(f, m->sz_rows);
-        ZSL_VECTOR_DEF(o, m->sz_rows);
-        ZSL_MATRIX_DEF(id, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(mi, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(mid, m->sz_rows, m->sz_rows);
-	ZSL_MATRIX_DEF(mt, m->sz_rows, m->sz_rows);
-
-        /* TODO: Check that we have a SQUARE matrix, etc. */
-
-        zsl_mtx_init(&mt, NULL);
-        zsl_vec_init(&o);
-        zsl_mtx_eigenvalues(m, &k, iter);
-
-	/* Copy ONCE every non-zero eigenvalue in the "o" vector to get rid of
-	 * repeated values. */
-        for (size_t q = 0; q < m->sz_rows; q++) {
-		if(((k.data[q] >= epsilon) || (k.data[q] <= -epsilon)) &&
-		(zsl_vec_contains(&o, k.data[q], EPSILON) == 0)) {
-			o.data[eval] = k.data[q];
-			eval++;
-		}
-        }
-
-	/* If zero is also an eigenvalue, copy it once in "o". */
-	if (zsl_vec_contains(&k, 0.0, epsilon) > 0) {
-		eval++;
+		zsl_mtx_set_col(mort, t, v.data);
 	}
 
-        for (size_t g = 0; g < eval; g++) {
-                count = 0;
-                ga = 0;
-		/* Calculate the null space of "m" minus each eigenvalue times
-		 * the identity matrix by performing the gaussian reduction. */
-                zsl_mtx_init(&id, zsl_mtx_entry_fn_identity);
-                zsl_mtx_scalar_mult_d(&id, -o.data[g]);
-                zsl_mtx_add_d(&id, m);
-                zsl_mtx_gauss_reduc(&id, &mid, &mi);
+	return 0;
+}
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int
+zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
+		     bool orthonormal)
+{
+	size_t b = 0;           /* Total number of eigenvectors. */
+	size_t e_vals = 0;      /* Number of unique eigenvalues. */
+	size_t count = 0;       /* Number of eigenvectors for an eigenvalue. */
+	size_t ga = 0;
+
+	zsl_real_t epsilon = 1E-6;
+	zsl_real_t x;
+
+	/* The vector where all eigenvalues will be stored. */
+	ZSL_VECTOR_DEF(k, m->sz_rows);
+	/* Temp vector to store column data. */
+	ZSL_VECTOR_DEF(f, m->sz_rows);
+	/* The vector where all UNIQUE eigenvalues will be stored. */
+	ZSL_VECTOR_DEF(o, m->sz_rows);
+	/* Temporary mxm identity matrix placeholder. */
+	ZSL_MATRIX_DEF(id, m->sz_rows, m->sz_rows);
+	/* 'm' minus the eigenvalues * the identity matrix (id). */
+	ZSL_MATRIX_DEF(mi, m->sz_rows, m->sz_rows);
+	/* Placeholder for zsl_mtx_gauss_reduc calls (required param). */
+	ZSL_MATRIX_DEF(mid, m->sz_rows, m->sz_rows);
+	/* Matrix containing all column eigenvectors for an eigenvalue. */
+	ZSL_MATRIX_DEF(evec, m->sz_rows, m->sz_rows);
+	/* Matrix containing all column eigenvectors for an eigenvalue.
+	* Two matrices are required for the Gramm-Schmidt operation. */
+	ZSL_MATRIX_DEF(evec2, m->sz_rows, m->sz_rows);
+
+	/* TODO: Check that we have a SQUARE matrix, etc. */
+	zsl_mtx_init(mev, NULL);
+	zsl_vec_init(&o);
+	zsl_mtx_eigenvalues(m, &k, iter);
+
+	/* Copy every non-zero eigenvalue ONCE in the 'o' vector to get rid of
+	 * repeated values. */
+	for (size_t q = 0; q < m->sz_rows; q++) {
+		if ((k.data[q] >= epsilon) || (k.data[q] <= -epsilon)) {
+			if (zsl_vec_contains(&o, k.data[q], epsilon) == 0) {
+				o.data[e_vals] = k.data[q];
+				/* Increment the unique eigenvalue counter. */
+				e_vals++;
+			}
+		}
+	}
+
+	/* If zero is also an eigenvalue, copy it once in 'o'. */
+	if (zsl_vec_contains(&k, 0.0, epsilon) > 0) {
+		e_vals++;
+	}
+
+	/* Calculates the null space of 'm' minus each eigenvalue times
+	 * the identity matrix by performing the gaussian reduction. */
+	for (size_t g = 0; g < e_vals; g++) {
+		count = 0;
+		ga = 0;
+
+		zsl_mtx_init(&id, zsl_mtx_entry_fn_identity);
+		zsl_mtx_scalar_mult_d(&id, -o.data[g]);
+		zsl_mtx_add_d(&id, m);
+		zsl_mtx_gauss_reduc(&id, &mid, &mi);
 
 		/* If 'orthonormal' is true, perform the following process. */
 		if (orthonormal == true) {
-			/* Count how many eigenvectors ('count' coefficient) are
-			 * there for each eigenvalue. */
-                        for (size_t h = 0; h < m->sz_rows; h++) {
-                                zsl_mtx_get(&mi, h, h, &x);
-                                if ((x >= 0.0 && x < epsilon) ||
-                                    (x <= 0.0 && x > -epsilon)) {
-                                        count++;
-                                }
-                        }
+			/* Count how many eigenvectors ('count' coefficient)
+			 * there are for each eigenvalue. */
+			for (size_t h = 0; h < m->sz_rows; h++) {
+				zsl_mtx_get(&mi, h, h, &x);
+				if ((x >= 0.0 && x < epsilon) ||
+				    (x <= 0.0 && x > -epsilon)) {
+					count++;
+				}
+			}
 
-                        ZSL_MATRIX_DEF(evec, m->sz_rows, count);
-                        ZSL_MATRIX_DEF(evec2, m->sz_rows, count);
+			/* Resize evec* placeholders to have 'count' cols. */
+			evec.sz_cols = count;
+			evec2.sz_cols = count;
 
 			/* Get all the eigenvectors for each eigenvalue and set
 			 * them as the columns of 'evec'. */
-                        for (size_t h = 0; h < m->sz_rows; h++) {
-                                zsl_mtx_get(&mi, h, h, &x);
-                                if ((x >= 0.0 && x < epsilon) ||
-                                    (x <= 0.0 && x > -epsilon)) {
-                                        zsl_mtx_set(&mi, h, h, -1);
-                                        zsl_mtx_get_col(&mi, h, f.data);
-                                        zsl_vec_neg(&f);
-                                        zsl_mtx_set_col(&evec, ga, f.data);
-                                        ga++;
-                                }
-                        }
+			for (size_t h = 0; h < m->sz_rows; h++) {
+				zsl_mtx_get(&mi, h, h, &x);
+				if ((x >= 0.0 && x < epsilon) ||
+				    (x <= 0.0 && x > -epsilon)) {
+					zsl_mtx_set(&mi, h, h, -1);
+					zsl_mtx_get_col(&mi, h, f.data);
+					zsl_vec_neg(&f);
+					zsl_mtx_set_col(&evec, ga, f.data);
+					ga++;
+				}
+			}
 			/* Orthonormalize the set of eigenvectors for each
 			 * eigenvalue using the Gram-Schmidt process. */
 			zsl_mtx_gram_schmidt(&evec, &evec2);
@@ -1305,122 +1446,117 @@ zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
 			/* Place these eigenvectors in the 'mt' matrix,
 			 * that will hold all the eigenvectors for different
 			 * eigenvalues. */
-                        for(size_t gi = 0; gi < count; gi++) {
-                                zsl_mtx_get_col(&evec, gi, f.data);
-                                zsl_mtx_set_col(&mt, b, f.data);
-                                b++;
-                        }
+			for (size_t gi = 0; gi < count; gi++) {
+				zsl_mtx_get_col(&evec, gi, f.data);
+				zsl_mtx_set_col(mev, b, f.data);
+				b++;
+			}
 
-		/* If 'orthonormal' is false, perform the following process. */
-                } else {
+		} else {
+			/* Orthonormal is false. */
 			/* Get the eigenvectors for every eigenvalue and place
 			 * them in 'mt'. */
-                        for (size_t h = 0; h < m->sz_rows; h++) {
-                                zsl_mtx_get(&mi, h, h, &x);
-                                if ((x >= 0.0 && x < epsilon) ||
-                                    (x <= 0.0 && x > -epsilon)) {
-                                        zsl_mtx_set(&mi, h, h, -1);
-                                        zsl_mtx_get_col(&mi, h, f.data);
-                                        zsl_vec_neg(&f);
-                                        zsl_mtx_set_col(&mt, b, f.data);
-                                        b++;
-                                }
-                        }
-                }
-        }
-
-	/* Since 'b' is the number of eigenvectors, reduce the matrix 'mt'
-	 * to the matrix 'mev' (of size m->sz_rows times b) to erase columns
-	 * of zeros. */
-	mev->sz_cols = b;
-	for (size_t du = 0; du < mev->sz_cols; du++) {
-		zsl_mtx_get_col(&mt, du, o.data);
-		zsl_mtx_set_col(mev, du, o.data);
+			for (size_t h = 0; h < m->sz_rows; h++) {
+				zsl_mtx_get(&mi, h, h, &x);
+				if ((x >= 0.0 && x < 1E-2) ||
+				    (x <= 0.0 && x > -1E-2)) {
+					zsl_mtx_set(&mi, h, h, -1);
+					zsl_mtx_get_col(&mi, h, f.data);
+					zsl_vec_neg(&f);
+					zsl_mtx_set_col(mev, b, f.data);
+					b++;
+				}
+			}
+		}
 	}
 
+	/* Since 'b' is the number of eigenvectors, reduce 'mev' (of size
+	 * m->sz_rows times b) to erase columns of zeros. */
+	mev->sz_cols = b;
+
 	/* Checks if the number of eigenvectors is the same as the shape of
-         * the input matrix. If the number of eigenvectors is less than
-         * the number of columns in the input matrix 'm', this will be
-         * indicated by EEIGENSIZE as a return code. */
+	 * the input matrix. If the number of eigenvectors is less than
+	 * the number of columns in the input matrix 'm', this will be
+	 * indicated by EEIGENSIZE as a return code. */
 	if (b != m->sz_cols) {
 		return -EEIGENSIZE;
 	}
 
-        return 0;
+	return 0;
 }
+#endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 int
 zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
-            struct zsl_mtx *v, size_t iter)
+	    struct zsl_mtx *v, size_t iter)
 {
-        ZSL_MATRIX_DEF(aat, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(aat, m->sz_rows, m->sz_rows);
 	ZSL_MATRIX_DEF(upri, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(ata, m->sz_cols, m->sz_cols);
-        ZSL_MATRIX_DEF(at, m->sz_cols, m->sz_rows);
+	ZSL_MATRIX_DEF(ata, m->sz_cols, m->sz_cols);
+	ZSL_MATRIX_DEF(at, m->sz_cols, m->sz_rows);
 	ZSL_VECTOR_DEF(ui, m->sz_rows);
-        ZSL_MATRIX_DEF(ui2, m->sz_cols, 1);
-        ZSL_MATRIX_DEF(ui3, m->sz_rows, 1);
-        ZSL_VECTOR_DEF(hu, m->sz_rows);
+	ZSL_MATRIX_DEF(ui2, m->sz_cols, 1);
+	ZSL_MATRIX_DEF(ui3, m->sz_rows, 1);
+	ZSL_VECTOR_DEF(hu, m->sz_rows);
 
-        zsl_real_t d;
-	size_t pu=0;
+	zsl_real_t d;
+	size_t pu = 0;
 	size_t min = m->sz_cols;
 	zsl_real_t epsilon = 1E-6;
 
-        zsl_mtx_trans(m, &at);
+	zsl_mtx_trans(m, &at);
 
 	/* Calculate 'm' times 'm' transposed and viceversa. */
-        zsl_mtx_mult(m, &at, &aat);
-        zsl_mtx_mult(&at, m, &ata);
+	zsl_mtx_mult(m, &at, &aat);
+	zsl_mtx_mult(&at, m, &ata);
 
 	/* Set the value 'min' as the minimum of number of columns and number
 	 * of rows. */
-        if (m->sz_rows <= m->sz_cols) {
-                min = m->sz_rows;
-        }
+	if (m->sz_rows <= m->sz_cols) {
+		min = m->sz_rows;
+	}
 
 	/* Calculate the eigenvalues of the square matrix 'm' times 'm'
 	 * transposed or the square matrix 'm' transposed times 'm', whichever
 	 * is smaller in dimensions. */
-        ZSL_VECTOR_DEF(ev, min);
-        if(min < m->sz_cols) {
-                zsl_mtx_eigenvalues(&aat, &ev, iter);
-        } else {
-                zsl_mtx_eigenvalues(&ata, &ev, iter);
-        }
+	ZSL_VECTOR_DEF(ev, min);
+	if (min < m->sz_cols) {
+		zsl_mtx_eigenvalues(&aat, &ev, iter);
+	} else {
+		zsl_mtx_eigenvalues(&ata, &ev, iter);
+	}
 
 	/* Place the square root of these eigenvalues in the diagonal entries
 	 * of 'e', the sigma matrix. */
-        zsl_mtx_init(e, NULL);
-        for(size_t g = 0; g < min; g++) {
-                zsl_mtx_set(e, g, g, sqrt(ev.data[g]));
-        }
+	zsl_mtx_init(e, NULL);
+	for (size_t g = 0; g < min; g++) {
+		zsl_mtx_set(e, g, g, sqrt(ev.data[g]));
+	}
 
-
-
-        /* Calculate the eigenvectors of 'm' times 'm' transposed and set them
+	/* Calculate the eigenvectors of 'm' times 'm' transposed and set them
 	 * as the columns of the 'v' matrix. */
-        zsl_mtx_eigenvectors(&ata, v, iter, true);
-        for (size_t gu = 0; gu < min; gu++) {
-		zsl_mtx_get_col(v, gu, ui.data);
+	zsl_mtx_eigenvectors(&ata, v, iter, true);
+	for (size_t i = 0; i < min; i++) {
+		zsl_mtx_get_col(v, i, ui.data);
 		zsl_mtx_from_arr(&ui2, ui.data);
-		zsl_mtx_get(e, gu, gu, &d);
+		zsl_mtx_get(e, i, i, &d);
 
 		/* Calculate the column vectors of 'u' by dividing these
 		 * eniegnvectors by the square root its eigenvalue and
 		 * multiplying them by the input matrix. */
 		zsl_mtx_mult(m, &ui2, &ui3);
-		if((d >= 0.0 && d < epsilon) ||	(d <= 0.0 && d > -epsilon)) {
+		if ((d >= 0.0 && d < epsilon) || (d <= 0.0 && d > -epsilon)) {
 			pu++;
 		} else {
 			zsl_mtx_scalar_mult_d(&ui3, (1 / d));
 			zsl_vec_from_arr(&ui, ui3.data);
-			zsl_mtx_set_col(u, gu, ui.data);
+			zsl_mtx_set_col(u, i, ui.data);
 		}
-        }
+	}
 
 	/* Expand the columns of 'u' into an orthonormal basis if there are
-	 * zero eigenvalues or if the number of columns in "m" is less than the
+	 * zero eigenvalues or if the number of columns in 'm' is less than the
 	 * number of rows. */
 	zsl_mtx_eigenvectors(&aat, &upri, iter, true);
 	for (size_t f = min - pu; f < m->sz_rows; f++) {
@@ -1428,56 +1564,59 @@ zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
 		zsl_mtx_set_col(u, f, hu.data);
 	}
 
-        return 0;
+	return 0;
 }
+#endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
 int
 zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter)
 {
-        zsl_real_t x;
+	zsl_real_t x;
 	size_t min = m->sz_cols;
 	zsl_real_t epsilon = 1E-6;
 
-        ZSL_MATRIX_DEF(u, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(e, m->sz_rows, m->sz_cols);
-        ZSL_MATRIX_DEF(v, m->sz_cols, m->sz_cols);
-        ZSL_MATRIX_DEF(et, m->sz_cols, m->sz_rows);
-        ZSL_MATRIX_DEF(ut, m->sz_rows, m->sz_rows);
-        ZSL_MATRIX_DEF(pas, m->sz_cols, m->sz_rows);
+	ZSL_MATRIX_DEF(u, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(e, m->sz_rows, m->sz_cols);
+	ZSL_MATRIX_DEF(v, m->sz_cols, m->sz_cols);
+	ZSL_MATRIX_DEF(et, m->sz_cols, m->sz_rows);
+	ZSL_MATRIX_DEF(ut, m->sz_rows, m->sz_rows);
+	ZSL_MATRIX_DEF(pas, m->sz_cols, m->sz_rows);
 
-	/* Determine the SVD decomposition of "m". */
-        zsl_mtx_svd(m, &u, &e, &v, iter);
+	/* Determine the SVD decomposition of 'm'. */
+	zsl_mtx_svd(m, &u, &e, &v, iter);
 
 	/* Transpose the 'u' matrix. */
-        zsl_mtx_trans(&u, &ut);
+	zsl_mtx_trans(&u, &ut);
 
 	/* Set the value 'min' as the minimum of number of columns and number
 	 * of rows. */
-        if(m->sz_rows <= m->sz_cols) {
-                min = m->sz_rows;
-        }
+	if (m->sz_rows <= m->sz_cols) {
+		min = m->sz_rows;
+	}
 
-        for (size_t g = 0; g < min; g++) {
+	for (size_t g = 0; g < min; g++) {
 
-		/* Invert the diagonal values in "e". If a value is zero, do
+		/* Invert the diagonal values in 'e'. If a value is zero, do
 		 * nothing to it. */
-                zsl_mtx_get(&e, g, g, &x);
-                if ((x < epsilon) || (x > -epsilon)) {
-                        x = 1 / x;
-                        zsl_mtx_set(&e, g, g, x);
-                }
-        }
+		zsl_mtx_get(&e, g, g, &x);
+		if ((x < epsilon) || (x > -epsilon)) {
+			x = 1 / x;
+			zsl_mtx_set(&e, g, g, x);
+		}
+	}
 
 	/* Transpose the sigma matrix. */
-        zsl_mtx_trans(&e, &et);
+	zsl_mtx_trans(&e, &et);
 
 	/* Multiply 'u' (transposed) times sigma (transposed and with inverted
 	 * eigenvalues) times 'v'. */
-        zsl_mtx_mult(&v, &et, &pas);
-        zsl_mtx_mult(&pas, &ut, pinv);
+	zsl_mtx_mult(&v, &et, &pas);
+	zsl_mtx_mult(&pas, &ut, pinv);
 
-        return 0;
+	return 0;
 }
+#endif
 
 int
 zsl_mtx_min(struct zsl_mtx *m, zsl_real_t *x)
@@ -1581,6 +1720,28 @@ zsl_mtx_is_notneg(struct zsl_mtx *m)
 	return true;
 }
 
+bool
+zsl_mtx_is_sym(struct zsl_mtx *m)
+{
+	zsl_real_t x;
+	zsl_real_t y;
+	zsl_real_t diff;
+	zsl_real_t epsilon = 1E-6;
+
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		for (size_t j = 0; j < m->sz_cols; j++) {
+			zsl_mtx_get(m, i, j, &x);
+			zsl_mtx_get(m, j, i, &y);
+			diff = x - y;
+			if (diff >= epsilon || diff <= -epsilon) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 int
 zsl_mtx_print(struct zsl_mtx *m)
 {
@@ -1595,7 +1756,7 @@ zsl_mtx_print(struct zsl_mtx *m)
 				return -EINVAL;
 			}
 			/* Print the current floating-point value. */
-			printf("%f ", x);
+			printf("%.10f ", x);
 		}
 		printf("\n");
 	}

@@ -160,7 +160,7 @@ void test_matrix_get(void)
 	zassert_equal(rc, 0, NULL);
 	zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
 
-	/* Check for out of bounbds error. */
+	/* Check for out of bounds error. */
 	zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL, NULL);
 }
 
@@ -351,6 +351,7 @@ void test_matrix_row_from_vec(void)
 	/* Now read one back. */
 	rc = zsl_mtx_get_row(&m, 0, v.data);
 	zassert_true(rc == 0, NULL);
+
 	/* Vector values should have changed to all be 0.0 now. */
 	zassert_true(val_is_equal(v.data[0], 0.0, 1E-5), NULL);
 	zassert_true(val_is_equal(v.data[1], 0.0, 1E-5), NULL);
@@ -430,7 +431,44 @@ void test_matrix_binary_func(void)
 
 void test_matrix_add(void)
 {
+	int rc;
+	zsl_real_t x;
 
+	ZSL_MATRIX_DEF(mc, 3, 4);
+
+	zsl_real_t a[12] = { 1.0, 2.0, 4.0, 7.0,
+			     0.0, 0.5, 0.0, 6.2,
+			     9.0, 0.8, 0.1, 0.4 };
+
+	zsl_real_t b[12] = { 3.0, 0.0, 0.0, 5.1,
+			     6.0, 2.5, 1.0, 4.4,
+			     0.0, 7.0, 4.1, 2.1 };
+
+	struct zsl_mtx ma = {
+		.sz_rows = 3,
+		.sz_cols = 4,
+		.data = a
+	};
+
+	struct zsl_mtx mb = {
+		.sz_rows = 3,
+		.sz_cols = 4,
+		.data = b
+	};
+
+	/* Init matrix mc. */
+	rc = zsl_mtx_init(&mc, NULL);
+	zassert_true(rc == 0, NULL);
+
+	/* Add 'ma' and 'mb'. */
+	rc = zsl_mtx_add(&ma, &mb, &mc);
+	zassert_true(rc == 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
+		x = ma.data[g] + mb.data[g];
+		zassert_true(val_is_equal(mc.data[g], x, 1E-5), NULL);
+	}
 }
 
 void test_matrix_add_d(void)
@@ -661,7 +699,32 @@ void test_matrix_trans(void)
 	zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), NULL);
 }
 
-void test_matrix_adj(void)
+void test_matrix_adjoint_3x3(void)
+{
+
+}
+
+void test_matrix_adjoint(void)
+{
+
+}
+
+void test_matrix_reduce(void)
+{
+
+}
+
+void test_matrix_reduce_iter(void)
+{
+
+}
+
+void test_matrix_augm_diag(void)
+{
+
+}
+
+void test_matrix_deter_3x3(void)
 {
 
 }
@@ -686,6 +749,11 @@ void test_matrix_gauss_reduc(void)
 
 }
 
+void test_matrix_cols_norm(void)
+{
+
+}
+
 void test_matrix_norm_elem(void)
 {
 
@@ -696,7 +764,7 @@ void test_matrix_norm_elem_d(void)
 
 }
 
-void test_matrix_inv(void)
+void test_matrix_inv_3x3(void)
 {
 	int rc = 0;
 
@@ -715,7 +783,7 @@ void test_matrix_inv(void)
 	/* Init matrix mi. */
 	zsl_mtx_init(&mi, NULL);
 
-	rc = zsl_mtx_inv(&m, &mi);
+	rc = zsl_mtx_inv_3x3(&m, &mi);
 	zassert_equal(rc, 0, NULL);
 	zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6), NULL);
 	zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6), NULL);
@@ -728,7 +796,7 @@ void test_matrix_inv(void)
 	zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), NULL);
 }
 
-void test_matrix_inv_nxn(void)
+void test_matrix_inv(void)
 {
 	int rc = 0;
 
@@ -765,6 +833,652 @@ void test_matrix_inv_nxn(void)
 	zassert_equal(rc, 0, NULL);
 	zassert_true(zsl_mtx_is_equal(&mi, &mtst), NULL);
 }
+
+void test_matrix_balance(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(moa, 4, 4);
+	ZSL_MATRIX_DEF(mob, 4, 4);
+
+	/* Input non-symmetric matrix. */
+	zsl_real_t data[16] = { 5.1, -3.2, 4.9, -8.1,
+				2.3, -4.1, -2.8, 0.2,
+				0.0, -7.7, 2.1, 0.0,
+				-0.7, 8.1, -5.5, 3.7 };
+
+	struct zsl_mtx ma = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Input symmetric matrix. */
+	zsl_real_t datb[16] = { 5.1, 2.3, 0.0, -8.1,
+				2.3, -4.1, -2.8, 0.2,
+				0.0, -2.8, 2.1, -5.5,
+				-8.1, 0.2, -5.5, 3.7 };
+
+	struct zsl_mtx mb = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = datb
+	};
+
+	/* Expected output. */
+	zsl_real_t dt[16] = { 5.1, -1.6, 2.45, -8.1,
+			      4.6, -4.1, -2.8, 0.4,
+			      0.0, -7.7, 2.1, 0.0,
+			      -0.7, 4.05, -2.75, 3.7 };
+
+	struct zsl_mtx mt = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = dt
+	};
+
+	/* Init output matrices. */
+	rc = zsl_mtx_init(&moa, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&mob, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Balance the input matrices. */
+	rc = zsl_mtx_balance(&ma, &moa);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_balance(&mb, &mob);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
+		zassert_true(val_is_equal(moa.data[g], mt.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(mob.data[g], mb.data[g], 1E-6), NULL);
+	}
+}
+
+void test_matrix_householder_sq(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(h, 3, 3);
+
+	/* Input matrix. */
+	zsl_real_t data[9] = { 0.0, 0.0, 4.0,
+			       2.0, 4.0, -2.0,
+			       0.0, 4.0, 2.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data
+	};
+
+	/* The holseholder matrix data for test purposes. */
+	zsl_real_t dtst[9] = { 0.0, 1.0, 0.0,
+			       1.0, 0.0, 0.0,
+			       0.0, 0.0, 1.0 };
+
+	struct zsl_mtx mt = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = dtst
+	};
+
+	/* Init matrix h. */
+	rc = zsl_mtx_init(&h, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Compute the Householder matrix. */
+	rc = zsl_mtx_householder(&m, &h, false);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
+		zassert_true(val_is_equal(h.data[g], mt.data[g], 1E-6), NULL);
+	}
+}
+
+void test_matrix_householder_rect(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(h, 4, 4);
+
+	/* Input matrix. */
+	zsl_real_t data[12] = { 1.0, -1.0, 4.0,
+				1.0, 4.0, -2.0,
+				1.0, 4.0, 2.0,
+				1.0, -1.0, 0.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 4,
+		.sz_cols = 3,
+		.data = data
+	};
+
+	/* The holseholder matrix data for test purposes. */
+	zsl_real_t dtst[16] = { 0.5, 0.5, 0.5, 0.5,
+				0.5, 0.5, -0.5, -0.5,
+				0.5, -0.5, 0.5, -0.5,
+				0.5, -0.5, -0.5, 0.5 };
+
+	struct zsl_mtx mt = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = dtst
+	};
+
+	/* Init matrix h. */
+	rc = zsl_mtx_init(&h, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Compute the Householder matrix. */
+	rc = zsl_mtx_householder(&m, &h, false);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	zassert_true(zsl_mtx_is_equal(&h, &mt), NULL);
+}
+
+void test_matrix_qrd(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(q, 3, 3);
+	ZSL_MATRIX_DEF(r, 3, 3);
+
+	/* Input matrix. */
+	zsl_real_t data[9] = { 0.0, 0.0, 4.0,
+			       2.0, 4.0, -2.0,
+			       0.0, 4.0, 2.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data
+	};
+
+	/* The expected results for Q and R matrices for test purposes. */
+	zsl_real_t qdata[9] = { 0.0, 0.0, 1.0,
+				1.0, 0.0, 0.0,
+				0.0, 1.0, 0.0 };
+
+	struct zsl_mtx q2 = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = qdata
+	};
+
+	zsl_real_t rdata[9] = { 2.0, 4.0, -2.0,
+				0.0, 4.0, 2.0,
+				0.0, 0.0, 4.0 };
+
+	struct zsl_mtx r2 = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = rdata
+	};
+
+
+	/* Init matrices Q and R. */
+	rc = zsl_mtx_init(&q, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&r, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Calculate the QR decomposition. */
+	rc = zsl_mtx_qrd(&m, &q, &r, false);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
+		zassert_true(val_is_equal(q.data[g], q2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(r.data[g], r2.data[g], 1E-6), NULL);
+
+	}
+}
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_matrix_qrd_iter(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(m2, 4, 4);
+	ZSL_VECTOR_DEF(v, 4);
+	ZSL_VECTOR_DEF(v2, 4);
+
+	/* Input matrix. */
+	zsl_real_t data[16] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0,
+				5.0, 3.0, -5.0, 2.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Init the output matrix. */
+	rc = zsl_mtx_init(&m2, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Perform the QR method 1500 times matrix. */
+	rc = zsl_mtx_qrd_iter(&m, &m2, 1500);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check if the output matrix is upper triangular and if it is similar
+	 * to the input matrix. */
+	zassert_true(val_is_equal(m2.data[4], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[8], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[9], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[12], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[13], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[14], 0.0, 1E-6), NULL);
+
+	zsl_mtx_eigenvalues(&m, &v, 500);
+	zsl_mtx_eigenvalues(&m2, &v2, 500);
+
+	zassert_true(zsl_vec_is_equal(&v, &v2, 1E-6), NULL);
+}
+#endif
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_matrix_eigenvalues(void)
+{
+	int rc;
+
+	ZSL_VECTOR_DEF(va, 4);
+	ZSL_VECTOR_DEF(vb, 4);
+	ZSL_VECTOR_DEF(vc, 4);
+
+	ZSL_VECTOR_DEF(va2, 4);
+	ZSL_VECTOR_DEF(vb2, 2);
+	ZSL_VECTOR_DEF(vc2, 4);
+
+	/* Input real-eigenvalue matrix. */
+	zsl_real_t data[16] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0,
+				5.0, 3.0, -5.0, 2.0 };
+
+	struct zsl_mtx ma = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Input complex-eigenvalue matrix. */
+	zsl_real_t datb[16] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0,
+				9.0, 3.0, -5.0, 2.0 };
+
+	struct zsl_mtx mb = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = datb
+	};
+
+	/* Input symmetric matrix. */
+	zsl_real_t datc[16] = { 1.0, 2.0, 4.0, 0.0,
+				2.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 5.0,
+				0.0, -2.0, 5.0, -1.0 };
+
+	struct zsl_mtx mc = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = datc
+	};
+
+	/* Expected output. */
+	va2.data[0] = 4.8347780554139375;
+	va2.data[1] = -2.6841592178899276;
+	va2.data[2] = 1.8493811427083884;
+	va2.data[3] = -0.9999999802303374;
+
+	vb2.data[0] = -3.0925670160610634;
+	vb2.data[1] = -1.0000000075030784;
+
+	vc2.data[0] = -9.2890349032381003;
+	vc2.data[1] = 7.4199113544017665;
+	vc2.data[2] = 2.7935849909013921;
+	vc2.data[3] = -0.9244614420638188;
+
+
+	/* Init the output vectors. */
+	rc = zsl_vec_init(&va);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_vec_init(&vb);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_vec_init(&vc);
+	zassert_equal(rc, 0, NULL);
+
+	/* Calculate the eigenvalues of 'ma', 'mb' and 'mc'. */
+	rc = zsl_mtx_eigenvalues(&ma, &va, 150);
+	zassert_equal(rc, 0, NULL);
+
+	rc = zsl_mtx_eigenvalues(&mb, &vb, 150);
+	zassert_equal(rc, -ECOMPLEXVAL, NULL);
+
+	rc = zsl_mtx_eigenvalues(&mc, &vc, 150);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	zassert_true(zsl_vec_is_equal(&va, &va2, 1E-6), NULL);
+	zassert_true(zsl_vec_is_equal(&vb, &vb2, 1E-6), NULL);
+	zassert_true(zsl_vec_is_equal(&vc, &vc2, 1E-6), NULL);
+}
+#endif
+
+void test_matrix_gram_schmidt(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(mot, 3, 3);
+
+	/* Input matrix. */
+	zsl_real_t data[9] = { 1.0, 5.0, -1.0,
+			       2.0, -4.0, -2.0,
+			       4.0, 3.0, 0.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data
+	};
+
+	/* Expected output. */
+	zsl_real_t dtst[9] = { 1.0, 4.5714285714, -1.2714138287,
+			       2.0, -4.8571428571, -0.9824561404,
+			       4.0, 1.2857142857, 0.8090815273 };
+
+	struct zsl_mtx mt = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = dtst
+	};
+
+	/* Init matrix mot. */
+	rc = zsl_mtx_init(&mot, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Perform the Gram-Schmidt process. */
+	rc = zsl_mtx_gram_schmidt(&m, &mot);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
+		zassert_true(val_is_equal(mot.data[g], mt.data[g], 1E-6), NULL);
+	}
+}
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_matrix_eigenvectors(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(va, 4, 4);
+	ZSL_MATRIX_DEF(vb, 4, 4);
+	ZSL_MATRIX_DEF(vc, 4, 4);
+
+	ZSL_MATRIX_DEF(va2, 4, 4);
+	ZSL_MATRIX_DEF(vb2, 4, 2);
+	ZSL_MATRIX_DEF(vc2, 4, 2);
+
+	/* Input real-eigenvalue matrix. */
+	zsl_real_t data[16] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0,
+				5.0, 3.0, -5.0, 2.0 };
+
+	struct zsl_mtx ma = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Input complex-eigenvalue matrix. */
+	zsl_real_t datb[16] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0,
+				9.0, 3.0, -5.0, 2.0 };
+
+	struct zsl_mtx mb = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = datb
+	};
+
+	/* Input real-eigenvalue matrix with repeated eigenvalues. */
+	zsl_real_t datc[16] = { 1.0, 2.0, 4.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				0.0, 0.0, 3.0, 5.0,
+				0.0, 0.0, 0.0, 1.0 };
+
+	struct zsl_mtx mc = {
+		.sz_rows = 4,
+		.sz_cols = 4,
+		.data = datc
+	};
+
+	/* Init the output matrices. */
+	rc = zsl_mtx_init(&va, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&vb, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&vb, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Calculate the eigenvectors of 'ma', 'mb' and 'mc'
+	 * non-orthonormalised. */
+	rc = zsl_mtx_eigenvectors(&ma, &va, 1500, false);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_eigenvectors(&mb, &vb, 1500, false);
+	zassert_equal(rc, -EEIGENSIZE, NULL);
+	rc = zsl_mtx_eigenvectors(&mc, &vc, 1500, false);
+	zassert_equal(rc, -EEIGENSIZE, NULL);
+
+	/* Expected output. */
+	zsl_real_t a[16] = {
+		0.7555042357,  0.6223771803,  0.2074844660,  5.5000009316,
+		2.2040997676, -0.5240911326,  0.2956011625, -3.5000005906,
+		1.5110084714,  1.2447543606,  0.4149689321,  4.0000005733,
+		1.0000000000,  1.0000000000,  1.0000000000,  1.0000000000
+	};
+
+	zsl_real_t b[8] = { 1.2304303063, -0.5000000054,
+			    -1.2873789372, 0.5000000045,
+			    2.4608606125, -0.0000000055,
+			    1.0000000000, 1.0000000000 };
+
+	zsl_real_t c[8] = { 1.0, 1.0,
+			    0.0, 1.0,
+			    0.0, 0.0,
+			    0.0, 0.0 };
+
+	rc = zsl_mtx_from_arr(&va2, a);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&vb2, b);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&vc2, c);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (va.sz_rows * va.sz_cols); g++) {
+		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6), NULL);
+	}
+
+	for (size_t g = 0; g < (vb.sz_rows * vb.sz_cols); g++) {
+		// zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6), NULL);
+		// zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6), NULL);
+	}
+
+	/* Calculate the eigenvectors of 'ma', 'mb' and 'mc' orthonormalised. */
+	rc = zsl_mtx_eigenvectors(&ma, &va, 1500, true);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_eigenvectors(&mb, &vb, 1500, true);
+	zassert_equal(rc, -EEIGENSIZE, NULL);
+	rc = zsl_mtx_eigenvectors(&mc, &vc, 1500, true);
+	zassert_equal(rc, -EEIGENSIZE, NULL);
+
+	/* Expected output. */
+	zsl_real_t a2[16] = {
+		0.2559636199, 0.3472992698, 0.1817921832, 0.7130241030,
+		0.7467454562, -0.2924536333, 0.2589976094, -0.4537426107,
+		0.5119272398, 0.6945985397, 0.3635843664, 0.5185629705,
+		0.3387983916, 0.5580205715, 0.8761724995, 0.1296407240
+	};
+
+
+	zsl_real_t b2[8] = { 0.3847511767, -0.4082482935,
+			     -0.4025588109, 0.4082482928,
+			     0.7695023535, -0.0000000045,
+			     0.3126964402, 0.8164965782 };
+
+	zsl_real_t c2[8] = { 1.0, 0.7071067812,
+			     0.0, 0.7071067812,
+			     0.0, 0.0,
+			     0.0, 0.0 };
+
+	rc = zsl_mtx_from_arr(&va2, a2);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&vb2, b2);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&vc2, c2);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (va.sz_rows * va.sz_cols); g++) {
+		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6), NULL);
+	}
+	for (size_t g = 0; g < (vb.sz_rows * vb.sz_cols); g++) {
+		zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6), NULL);
+	}
+}
+#endif
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_matrix_svd(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(u, 3, 3);
+	ZSL_MATRIX_DEF(e, 3, 4);
+	ZSL_MATRIX_DEF(v, 4, 4);
+
+	ZSL_MATRIX_DEF(u2, 3, 3);
+	ZSL_MATRIX_DEF(e2, 3, 4);
+	ZSL_MATRIX_DEF(v2, 4, 4);
+
+	/* Input  matrix. */
+	zsl_real_t data[12] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 3,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Init the output matrices. */
+	rc = zsl_mtx_init(&u, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&e, NULL);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_init(&v, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Calculate the svd of 'm'. */
+	rc = zsl_mtx_svd(&m, &u, &e, &v, 1500);
+	zassert_equal(rc, 0, NULL);
+
+	/* Expected output. */
+	zsl_real_t a[9] = { -0.3481845133, -0.0474852763, 0.9362225661,
+			    -0.0396196056, -0.9970784021, -0.0653065614,
+			    -0.9365884003, 0.0598315021, -0.3452859102 };
+
+	zsl_real_t b[12] = { 6.8246886030, 0.0, 0.0, 0.0,
+			     0.0, 5.3940011894, 0.0, 0.0,
+			     0.0, 0.0, 0.5730415692, 0.0 };
+
+	zsl_real_t c[16] = { -0.5999596982, 0.0355655710, -0.7764202435,
+			     0.1896181853, -0.6683940777, -0.5277862667, 0.5154631408, 0.0948090926,
+			     0.4395030259, -0.7638713255, -0.2819884104, 0.3792363705, 0.0116106706,
+			     0.3696989923, 0.2279295777, 0.9006863800 };
+
+	rc = zsl_mtx_from_arr(&u2, a);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&e2, b);
+	zassert_equal(rc, 0, NULL);
+	rc = zsl_mtx_from_arr(&v2, c);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (u.sz_rows * u.sz_cols); g++) {
+		zassert_true(val_is_equal(u.data[g], u2.data[g], 1E-8), NULL);
+	}
+
+	for (size_t g = 0; g < (e.sz_rows * e.sz_cols); g++) {
+		zassert_true(val_is_equal(e.data[g], e2.data[g], 1E-8), NULL);
+	}
+
+	for (size_t g = 0; g < (v.sz_rows * v.sz_cols); g++) {
+		zassert_true(val_is_equal(v.data[g], v2.data[g], 1E-8), NULL);
+	}
+}
+#endif
+
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_matrix_pinv(void)
+{
+	int rc;
+
+	ZSL_MATRIX_DEF(pinv, 4, 3);
+
+	ZSL_MATRIX_DEF(pinv2, 4, 3);
+
+	/* Input  matrix. */
+	zsl_real_t data[12] = { 1.0, 2.0, -1.0, 0.0,
+				0.0, 3.0, 4.0, -2.0,
+				4.0, 4.0, -3.0, 0.0 };
+
+	struct zsl_mtx m = {
+		.sz_rows = 3,
+		.sz_cols = 4,
+		.data = data
+	};
+
+	/* Init the output matrix. */
+	rc = zsl_mtx_init(&pinv, NULL);
+	zassert_equal(rc, 0, NULL);
+
+	/* Calculate the pseudo-inverse of 'm'. */
+	rc = zsl_mtx_pinv(&m, &pinv, 1500);
+	zassert_equal(rc, 0, NULL);
+
+	/* Expected output. */
+	zsl_real_t a[12] = {
+		-1.2382022472, 0.0853932584, 0.5505617978,
+		0.8808988764, 0.0426966292, -0.2247191011,
+		-0.4764044944, 0.1707865169, 0.1011235955,
+		0.3685393258, -0.0943820225, -0.1348314607
+	};
+
+	rc = zsl_mtx_from_arr(&pinv2, a);
+	zassert_equal(rc, 0, NULL);
+
+	/* Check the output. */
+	for (size_t g = 0; g < (pinv.sz_rows * pinv.sz_cols); g++) {
+		zassert_true(val_is_equal(pinv.data[g], pinv2.data[g], 1E-8),
+			     NULL);
+	}
+}
+#endif
 
 void test_matrix_min(void)
 {
@@ -909,5 +1623,37 @@ void test_matrix_is_notneg(void)
 
 	zsl_mtx_set(&m, 1, 1, -0.01);
 	res = zsl_mtx_is_notneg(&m);
+	zassert_equal(res, false, NULL);
+}
+
+void test_matrix_is_sym(void)
+{
+	bool res;
+
+	/* Input matrixes. */
+	zsl_real_t a[9] = { 2.0, 3.0, 6.0,
+			    3.0, 4.0, -1.0,
+			    6.0, -1.0, 0.0 };
+	struct zsl_mtx ma = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = a
+	};
+
+	zsl_real_t b[9] = { 5.0, 3.0, 4.0,
+			    7.0, -5.0, 0.0,
+			    3.0, -2.0, 3.0 };
+	struct zsl_mtx mb = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = b
+	};
+
+	/* Perform a test with a symmetric matrix. */
+	res = zsl_mtx_is_sym(&ma);
+	zassert_equal(res, true, NULL);
+
+	/* Perform a test with a non-symmetric matrix. */
+	res = zsl_mtx_is_sym(&mb);
 	zassert_equal(res, false, NULL);
 }

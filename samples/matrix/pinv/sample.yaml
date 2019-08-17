@@ -1,5 +1,5 @@
 sample:
-  name: zscilib svd and pseudo-inverse (pinv) sample
+  name: zscilib pseudo-inverse (pinv) sample
 tests:
   test:
     tags: zscilib

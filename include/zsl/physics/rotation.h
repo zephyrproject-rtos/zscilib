@@ -76,7 +76,7 @@ int zsl_phy_rot_dist(zsl_real_t phi, zsl_real_t r, zsl_real_t *dist);
  *        in radians (phi).
  *
  * @param phi   Total change in angle travelled by the object in radians.
- * @param turn  Pointer to the output number of turns.
+ * @param turn  Pointer to the output number of rotations.
  *
  * @return 0 on success, and non-zero error code on failure.
  */
@@ -121,7 +121,7 @@ int zsl_phy_rot_omega(zsl_real_t oi, zsl_real_t time, zsl_real_t a,
  *        angular velocity (oi) and the angle it has run (phy).
  *
  * @param oi    Initial angular velocity in radians per second.
- * @param phy   Angle run by the object in radians.
+ * @param phi   Angle run by the object in radians.
  * @param a     Angular acceleration in radians per second squared.
  * @param of    Pointer to the output final angular velocity in radians per
  *              second. Will be set to NAN if the angular velocity takes a
@@ -137,7 +137,7 @@ int zsl_phy_rot_omega2(zsl_real_t oi, zsl_real_t phi, zsl_real_t a,
  *        object under circular motion based on the time and the angle it
  *        has run (phy).
  *
- * @param phy    Angle run by the object in radians.
+ * @param phi    Angle run by the object in radians.
  * @param time   Time in seconds.
  * @param omega  Pointer to the output average angular velocity in radians per
  *               second. Will be set to NAN if the time is negative or zero.
@@ -191,14 +191,14 @@ int zsl_phy_rot_ang_accel(zsl_real_t oi, zsl_real_t of, zsl_real_t time,
 int zsl_phy_rot_accel(zsl_real_t a, zsl_real_t r, zsl_real_t *accel);
 
 /**
- * @brief Calculates the rotational kinetic energy in joules of an object under
+ * @brief Calculates the angular kinetic energy in joules of an object under
  *        circular motion based on its angular velocity (omega) and its moment
  *        of inertia (i).
  *
  * @param omega  Angular velocity in radians per second.
- * @param i      Moment of inertia of the object in kilograms times meters
+ * @param i      Moment of inertia of the object in kilograms and meters
  *               squared.
- * @param rke    Pointer to the output rotational kinetic energy in joules.
+ * @param rke    Pointer to the output angular kinetic energy in joules.
  *               Will be set to NAN if the moment of inertia is negative.
  *
  * @return 0 on success, and non-zero error code on failure.

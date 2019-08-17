@@ -46,14 +46,13 @@ extern "C" {
  * @brief Calculates the three coordinate position of the center of mass of a
  *        set of objects given their masses and positions.
  *
- * @param n     Number of objects.
  * @param m     Vector that contains the mass of each object in kilograms.
  * @param x     Vector that contains the x coordinate of each object in meters.
  * @param y     Vector that contains the y coordinate of each object in meters.
  * @param z     Vector that contains the z coordinate of each object in meters.
  * @param mx    Pointer to the x position of the center of mass in meters.
- * @param mx    Pointer to the y position of the center of mass in meters.
- * @param mx    Pointer to the z position of the center of mass in meters.
+ * @param my    Pointer to the y position of the center of mass in meters.
+ * @param mz    Pointer to the z position of the center of mass in meters.
  *
  * @return 0 if everything executed properly, -EINVAL if any of the masses has
  *         a negative value or the total mass is zero.

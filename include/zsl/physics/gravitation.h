@@ -108,7 +108,7 @@ int zsl_phy_grav_orb_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v);
  * @param m2        Mass of the second object in kilograms.
  * @param r         Distance between the objects in meters.
  * @param f         Pointer to the output force in newtons. Will be set to NAN
- *                  if their distance is zero.
+ *                  if the distance is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
@@ -117,14 +117,14 @@ int zsl_phy_grav_force(zsl_real_t m1, zsl_real_t m2, zsl_real_t r,
 
 /**
  * @brief Calculates the gravitational potential energy between two objects in
- *        joules based on their masses (m1 and m2) and the distance they are
+ *        kilojoules based on their masses (m1 and m2) and the distance they are
  *        separated (r).
  *
  * @param m1        Mass of the first object in kilograms.
  * @param m2        Mass of the second object in kilograms.
  * @param r         Distance between the objects in meters.
- * @param u         Pointer to the output potential energy in joules. Will be
- *                  set to NAN if their distance is zero.
+ * @param u         Pointer to the output potential energy in kilojoules. Will
+ *                  be set to NAN if the distance is zero.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
