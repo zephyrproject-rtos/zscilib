@@ -82,15 +82,13 @@ zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Ensure that msrc and mdest have the same shape. */
-	if ((mdest->sz_rows != msrc->sz_cols) ||
-	    (mdest->sz_cols != msrc->sz_rows)) {
+	if ((mdest->sz_rows != msrc->sz_rows) ||
+	    (mdest->sz_cols != msrc->sz_cols)) {
 		return -EINVAL;
 	}
 #endif
 
 	/* Make a copy of matrix 'msrc'. */
-	mdest->sz_rows = msrc->sz_rows;
-	mdest->sz_cols = msrc->sz_cols;
 	memcpy(mdest->data, msrc->data, sizeof(zsl_real_t) *
 	       msrc->sz_rows * msrc->sz_cols);
 
@@ -551,20 +549,42 @@ zsl_mtx_adjoint_3x3(struct zsl_mtx *m, struct zsl_mtx *ma)
 int
 zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
 {
-	/* Currently only 3x3 matrices are supported. */
+	/* Shortcut for 3x3 matrices. */
 	if (m->sz_rows == 3) {
 		return zsl_mtx_adjoint_3x3(m, ma);
 	}
 
-	/* TODO: Recursive calls to reduce matrix to 3x3 chunks. */
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure this is a square matrix. */
+	if (m->sz_rows != m->sz_cols) {
+		return -EINVAL;
+	}
+#endif
 
-	return -ENOSYS; /* Not yet implemented! */
+	zsl_real_t sign;
+	zsl_real_t d;
+	ZSL_MATRIX_DEF(mr, (m->sz_cols - 1), (m->sz_cols - 1));
+
+	for (size_t i = 0; i < m->sz_cols; i++) {
+		for (size_t j = 0; j < m->sz_cols; j++) {
+			sign = 1.0;
+			if ((i+j) % 2 != 0) {
+				sign = -1.0;
+			}
+			zsl_mtx_reduce(m, &mr, i, j);
+			zsl_mtx_deter(&mr, &d);
+			d *= sign;
+			zsl_mtx_set(ma, i, j, d);
+		}
+	}
+
+	return 0;
 }
 
 int
 zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 {
-	size_t u = 0.0;
+	size_t u = 0;
 	zsl_real_t x;
 	zsl_real_t v[mr->sz_rows * mr->sz_rows];
 
@@ -590,6 +610,7 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 			}
 		}
 	}
+	
 	zsl_mtx_from_arr(mr, v);
 
 	return 0;
@@ -826,6 +847,35 @@ zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mi,
 }
 
 int
+zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort)
+{
+	ZSL_VECTOR_DEF(v, m->sz_rows);
+	ZSL_VECTOR_DEF(w, m->sz_rows);
+	ZSL_VECTOR_DEF(q, m->sz_rows);
+
+	for (size_t t = 0; t < m->sz_cols; t++) {
+		zsl_vec_init(&q);
+		zsl_mtx_get_col(m, t, v.data);
+		for (size_t g = 0; g < t; g++) {
+			zsl_mtx_get_col(mort, g, w.data);
+
+			/* Calculate the projection of every column vector
+			 * before 'g' on the 't'th column. */
+			zsl_vec_project(&w, &v, &w);
+			zsl_vec_add(&q, &w, &q);
+		}
+
+		/* Substract the sum of the projections on the 't'th column from
+		 * the 't'th column and set this vector as the 't'th column of
+		 * the output matrix. */
+		zsl_vec_sub(&v, &q, &v);
+		zsl_mtx_set_col(mort, t, v.data);
+	}
+
+	return 0;
+}
+
+int
 zsl_mtx_cols_norm(struct zsl_mtx *m, struct zsl_mtx *mnorm)
 {
 	ZSL_VECTOR_DEF(v, m->sz_rows);
@@ -1025,8 +1075,10 @@ zsl_mtx_balance(struct zsl_mtx *m, struct zsl_mtx *mout)
 		for (size_t i = 0; i < m->sz_rows; i++) {
 			/* Calculate sum of components of each row, column. */
 			for (size_t j = 0; j < m->sz_cols; j++) {
-				row += fabs(mout->data[(i * m->sz_rows) + j]);
-				col += fabs(mout->data[(j * m->sz_rows) + i]);
+				row += ZSL_ABS(mout->data[(i * m->sz_rows) +
+					       j]);
+				col += ZSL_ABS(mout->data[(j * m->sz_rows) +
+					       i]);
 			}
 
 			/* TODO: Extend with a check against epsilon? */
@@ -1316,35 +1368,6 @@ zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter)
 }
 #endif
 
-int
-zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort)
-{
-	ZSL_VECTOR_DEF(v, m->sz_rows);
-	ZSL_VECTOR_DEF(w, m->sz_rows);
-	ZSL_VECTOR_DEF(q, m->sz_rows);
-
-	for (size_t t = 0; t < m->sz_cols; t++) {
-		zsl_vec_init(&q);
-		zsl_mtx_get_col(m, t, v.data);
-		for (size_t g = 0; g < t; g++) {
-			zsl_mtx_get_col(mort, g, w.data);
-
-			/* Calculate the projection of every column vector
-			 * before 'g' on the 't'th column. */
-			zsl_vec_project(&w, &v, &w);
-			zsl_vec_add(&q, &w, &q);
-		}
-
-		/* Substract the sum of the projections on the 't'th column from
-		 * the 't'th column and set this vector as the 't'th column of
-		 * the output matrix. */
-		zsl_vec_sub(&v, &q, &v);
-		zsl_mtx_set_col(mort, t, v.data);
-	}
-
-	return 0;
-}
-
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 int
 zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
@@ -1375,9 +1398,11 @@ zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
 	/* Matrix containing all column eigenvectors for an eigenvalue.
 	* Two matrices are required for the Gramm-Schmidt operation. */
 	ZSL_MATRIX_DEF(evec2, m->sz_rows, m->sz_rows);
+	/* Matrix containing all column eigenvectors. */
+	ZSL_MATRIX_DEF(mev2, m->sz_rows, m->sz_rows);
 
 	/* TODO: Check that we have a SQUARE matrix, etc. */
-	zsl_mtx_init(mev, NULL);
+	zsl_mtx_init(&mev2, NULL);
 	zsl_vec_init(&o);
 	zsl_mtx_eigenvalues(m, &k, iter);
 
@@ -1443,27 +1468,27 @@ zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
 			zsl_mtx_gram_schmidt(&evec, &evec2);
 			zsl_mtx_cols_norm(&evec2, &evec);
 
-			/* Place these eigenvectors in the 'mt' matrix,
+			/* Place these eigenvectors in the 'mev2' matrix,
 			 * that will hold all the eigenvectors for different
 			 * eigenvalues. */
 			for (size_t gi = 0; gi < count; gi++) {
 				zsl_mtx_get_col(&evec, gi, f.data);
-				zsl_mtx_set_col(mev, b, f.data);
+				zsl_mtx_set_col(&mev2, b, f.data);
 				b++;
 			}
 
 		} else {
 			/* Orthonormal is false. */
 			/* Get the eigenvectors for every eigenvalue and place
-			 * them in 'mt'. */
+			 * them in 'mev2'. */
 			for (size_t h = 0; h < m->sz_rows; h++) {
 				zsl_mtx_get(&mi, h, h, &x);
-				if ((x >= 0.0 && x < 1E-2) ||
-				    (x <= 0.0 && x > -1E-2)) {
+				if ((x >= 0.0 && x < epsilon) ||
+				    (x <= 0.0 && x > -epsilon)) {
 					zsl_mtx_set(&mi, h, h, -1);
 					zsl_mtx_get_col(&mi, h, f.data);
 					zsl_vec_neg(&f);
-					zsl_mtx_set_col(mev, b, f.data);
+					zsl_mtx_set_col(&mev2, b, f.data);
 					b++;
 				}
 			}
@@ -1473,6 +1498,11 @@ zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
 	/* Since 'b' is the number of eigenvectors, reduce 'mev' (of size
 	 * m->sz_rows times b) to erase columns of zeros. */
 	mev->sz_cols = b;
+	
+	for (size_t s = 0; s < b; s++) {
+		zsl_mtx_get_col(&mev2, s, f.data);
+		zsl_mtx_set_col(mev, s, f.data);
+	}
 
 	/* Checks if the number of eigenvectors is the same as the shape of
 	 * the input matrix. If the number of eigenvectors is less than
@@ -1531,7 +1561,7 @@ zsl_mtx_svd(struct zsl_mtx *m, struct zsl_mtx *u, struct zsl_mtx *e,
 	 * of 'e', the sigma matrix. */
 	zsl_mtx_init(e, NULL);
 	for (size_t g = 0; g < min; g++) {
-		zsl_mtx_set(e, g, g, sqrt(ev.data[g]));
+		zsl_mtx_set(e, g, g, ZSL_SQRT(ev.data[g]));
 	}
 
 	/* Calculate the eigenvectors of 'm' times 'm' transposed and set them
@@ -1756,7 +1786,7 @@ zsl_mtx_print(struct zsl_mtx *m)
 				return -EINVAL;
 			}
 			/* Print the current floating-point value. */
-			printf("%.10f ", x);
+			printf("%f ", x);
 		}
 		printf("\n");
 	}

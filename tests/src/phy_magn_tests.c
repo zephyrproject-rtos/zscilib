@@ -62,7 +62,11 @@ void test_phy_magn_torque_loop(void)
 
 	rc = zsl_phy_magn_torque_loop(1.5, 10.0, 4.3, 1.1, &tor);
 	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(tor, 57.482874724, 1E-6), NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(tor, 57.482874724, 1E-5), NULL);
+#else
+	zassert_true(val_is_equal(tor, 57.482874724, 1E-8), NULL);
+#endif
 
 	/* Example for negative area. */
 	rc = zsl_phy_magn_torque_loop(1.5, -10.0, 4.3, 1.1, &tor);

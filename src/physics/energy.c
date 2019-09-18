@@ -100,7 +100,7 @@ int
 zsl_phy_ener_final(zsl_real_t ei1, zsl_real_t ei2, zsl_real_t ei3,
 		   zsl_real_t ei4, zsl_real_t ef1, zsl_real_t ef2,
 		   zsl_real_t ef3, zsl_real_t *ef4)
-{	
+{
 	/* According to the conservation of mechanical energy, the equation
 	 * ei1 + ei2 + ei3 + ei4 = ef1 + ef2 + ef3 + ef4 must be always true. */
 	*ef4 = ei1 + ei2 + ei3 + ei4 - ef1 - ef2 - ef3;
@@ -110,12 +110,12 @@ zsl_phy_ener_final(zsl_real_t ei1, zsl_real_t ei2, zsl_real_t ei3,
 
 int
 zsl_phy_ener_photon(zsl_real_t f, zsl_real_t *e)
-{	
+{
 	if (f < 0) {
 		*e = NAN;
 		return -EINVAL;
 	}
-	
+
 	*e = (ZSL_PLANCK * f) / 1.602176634E-19;
 
 	return 0;
@@ -123,12 +123,15 @@ zsl_phy_ener_photon(zsl_real_t f, zsl_real_t *e)
 
 int
 zsl_phy_ener_photon2(zsl_real_t lambda, zsl_real_t *e)
-{	
+{
 	if (lambda <= 0) {
 		*e = NAN;
 		return -EINVAL;
 	}
-	
+
+        /* Scale lamba from nm to m. */
+        lambda *= 1E-9;
+
 	*e = (ZSL_PLANCK * ZSL_LIGHT_SPEED) / (lambda * 1.602176634E-19);
 
 	return 0;

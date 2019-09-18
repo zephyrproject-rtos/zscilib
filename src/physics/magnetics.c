@@ -18,7 +18,7 @@ zsl_phy_magn_force(zsl_real_t q, zsl_real_t v, zsl_real_t b, zsl_real_t theta,
 		return -EINVAL;
 	}
 
-	*f = q * v * b * sin(theta);
+	*f = q * v * b * ZSL_SIN(theta);
 
 	return 0;
 }
@@ -32,7 +32,7 @@ zsl_phy_magn_force_wire(zsl_real_t i, zsl_real_t l, zsl_real_t b,
 		return -EINVAL;
 	}
 
-	*f = i * l * b * sin(theta);
+	*f = i * l * b * ZSL_SIN(theta);
 
 	return 0;
 }
@@ -46,7 +46,7 @@ zsl_phy_magn_torque_loop(zsl_real_t i, zsl_real_t a, zsl_real_t b,
 		return -EINVAL;
 	}
 
-	*tor = i * a * b * sin(theta);
+	*tor = i * a * b * ZSL_SIN(theta);
 
 	return 0;
 }
@@ -60,7 +60,7 @@ zsl_phy_magn_pot_dipole(zsl_real_t mom, zsl_real_t b, zsl_real_t theta,
 		return -EINVAL;
 	}
 
-	*u = -mom * b * cos(theta);
+	*u = -mom * b * ZSL_COS(theta);
 
 	return 0;
 }
@@ -92,7 +92,7 @@ zsl_phy_magn_flux(zsl_real_t a, zsl_real_t b, zsl_real_t theta, zsl_real_t *fl)
 		return -EINVAL;
 	}
 
-	*fl = a * b * cos(theta);
+	*fl = a * b * ZSL_COS(theta);
 
 	return 0;
 }

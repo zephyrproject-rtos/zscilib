@@ -13,8 +13,8 @@ int
 zsl_phy_proj_init_vel(zsl_real_t vi, zsl_real_t theta, zsl_real_t *vih,
 		      zsl_real_t *viv)
 {
-	*vih = vi * cos(theta);
-	*viv = vi * sin(theta);
+	*vih = vi * ZSL_COS(theta);
+	*viv = vi * ZSL_SIN(theta);
 
 	return 0;
 }
@@ -30,7 +30,7 @@ zsl_phy_proj_time(zsl_real_t viv, zsl_real_t yi, zsl_real_t yf,
 		return -EINVAL;
 	}
 
-	*t = (viv + sqrt(disc)) / ZSL_GRAV_EARTH;
+	*t = (viv + ZSL_SQRT(disc)) / ZSL_GRAV_EARTH;
 
 	return 0;
 }
@@ -45,7 +45,7 @@ int zsl_phy_proj_time_first(zsl_real_t viv, zsl_real_t yi, zsl_real_t yf,
 		return -EINVAL;
 	}
 
-	*t = (viv - sqrt(disc)) / ZSL_GRAV_EARTH;
+	*t = (viv - ZSL_SQRT(disc)) / ZSL_GRAV_EARTH;
 
 	if (*t < 0) {
 		*t = NAN;
@@ -128,7 +128,7 @@ zsl_phy_proj_trajectory(zsl_real_t vih, zsl_real_t viv, zsl_real_t xi,
 int
 zsl_phy_proj_vel(zsl_real_t vfh, zsl_real_t vfv, zsl_real_t *vf)
 {
-	*vf = sqrt(vfh * vfh + vfv * vfv);
+	*vf = ZSL_SQRT(vfh * vfh + vfv * vfv);
 
 	return 0;
 }
@@ -141,7 +141,7 @@ zsl_phy_proj_angle(zsl_real_t vfh, zsl_real_t vfv, zsl_real_t *theta)
 		return 0;
 	}
 
-	*theta = atan(vfv / vfh);
+	*theta = ZSL_ATAN(vfv / vfh);
 
 	return 0;
 }

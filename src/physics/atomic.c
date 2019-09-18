@@ -17,7 +17,7 @@ zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r)
 		return -EINVAL;
 	}
 
-	*r = ZSL_NUCL_RADIUS * pow((zsl_real_t) a, 1.0 / 3.0) * 1E15;
+	*r = ZSL_NUCL_RADIUS * ZSL_POW((zsl_real_t) a, 1.0 / 3.0) * 1E15;
 
 	return 0;
 }
@@ -60,7 +60,7 @@ zsl_phy_atom_bohr_orb_ener(u8_t z, u8_t n, zsl_real_t *e)
 		return -EINVAL;
 	}
 
-	*e = -(pow(((zsl_real_t) z * ZSL_COULOMB * ZSL_E_CHARGE *
+	*e = -(ZSL_POW(((zsl_real_t) z * ZSL_COULOMB * ZSL_E_CHARGE *
 	       ZSL_E_CHARGE) / ((zsl_real_t) n * ZSL_RED_PLANCK), 2.0) * 0.5 *
 	       ZSL_E_MASS) / 1.602176634E-19;
 	
@@ -76,7 +76,7 @@ zsl_phy_atom_rad_decay(zsl_real_t qi, zsl_real_t t, zsl_real_t lambda,
 		return -EINVAL;
 	}
 
-	*qf = qi * pow(ZSL_E, -lambda * t);
+	*qf = qi * ZSL_POW(ZSL_E, -lambda * t);
 
 	return 0;
 }
@@ -90,7 +90,7 @@ zsl_phy_atom_bragg(u8_t n, zsl_real_t theta, zsl_real_t lambda,
 		return -EINVAL;
 	}
 
-	*d = ((zsl_real_t) n * lambda) / (2.0 * sin(theta));
+	*d = ((zsl_real_t) n * lambda) / (2.0 * ZSL_SIN(theta));
 
 	return 0;
 }

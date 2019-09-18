@@ -51,6 +51,8 @@ extern void test_matrix_deter(void);
 extern void test_matrix_gauss_elim(void);
 extern void test_matrix_gauss_elim_d(void);
 extern void test_matrix_gauss_reduc(void);
+extern void test_matrix_gram_schmidt_sq(void);
+extern void test_matrix_gram_schmidt_rect(void);
 extern void test_matrix_cols_norm(void);
 extern void test_matrix_norm_elem(void);
 extern void test_matrix_norm_elem_d(void);
@@ -59,8 +61,8 @@ extern void test_matrix_inv(void);
 extern void test_matrix_balance(void);
 extern void test_matrix_householder_sq(void);
 extern void test_matrix_householder_rect(void);
-extern void test_matrix_gram_schmidt(void);
 extern void test_matrix_qrd(void);
+extern void test_matrix_qrd_hess(void);
 extern void test_matrix_min(void);
 extern void test_matrix_max(void);
 extern void test_matrix_min_idx(void);
@@ -114,9 +116,30 @@ extern void test_phy_atom_bragg(void);
 extern void test_phy_dyn_newton(void);
 extern void test_phy_dyn_fric(void);
 extern void test_phy_dyn_normal(void);
+extern void test_phy_dyn_pendul_period(void);
+extern void test_phy_dyn_pendul_max_speed(void);
+extern void test_phy_dyn_tension(void);
+extern void test_phy_dyn_lever(void);
 
 extern void test_phy_ecmp_capac_cpv(void);
 extern void test_phy_ecmp_capac_ad(void);
+extern void test_phy_ecmp_ener_capac(void);
+extern void test_phy_ecmp_ener_induc(void);
+extern void test_phy_ecmp_trans(void);
+extern void test_phy_ecmp_rlc_volt(void);
+extern void test_phy_ecmp_rc_charg_i(void);
+extern void test_phy_ecmp_rc_charg_q(void);
+extern void test_phy_ecmp_rc_discharg_i(void);
+extern void test_phy_ecmp_rc_discharg_q(void);
+extern void test_phy_ecmp_rl_current(void);
+
+extern void test_phy_elec_charge_dens(void);
+extern void test_phy_elec_force(void);
+extern void test_phy_elec_force2(void);
+extern void test_phy_elec_field(void);
+extern void test_phy_elec_pot_ener(void);
+extern void test_phy_elec_potential(void);
+extern void test_phy_elec_flux(void);
 
 extern void test_phy_ener_kin(void);
 extern void test_phy_ener_rot(void);
@@ -129,6 +152,20 @@ extern void test_phy_ener_final(void);
 extern void test_phy_ener_photon(void);
 extern void test_phy_ener_photon2(void);
 
+extern void test_phy_fluid_dens(void);
+extern void test_phy_fluid_simple_press(void);
+extern void test_phy_fluid_press(void);
+extern void test_phy_fluid_bouyant_force(void);
+extern void test_phy_fluid_flow_rate(void);
+extern void test_phy_fluid_force_prop(void);
+extern void test_phy_fluid_bernoulli(void);
+extern void test_phy_fluid_volume_flow_rate(void);
+
+extern void test_phy_gas_av_vel(void);
+extern void test_phy_gas_press(void);
+extern void test_phy_gas_boyle(void);
+extern void test_phy_gas_charles_lussac(void);
+
 extern void test_phy_grav_orb_period(void);
 extern void test_phy_grav_esc_vel(void);
 extern void test_phy_grav_acc(void);
@@ -137,9 +174,14 @@ extern void test_phy_grav_force(void);
 extern void test_phy_grav_pot_ener(void);
 
 extern void test_phy_kin_dist(void);
+extern void test_phy_kin_init_pos(void);
+extern void test_phy_kin_init_pos2(void);
 extern void test_phy_kin_time(void);
 extern void test_phy_kin_vel(void);
 extern void test_phy_kin_vel2(void);
+extern void test_phy_kin_init_vel(void);
+extern void test_phy_kin_init_vel2(void);
+extern void test_phy_kin_init_vel3(void);
 extern void test_phy_kin_av_vel(void);
 extern void test_phy_kin_accel(void);
 extern void test_phy_kin_ener(void);
@@ -159,6 +201,20 @@ extern void test_phy_mom_imp(void);
 extern void test_phy_mom_change(void);
 extern void test_phy_mom_elas(void);
 extern void test_phy_mom_inelas(void);
+
+extern void test_phy_opt_refrac_index(void);
+extern void test_phy_opt_snell(void);
+extern void test_phy_opt_focus(void);
+extern void test_phy_opt_critic_angle(void);
+extern void test_phy_opt_power(void);
+extern void test_phy_opt_magn(void);
+extern void test_phy_opt_dif(void);
+
+extern void test_phy_photon_ener(void);
+extern void test_phy_photon_mom(void);
+extern void test_phy_photon_wavelenght(void);
+extern void test_phy_photon_frequency(void);
+extern void test_phy_photon_photoelectric(void);
 
 extern void test_phy_proj_init_vel(void);
 extern void test_phy_proj_time(void);
@@ -196,6 +252,20 @@ extern void test_phy_sound_intensity(void);
 extern void test_phy_sound_shock_wave_angle(void);
 extern void test_phy_sound_dop_effect(void);
 extern void test_phy_sound_beat(void);
+
+extern void test_phy_thermo_fahren_cels(void);
+extern void test_phy_thermo_cels_kel(void);
+extern void test_phy_thermo_heat_fusion(void);
+extern void test_phy_thermo_heat(void);
+extern void test_phy_thermo_expan(void);
+extern void test_phy_thermo_mean_free_path(void);
+extern void test_phy_thermo_effic_heat_engine(void);
+extern void test_phy_thermo_carnot_engine(void);
+
+extern void test_phy_work_module(void);
+extern void test_phy_work_x(void);
+extern void test_phy_work_y(void);
+extern void test_phy_work_kin(void);
 
 void test_main(void)
 {
@@ -246,6 +316,8 @@ void test_main(void)
 	ztest_unit_test(test_matrix_gauss_elim),
 	ztest_unit_test(test_matrix_gauss_elim_d),
 	ztest_unit_test(test_matrix_gauss_reduc),
+	ztest_unit_test(test_matrix_gram_schmidt_sq),
+	ztest_unit_test(test_matrix_gram_schmidt_rect),
 	ztest_unit_test(test_matrix_cols_norm),
 	ztest_unit_test(test_matrix_norm_elem),
 	ztest_unit_test(test_matrix_norm_elem_d),
@@ -254,8 +326,8 @@ void test_main(void)
 	ztest_unit_test(test_matrix_balance),
 	ztest_unit_test(test_matrix_householder_sq),
 	ztest_unit_test(test_matrix_householder_rect),
-        ztest_unit_test(test_matrix_gram_schmidt),
 	ztest_unit_test(test_matrix_qrd),
+	ztest_unit_test(test_matrix_qrd_hess),
 	ztest_unit_test(test_matrix_min),
 	ztest_unit_test(test_matrix_max),
 	ztest_unit_test(test_matrix_min_idx),
@@ -300,9 +372,30 @@ void test_main(void)
 	ztest_unit_test(test_phy_dyn_newton),
 	ztest_unit_test(test_phy_dyn_fric),
 	ztest_unit_test(test_phy_dyn_normal),
+	ztest_unit_test(test_phy_dyn_pendul_period),
+	ztest_unit_test(test_phy_dyn_pendul_max_speed),
+	ztest_unit_test(test_phy_dyn_tension),
+	ztest_unit_test(test_phy_dyn_lever),
 
 	ztest_unit_test(test_phy_ecmp_capac_cpv),
 	ztest_unit_test(test_phy_ecmp_capac_ad),
+	ztest_unit_test(test_phy_ecmp_ener_capac),
+	ztest_unit_test(test_phy_ecmp_ener_induc),
+	ztest_unit_test(test_phy_ecmp_trans),
+	ztest_unit_test(test_phy_ecmp_rlc_volt),
+	ztest_unit_test(test_phy_ecmp_rc_charg_i),
+	ztest_unit_test(test_phy_ecmp_rc_charg_q),
+	ztest_unit_test(test_phy_ecmp_rc_discharg_i),
+	ztest_unit_test(test_phy_ecmp_rc_discharg_q),
+	ztest_unit_test(test_phy_ecmp_rl_current),
+
+	ztest_unit_test(test_phy_elec_charge_dens),
+	ztest_unit_test(test_phy_elec_force),
+	ztest_unit_test(test_phy_elec_force2),
+	ztest_unit_test(test_phy_elec_field),
+	ztest_unit_test(test_phy_elec_pot_ener),
+	ztest_unit_test(test_phy_elec_potential),
+	ztest_unit_test(test_phy_elec_flux),
 
 	ztest_unit_test(test_phy_ener_kin),
 	ztest_unit_test(test_phy_ener_rot),
@@ -315,6 +408,20 @@ void test_main(void)
 	ztest_unit_test(test_phy_ener_photon),
 	ztest_unit_test(test_phy_ener_photon2),
 
+	ztest_unit_test(test_phy_fluid_dens),
+	ztest_unit_test(test_phy_fluid_simple_press),
+	ztest_unit_test(test_phy_fluid_press),
+	ztest_unit_test(test_phy_fluid_bouyant_force),
+	ztest_unit_test(test_phy_fluid_flow_rate),
+	ztest_unit_test(test_phy_fluid_force_prop),
+	ztest_unit_test(test_phy_fluid_bernoulli),
+	ztest_unit_test(test_phy_fluid_volume_flow_rate),
+
+	ztest_unit_test(test_phy_gas_av_vel),
+	ztest_unit_test(test_phy_gas_press),
+	ztest_unit_test(test_phy_gas_boyle),
+	ztest_unit_test(test_phy_gas_charles_lussac),
+
 	ztest_unit_test(test_phy_grav_orb_period),
 	ztest_unit_test(test_phy_grav_esc_vel),
 	ztest_unit_test(test_phy_grav_acc),
@@ -323,9 +430,14 @@ void test_main(void)
 	ztest_unit_test(test_phy_grav_pot_ener),
 
 	ztest_unit_test(test_phy_kin_dist),
+	ztest_unit_test(test_phy_kin_init_pos),
+	ztest_unit_test(test_phy_kin_init_pos2),
 	ztest_unit_test(test_phy_kin_time),
 	ztest_unit_test(test_phy_kin_vel),
 	ztest_unit_test(test_phy_kin_vel2),
+	ztest_unit_test(test_phy_kin_init_vel),
+	ztest_unit_test(test_phy_kin_init_vel2),
+	ztest_unit_test(test_phy_kin_init_vel3),
 	ztest_unit_test(test_phy_kin_av_vel),
 	ztest_unit_test(test_phy_kin_accel),
 	ztest_unit_test(test_phy_kin_ener),
@@ -345,6 +457,20 @@ void test_main(void)
 	ztest_unit_test(test_phy_mom_change),
 	ztest_unit_test(test_phy_mom_elas),
 	ztest_unit_test(test_phy_mom_inelas),
+
+	ztest_unit_test(test_phy_opt_refrac_index),
+	ztest_unit_test(test_phy_opt_snell),
+	ztest_unit_test(test_phy_opt_focus),
+	ztest_unit_test(test_phy_opt_critic_angle),
+	ztest_unit_test(test_phy_opt_power),
+	ztest_unit_test(test_phy_opt_magn),
+	ztest_unit_test(test_phy_opt_dif),
+	
+	ztest_unit_test(test_phy_photon_ener),
+	ztest_unit_test(test_phy_photon_mom),
+	ztest_unit_test(test_phy_photon_wavelenght),
+	ztest_unit_test(test_phy_photon_frequency),
+	ztest_unit_test(test_phy_photon_photoelectric),
 
 	ztest_unit_test(test_phy_proj_init_vel),
 	ztest_unit_test(test_phy_proj_time),
@@ -381,7 +507,21 @@ void test_main(void)
 	ztest_unit_test(test_phy_sound_intensity),
 	ztest_unit_test(test_phy_sound_shock_wave_angle),
 	ztest_unit_test(test_phy_sound_dop_effect),
-	ztest_unit_test(test_phy_sound_beat)
+	ztest_unit_test(test_phy_sound_beat),
+
+	ztest_unit_test(test_phy_thermo_fahren_cels),
+	ztest_unit_test(test_phy_thermo_cels_kel),
+	ztest_unit_test(test_phy_thermo_heat_fusion),
+	ztest_unit_test(test_phy_thermo_heat),
+	ztest_unit_test(test_phy_thermo_expan),
+	ztest_unit_test(test_phy_thermo_mean_free_path),
+	ztest_unit_test(test_phy_thermo_effic_heat_engine),
+	ztest_unit_test(test_phy_thermo_carnot_engine),
+
+	ztest_unit_test(test_phy_work_module),
+	ztest_unit_test(test_phy_work_x),
+	ztest_unit_test(test_phy_work_y),
+	ztest_unit_test(test_phy_work_kin)
 
 	);
 
@@ -396,7 +536,7 @@ void test_main(void)
 		ztest_unit_test(test_matrix_svd),
 		ztest_unit_test(test_matrix_pinv)
 	);
-        
+
 	ztest_run_test_suite(zsl_tests_double);
 	#endif
 }

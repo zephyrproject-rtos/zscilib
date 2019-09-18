@@ -60,7 +60,7 @@ int zsl_phy_ener_kin(zsl_real_t v, zsl_real_t m, zsl_real_t *ke);
  *
  * @param omega   Angular velocity in radians per second.
  * @param i       Moment of inertia in kilograms and meters squared.
- * @param rke     Pointer to the output angular kinetic energy in joules. Will 
+ * @param rke     Pointer to the output angular kinetic energy in joules. Will
  *                be set to NAN if the moment of inertia of the object
  *                is negative.
  *
@@ -84,7 +84,7 @@ int zsl_phy_ener_grav_pot(zsl_real_t m, zsl_real_t h, zsl_real_t *ug);
 
 
 /**
- * @brief Calculates the elastic potential energy of a spring based on the 
+ * @brief Calculates the elastic potential energy of a spring based on the
 distance it has been compressed/expanded and its characteristic 'k' constant.
  *
  * @param k      Constant characteristic of the spring, in newtons per meter.
@@ -143,7 +143,7 @@ int zsl_phy_ener_mec(zsl_real_t ke, zsl_real_t rke, zsl_real_t ug,
  * @brief Given the initial values of the two kinetic (linear and rotational)
  *        and the two potential (gravitational and elastic) energies, and three
  *        of the four final values of these energies, this function calculates
- *        the fourth value of the unknown final energy using the conservation 
+ *        the fourth value of the unknown final energy using the conservation
  *        of mechanical energy.
  *
  * @param ei1    Initial value of one of the energies in joules.
@@ -162,26 +162,24 @@ int zsl_phy_ener_final(zsl_real_t ei1, zsl_real_t ei2, zsl_real_t ei3,
 		       zsl_real_t ef3, zsl_real_t *ef4);
 
 /**
- * @brief Calculates the force in newtons that experiments a body based on its
- *        mass (m) and acceleration (accel).
+ * @brief Calculates the energy in electron volts of a photon based on it's
+ *        frequency in hertz.
  *
- * @param m      Mass of the body in kilograms.
- * @param accel  Acceleration in meters per second squared.
- * @param f      Pointer to the output force in newtons. Will be set to NAN if
- *               the mass of the body is negative.
+ * @param f      Frequency of the photon in hertz.
+ * @param e      Pointer to the output energy in electron volts. Will be set
+ *               to NAN if frequency is less than 0.
  *
  * @return 0 if everything executed properly, error code on failure.
  */
 int zsl_phy_ener_photon(zsl_real_t f, zsl_real_t *e);
 
 /**
- * @brief Calculates the force in newtons that experiments a body based on its
- *        mass (m) and acceleration (accel).
+ * @brief Calculates the energy in electron volts of a photon based on it's
+ *        wavelength in ???.
  *
- * @param m      Mass of the body in kilograms.
- * @param accel  Acceleration in meters per second squared.
- * @param f      Pointer to the output force in newtons. Will be set to NAN if
- *               the mass of the body is negative.
+ * @param lambda Wavelength of the photon in ???
+ * @param e      Pointer to the output energy in electron volts. Will be set
+ *               to NAN if wavelength is less than or equal to 0.
  *
  * @return 0 if everything executed properly, error code on failure.
  */

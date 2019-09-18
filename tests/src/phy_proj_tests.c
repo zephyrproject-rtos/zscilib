@@ -192,5 +192,9 @@ void test_phy_proj_range(void)
 
 	rc = zsl_phy_proj_range(7.0, 12.0, 3.0, 15.0, &dist);
 	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(dist, 23.50711351, 1E-6), NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+ 	zassert_true(val_is_equal(dist, 23.50711351, 1E-5), NULL);
+#else
+	zassert_true(val_is_equal(dist, 23.50711351, 1E-8), NULL);
+#endif
 }

@@ -716,6 +716,20 @@ int zsl_mtx_gauss_reduc(struct zsl_mtx *m, struct zsl_mtx *mi,
 int zsl_mtx_cols_norm(struct zsl_mtx *m, struct zsl_mtx *mnorm);
 
 /**
+ * @brief Performs the Gram-Schmidt algorithm on the set of column vectors in
+ *        matrix 'm'. This algorithm calculates a set of orthogonal vectors in
+ *        the same vectorial space as the original vectors.
+ *
+ * @param m     Pointer to the input matrix containing the vector data.
+ * @param mort  Pointer to the output matrix containing the orthogonal vector
+ *              data.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
+
+/**
  * @brief Normalises elements in matrix m such that the element at position
  *        (i, j) is equal to 1.0.
  *
@@ -812,6 +826,7 @@ int zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h, bool hessenberg);
  * @param q     Pointer to the output orthoogonal square matrix.
  * @param r     Pointer to the output upper triangular square matrix or
  *              hessenberg matrix if set to true.
+ * @param hessenberg Sets the matrix to hessenberg format if 'true'.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
@@ -858,20 +873,6 @@ int zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter);
  */
 int zsl_mtx_eigenvalues(struct zsl_mtx *m, struct zsl_vec *v, size_t iter);
 #endif
-
-/**
- * @brief Performs the Gram-Schmidt algorithm on the set of column vectors in
- *        matrix 'm'. This algorithm calculates a set of orthogonal vectors in
- *        the same vectorial space as the original vectors.
- *
- * @param m     Pointer to the input matrix containing the vector data.
- * @param mort  Pointer to the output matrix containing the orthogonal vector
- *              data.
- *
- * @return  0 if everything executed correctly, otherwise an appropriate
- *          error code.
- */
-int zsl_mtx_gram_schmidt(struct zsl_mtx *m, struct zsl_mtx *mort);
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**

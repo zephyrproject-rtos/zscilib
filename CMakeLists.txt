@@ -19,6 +19,7 @@ zephyr_library_sources(
     src/physics/misc.c
     src/physics/momentum.c
     src/physics/optics.c
+    src/physics/photons.c
     src/physics/projectiles.c
     src/physics/relativity.c
     src/physics/rotation.c

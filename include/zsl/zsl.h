@@ -48,11 +48,11 @@ extern "C" {
  *   o "-release"
  */
 
-#define ZSL_VERSION             "0.1.0-prerelease"
+#define ZSL_VERSION             "0.2.0-alpha"
 #define ZSL_VERSION_MAJOR       0
-#define ZSL_VERSION_MINOR       1
+#define ZSL_VERSION_MINOR       2
 #define ZSL_VERSION_REVISION    0
-#define ZSL_VERSION_STATUS      "-prerelease"
+#define ZSL_VERSION_STATUS      "-alpha"
 #define ZSL_VERSION_DATE        __DATE__
 
 extern const char * zsl_version;

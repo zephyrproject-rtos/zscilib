@@ -79,7 +79,7 @@ zsl_phy_rot_omega2(zsl_real_t oi, zsl_real_t phi, zsl_real_t a, zsl_real_t *of)
 		return -EINVAL;
 	}
 
-	*of = sqrt(of2);
+	*of = ZSL_SQRT(of2);
 
 	return 0;
 }
@@ -205,7 +205,7 @@ zsl_phy_rot_cent_accel2(zsl_real_t t, zsl_real_t r, zsl_real_t *ca)
 int
 zsl_phy_rot_total_accel(zsl_real_t accel, zsl_real_t ca, zsl_real_t *at)
 {
-	*at = sqrt(accel * accel + ca * ca);
+	*at = ZSL_SQRT(accel * accel + ca * ca);
 
 	return 0;
 }

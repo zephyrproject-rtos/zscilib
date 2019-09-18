@@ -30,7 +30,7 @@ zsl_phy_sound_level(zsl_real_t i, zsl_real_t i0, zsl_real_t *b)
 		return -EINVAL;
 	}
 
-	*b = 10 * log10(i / i0);
+	*b = 10 * ZSL_LOG10(i / i0);
 
 	return 0;
 }
@@ -43,7 +43,7 @@ zsl_phy_sound_intensity(zsl_real_t b, zsl_real_t d, zsl_real_t p, zsl_real_t *i)
 		return -EINVAL;
 	}
 	
-	*i = (p * p * sqrt(b / d)) / (2 * b);
+	*i = (p * p * ZSL_SQRT(b / d)) / (2 * b);
 
 	return 0;
 }
@@ -51,7 +51,7 @@ zsl_phy_sound_intensity(zsl_real_t b, zsl_real_t d, zsl_real_t p, zsl_real_t *i)
 int
 zsl_phy_sound_shock_wave_angle(zsl_real_t v, zsl_real_t vs, zsl_real_t *theta)
 {
-	*theta = asin(v / vs);
+	*theta = ZSL_ASIN(v / vs);
 
 	return 0;
 }
@@ -83,7 +83,7 @@ zsl_phy_sound_beat(zsl_real_t fa, zsl_real_t fb, zsl_real_t *f)
 		return -EINVAL;
 	}
 	
-	*f = fabs(fa - fb);
+	*f = ZSL_ABS(fa - fb);
 
 	return 0;
 }

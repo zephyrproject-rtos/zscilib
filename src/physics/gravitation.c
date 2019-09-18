@@ -18,8 +18,8 @@ zsl_phy_grav_orb_period(zsl_real_t mp, zsl_real_t msat, zsl_real_t r,
 		return -EINVAL;
 	}
 
-	*t = sqrt((4.0 * ZSL_PI * ZSL_PI * r * r * r) / (ZSL_UNIV_GRAV *
-						       (mp + msat)));
+	*t = ZSL_SQRT((4.0 * ZSL_PI * ZSL_PI * r * r * r) / (ZSL_UNIV_GRAV *
+							    (mp + msat)));
 
 	return 0;
 }
@@ -32,7 +32,7 @@ zsl_phy_grav_esc_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v)
 		return -EINVAL;
 	}
 
-	*v = sqrt((2.0 * ZSL_UNIV_GRAV * mp) / r);
+	*v = ZSL_SQRT((2.0 * ZSL_UNIV_GRAV * mp) / r);
 
 	return 0;
 }
@@ -58,7 +58,7 @@ zsl_phy_grav_orb_vel(zsl_real_t mp, zsl_real_t r, zsl_real_t *v)
 		return -EINVAL;
 	}
 
-	*v = sqrt((ZSL_UNIV_GRAV * mp) / r);
+	*v = ZSL_SQRT((ZSL_UNIV_GRAV * mp) / r);
 
 	return 0;
 }

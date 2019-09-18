@@ -70,7 +70,6 @@ int zsl_phy_mom_imp(zsl_real_t f, zsl_real_t time, zsl_real_t *imp);
 /**
  * @brief Calculates the gain or loss in momentum of an object based on its
  *        mass (m) and its initial (vi) and final (vf) velocities.
-.
  *
  * @param m     Mass of the object in kilograms.
  * @param vi    Inital velocity in meters per second.
@@ -104,7 +103,7 @@ int zsl_phy_mom_elas(zsl_real_t m1, zsl_real_t vi1, zsl_real_t vf1,
 
 /**
  * @brief Calculates the final velocity of the merged object after a perfect
- *        inelastic collision between two objects occur, given the masses and 
+ *        inelastic collision between two objects occur, given the masses and
  *        initial velocities of both the initial objects.
  *
  * @param m1     Mass of the first initial object in kilograms.

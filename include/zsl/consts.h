@@ -105,6 +105,11 @@ extern "C" {
  */
 #define ZSL_LIGHT_SPEED                                 (299792458.0)
 
+/**
+ * The ideal gas constant, in joules per kelvin and mol.
+ */
+#define ZSL_IDEAL_GAS_CONST                             (8.314462618)
+
 #ifdef __cplusplus
 }
 #endif

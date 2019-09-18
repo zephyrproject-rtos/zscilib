@@ -24,6 +24,38 @@ zsl_phy_kin_dist(zsl_real_t vi, zsl_real_t time, zsl_real_t accel,
 }
 
 int
+zsl_phy_kin_init_pos(zsl_real_t vi, zsl_real_t t, zsl_real_t a, zsl_real_t xf,
+		     zsl_real_t *xi)
+{
+	if (t < 0) {
+		*xi = NAN;
+		return -EINVAL;
+	}
+	
+	zsl_real_t dist;
+	
+	zsl_phy_kin_dist(vi, t, a, &dist);
+	
+	*xi = xf - dist;
+
+	return 0;
+}
+
+int
+zsl_phy_kin_init_pos2(zsl_real_t vi, zsl_real_t vf, zsl_real_t a, zsl_real_t xf,
+		      zsl_real_t *xi)
+{
+	if (a == 0) {
+		*xi = NAN;
+		return -EINVAL;
+	}
+	
+	*xi = xf - ((vf * vf - vi * vi) / (2.0 * a));
+
+	return 0;
+}
+
+int
 zsl_phy_kin_time(zsl_real_t vi, zsl_real_t vf, zsl_real_t accel,
 		 zsl_real_t *time)
 {
@@ -62,7 +94,50 @@ zsl_phy_kin_vel2(zsl_real_t vi, zsl_real_t dist, zsl_real_t accel,
 		return -EINVAL;
 	}
 
-	*vf = sqrt(vf2);
+	*vf = ZSL_SQRT(vf2);
+
+	return 0;
+}
+
+int
+zsl_phy_kin_init_vel(zsl_real_t vf, zsl_real_t a, zsl_real_t t, zsl_real_t *vi)
+{
+	if (t < 0) {
+		*vi = NAN;
+		return -EINVAL;
+	}
+
+	*vi = vf - a * t;
+
+	return 0;
+}
+
+int
+zsl_phy_kin_init_vel2(zsl_real_t dist, zsl_real_t a, zsl_real_t t,
+		      zsl_real_t *vi)
+{
+	if (t <= 0) {
+		*vi = NAN;
+		return -EINVAL;
+	}
+
+	*vi = (dist - 0.5 * a * t * t) / t;
+
+	return 0;
+}
+
+int
+zsl_phy_kin_init_vel3(zsl_real_t vf, zsl_real_t a, zsl_real_t dist,
+		      zsl_real_t *vi)
+{
+	zsl_real_t sq = vf * vf - 2 * a * dist;
+	
+	if (sq < 0) {
+		*vi = NAN;
+		return -EINVAL;
+	}
+
+	*vi = ZSL_SQRT(sq);
 
 	return 0;
 }

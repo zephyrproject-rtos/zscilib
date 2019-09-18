@@ -108,58 +108,41 @@ main(void)
 {
         printf("Hello, zscilib!\n\n");
 	
-	int rc;
-
-	ZSL_MATRIX_DEF(va, 4, 4);
-	ZSL_MATRIX_DEF(vb, 4, 4);
-	ZSL_MATRIX_DEF(vc, 4, 4);
+	int rc = 0;
 	
-	ZSL_MATRIX_DEF(va2, 4, 4);
-	ZSL_MATRIX_DEF(vb2, 4, 2);
-	ZSL_MATRIX_DEF(vc2, 4, 2);
-
-	/* Input real-eigenvalue matrix. */
-	zsl_real_t data[16] = { 1.0, 2.0,-1.0, 0.0,
-				0.0, 3.0, 4.0,-2.0,
-				4.0, 4.0,-3.0, 0.0,
-				5.0, 3.0,-5.0, 2.0 };
+	ZSL_MATRIX_DEF(va, 3, 3);
+	ZSL_MATRIX_DEF(vb, 3, 3);
+	
+	/* Input matrix with range 3. */
+	zsl_real_t data[9] = { 4.0,  3.0,  0.0,
+			       2.0,  1.0, -3.0,
+			      -4.0, -5.0, -8.0 };
 	
 	struct zsl_mtx ma = {
-		.sz_rows = 4,
-		.sz_cols = 4,
+		.sz_rows = 3,
+		.sz_cols = 3,
 		.data = data
 	};
 	
-	/* Input complex-eigenvalue matrix. */
-	zsl_real_t datb[16] = { 1.0, 2.0,-1.0, 0.0,
-				0.0, 3.0, 4.0,-2.0,
-				4.0, 4.0,-3.0, 0.0,
-				9.0, 3.0,-5.0, 2.0 };
+	/* Input matrix with range 2. */
+	zsl_real_t datb[9] = { 4.0,  2.0,  0.0,
+			       2.0,  1.0, -3.0,
+			      -4.0, -2.0, -8.0 };
 	
 	struct zsl_mtx mb = {
-		.sz_rows = 4,
-		.sz_cols = 4,
+		.sz_rows = 3,
+		.sz_cols = 3,
 		.data = datb
 	};
 	
-	/* Input real-eigenvalue matrix with repeated eigenvalues. */
-	zsl_real_t datc[16] = { 1.0, 2.0, 4.0, 0.0,
-				0.0, 3.0, 4.0,-2.0,
-				0.0, 0.0, 3.0, 5.0,
-				0.0, 0.0, 0.0, 1.0 };
+	rc = zsl_mtx_gauss_reduc(&ma, &vb, &va);
 	
-	struct zsl_mtx mc = {
-		.sz_rows = 4,
-		.sz_cols = 4,
-		.data = datc
-	};
-		
-
-	
-	/* Calculate the eigenvectors of 'ma', 'mb' and 'mc'
-	 * non-orthonormalised. */
-	rc = zsl_mtx_eigenvectors(&ma, &va, 1500, false);
 	zsl_mtx_print(&va);
+	printf("\n\n");
+	
+	rc = zsl_mtx_gauss_reduc(&mb, &va, &vb);
+	
+	zsl_mtx_print(&vb);
 	printf("\n\n");
 
         return 0;
