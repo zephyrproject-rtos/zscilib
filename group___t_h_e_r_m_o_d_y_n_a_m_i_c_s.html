@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Thermo-dynamics<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,418 @@ Files</h2></td></tr>
 <tr class="memitem:thermo_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thermo_8h.html">thermo.h</a></td></tr>
 <tr class="memdesc:thermo_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for thermo-dynamics in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga974e6d2674cf0967ee686129d98bf8ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#ga974e6d2674cf0967ee686129d98bf8ed">zsl_phy_thermo_fahren_cels</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *t2, bool ctf)</td></tr>
+<tr class="memdesc:ga974e6d2674cf0967ee686129d98bf8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">If 'ctf' is set to true, this function transforms the celcius input temperature into fahrenheit. If 'ctf' is set to false, this function transforms the fahrenheit input temperature into celcius.  <a href="#ga974e6d2674cf0967ee686129d98bf8ed">More...</a><br /></td></tr>
+<tr class="separator:ga974e6d2674cf0967ee686129d98bf8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff29e05435c372a444c1f33a84a522c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#gaff29e05435c372a444c1f33a84a522c0">zsl_phy_thermo_cels_kel</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *t2, bool ktc)</td></tr>
+<tr class="memdesc:gaff29e05435c372a444c1f33a84a522c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">If 'ktc' is set to true, this function transforms the kelvin input temperature into celcius. If 'ktc' is set to false, this function transforms the celcius input temperature into kelvin.  <a href="#gaff29e05435c372a444c1f33a84a522c0">More...</a><br /></td></tr>
+<tr class="separator:gaff29e05435c372a444c1f33a84a522c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac948207df5facddc88afbb0697403029"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#gac948207df5facddc88afbb0697403029">zsl_phy_thermo_heat_fusion</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> lh, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *q)</td></tr>
+<tr class="memdesc:gac948207df5facddc88afbb0697403029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the necessary heat to melt a material based on its latent heat (lh) and mass (m).  <a href="#gac948207df5facddc88afbb0697403029">More...</a><br /></td></tr>
+<tr class="separator:gac948207df5facddc88afbb0697403029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6419575e7bb6c659cb1c2f868b246760"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#ga6419575e7bb6c659cb1c2f868b246760">zsl_phy_thermo_heat</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> sh, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *q)</td></tr>
+<tr class="memdesc:ga6419575e7bb6c659cb1c2f868b246760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the amount of heat required to increase the temperature of a material.  <a href="#ga6419575e7bb6c659cb1c2f868b246760">More...</a><br /></td></tr>
+<tr class="separator:ga6419575e7bb6c659cb1c2f868b246760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e94ec24f4702336ef047b46b18cb920"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#ga3e94ec24f4702336ef047b46b18cb920">zsl_phy_thermo_expan</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> l0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *l)</td></tr>
+<tr class="memdesc:ga3e94ec24f4702336ef047b46b18cb920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the final length of an object under heat expansion based on its initial length, its linear thermal expansion coeffitient and the difference in temperature.  <a href="#ga3e94ec24f4702336ef047b46b18cb920">More...</a><br /></td></tr>
+<tr class="separator:ga3e94ec24f4702336ef047b46b18cb920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0c7989d82605faa7be4a3418a7be7c5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#gaa0c7989d82605faa7be4a3418a7be7c5">zsl_phy_thermo_mean_free_path</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> nv, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> d, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *lambda)</td></tr>
+<tr class="memdesc:gaa0c7989d82605faa7be4a3418a7be7c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the average distance between the collisions of molecules in a gas based on the number of particles per unit volume and the diameter of the gas molecules.  <a href="#gaa0c7989d82605faa7be4a3418a7be7c5">More...</a><br /></td></tr>
+<tr class="separator:gaa0c7989d82605faa7be4a3418a7be7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga551690e207f9529fcdb923c0d7183301"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#ga551690e207f9529fcdb923c0d7183301">zsl_phy_thermo_effic_heat_engine</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> qc, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> qh, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *e)</td></tr>
+<tr class="memdesc:ga551690e207f9529fcdb923c0d7183301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the efficiency of a heat engine based on the energy of the cold (qc) and the hot (qh) chambers.  <a href="#ga551690e207f9529fcdb923c0d7183301">More...</a><br /></td></tr>
+<tr class="separator:ga551690e207f9529fcdb923c0d7183301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fb98054bb93aca93d8eaad64bb87f92"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_e_r_m_o_d_y_n_a_m_i_c_s.html#ga5fb98054bb93aca93d8eaad64bb87f92">zsl_phy_thermo_carnot_engine</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> tc, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> qc, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> th, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *qh)</td></tr>
+<tr class="memdesc:ga5fb98054bb93aca93d8eaad64bb87f92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy of the hot chamber of a Carnot engine when the energy of the cold chamber and the temperatures in both chambers are known values.  <a href="#ga5fb98054bb93aca93d8eaad64bb87f92">More...</a><br /></td></tr>
+<tr class="separator:ga5fb98054bb93aca93d8eaad64bb87f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Thermo-dynamic functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga5fb98054bb93aca93d8eaad64bb87f92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fb98054bb93aca93d8eaad64bb87f92">&#9670;&nbsp;</a></span>zsl_phy_thermo_carnot_engine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_carnot_engine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>tc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>qc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>qh</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy of the hot chamber of a Carnot engine when the energy of the cold chamber and the temperatures in both chambers are known values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tc</td><td>Temperature in the cold chamber in kelvins. </td></tr>
+    <tr><td class="paramname">qc</td><td>Energy of the cold chamber in joules. </td></tr>
+    <tr><td class="paramname">th</td><td>Temperature in the hot chamber in kelvins. </td></tr>
+    <tr><td class="paramname">qh</td><td>Pointer to the output energy of the hot chamber in joules. Will be set to NAN if any of the temperatures is negative or if tc = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaff29e05435c372a444c1f33a84a522c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff29e05435c372a444c1f33a84a522c0">&#9670;&nbsp;</a></span>zsl_phy_thermo_cels_kel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_cels_kel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>t2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ktc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If 'ktc' is set to true, this function transforms the kelvin input temperature into celcius. If 'ktc' is set to false, this function transforms the celcius input temperature into kelvin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t1</td><td>Input temperature. </td></tr>
+    <tr><td class="paramname">ktc</td><td>If set to true, reverses the function. </td></tr>
+    <tr><td class="paramname">t2</td><td>Pointer to the output temperature.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga551690e207f9529fcdb923c0d7183301"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga551690e207f9529fcdb923c0d7183301">&#9670;&nbsp;</a></span>zsl_phy_thermo_effic_heat_engine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_effic_heat_engine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>qc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>qh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the efficiency of a heat engine based on the energy of the cold (qc) and the hot (qh) chambers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qc</td><td>Energy of the cold chamber in joules. </td></tr>
+    <tr><td class="paramname">qh</td><td>Energy of the hot chamber in joules. </td></tr>
+    <tr><td class="paramname">e</td><td>Pointer to the output efficiency. Will be set to NAN if qh = 0 or if the energy of the cold chamber is greater than the energy of the hot chamber.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga3e94ec24f4702336ef047b46b18cb920"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3e94ec24f4702336ef047b46b18cb920">&#9670;&nbsp;</a></span>zsl_phy_thermo_expan()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_expan </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>l0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>l</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the final length of an object under heat expansion based on its initial length, its linear thermal expansion coeffitient and the difference in temperature. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l0</td><td>Initial length in meters. </td></tr>
+    <tr><td class="paramname">a</td><td>Linear thermal expansion coeffitient of the material in 1 / kelvin. </td></tr>
+    <tr><td class="paramname">t</td><td>Increment of temperature in kelvin. </td></tr>
+    <tr><td class="paramname">l</td><td>Pointer to the output final length in meters. Will be set to NAN if either 'l0' or 'a' are negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga974e6d2674cf0967ee686129d98bf8ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga974e6d2674cf0967ee686129d98bf8ed">&#9670;&nbsp;</a></span>zsl_phy_thermo_fahren_cels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_fahren_cels </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>t2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ctf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If 'ctf' is set to true, this function transforms the celcius input temperature into fahrenheit. If 'ctf' is set to false, this function transforms the fahrenheit input temperature into celcius. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t1</td><td>Input temperature. </td></tr>
+    <tr><td class="paramname">ctf</td><td>If set to true, reverses the function. </td></tr>
+    <tr><td class="paramname">t2</td><td>Pointer to the output temperature.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga6419575e7bb6c659cb1c2f868b246760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6419575e7bb6c659cb1c2f868b246760">&#9670;&nbsp;</a></span>zsl_phy_thermo_heat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_heat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>sh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>q</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the amount of heat required to increase the temperature of a material. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Mass of the material in kilograms. </td></tr>
+    <tr><td class="paramname">sh</td><td>Specific heat of the material in kilojoules per kilogram and kelvin. </td></tr>
+    <tr><td class="paramname">t</td><td>Increment of temperature in kelvins. </td></tr>
+    <tr><td class="paramname">q</td><td>Pointer to the output amount of heat in kilojoules. Will be set to NAN if either the mass or the specific heat are negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac948207df5facddc88afbb0697403029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac948207df5facddc88afbb0697403029">&#9670;&nbsp;</a></span>zsl_phy_thermo_heat_fusion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_heat_fusion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>lh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>q</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the necessary heat to melt a material based on its latent heat (lh) and mass (m). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Mass of the material in kilograms. </td></tr>
+    <tr><td class="paramname">lh</td><td>Melting latent heat of the material in kilojoules per kilogram. </td></tr>
+    <tr><td class="paramname">q</td><td>Pointer to the output heat in kilojoules. Will be set to NAN if any of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaa0c7989d82605faa7be4a3418a7be7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa0c7989d82605faa7be4a3418a7be7c5">&#9670;&nbsp;</a></span>zsl_phy_thermo_mean_free_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_thermo_mean_free_path </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>nv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>lambda</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the average distance between the collisions of molecules in a gas based on the number of particles per unit volume and the diameter of the gas molecules. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nv</td><td>Number of particles per unit volume in 1 / meter cubed. </td></tr>
+    <tr><td class="paramname">d</td><td>Diameter of the molecules in meters. </td></tr>
+    <tr><td class="paramname">lambda</td><td>Pointer to the output distance between collisions in micrometers. Will be set to NAN if any of the input values is zero or negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

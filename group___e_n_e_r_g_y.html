@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Energy<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,528 @@ Files</h2></td></tr>
 <tr class="memitem:energy_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="energy_8h.html">energy.h</a></td></tr>
 <tr class="memdesc:energy_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for energy in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae3150533d5d9e72e547a5a5ae66c8df8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gae3150533d5d9e72e547a5a5ae66c8df8">zsl_phy_ener_kin</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *ke)</td></tr>
+<tr class="memdesc:gae3150533d5d9e72e547a5a5ae66c8df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the kinetic energy of a moving object based on its mass (m) and velocity (v).  <a href="#gae3150533d5d9e72e547a5a5ae66c8df8">More...</a><br /></td></tr>
+<tr class="separator:gae3150533d5d9e72e547a5a5ae66c8df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa00173a09eee23499ef5c5d2aa777dd6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gaa00173a09eee23499ef5c5d2aa777dd6">zsl_phy_ener_rot</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> omega, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *rke)</td></tr>
+<tr class="memdesc:gaa00173a09eee23499ef5c5d2aa777dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the angular kinetic energy of a rotating object based on its angular velocity (omega) and moment of inertia (i).  <a href="#gaa00173a09eee23499ef5c5d2aa777dd6">More...</a><br /></td></tr>
+<tr class="separator:gaa00173a09eee23499ef5c5d2aa777dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad17e73da97cf5b3a5690da4b3f64ab65"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gad17e73da97cf5b3a5690da4b3f64ab65">zsl_phy_ener_grav_pot</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> h, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *ug)</td></tr>
+<tr class="memdesc:gad17e73da97cf5b3a5690da4b3f64ab65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the gravitational potential energy in joules of an object based on its mass (m) and its height (h) with respect to a chosen initial height.  <a href="#gad17e73da97cf5b3a5690da4b3f64ab65">More...</a><br /></td></tr>
+<tr class="separator:gad17e73da97cf5b3a5690da4b3f64ab65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a87688acb4b103755c6297018cd90d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#ga3a87688acb4b103755c6297018cd90d6">zsl_phy_ener_elas_pot</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> k, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *ue)</td></tr>
+<tr class="memdesc:ga3a87688acb4b103755c6297018cd90d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the elastic potential energy of a spring based on the distance it has been compressed/expanded and its characteristic 'k' constant.  <a href="#ga3a87688acb4b103755c6297018cd90d6">More...</a><br /></td></tr>
+<tr class="separator:ga3a87688acb4b103755c6297018cd90d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab6cbaa141e7129c24cd4ff68d506278"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gaab6cbaa141e7129c24cd4ff68d506278">zsl_phy_ener_power</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ener, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> time, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *power)</td></tr>
+<tr class="memdesc:gaab6cbaa141e7129c24cd4ff68d506278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the power by dividing energy or work by time.  <a href="#gaab6cbaa141e7129c24cd4ff68d506278">More...</a><br /></td></tr>
+<tr class="separator:gaab6cbaa141e7129c24cd4ff68d506278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fbbcba4d69ed3986947d7bac89f2da4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#ga4fbbcba4d69ed3986947d7bac89f2da4">zsl_phy_ener_fric</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> fric, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *e)</td></tr>
+<tr class="memdesc:ga4fbbcba4d69ed3986947d7bac89f2da4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy lost due to a friction force based on the distance the object experiencing the friction has moved.  <a href="#ga4fbbcba4d69ed3986947d7bac89f2da4">More...</a><br /></td></tr>
+<tr class="separator:ga4fbbcba4d69ed3986947d7bac89f2da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ee27b750d717f36ccfa3b1ab2277703"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#ga8ee27b750d717f36ccfa3b1ab2277703">zsl_phy_ener_mec</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ke, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> rke, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ug, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ue, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *me)</td></tr>
+<tr class="memdesc:ga8ee27b750d717f36ccfa3b1ab2277703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the total mechanical energy of a system by adding kinetic energy (linear and angular) and potential energy (gravitational and elastic).  <a href="#ga8ee27b750d717f36ccfa3b1ab2277703">More...</a><br /></td></tr>
+<tr class="separator:ga8ee27b750d717f36ccfa3b1ab2277703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga976811d90d6936bdf0987601e41e48a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#ga976811d90d6936bdf0987601e41e48a2">zsl_phy_ener_final</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ei1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ei2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ei3, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ei4, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ef1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ef2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ef3, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *ef4)</td></tr>
+<tr class="memdesc:ga976811d90d6936bdf0987601e41e48a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the initial values of the two kinetic (linear and rotational) and the two potential (gravitational and elastic) energies, and three of the four final values of these energies, this function calculates the fourth value of the unknown final energy using the conservation of mechanical energy.  <a href="#ga976811d90d6936bdf0987601e41e48a2">More...</a><br /></td></tr>
+<tr class="separator:ga976811d90d6936bdf0987601e41e48a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3c3c96180f79d6747f915e9fd541f05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gaa3c3c96180f79d6747f915e9fd541f05">zsl_phy_ener_photon</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> f, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *e)</td></tr>
+<tr class="memdesc:gaa3c3c96180f79d6747f915e9fd541f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy in electron volts of a photon based on it's frequency in hertz.  <a href="#gaa3c3c96180f79d6747f915e9fd541f05">More...</a><br /></td></tr>
+<tr class="separator:gaa3c3c96180f79d6747f915e9fd541f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5786c3596e3e3dd9b8094c56256595b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_n_e_r_g_y.html#gad5786c3596e3e3dd9b8094c56256595b">zsl_phy_ener_photon2</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> lambda, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *e)</td></tr>
+<tr class="memdesc:gad5786c3596e3e3dd9b8094c56256595b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy in electron volts of a photon based on it's wavelength in ???.  <a href="#gad5786c3596e3e3dd9b8094c56256595b">More...</a><br /></td></tr>
+<tr class="separator:gad5786c3596e3e3dd9b8094c56256595b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Energy functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3a87688acb4b103755c6297018cd90d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a87688acb4b103755c6297018cd90d6">&#9670;&nbsp;</a></span>zsl_phy_ener_elas_pot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_elas_pot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>dist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>ue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the elastic potential energy of a spring based on the distance it has been compressed/expanded and its characteristic 'k' constant. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">k</td><td>Constant characteristic of the spring, in newtons per meter. </td></tr>
+    <tr><td class="paramname">dist</td><td>Distance compressed/expanded in meters. </td></tr>
+    <tr><td class="paramname">ue</td><td>Pointer to the output elastic potential energy in joules. Will be set to NAN if 'k' is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga976811d90d6936bdf0987601e41e48a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga976811d90d6936bdf0987601e41e48a2">&#9670;&nbsp;</a></span>zsl_phy_ener_final()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_final </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ei1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ei2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ei3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ei4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ef1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ef2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ef3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>ef4</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given the initial values of the two kinetic (linear and rotational) and the two potential (gravitational and elastic) energies, and three of the four final values of these energies, this function calculates the fourth value of the unknown final energy using the conservation of mechanical energy. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ei1</td><td>Initial value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ei2</td><td>Initial value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ei3</td><td>Initial value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ei4</td><td>Initial value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ef1</td><td>Final value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ef2</td><td>Final value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ef3</td><td>Final value of one of the energies in joules. </td></tr>
+    <tr><td class="paramname">ef4</td><td>Pointer to the output unknown final energy in joules.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga4fbbcba4d69ed3986947d7bac89f2da4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fbbcba4d69ed3986947d7bac89f2da4">&#9670;&nbsp;</a></span>zsl_phy_ener_fric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_fric </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>fric</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>dist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy lost due to a friction force based on the distance the object experiencing the friction has moved. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fric</td><td>Module of the friction force in newtons. </td></tr>
+    <tr><td class="paramname">dist</td><td>Distance through which the force has been applied, in meters. </td></tr>
+    <tr><td class="paramname">e</td><td>Pointer to the output lost energy in joules. Will be set to NAN if either the friction force or the distance are negatives.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gad17e73da97cf5b3a5690da4b3f64ab65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad17e73da97cf5b3a5690da4b3f64ab65">&#9670;&nbsp;</a></span>zsl_phy_ener_grav_pot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_grav_pot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>ug</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the gravitational potential energy in joules of an object based on its mass (m) and its height (h) with respect to a chosen initial height. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Mass of the body in kilograms. </td></tr>
+    <tr><td class="paramname">h</td><td>Height in meters. </td></tr>
+    <tr><td class="paramname">ug</td><td>Pointer to the output gravitational potential energy in joules. Will be set to NAN if the mass of the body is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gae3150533d5d9e72e547a5a5ae66c8df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae3150533d5d9e72e547a5a5ae66c8df8">&#9670;&nbsp;</a></span>zsl_phy_ener_kin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_kin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>ke</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the kinetic energy of a moving object based on its mass (m) and velocity (v). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Velocity in meters per second. </td></tr>
+    <tr><td class="paramname">m</td><td>Mass of the object in kilograms. </td></tr>
+    <tr><td class="paramname">ke</td><td>Pointer to the output kinetic energy in joules. Will be set to NAN if the mass is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8ee27b750d717f36ccfa3b1ab2277703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8ee27b750d717f36ccfa3b1ab2277703">&#9670;&nbsp;</a></span>zsl_phy_ener_mec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_mec </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ke</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>rke</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ug</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>me</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the total mechanical energy of a system by adding kinetic energy (linear and angular) and potential energy (gravitational and elastic). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ke</td><td>Linear kinetic energy (AKA half of the mass times velocity squared) in joules. </td></tr>
+    <tr><td class="paramname">rke</td><td>Angular kinetic energy (AKA half of the moment of inertia times angular velocity squared) in joules. </td></tr>
+    <tr><td class="paramname">ug</td><td>Gravitational potential energy in joules. </td></tr>
+    <tr><td class="paramname">ue</td><td>Elastic potential energy in joules. </td></tr>
+    <tr><td class="paramname">me</td><td>Pointer to the output mechanical energy in joules.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaa3c3c96180f79d6747f915e9fd541f05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3c3c96180f79d6747f915e9fd541f05">&#9670;&nbsp;</a></span>zsl_phy_ener_photon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_photon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy in electron volts of a photon based on it's frequency in hertz. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Frequency of the photon in hertz. </td></tr>
+    <tr><td class="paramname">e</td><td>Pointer to the output energy in electron volts. Will be set to NAN if frequency is less than 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gad5786c3596e3e3dd9b8094c56256595b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad5786c3596e3e3dd9b8094c56256595b">&#9670;&nbsp;</a></span>zsl_phy_ener_photon2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_photon2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>lambda</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy in electron volts of a photon based on it's wavelength in ???. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lambda</td><td>Wavelength of the photon in ??? </td></tr>
+    <tr><td class="paramname">e</td><td>Pointer to the output energy in electron volts. Will be set to NAN if wavelength is less than or equal to 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaab6cbaa141e7129c24cd4ff68d506278"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab6cbaa141e7129c24cd4ff68d506278">&#9670;&nbsp;</a></span>zsl_phy_ener_power()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_power </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ener</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>power</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the power by dividing energy or work by time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ener</td><td>Energy or work supplied in joules. </td></tr>
+    <tr><td class="paramname">time</td><td>Time in seconds.. </td></tr>
+    <tr><td class="paramname">power</td><td>Pointer to the output power in watts. Will be set to NAN if the time is zero or negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaa00173a09eee23499ef5c5d2aa777dd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa00173a09eee23499ef5c5d2aa777dd6">&#9670;&nbsp;</a></span>zsl_phy_ener_rot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ener_rot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>omega</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>rke</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the angular kinetic energy of a rotating object based on its angular velocity (omega) and moment of inertia (i). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">omega</td><td>Angular velocity in radians per second. </td></tr>
+    <tr><td class="paramname">i</td><td>Moment of inertia in kilograms and meters squared. </td></tr>
+    <tr><td class="paramname">rke</td><td>Pointer to the output angular kinetic energy in joules. Will be set to NAN if the moment of inertia of the object is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

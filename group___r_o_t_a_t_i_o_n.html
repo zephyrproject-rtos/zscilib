@@ -111,7 +111,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaadd3dd5a83203c7173263225f8f83a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the module of the acceleration tangent to the circular trajectory of an object under circular motion, based on its angular acceleration (a) and the radius of its trajectory (r).  <a href="#gaadd3dd5a83203c7173263225f8f83a9a">More...</a><br /></td></tr>
 <tr class="separator:gaadd3dd5a83203c7173263225f8f83a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3366649c9dd97670e11491bc295ef329"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_o_t_a_t_i_o_n.html#ga3366649c9dd97670e11491bc295ef329">zsl_phy_rot_ener</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> omega, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *rke)</td></tr>
-<tr class="memdesc:ga3366649c9dd97670e11491bc295ef329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the rotational kinetic energy in joules of an object under circular motion based on its angular velocity (omega) and its moment of inertia (i).  <a href="#ga3366649c9dd97670e11491bc295ef329">More...</a><br /></td></tr>
+<tr class="memdesc:ga3366649c9dd97670e11491bc295ef329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the angular kinetic energy in joules of an object under circular motion based on its angular velocity (omega) and its moment of inertia (i).  <a href="#ga3366649c9dd97670e11491bc295ef329">More...</a><br /></td></tr>
 <tr class="separator:ga3366649c9dd97670e11491bc295ef329"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad63b4d65d3ac45f9992a11d764ff3c30"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_o_t_a_t_i_o_n.html#gad63b4d65d3ac45f9992a11d764ff3c30">zsl_phy_rot_period</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> omega, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *t)</td></tr>
 <tr class="memdesc:gad63b4d65d3ac45f9992a11d764ff3c30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the period in seconds of an object under circular motion given its angular velocity (omega).  <a href="#gad63b4d65d3ac45f9992a11d764ff3c30">More...</a><br /></td></tr>
@@ -319,7 +319,7 @@ Functions</h2></td></tr>
 <p>Calculates the average angular velocity in radians per second of an object under circular motion based on the time and the angle it has run (phy). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">phy</td><td>Angle run by the object in radians. </td></tr>
+    <tr><td class="paramname">phi</td><td>Angle run by the object in radians. </td></tr>
     <tr><td class="paramname">time</td><td>Time in seconds. </td></tr>
     <tr><td class="paramname">omega</td><td>Pointer to the output average angular velocity in radians per second. Will be set to NAN if the time is negative or zero.</td></tr>
   </table>
@@ -496,12 +496,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates the rotational kinetic energy in joules of an object under circular motion based on its angular velocity (omega) and its moment of inertia (i). </p>
+<p>Calculates the angular kinetic energy in joules of an object under circular motion based on its angular velocity (omega) and its moment of inertia (i). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">omega</td><td>Angular velocity in radians per second. </td></tr>
-    <tr><td class="paramname">i</td><td>Moment of inertia of the object in kilograms times meters squared. </td></tr>
-    <tr><td class="paramname">rke</td><td>Pointer to the output rotational kinetic energy in joules. Will be set to NAN if the moment of inertia is negative.</td></tr>
+    <tr><td class="paramname">i</td><td>Moment of inertia of the object in kilograms and meters squared. </td></tr>
+    <tr><td class="paramname">rke</td><td>Pointer to the output angular kinetic energy in joules. Will be set to NAN if the moment of inertia is negative.</td></tr>
   </table>
   </dd>
 </dl>
@@ -641,7 +641,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">oi</td><td>Initial angular velocity in radians per second. </td></tr>
-    <tr><td class="paramname">phy</td><td>Angle run by the object in radians. </td></tr>
+    <tr><td class="paramname">phi</td><td>Angle run by the object in radians. </td></tr>
     <tr><td class="paramname">a</td><td>Angular acceleration in radians per second squared. </td></tr>
     <tr><td class="paramname">of</td><td>Pointer to the output final angular velocity in radians per second. Will be set to NAN if the angular velocity takes a complex value.</td></tr>
   </table>
@@ -861,7 +861,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">phi</td><td>Total change in angle travelled by the object in radians. </td></tr>
-    <tr><td class="paramname">turn</td><td>Pointer to the output number of turns.</td></tr>
+    <tr><td class="paramname">turn</td><td>Pointer to the output number of rotations.</td></tr>
   </table>
   </dd>
 </dl>

@@ -14,6 +14,8 @@ var searchData=
   ['zsl_5fexp',['ZSL_EXP',['../zsl_8h.html#a0c0b7373cd4a215db2dc3c569dfe857c',1,'zsl.h']]],
   ['zsl_5ffloor',['ZSL_FLOOR',['../zsl_8h.html#aba67f9a4a83aa37496c9474ab478c391',1,'zsl.h']]],
   ['zsl_5fgrav_5fearth',['ZSL_GRAV_EARTH',['../consts_8h.html#abe189de086d88eac4aa7ab559ba954fa',1,'consts.h']]],
+  ['zsl_5fideal_5fgas_5fconst',['ZSL_IDEAL_GAS_CONST',['../consts_8h.html#a5c91afe30d64e4f3dc22eaeb54b2e11c',1,'consts.h']]],
+  ['zsl_5flight_5fspeed',['ZSL_LIGHT_SPEED',['../consts_8h.html#a974c67031362972f8291f1d93f0ad991',1,'consts.h']]],
   ['zsl_5flog',['ZSL_LOG',['../zsl_8h.html#ac748cd2446f76c151aa52e00603cccd3',1,'zsl.h']]],
   ['zsl_5flog10',['ZSL_LOG10',['../zsl_8h.html#a83ec21a4253e378d7f7e462a5a6981db',1,'zsl.h']]],
   ['zsl_5fmax',['ZSL_MAX',['../zsl_8h.html#aae4b96c9e987d9164e3de6f24ead8079',1,'zsl.h']]],

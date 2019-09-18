@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Electric<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,370 @@ Files</h2></td></tr>
 <tr class="memitem:electric_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="electric_8h.html">electric.h</a></td></tr>
 <tr class="memdesc:electric_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for electrics in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga777f99dcb469de8d9c614d147b895ded"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#ga777f99dcb469de8d9c614d147b895ded">zsl_phy_elec_charge_dens</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *d)</td></tr>
+<tr class="memdesc:ga777f99dcb469de8d9c614d147b895ded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the uniform charge density of an charged body based on its charge and its volume.  <a href="#ga777f99dcb469de8d9c614d147b895ded">More...</a><br /></td></tr>
+<tr class="separator:ga777f99dcb469de8d9c614d147b895ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4b7bba32e7179b4f284cc880f12e15f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#gad4b7bba32e7179b4f284cc880f12e15f">zsl_phy_elec_force</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:gad4b7bba32e7179b4f284cc880f12e15f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric force in newtons between two charged bodies based on their charges and the distance between them.  <a href="#gad4b7bba32e7179b4f284cc880f12e15f">More...</a><br /></td></tr>
+<tr class="separator:gad4b7bba32e7179b4f284cc880f12e15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga921019d6685ad5df2dee47b3c793ff7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#ga921019d6685ad5df2dee47b3c793ff7e">zsl_phy_elec_force2</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> e, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:ga921019d6685ad5df2dee47b3c793ff7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric force in newtons that a charged body experiences when it enters an electric field.  <a href="#ga921019d6685ad5df2dee47b3c793ff7e">More...</a><br /></td></tr>
+<tr class="separator:ga921019d6685ad5df2dee47b3c793ff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8166ba32ba3ae353dbd7b24732eda93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#gac8166ba32ba3ae353dbd7b24732eda93">zsl_phy_elec_field</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *e)</td></tr>
+<tr class="memdesc:gac8166ba32ba3ae353dbd7b24732eda93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric field created by a charged body anywhere in space.  <a href="#gac8166ba32ba3ae353dbd7b24732eda93">More...</a><br /></td></tr>
+<tr class="separator:gac8166ba32ba3ae353dbd7b24732eda93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab08aabff8d5f29f0bd21320effe798da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#gab08aabff8d5f29f0bd21320effe798da">zsl_phy_elec_pot_ener</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *u)</td></tr>
+<tr class="memdesc:gab08aabff8d5f29f0bd21320effe798da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric potential energy in joules of two charged bodies based on their charges and the distance between them.  <a href="#gab08aabff8d5f29f0bd21320effe798da">More...</a><br /></td></tr>
+<tr class="separator:gab08aabff8d5f29f0bd21320effe798da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga324e33a6caa980ab582a93ca54f54767"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#ga324e33a6caa980ab582a93ca54f54767">zsl_phy_elec_potential</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v)</td></tr>
+<tr class="memdesc:ga324e33a6caa980ab582a93ca54f54767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the Coulomb's potential of a charged body anywhere in space.  <a href="#ga324e33a6caa980ab582a93ca54f54767">More...</a><br /></td></tr>
+<tr class="separator:ga324e33a6caa980ab582a93ca54f54767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02648a51e685eb5143c0608c710a8105"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c.html#ga02648a51e685eb5143c0608c710a8105">zsl_phy_elec_flux</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> e, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *fl)</td></tr>
+<tr class="memdesc:ga02648a51e685eb5143c0608c710a8105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric flux that flows across a surface based on the area (a), the electric field (b) and the angle they form.  <a href="#ga02648a51e685eb5143c0608c710a8105">More...</a><br /></td></tr>
+<tr class="separator:ga02648a51e685eb5143c0608c710a8105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Electric functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga777f99dcb469de8d9c614d147b895ded"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga777f99dcb469de8d9c614d147b895ded">&#9670;&nbsp;</a></span>zsl_phy_elec_charge_dens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_charge_dens </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the uniform charge density of an charged body based on its charge and its volume. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the body in coulombs. </td></tr>
+    <tr><td class="paramname">v</td><td>Volume of the body in meters cubed. </td></tr>
+    <tr><td class="paramname">d</td><td>Pointer to the output uniform charge density in coulombs per meter cubed. Will be set to NAN if the volume is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac8166ba32ba3ae353dbd7b24732eda93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac8166ba32ba3ae353dbd7b24732eda93">&#9670;&nbsp;</a></span>zsl_phy_elec_field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_field </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric field created by a charged body anywhere in space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the body in coulombs. </td></tr>
+    <tr><td class="paramname">r</td><td>Distance to the body in meters. </td></tr>
+    <tr><td class="paramname">e</td><td>Pointer to the output electric field in newtons per coulomb. Will be set to NAN if the distance is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga02648a51e685eb5143c0608c710a8105"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga02648a51e685eb5143c0608c710a8105">&#9670;&nbsp;</a></span>zsl_phy_elec_flux()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_flux </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>fl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric flux that flows across a surface based on the area (a), the electric field (b) and the angle they form. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Module of the electric field vector in newtons per coulomb. </td></tr>
+    <tr><td class="paramname">a</td><td>Surface in meters squared. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the vector normal to the surface and the electric field vector in radians. </td></tr>
+    <tr><td class="paramname">fl</td><td>Pointer to the output electric flux in newtons and meters squared per coulomb. Will be set to NAN if the area or the electric field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gad4b7bba32e7179b4f284cc880f12e15f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4b7bba32e7179b4f284cc880f12e15f">&#9670;&nbsp;</a></span>zsl_phy_elec_force()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_force </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric force in newtons between two charged bodies based on their charges and the distance between them. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q1</td><td>Charge of the first body in coulombs. </td></tr>
+    <tr><td class="paramname">q2</td><td>Charge of the second body in coulombs. </td></tr>
+    <tr><td class="paramname">r</td><td>Distance between the two bodies. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output electric force in newtons. Will be set to NAN if the distance is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga921019d6685ad5df2dee47b3c793ff7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga921019d6685ad5df2dee47b3c793ff7e">&#9670;&nbsp;</a></span>zsl_phy_elec_force2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_force2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric force in newtons that a charged body experiences when it enters an electric field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the body in coulombs. </td></tr>
+    <tr><td class="paramname">e</td><td>Electric field in newtons per coulomb. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output electric force in newtons.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gab08aabff8d5f29f0bd21320effe798da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab08aabff8d5f29f0bd21320effe798da">&#9670;&nbsp;</a></span>zsl_phy_elec_pot_ener()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_pot_ener </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric potential energy in joules of two charged bodies based on their charges and the distance between them. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q1</td><td>Charge of the first body in coulombs. </td></tr>
+    <tr><td class="paramname">q2</td><td>Charge of the second body in coulombs. </td></tr>
+    <tr><td class="paramname">r</td><td>Distance between the two bodies. </td></tr>
+    <tr><td class="paramname">u</td><td>Pointer to the output potential energy in joules. Will be set to NAN if the distance is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga324e33a6caa980ab582a93ca54f54767"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga324e33a6caa980ab582a93ca54f54767">&#9670;&nbsp;</a></span>zsl_phy_elec_potential()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_elec_potential </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the Coulomb's potential of a charged body anywhere in space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the body in coulombs. </td></tr>
+    <tr><td class="paramname">r</td><td>Distance to the body in meters. </td></tr>
+    <tr><td class="paramname">v</td><td>Pointer to the output potential in volts. Will be set to NAN if the distance is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

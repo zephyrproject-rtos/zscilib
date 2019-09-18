@@ -65,6 +65,8 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">gases.h File Reference<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a> &raquo; <a class="el" href="group___g_a_s_e_s.html">Gases</a></div></div>  </div>
 </div><!--header-->
@@ -75,6 +77,22 @@ $(function() {
 <div class="textblock"><code>#include &lt;<a class="el" href="zsl_8h_source.html">zsl/zsl.h</a>&gt;</code><br />
 </div>
 <p><a href="gases_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga655e8d229913fa969e6e459fc075dbe6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#ga655e8d229913fa969e6e459fc075dbe6">zsl_phy_gas_av_vel</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v)</td></tr>
+<tr class="memdesc:ga655e8d229913fa969e6e459fc075dbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the average velocity of a gas molecule based on the mass of gas (m), its temperature (t) and the number of moles of gas (n).  <a href="group___g_a_s_e_s.html#ga655e8d229913fa969e6e459fc075dbe6">More...</a><br /></td></tr>
+<tr class="separator:ga655e8d229913fa969e6e459fc075dbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadddf0f278d52c6269151e198f31160b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#gadddf0f278d52c6269151e198f31160b3">zsl_phy_gas_press</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p)</td></tr>
+<tr class="memdesc:gadddf0f278d52c6269151e198f31160b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the pressure of an ideal gas based on the number of moles, the temperature and the volume of gas.  <a href="group___g_a_s_e_s.html#gadddf0f278d52c6269151e198f31160b3">More...</a><br /></td></tr>
+<tr class="separator:gadddf0f278d52c6269151e198f31160b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb4e7fe2f0310e12ce289121a6368e04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#gadb4e7fe2f0310e12ce289121a6368e04">zsl_phy_gas_boyle</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> pi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> pf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vf)</td></tr>
+<tr class="memdesc:gadb4e7fe2f0310e12ce289121a6368e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the initial and final pressure, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing the temperature hasn't changed through the process.  <a href="group___g_a_s_e_s.html#gadb4e7fe2f0310e12ce289121a6368e04">More...</a><br /></td></tr>
+<tr class="separator:gadb4e7fe2f0310e12ce289121a6368e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30b852c320f8b79a960dff7f8bc22410"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#ga30b852c320f8b79a960dff7f8bc22410">zsl_phy_gas_charles_lussac</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ti, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> tf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vf)</td></tr>
+<tr class="memdesc:ga30b852c320f8b79a960dff7f8bc22410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the initial and final temperature, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing its pressure hasn't changed through the process.  <a href="group___g_a_s_e_s.html#ga30b852c320f8b79a960dff7f8bc22410">More...</a><br /></td></tr>
+<tr class="separator:ga30b852c320f8b79a960dff7f8bc22410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>API header file for gases in zscilib. </p>
 <p>This file contains the zscilib gases APIs </p>

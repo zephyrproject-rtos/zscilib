@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Optics<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,349 @@ Files</h2></td></tr>
 <tr class="memitem:optics_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="optics_8h.html">optics.h</a></td></tr>
 <tr class="memdesc:optics_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for optics in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga44bde26478aa6389887cc668da1d59b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#ga44bde26478aa6389887cc668da1d59b9">zsl_phy_opt_refrac_index</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *n)</td></tr>
+<tr class="memdesc:ga44bde26478aa6389887cc668da1d59b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates index of refraction of a medium based on the velocity of light in the medium.  <a href="#ga44bde26478aa6389887cc668da1d59b9">More...</a><br /></td></tr>
+<tr class="separator:ga44bde26478aa6389887cc668da1d59b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8827930bb1e6b4c8457c361aef60ef4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#gae8827930bb1e6b4c8457c361aef60ef4">zsl_phy_opt_snell</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> o1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *o2)</td></tr>
+<tr class="memdesc:gae8827930bb1e6b4c8457c361aef60ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the angle of refraction of a light beam changing the medium of propagation based on the incident angle and the index of refraction of both mediums.  <a href="#gae8827930bb1e6b4c8457c361aef60ef4">More...</a><br /></td></tr>
+<tr class="separator:gae8827930bb1e6b4c8457c361aef60ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee43166abf667e749adf46ba1dd9fa68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#gaee43166abf667e749adf46ba1dd9fa68">zsl_phy_opt_focus</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> sr, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> si, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:gaee43166abf667e749adf46ba1dd9fa68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the distance of the focus of a curved mirror based on the position of the real (sr) and imaginary (si) images.  <a href="#gaee43166abf667e749adf46ba1dd9fa68">More...</a><br /></td></tr>
+<tr class="separator:gaee43166abf667e749adf46ba1dd9fa68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25c84347c39f6a7263dc86291527cfdd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#ga25c84347c39f6a7263dc86291527cfdd">zsl_phy_opt_critic_angle</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *oc)</td></tr>
+<tr class="memdesc:ga25c84347c39f6a7263dc86291527cfdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the critical angle of incision from which the refraction effect does not occur.  <a href="#ga25c84347c39f6a7263dc86291527cfdd">More...</a><br /></td></tr>
+<tr class="separator:ga25c84347c39f6a7263dc86291527cfdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1c3e4dcfd588cd944699cfe32c81b95"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#gae1c3e4dcfd588cd944699cfe32c81b95">zsl_phy_opt_power</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> f, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p)</td></tr>
+<tr class="memdesc:gae1c3e4dcfd588cd944699cfe32c81b95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the power of a lens based on its focal length.  <a href="#gae1c3e4dcfd588cd944699cfe32c81b95">More...</a><br /></td></tr>
+<tr class="separator:gae1c3e4dcfd588cd944699cfe32c81b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec8ad369168f2643ecd806a86a44e2b2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#gaec8ad369168f2643ecd806a86a44e2b2">zsl_phy_opt_magn</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> y1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> y2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *m)</td></tr>
+<tr class="memdesc:gaec8ad369168f2643ecd806a86a44e2b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the magnification of a lens based on the real length of an object and its apparent lenght through the lens.  <a href="#gaec8ad369168f2643ecd806a86a44e2b2">More...</a><br /></td></tr>
+<tr class="separator:gaec8ad369168f2643ecd806a86a44e2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb8da87bf9ea2cd1b7bc44c552bfeaa6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_p_t_i_c_s.html#gadb8da87bf9ea2cd1b7bc44c552bfeaa6">zsl_phy_opt_dif</a> (<a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a> n, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> lambda, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> o, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *d)</td></tr>
+<tr class="memdesc:gadb8da87bf9ea2cd1b7bc44c552bfeaa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the distance between two objects when a light beam of wavelenght comparable to the distance passes through them and difracts producing spectral lines.  <a href="#gadb8da87bf9ea2cd1b7bc44c552bfeaa6">More...</a><br /></td></tr>
+<tr class="separator:gadb8da87bf9ea2cd1b7bc44c552bfeaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Optics functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga25c84347c39f6a7263dc86291527cfdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga25c84347c39f6a7263dc86291527cfdd">&#9670;&nbsp;</a></span>zsl_phy_opt_critic_angle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_critic_angle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>oc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the critical angle of incision from which the refraction effect does not occur. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n1</td><td>Index of refraction of the first medium. </td></tr>
+    <tr><td class="paramname">n2</td><td>Index of refraction of the second medium. </td></tr>
+    <tr><td class="paramname">oc</td><td>Pointer to the output critical angle in radians. Will be set to NAN if any of the indexes is negative or if n2 &gt; n1.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gadb8da87bf9ea2cd1b7bc44c552bfeaa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb8da87bf9ea2cd1b7bc44c552bfeaa6">&#9670;&nbsp;</a></span>zsl_phy_opt_dif()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_dif </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a>&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>lambda</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>o</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the distance between two objects when a light beam of wavelenght comparable to the distance passes through them and difracts producing spectral lines. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Number of the spectral line. </td></tr>
+    <tr><td class="paramname">lambda</td><td>Wavelenght of the light beam in nanometers. </td></tr>
+    <tr><td class="paramname">o</td><td>Angle between the center of the distance and the n-th spectral line in radians. </td></tr>
+    <tr><td class="paramname">d</td><td>Pointer to the output distance in nanometers. Will be set to NAN if either 'n', 'lambda' or sin(o) are negative or if sin(o) = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaee43166abf667e749adf46ba1dd9fa68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaee43166abf667e749adf46ba1dd9fa68">&#9670;&nbsp;</a></span>zsl_phy_opt_focus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_focus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>sr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>si</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the distance of the focus of a curved mirror based on the position of the real (sr) and imaginary (si) images. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sr</td><td>Distance to the real image in meters. </td></tr>
+    <tr><td class="paramname">si</td><td>Distance to the imaginary image in meters. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output distance to the focus in meters. Will be set to NAN if the mirror is plane AKA sr + si = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaec8ad369168f2643ecd806a86a44e2b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec8ad369168f2643ecd806a86a44e2b2">&#9670;&nbsp;</a></span>zsl_phy_opt_magn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_magn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>m</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the magnification of a lens based on the real length of an object and its apparent lenght through the lens. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">y1</td><td>Real length of the object in meters. </td></tr>
+    <tr><td class="paramname">y2</td><td>Apparent length of the object in meters. </td></tr>
+    <tr><td class="paramname">m</td><td>Pointer to the output magnification value. Will be set to NAN if any of the input values is negative of if y1 = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gae1c3e4dcfd588cd944699cfe32c81b95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae1c3e4dcfd588cd944699cfe32c81b95">&#9670;&nbsp;</a></span>zsl_phy_opt_power()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_power </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the power of a lens based on its focal length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Focal length in meters. </td></tr>
+    <tr><td class="paramname">p</td><td>Pointer to the output power in 1 / meter. Will be set to NAN if f = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga44bde26478aa6389887cc668da1d59b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga44bde26478aa6389887cc668da1d59b9">&#9670;&nbsp;</a></span>zsl_phy_opt_refrac_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_refrac_index </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates index of refraction of a medium based on the velocity of light in the medium. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Velocity of light in the medium in meters per second. </td></tr>
+    <tr><td class="paramname">n</td><td>Pointer to the output index of refraction. Will be set to NAN if the velocity is negative or greater than the speed of light.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gae8827930bb1e6b4c8457c361aef60ef4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae8827930bb1e6b4c8457c361aef60ef4">&#9670;&nbsp;</a></span>zsl_phy_opt_snell()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_opt_snell </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>o1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>o2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the angle of refraction of a light beam changing the medium of propagation based on the incident angle and the index of refraction of both mediums. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n1</td><td>Index of refraction of the first medium. </td></tr>
+    <tr><td class="paramname">n2</td><td>Index of refraction of the second medium. </td></tr>
+    <tr><td class="paramname">o1</td><td>Angle of incision in radians. </td></tr>
+    <tr><td class="paramname">o2</td><td>Pointer to the output angle of refraction in radians. Will be set to NAN if any of the indexes is negative or if the light beam does not change of medium.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

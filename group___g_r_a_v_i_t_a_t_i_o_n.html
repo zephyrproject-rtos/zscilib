@@ -96,7 +96,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga945bb65937ae7998221b52bc4892f111"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the gravitational force between two objects in newtons based on their masses (m1 and m2) and the distance they are separeted (r).  <a href="#ga945bb65937ae7998221b52bc4892f111">More...</a><br /></td></tr>
 <tr class="separator:ga945bb65937ae7998221b52bc4892f111"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac904dac3092e801cba019921f5210411"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_r_a_v_i_t_a_t_i_o_n.html#gac904dac3092e801cba019921f5210411">zsl_phy_grav_pot_ener</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *u)</td></tr>
-<tr class="memdesc:gac904dac3092e801cba019921f5210411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the gravitational potential energy between two objects in joules based on their masses (m1 and m2) and the distance they are separated (r).  <a href="#gac904dac3092e801cba019921f5210411">More...</a><br /></td></tr>
+<tr class="memdesc:gac904dac3092e801cba019921f5210411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the gravitational potential energy between two objects in kilojoules based on their masses (m1 and m2) and the distance they are separated (r).  <a href="#gac904dac3092e801cba019921f5210411">More...</a><br /></td></tr>
 <tr class="separator:gac904dac3092e801cba019921f5210411"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -236,7 +236,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">m1</td><td>Mass of the first object in kilograms. </td></tr>
     <tr><td class="paramname">m2</td><td>Mass of the second object in kilograms. </td></tr>
     <tr><td class="paramname">r</td><td>Distance between the objects in meters. </td></tr>
-    <tr><td class="paramname">f</td><td>Pointer to the output force in newtons. Will be set to NAN if their distance is zero.</td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output force in newtons. Will be set to NAN if the distance is zero.</td></tr>
   </table>
   </dd>
 </dl>
@@ -379,13 +379,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates the gravitational potential energy between two objects in joules based on their masses (m1 and m2) and the distance they are separated (r). </p>
+<p>Calculates the gravitational potential energy between two objects in kilojoules based on their masses (m1 and m2) and the distance they are separated (r). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m1</td><td>Mass of the first object in kilograms. </td></tr>
     <tr><td class="paramname">m2</td><td>Mass of the second object in kilograms. </td></tr>
     <tr><td class="paramname">r</td><td>Distance between the objects in meters. </td></tr>
-    <tr><td class="paramname">u</td><td>Pointer to the output potential energy in joules. Will be set to NAN if their distance is zero.</td></tr>
+    <tr><td class="paramname">u</td><td>Pointer to the output potential energy in kilojoules. Will be set to NAN if the distance is zero.</td></tr>
   </table>
   </dd>
 </dl>

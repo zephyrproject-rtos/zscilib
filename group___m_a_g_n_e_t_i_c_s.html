@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Magnetics<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,419 @@ Files</h2></td></tr>
 <tr class="memitem:magnetics_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="magnetics_8h.html">magnetics.h</a></td></tr>
 <tr class="memdesc:magnetics_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for magnetics in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga58f7005d65ed618623ab46d04c270d2c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#ga58f7005d65ed618623ab46d04c270d2c">zsl_phy_magn_force</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:ga58f7005d65ed618623ab46d04c270d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the module of the magnetic force in newtons that experiences a charged body moving in a magnetic field.  <a href="#ga58f7005d65ed618623ab46d04c270d2c">More...</a><br /></td></tr>
+<tr class="separator:ga58f7005d65ed618623ab46d04c270d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8e3161a805425f32fac7e390dd3afcf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#gac8e3161a805425f32fac7e390dd3afcf">zsl_phy_magn_force_wire</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> l, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:gac8e3161a805425f32fac7e390dd3afcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the module of the magnetic force in newtons that experiences an electric wire.  <a href="#gac8e3161a805425f32fac7e390dd3afcf">More...</a><br /></td></tr>
+<tr class="separator:gac8e3161a805425f32fac7e390dd3afcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94abeb7a5435ebbc4a13f3e053bef6d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#ga94abeb7a5435ebbc4a13f3e053bef6d2">zsl_phy_magn_torque_loop</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *tor)</td></tr>
+<tr class="memdesc:ga94abeb7a5435ebbc4a13f3e053bef6d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the torque in newtons and meters that experiences a wire loop with intensity 'i' and area 'a' under a magnetic field 'b'.  <a href="#ga94abeb7a5435ebbc4a13f3e053bef6d2">More...</a><br /></td></tr>
+<tr class="separator:ga94abeb7a5435ebbc4a13f3e053bef6d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0876070d3d58d42b4529e1c5526492fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#ga0876070d3d58d42b4529e1c5526492fa">zsl_phy_magn_pot_dipole</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> mom, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *u)</td></tr>
+<tr class="memdesc:ga0876070d3d58d42b4529e1c5526492fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the potential energy in joules of a magnetic dipole with magnetic momentum 'mom' under a magnetic field 'b' that has been rotated an angle 'theta' from its resting position.  <a href="#ga0876070d3d58d42b4529e1c5526492fa">More...</a><br /></td></tr>
+<tr class="separator:ga0876070d3d58d42b4529e1c5526492fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4af3c617665caef89eccdb8b47a9e84"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#gaf4af3c617665caef89eccdb8b47a9e84">zsl_phy_magn_orb_radius</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *r)</td></tr>
+<tr class="memdesc:gaf4af3c617665caef89eccdb8b47a9e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the radius of the circular trajectory a charged object descrives when entering a magnetic field.  <a href="#gaf4af3c617665caef89eccdb8b47a9e84">More...</a><br /></td></tr>
+<tr class="separator:gaf4af3c617665caef89eccdb8b47a9e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga606a8a7ddfb4f03443f0776d64a40d9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#ga606a8a7ddfb4f03443f0776d64a40d9a">zsl_phy_magn_flux</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> b, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> theta, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *fl)</td></tr>
+<tr class="memdesc:ga606a8a7ddfb4f03443f0776d64a40d9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the magnetic flux in webers that flows across a surface based on the area (a), the magnetic field (b) and the angle they form.  <a href="#ga606a8a7ddfb4f03443f0776d64a40d9a">More...</a><br /></td></tr>
+<tr class="separator:ga606a8a7ddfb4f03443f0776d64a40d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5be26ba9d658ae8165e0772ddbce6ce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_g_n_e_t_i_c_s.html#gac5be26ba9d658ae8165e0772ddbce6ce">zsl_phy_magn_mom</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *mom)</td></tr>
+<tr class="memdesc:gac5be26ba9d658ae8165e0772ddbce6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the magnetic momentum of a wire loop in amperes and meters squared based on its intensity (i) and surface (a).  <a href="#gac5be26ba9d658ae8165e0772ddbce6ce">More...</a><br /></td></tr>
+<tr class="separator:gac5be26ba9d658ae8165e0772ddbce6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Magnetics functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga606a8a7ddfb4f03443f0776d64a40d9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga606a8a7ddfb4f03443f0776d64a40d9a">&#9670;&nbsp;</a></span>zsl_phy_magn_flux()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_flux </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>fl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the magnetic flux in webers that flows across a surface based on the area (a), the magnetic field (b) and the angle they form. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Surface in meters squared. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the vector normal to the surface and the magnetic field vector in radians. </td></tr>
+    <tr><td class="paramname">fl</td><td>Pointer to the output magnetic flux in webers. Will be set to NAN if either the area or the magnetic field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga58f7005d65ed618623ab46d04c270d2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58f7005d65ed618623ab46d04c270d2c">&#9670;&nbsp;</a></span>zsl_phy_magn_force()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_force </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the module of the magnetic force in newtons that experiences a charged body moving in a magnetic field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the body in coulombs. </td></tr>
+    <tr><td class="paramname">v</td><td>Module of the velocity vector in meters per second. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the velocity and magnetic field vectors in radians. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output magnetic force in newtons. Will be set to NAN if either the velocity or the magnetic field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac8e3161a805425f32fac7e390dd3afcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac8e3161a805425f32fac7e390dd3afcf">&#9670;&nbsp;</a></span>zsl_phy_magn_force_wire()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_force_wire </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the module of the magnetic force in newtons that experiences an electric wire. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Intensity running through the wire in amperes. </td></tr>
+    <tr><td class="paramname">l</td><td>Lenght of the wire in meters. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the vector parallel to the wire and the magnetic field vector in radians. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output magnetic force in newtons. Will be set to NAN if either the length or the magnetic field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gac5be26ba9d658ae8165e0772ddbce6ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac5be26ba9d658ae8165e0772ddbce6ce">&#9670;&nbsp;</a></span>zsl_phy_magn_mom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_mom </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>mom</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the magnetic momentum of a wire loop in amperes and meters squared based on its intensity (i) and surface (a). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Intensity running through the wire loop in amperes. </td></tr>
+    <tr><td class="paramname">a</td><td>Surface of the loop in meters squared. </td></tr>
+    <tr><td class="paramname">mom</td><td>Pointer to the output magnetic momentum in amperes and meters squared. Will be set to NAN if the area is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaf4af3c617665caef89eccdb8b47a9e84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf4af3c617665caef89eccdb8b47a9e84">&#9670;&nbsp;</a></span>zsl_phy_magn_orb_radius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_orb_radius </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>r</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the radius of the circular trajectory a charged object descrives when entering a magnetic field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>Charge of the object in coulombs. </td></tr>
+    <tr><td class="paramname">v</td><td>Module of the velocity vector in meters per second. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">m</td><td>Mas of the object in kilograms. </td></tr>
+    <tr><td class="paramname">r</td><td>Pointer to the output radius in meters. Will be set to NAN if either the mass or the radius itself are negative values, or if the charge or the magnetic field are zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga0876070d3d58d42b4529e1c5526492fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0876070d3d58d42b4529e1c5526492fa">&#9670;&nbsp;</a></span>zsl_phy_magn_pot_dipole()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_pot_dipole </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>mom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the potential energy in joules of a magnetic dipole with magnetic momentum 'mom' under a magnetic field 'b' that has been rotated an angle 'theta' from its resting position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mom</td><td>Module of the magnetic momentum of the dipole in amperes and meters squared. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the magnetic momentum and the magnetic field vectors in radians. </td></tr>
+    <tr><td class="paramname">u</td><td>Pointer to the output potential energy in joules. Will be set to NAN if either the magnetic momentum or the magnetic field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga94abeb7a5435ebbc4a13f3e053bef6d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga94abeb7a5435ebbc4a13f3e053bef6d2">&#9670;&nbsp;</a></span>zsl_phy_magn_torque_loop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_magn_torque_loop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>tor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the torque in newtons and meters that experiences a wire loop with intensity 'i' and area 'a' under a magnetic field 'b'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Intensity running through the wire loop in amperes. </td></tr>
+    <tr><td class="paramname">a</td><td>Surface of the loop in meters squared. </td></tr>
+    <tr><td class="paramname">b</td><td>Module of the magnetic field vector in teslas. </td></tr>
+    <tr><td class="paramname">theta</td><td>Angle between the vector normal to the surface of the loop and the magnetic field vector in radians. </td></tr>
+    <tr><td class="paramname">tor</td><td>Pointer to the output torque in newtons and meters. Will be set to NAN if either the area or the magnetic field are negative values.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

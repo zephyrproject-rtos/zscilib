@@ -86,6 +86,33 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6395f2c1c546a8ed483f03a4d66b218d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga6395f2c1c546a8ed483f03a4d66b218d">zsl_phy_ecmp_capac_ad</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> d, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *c)</td></tr>
 <tr class="memdesc:ga6395f2c1c546a8ed483f03a4d66b218d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates capacitance in farads based on the permitivity of freespace multiplied by area (a) and divided by distance (d). i.e.: C = E (A / D) where E = 8.85 x 10^-12 farad per meter (F/m).  <a href="#ga6395f2c1c546a8ed483f03a4d66b218d">More...</a><br /></td></tr>
 <tr class="separator:ga6395f2c1c546a8ed483f03a4d66b218d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga060261f51f31a76df4bc3489425271a7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga060261f51f31a76df4bc3489425271a7">zsl_phy_ecmp_ener_capac</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> c, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *u)</td></tr>
+<tr class="memdesc:ga060261f51f31a76df4bc3489425271a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy in joules of a capacitor of capacitance 'c' and voltage 'v'.  <a href="#ga060261f51f31a76df4bc3489425271a7">More...</a><br /></td></tr>
+<tr class="separator:ga060261f51f31a76df4bc3489425271a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19323de31ffdf47abf94913769cf6f6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga19323de31ffdf47abf94913769cf6f6c">zsl_phy_ecmp_ener_induc</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> l, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *u)</td></tr>
+<tr class="memdesc:ga19323de31ffdf47abf94913769cf6f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the energy in joules of an inductor of inductance 'l' and electric current 'i'.  <a href="#ga19323de31ffdf47abf94913769cf6f6c">More...</a><br /></td></tr>
+<tr class="separator:ga19323de31ffdf47abf94913769cf6f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf83dfdf2138c5336d4da95f0de7322fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#gaf83dfdf2138c5336d4da95f0de7322fd">zsl_phy_ecmp_trans</a> (<a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a> t1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v1, <a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a> t2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v2)</td></tr>
+<tr class="memdesc:gaf83dfdf2138c5336d4da95f0de7322fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the output voltage in volts in a two-coil based transformer given the number of turns on each coil and the input voltage.  <a href="#gaf83dfdf2138c5336d4da95f0de7322fd">More...</a><br /></td></tr>
+<tr class="separator:gaf83dfdf2138c5336d4da95f0de7322fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f870313e19e26313d49ee3be62addfa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga8f870313e19e26313d49ee3be62addfa">zsl_phy_ecmp_rlc_volt</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vr, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vl, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vc, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v)</td></tr>
+<tr class="memdesc:ga8f870313e19e26313d49ee3be62addfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the total voltage of a RCL circuit based on the voltage in the resistance (vr), in the inductor (vl) and in the capacitor (vc).  <a href="#ga8f870313e19e26313d49ee3be62addfa">More...</a><br /></td></tr>
+<tr class="separator:ga8f870313e19e26313d49ee3be62addfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7088223b9084afba535ecfe7c7123de6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga7088223b9084afba535ecfe7c7123de6">zsl_phy_ecmp_rc_charg_i</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> c, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *i)</td></tr>
+<tr class="memdesc:ga7088223b9084afba535ecfe7c7123de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric current of a capacitor in a RC circuit during its charging phase.  <a href="#ga7088223b9084afba535ecfe7c7123de6">More...</a><br /></td></tr>
+<tr class="separator:ga7088223b9084afba535ecfe7c7123de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe8336b1962482249d86d85ed395c298"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#gabe8336b1962482249d86d85ed395c298">zsl_phy_ecmp_rc_charg_q</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> c, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *q)</td></tr>
+<tr class="memdesc:gabe8336b1962482249d86d85ed395c298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric charge in coulombs of a capacitor in a RC circuit during its charging phase.  <a href="#gabe8336b1962482249d86d85ed395c298">More...</a><br /></td></tr>
+<tr class="separator:gabe8336b1962482249d86d85ed395c298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bfc536a37d48f6b530ecfbe593117a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga0bfc536a37d48f6b530ecfbe593117a8">zsl_phy_ecmp_rc_discharg_i</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> c, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *i)</td></tr>
+<tr class="memdesc:ga0bfc536a37d48f6b530ecfbe593117a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric current of a capacitor in a RC circuit during its discharging phase.  <a href="#ga0bfc536a37d48f6b530ecfbe593117a8">More...</a><br /></td></tr>
+<tr class="separator:ga0bfc536a37d48f6b530ecfbe593117a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d0504f700f1d85778fe4d1818a45a93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga2d0504f700f1d85778fe4d1818a45a93">zsl_phy_ecmp_rc_discharg_q</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> c, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> q0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *q)</td></tr>
+<tr class="memdesc:ga2d0504f700f1d85778fe4d1818a45a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric charge in coulombs of a capacitor in a RC circuit during its discharging phase.  <a href="#ga2d0504f700f1d85778fe4d1818a45a93">More...</a><br /></td></tr>
+<tr class="separator:ga2d0504f700f1d85778fe4d1818a45a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga576a911b7b4c20aa752814d4969195f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_e_c_t_r_i_c_a_l___c_o_m_p_s.html#ga576a911b7b4c20aa752814d4969195f6">zsl_phy_ecmp_rl_current</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> r, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> l, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> i0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *i)</td></tr>
+<tr class="memdesc:ga576a911b7b4c20aa752814d4969195f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the electric current in amperes of a RL circuit in time.  <a href="#ga576a911b7b4c20aa752814d4969195f6">More...</a><br /></td></tr>
+<tr class="separator:ga576a911b7b4c20aa752814d4969195f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Electrical component functions. </p>
@@ -128,7 +155,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">a</td><td>Area in square meters. </td></tr>
     <tr><td class="paramname">d</td><td>Distance in meters. </td></tr>
-    <tr><td class="paramname">c</td><td>Pointer to the output capacitance in farad. Will be set to NAN if d = 0.</td></tr>
+    <tr><td class="paramname">c</td><td>Pointer to the output capacitance in farads. Will be set to NAN if d = 0.</td></tr>
   </table>
   </dd>
 </dl>
@@ -173,7 +200,496 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">q</td><td>Charge in coulombs. </td></tr>
     <tr><td class="paramname">v</td><td>Voltage in volts. </td></tr>
-    <tr><td class="paramname">c</td><td>Pointer to the output capacitance in farad. Will be set to NAN if v = 0.</td></tr>
+    <tr><td class="paramname">c</td><td>Pointer to the output capacitance in farads. Will be set to NAN if v = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga060261f51f31a76df4bc3489425271a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga060261f51f31a76df4bc3489425271a7">&#9670;&nbsp;</a></span>zsl_phy_ecmp_ener_capac()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_ener_capac </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy in joules of a capacitor of capacitance 'c' and voltage 'v'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Capacitance in farads. </td></tr>
+    <tr><td class="paramname">v</td><td>Voltage in volts. </td></tr>
+    <tr><td class="paramname">u</td><td>Pointer to the output energy in joules.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga19323de31ffdf47abf94913769cf6f6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19323de31ffdf47abf94913769cf6f6c">&#9670;&nbsp;</a></span>zsl_phy_ecmp_ener_induc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_ener_induc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the energy in joules of an inductor of inductance 'l' and electric current 'i'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>Inductance in henrys. </td></tr>
+    <tr><td class="paramname">i</td><td>Electric current in amperes. </td></tr>
+    <tr><td class="paramname">u</td><td>Pointer to the output energy in joules.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga7088223b9084afba535ecfe7c7123de6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7088223b9084afba535ecfe7c7123de6">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rc_charg_i()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rc_charg_i </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric current of a capacitor in a RC circuit during its charging phase. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Resistance in ohms. </td></tr>
+    <tr><td class="paramname">c</td><td>Capacitance in farads. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">i0</td><td>Initial current of the capacitor in amperes. </td></tr>
+    <tr><td class="paramname">i</td><td>Pointer to the output electric current in amperes. Will be set to NAN if r * c is less or equal than zero or if the time or the initial current are negavive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gabe8336b1962482249d86d85ed395c298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabe8336b1962482249d86d85ed395c298">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rc_charg_q()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rc_charg_q </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>q</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric charge in coulombs of a capacitor in a RC circuit during its charging phase. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Resistance in ohms. </td></tr>
+    <tr><td class="paramname">c</td><td>Capacitance in farads. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">q0</td><td>Initial charge of the capacitor in coulombs. </td></tr>
+    <tr><td class="paramname">q</td><td>Pointer to the output electric charge in coulombs. Will be set to NAN if r * c is less or equal than zero or if the time or the initial charge are negavive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga0bfc536a37d48f6b530ecfbe593117a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0bfc536a37d48f6b530ecfbe593117a8">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rc_discharg_i()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rc_discharg_i </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric current of a capacitor in a RC circuit during its discharging phase. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Resistance in ohms. </td></tr>
+    <tr><td class="paramname">c</td><td>Capacitance in farads. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">i0</td><td>Initial current of the capacitor in amperes. </td></tr>
+    <tr><td class="paramname">i</td><td>Pointer to the output electric current in amperes. Will be set to NAN if r * c is less or equal than zero or if the time or the initial current are negavive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga2d0504f700f1d85778fe4d1818a45a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d0504f700f1d85778fe4d1818a45a93">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rc_discharg_q()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rc_discharg_q </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>q0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>q</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric charge in coulombs of a capacitor in a RC circuit during its discharging phase. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Resistance in ohms. </td></tr>
+    <tr><td class="paramname">c</td><td>Capacitance in farads. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">q0</td><td>Initial charge of the capacitor in coulombs. </td></tr>
+    <tr><td class="paramname">q</td><td>Pointer to the output electric charge in coulombs. Will be set to NAN if r * c is less or equal than zero or if the time or the initial charge are negavive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga576a911b7b4c20aa752814d4969195f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga576a911b7b4c20aa752814d4969195f6">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rl_current()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rl_current </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>i0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the electric current in amperes of a RL circuit in time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Resistance in ohms. </td></tr>
+    <tr><td class="paramname">l</td><td>Inductance in henrys. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">i0</td><td>Initial current of the capacitor in amperes. </td></tr>
+    <tr><td class="paramname">i</td><td>Pointer to the output electric current in amperes. Will be set to NAN the time, the inductance, the resistance or the initial current are negavive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8f870313e19e26313d49ee3be62addfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8f870313e19e26313d49ee3be62addfa">&#9670;&nbsp;</a></span>zsl_phy_ecmp_rlc_volt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_rlc_volt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the total voltage of a RCL circuit based on the voltage in the resistance (vr), in the inductor (vl) and in the capacitor (vc). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vr</td><td>Voltage in the resistance. </td></tr>
+    <tr><td class="paramname">vl</td><td>Voltage in the inductor. </td></tr>
+    <tr><td class="paramname">vc</td><td>Voltage in the capacitor. </td></tr>
+    <tr><td class="paramname">v</td><td>Pointer to the total voltage in volts.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaf83dfdf2138c5336d4da95f0de7322fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf83dfdf2138c5336d4da95f0de7322fd">&#9670;&nbsp;</a></span>zsl_phy_ecmp_trans()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_ecmp_trans </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a>&#160;</td>
+          <td class="paramname"><em>t1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#ae081489b4906f65a3cb18e9fbe9f8d23">u8_t</a>&#160;</td>
+          <td class="paramname"><em>t2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the output voltage in volts in a two-coil based transformer given the number of turns on each coil and the input voltage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t1</td><td>Number of turns of the input coil. </td></tr>
+    <tr><td class="paramname">v1</td><td>Voltage in the input coil, in volts. </td></tr>
+    <tr><td class="paramname">t2</td><td>Number of turns of the output coil. </td></tr>
+    <tr><td class="paramname">v2</td><td>Pointer to the output voltage in the output coil in volts. Will be set to NAN if any of the number of turns is negative.</td></tr>
   </table>
   </dd>
 </dl>

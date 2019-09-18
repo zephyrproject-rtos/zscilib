@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Fluids<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,432 @@ Files</h2></td></tr>
 <tr class="memitem:fluids_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluids_8h.html">fluids.h</a></td></tr>
 <tr class="memdesc:fluids_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for fluids in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga155149e6ea701a34a7db79a90ae19bb3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#ga155149e6ea701a34a7db79a90ae19bb3">zsl_phy_fluid_dens</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *d)</td></tr>
+<tr class="memdesc:ga155149e6ea701a34a7db79a90ae19bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the density of a material based on its mass and volume.  <a href="#ga155149e6ea701a34a7db79a90ae19bb3">More...</a><br /></td></tr>
+<tr class="separator:ga155149e6ea701a34a7db79a90ae19bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98c6665ad1dea840d195ed2d0ba6e98e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#ga98c6665ad1dea840d195ed2d0ba6e98e">zsl_phy_fluid_simple_press</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> f, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p)</td></tr>
+<tr class="memdesc:ga98c6665ad1dea840d195ed2d0ba6e98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the pressure in pascals based on a force (f) against a surface (a).  <a href="#ga98c6665ad1dea840d195ed2d0ba6e98e">More...</a><br /></td></tr>
+<tr class="separator:ga98c6665ad1dea840d195ed2d0ba6e98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0d4a574fcd2e9138d471235dfcf1574"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#gaa0d4a574fcd2e9138d471235dfcf1574">zsl_phy_fluid_press</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> p0, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> h, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> d, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p)</td></tr>
+<tr class="memdesc:gaa0d4a574fcd2e9138d471235dfcf1574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates pressure in pascals of a body submerged 'h' meters down the surface of a fluid, given the pressure of the fluid at its surface and its density.  <a href="#gaa0d4a574fcd2e9138d471235dfcf1574">More...</a><br /></td></tr>
+<tr class="separator:gaa0d4a574fcd2e9138d471235dfcf1574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8557ba8a3949a897f77d04cca0a73ce5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#ga8557ba8a3949a897f77d04cca0a73ce5">zsl_phy_fluid_bouyant_force</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> d, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f)</td></tr>
+<tr class="memdesc:ga8557ba8a3949a897f77d04cca0a73ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the module of the upwards force experienced by a body submerged into a fluid, AKA bouyant force.  <a href="#ga8557ba8a3949a897f77d04cca0a73ce5">More...</a><br /></td></tr>
+<tr class="separator:ga8557ba8a3949a897f77d04cca0a73ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga138ab3591ae8d5ee682658027fcabc2d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#ga138ab3591ae8d5ee682658027fcabc2d">zsl_phy_fluid_flow_rate</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v2)</td></tr>
+<tr class="memdesc:ga138ab3591ae8d5ee682658027fcabc2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two sections of a pipe with different surfaces 'a1' and 'a2' and knowing the value of the velocity of the fluid when passing through 'a1', this function calculates the velocity of the fluid in 'a2'.  <a href="#ga138ab3591ae8d5ee682658027fcabc2d">More...</a><br /></td></tr>
+<tr class="separator:ga138ab3591ae8d5ee682658027fcabc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcf1756796079b89c7acdbfacf002b6f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#gabcf1756796079b89c7acdbfacf002b6f">zsl_phy_fluid_force_prop</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> f1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *f2)</td></tr>
+<tr class="memdesc:gabcf1756796079b89c7acdbfacf002b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two sections of a pipe with different surfaces 'a1' and 'a2' and knowing the value of the force with which the fluid goes through 'a1', this function calculates the force with which the fluid goes through 'a2'.  <a href="#gabcf1756796079b89c7acdbfacf002b6f">More...</a><br /></td></tr>
+<tr class="separator:gabcf1756796079b89c7acdbfacf002b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab393f57d3da088da8a53d33131c2205d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#gab393f57d3da088da8a53d33131c2205d">zsl_phy_fluid_bernoulli</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> d, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> p1, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v2, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p2)</td></tr>
+<tr class="memdesc:gab393f57d3da088da8a53d33131c2205d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a pipe in which a fluid flows at different velocities 'v1' and 'v2' in two different sections and knowing the pressure of the fluid in the first section (p1), this function calculates the pressure of fluid in the second section.  <a href="#gab393f57d3da088da8a53d33131c2205d">More...</a><br /></td></tr>
+<tr class="separator:gab393f57d3da088da8a53d33131c2205d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf25af2f1671fd4bec47b5f649def645f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_u_i_d_s.html#gaf25af2f1671fd4bec47b5f649def645f">zsl_phy_fluid_volume_flow_rate</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vel, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v)</td></tr>
+<tr class="memdesc:gaf25af2f1671fd4bec47b5f649def645f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the volume flow rate of a flowing fluid based on its velocity (vel) in a section of surface (a).  <a href="#gaf25af2f1671fd4bec47b5f649def645f">More...</a><br /></td></tr>
+<tr class="separator:gaf25af2f1671fd4bec47b5f649def645f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Fluids functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gab393f57d3da088da8a53d33131c2205d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab393f57d3da088da8a53d33131c2205d">&#9670;&nbsp;</a></span>zsl_phy_fluid_bernoulli()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_bernoulli </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>p2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a pipe in which a fluid flows at different velocities 'v1' and 'v2' in two different sections and knowing the pressure of the fluid in the first section (p1), this function calculates the pressure of fluid in the second section. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>Density of the fluid in kilograms per meter cubed. </td></tr>
+    <tr><td class="paramname">v1</td><td>Velocity in the first section in meters per second. </td></tr>
+    <tr><td class="paramname">p1</td><td>Pressure in the first section in kilopascals. </td></tr>
+    <tr><td class="paramname">v2</td><td>Velocity in the second section in meters per second. </td></tr>
+    <tr><td class="paramname">p2</td><td>Pointer to the output pressure in kilopascals. Will be set to NAN ifany of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8557ba8a3949a897f77d04cca0a73ce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8557ba8a3949a897f77d04cca0a73ce5">&#9670;&nbsp;</a></span>zsl_phy_fluid_bouyant_force()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_bouyant_force </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the module of the upwards force experienced by a body submerged into a fluid, AKA bouyant force. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Volume of the submerged body in meters cubed. </td></tr>
+    <tr><td class="paramname">d</td><td>Density of the fluid in kilograms per meter cubed. </td></tr>
+    <tr><td class="paramname">f</td><td>Pointer to the output bouyant force in kilonewtons. Will be set to NAN if any of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga155149e6ea701a34a7db79a90ae19bb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga155149e6ea701a34a7db79a90ae19bb3">&#9670;&nbsp;</a></span>zsl_phy_fluid_dens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_dens </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the density of a material based on its mass and volume. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Mass of the material in kilograms. </td></tr>
+    <tr><td class="paramname">v</td><td>Volume of the body in meters cubed. </td></tr>
+    <tr><td class="paramname">d</td><td>Pointer to the output density in kilograms per meter cubed. Will be set to NAN if any of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga138ab3591ae8d5ee682658027fcabc2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga138ab3591ae8d5ee682658027fcabc2d">&#9670;&nbsp;</a></span>zsl_phy_fluid_flow_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_flow_rate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given two sections of a pipe with different surfaces 'a1' and 'a2' and knowing the value of the velocity of the fluid when passing through 'a1', this function calculates the velocity of the fluid in 'a2'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a1</td><td>Area of the first section of the pipe in meters squared. </td></tr>
+    <tr><td class="paramname">v1</td><td>Velocity of the fluid in 'a1' in meters per second. </td></tr>
+    <tr><td class="paramname">a2</td><td>Area of the second section of the pipe in meters squared. </td></tr>
+    <tr><td class="paramname">v2</td><td>Pointer to the output velocity in meters per second. Will be set to NAN if any of the input values is negative or if a2 = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gabcf1756796079b89c7acdbfacf002b6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabcf1756796079b89c7acdbfacf002b6f">&#9670;&nbsp;</a></span>zsl_phy_fluid_force_prop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_force_prop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>f1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>f2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given two sections of a pipe with different surfaces 'a1' and 'a2' and knowing the value of the force with which the fluid goes through 'a1', this function calculates the force with which the fluid goes through 'a2'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a1</td><td>Area of the first section of the pipe in meters squared. </td></tr>
+    <tr><td class="paramname">f1</td><td>The force with which the fluid goes through 'a1' in newtons. </td></tr>
+    <tr><td class="paramname">a2</td><td>Area of the second section of the pipe in meters squared. </td></tr>
+    <tr><td class="paramname">f2</td><td>Pointer to the output force in newtons. Will be set to NAN if any of the input values is negative or if a1 = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaa0d4a574fcd2e9138d471235dfcf1574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa0d4a574fcd2e9138d471235dfcf1574">&#9670;&nbsp;</a></span>zsl_phy_fluid_press()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_press </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>p0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates pressure in pascals of a body submerged 'h' meters down the surface of a fluid, given the pressure of the fluid at its surface and its density. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p0</td><td>Pressure on the surface of the fluid in kilopascals. </td></tr>
+    <tr><td class="paramname">h</td><td>Distance to the surface of the fluid in meters. </td></tr>
+    <tr><td class="paramname">d</td><td>Density of the fluid in kilograms per meter cubed. </td></tr>
+    <tr><td class="paramname">p</td><td>Pointer to the output pressure in kilopascals. Will be set to NAN if any of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga98c6665ad1dea840d195ed2d0ba6e98e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98c6665ad1dea840d195ed2d0ba6e98e">&#9670;&nbsp;</a></span>zsl_phy_fluid_simple_press()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_simple_press </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the pressure in pascals based on a force (f) against a surface (a). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Force in newtons. </td></tr>
+    <tr><td class="paramname">a</td><td>Area in meters squared. </td></tr>
+    <tr><td class="paramname">p</td><td>Pointer to the output pressure in pascals. Will be set to NAN if any of the input values is negative or if a = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaf25af2f1671fd4bec47b5f649def645f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf25af2f1671fd4bec47b5f649def645f">&#9670;&nbsp;</a></span>zsl_phy_fluid_volume_flow_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_fluid_volume_flow_rate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the volume flow rate of a flowing fluid based on its velocity (vel) in a section of surface (a). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vel</td><td>Velocity of the fluid in meters per second. </td></tr>
+    <tr><td class="paramname">a</td><td>Area of the section in meters squared. </td></tr>
+    <tr><td class="paramname">v</td><td>Pointer to the output volume flow rate in meters cubed per second. Will be set to NAN if any of the input values is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed properly, error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

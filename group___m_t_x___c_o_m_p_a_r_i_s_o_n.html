@@ -77,8 +77,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga9f8c743f0d3b7d0efdcbc16145a1f92b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two matrices are identical in shape and content.  <a href="#ga9f8c743f0d3b7d0efdcbc16145a1f92b">More...</a><br /></td></tr>
 <tr class="separator:ga9f8c743f0d3b7d0efdcbc16145a1f92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f281b6490db543966ec38b03195f130"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___c_o_m_p_a_r_i_s_o_n.html#ga1f281b6490db543966ec38b03195f130">zsl_mtx_is_notneg</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m)</td></tr>
-<tr class="memdesc:ga1f281b6490db543966ec38b03195f130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all elements in matrix m are &gt;= zero and non-null.  <a href="#ga1f281b6490db543966ec38b03195f130">More...</a><br /></td></tr>
+<tr class="memdesc:ga1f281b6490db543966ec38b03195f130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all elements in matrix m are &gt;= zero.  <a href="#ga1f281b6490db543966ec38b03195f130">More...</a><br /></td></tr>
 <tr class="separator:ga1f281b6490db543966ec38b03195f130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga816edeec71dd9ecf8edeb6622962e81d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___c_o_m_p_a_r_i_s_o_n.html#ga816edeec71dd9ecf8edeb6622962e81d">zsl_mtx_is_sym</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m)</td></tr>
+<tr class="memdesc:ga816edeec71dd9ecf8edeb6622962e81d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the square input matrix is symmetric.  <a href="#ga816edeec71dd9ecf8edeb6622962e81d">More...</a><br /></td></tr>
+<tr class="separator:ga816edeec71dd9ecf8edeb6622962e81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions used to compare or verify matrices. </p>
@@ -119,7 +122,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the two matrices have the same shape and values, otherwise false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01557">1557</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01726">1726</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
 </div>
 </div>
@@ -139,16 +142,47 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if all elements in matrix m are &gt;= zero and non-null. </p>
+<p>Checks if all elements in matrix m are &gt;= zero. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>The matrix to check.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the all matrix elements are zero, positive and non-null, otherwise false. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the all matrix elements are zero or positive, otherwise false. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01573">1573</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01742">1742</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+
+</div>
+</div>
+<a id="ga816edeec71dd9ecf8edeb6622962e81d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga816edeec71dd9ecf8edeb6622962e81d">&#9670;&nbsp;</a></span>zsl_mtx_is_sym()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool zsl_mtx_is_sym </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
+          <td class="paramname"><em>m</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the square input matrix is symmetric. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The matrix to check.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the matrix is symmetric, otherwise false. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01754">1754</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01267">zsl_mtx_eigenvalues()</a>.</p>
 
 </div>
 </div>

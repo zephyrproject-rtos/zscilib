@@ -109,6 +109,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga756944b115550c5798f4270b641cd1bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga756944b115550c5798f4270b641cd1bb">zsl_mtx_cols_norm</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mnorm)</td></tr>
 <tr class="memdesc:ga756944b115550c5798f4270b641cd1bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the values of every column vector in input matrix 'm' to have unitary values.  <a href="#ga756944b115550c5798f4270b641cd1bb">More...</a><br /></td></tr>
 <tr class="separator:ga756944b115550c5798f4270b641cd1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33556c879cbd3afe108506041e21a761"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga33556c879cbd3afe108506041e21a761">zsl_mtx_gram_schmidt</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mort)</td></tr>
+<tr class="memdesc:ga33556c879cbd3afe108506041e21a761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the Gram-Schmidt algorithm on the set of column vectors in matrix 'm'. This algorithm calculates a set of orthogonal vectors in the same vectorial space as the original vectors.  <a href="#ga33556c879cbd3afe108506041e21a761">More...</a><br /></td></tr>
+<tr class="separator:ga33556c879cbd3afe108506041e21a761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf5e94e0ebfd5599d84b4eba90430c54"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gabf5e94e0ebfd5599d84b4eba90430c54">zsl_mtx_norm_elem</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mn, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mi, size_t i, size_t j)</td></tr>
 <tr class="memdesc:gabf5e94e0ebfd5599d84b4eba90430c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalises elements in matrix m such that the element at position (i, j) is equal to 1.0.  <a href="#gabf5e94e0ebfd5599d84b4eba90430c54">More...</a><br /></td></tr>
 <tr class="separator:gabf5e94e0ebfd5599d84b4eba90430c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,21 +124,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6268baeb64622466c50c6950f89a8392"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga6268baeb64622466c50c6950f89a8392">zsl_mtx_inv</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mi)</td></tr>
 <tr class="memdesc:ga6268baeb64622466c50c6950f89a8392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the inverse of square matrix 'm'.  <a href="#ga6268baeb64622466c50c6950f89a8392">More...</a><br /></td></tr>
 <tr class="separator:ga6268baeb64622466c50c6950f89a8392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a384f8829a4962e9c26e32fee4b96d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga3a384f8829a4962e9c26e32fee4b96d2">zsl_mtx_householder</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *h)</td></tr>
-<tr class="memdesc:ga3a384f8829a4962e9c26e32fee4b96d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the householder transformation on matrix 'm'. Used as part of QR decomposition.  <a href="#ga3a384f8829a4962e9c26e32fee4b96d2">More...</a><br /></td></tr>
-<tr class="separator:ga3a384f8829a4962e9c26e32fee4b96d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac2b5fe73262d6091eb13d905b7d94a32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gac2b5fe73262d6091eb13d905b7d94a32">zsl_mtx_qrd</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *q, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *r)</td></tr>
-<tr class="memdesc:gac2b5fe73262d6091eb13d905b7d94a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">QR decomposition, which is a factorisation of matrix 'm' into an orthogonal matrix (q) and an upper triangular matrix (r). This function uses the householder method.  <a href="#gac2b5fe73262d6091eb13d905b7d94a32">More...</a><br /></td></tr>
-<tr class="separator:gac2b5fe73262d6091eb13d905b7d94a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f6237b030695a1e3c6603eecd47448c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga1f6237b030695a1e3c6603eecd47448c">zsl_mtx_balance</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mout)</td></tr>
+<tr class="memdesc:ga1f6237b030695a1e3c6603eecd47448c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Balances the square matrix 'm', a process in which the eigenvalues of the output matrix are the same as the eigenvalues of the input matrix.  <a href="#ga1f6237b030695a1e3c6603eecd47448c">More...</a><br /></td></tr>
+<tr class="separator:ga1f6237b030695a1e3c6603eecd47448c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa8cbce5a3094d2292f1e4ec3402b470"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gafa8cbce5a3094d2292f1e4ec3402b470">zsl_mtx_householder</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *h, bool hessenberg)</td></tr>
+<tr class="memdesc:gafa8cbce5a3094d2292f1e4ec3402b470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the householder reflection of 'm'. Used as part of QR decomposition. When 'hessenberg' is active, it calculates the householder reflection but without using the first line of 'm'.  <a href="#gafa8cbce5a3094d2292f1e4ec3402b470">More...</a><br /></td></tr>
+<tr class="separator:gafa8cbce5a3094d2292f1e4ec3402b470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9b76643a6acf826c442cfa24e5fe83d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gaf9b76643a6acf826c442cfa24e5fe83d">zsl_mtx_qrd</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *q, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *r, bool hessenberg)</td></tr>
+<tr class="memdesc:gaf9b76643a6acf826c442cfa24e5fe83d"><td class="mdescLeft">&#160;</td><td class="mdescRight">If 'hessenberg' is set to false, this function performs the QR decomposition, which is a factorisation of matrix 'm' into an orthogonal matrix (q) and an upper triangular matrix (r). If 'hessenberg' is set to true, this function puts the matrix 'm' into hessenberg form. This function uses the householder reflections.  <a href="#gaf9b76643a6acf826c442cfa24e5fe83d">More...</a><br /></td></tr>
+<tr class="separator:gaf9b76643a6acf826c442cfa24e5fe83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1156b53e640a1dbab183a18eac2db93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gaa1156b53e640a1dbab183a18eac2db93">zsl_mtx_qrd_iter</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mout, size_t iter)</td></tr>
 <tr class="memdesc:gaa1156b53e640a1dbab183a18eac2db93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes recursively the QR decompisition method to put the input square matrix into upper triangular form.  <a href="#gaa1156b53e640a1dbab183a18eac2db93">More...</a><br /></td></tr>
 <tr class="separator:gaa1156b53e640a1dbab183a18eac2db93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0289da37e5c6f926a7513ac13fa2b158"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga0289da37e5c6f926a7513ac13fa2b158">zsl_mtx_eigenvalues</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__vec.html">zsl_vec</a> *v, size_t iter)</td></tr>
 <tr class="memdesc:ga0289da37e5c6f926a7513ac13fa2b158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the eigenvalues for input matrix 'm' using QR decomposition recursively. The output vector will only contain real eigenvalues, even if the input matrix has complex eigenvalues.  <a href="#ga0289da37e5c6f926a7513ac13fa2b158">More...</a><br /></td></tr>
 <tr class="separator:ga0289da37e5c6f926a7513ac13fa2b158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33556c879cbd3afe108506041e21a761"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#ga33556c879cbd3afe108506041e21a761">zsl_mtx_gram_schmidt</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mort)</td></tr>
-<tr class="memdesc:ga33556c879cbd3afe108506041e21a761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the Gram-Schmidt algorithm on the set of column vectors in matrix 'm'. This algorithm calculates a set of orthogonal vectors in the same vectorial space as the original vectors.  <a href="#ga33556c879cbd3afe108506041e21a761">More...</a><br /></td></tr>
-<tr class="separator:ga33556c879cbd3afe108506041e21a761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa0176385192f0884c6ec58d81d8a0a78"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_t_x___t_r_a_n_s_f_o_r_m_a_t_i_o_n_s.html#gaa0176385192f0884c6ec58d81d8a0a78">zsl_mtx_eigenvectors</a> (struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *m, struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *mev, size_t iter, bool orthonormal)</td></tr>
 <tr class="memdesc:gaa0176385192f0884c6ec58d81d8a0a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcualtes the set of eigenvectors for input matrix 'm', using the specified number of iterations to find a balance between precision and processing effort. Optionally, the output eigenvectors can be orthonormalised.  <a href="#gaa0176385192f0884c6ec58d81d8a0a78">More...</a><br /></td></tr>
 <tr class="separator:gaa0176385192f0884c6ec58d81d8a0a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,7 +188,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if this isn't a square matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00572">572</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00550">550</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
 </div>
 </div>
@@ -225,9 +228,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if this isn't a 3x3 square matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00534">534</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00512">512</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00572">zsl_mtx_adjoint()</a>, and <a class="el" href="matrices_8c_source.html#l00883">zsl_mtx_inv_3x3()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00550">zsl_mtx_adjoint()</a>, and <a class="el" href="matrices_8c_source.html#l00937">zsl_mtx_inv_3x3()</a>.</p>
 
 </div>
 </div>
@@ -267,9 +270,51 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00635">635</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00636">636</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01035">zsl_mtx_qrd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01125">zsl_mtx_householder()</a>, and <a class="el" href="matrices_8c_source.html#l01188">zsl_mtx_qrd()</a>.</p>
+
+</div>
+</div>
+<a id="ga1f6237b030695a1e3c6603eecd47448c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f6237b030695a1e3c6603eecd47448c">&#9670;&nbsp;</a></span>zsl_mtx_balance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_mtx_balance </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
+          <td class="paramname"><em>mout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Balances the square matrix 'm', a process in which the eigenvalues of the output matrix are the same as the eigenvalues of the input matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>The input square matrix to use. </td></tr>
+    <tr><td class="paramname">mout</td><td>The output balanced matrix.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01044">1044</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01267">zsl_mtx_eigenvalues()</a>.</p>
 
 </div>
 </div>
@@ -309,9 +354,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00825">825</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00879">879</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01223">zsl_mtx_eigenvectors()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01373">zsl_mtx_eigenvectors()</a>.</p>
 
 </div>
 </div>
@@ -351,9 +396,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if this isn't a square matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00683">683</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00684">684</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00938">zsl_mtx_inv()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00550">zsl_mtx_adjoint()</a>, and <a class="el" href="matrices_8c_source.html#l00992">zsl_mtx_inv()</a>.</p>
 
 </div>
 </div>
@@ -393,9 +438,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, or -EINVAL if this isn't a 3x3 square matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00653">653</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00654">654</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00683">zsl_mtx_deter()</a>, and <a class="el" href="matrices_8c_source.html#l00883">zsl_mtx_inv_3x3()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00684">zsl_mtx_deter()</a>, and <a class="el" href="matrices_8c_source.html#l00937">zsl_mtx_inv_3x3()</a>.</p>
 
 </div>
 </div>
@@ -443,9 +488,9 @@ Functions</h2></td></tr>
 <p>NOTE: Large values required more iterations to get precise results, and some trial and error may be required to find the right balance of iterations versus processing time.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. If -ECOMPLEXVAL is returned, it means that complex numbers were detected in the output eigenvalues. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01117">1117</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01267">1267</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01223">zsl_mtx_eigenvectors()</a>, and <a class="el" href="matrices_8c_source.html#l01353">zsl_mtx_svd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01373">zsl_mtx_eigenvectors()</a>, and <a class="el" href="matrices_8c_source.html#l01521">zsl_mtx_svd()</a>.</p>
 
 </div>
 </div>
@@ -500,9 +545,9 @@ Functions</h2></td></tr>
 <p>NOTE: Large values required more iterations to get precise results, and some trial and error may be required to find the right balance of iterations versus processing time.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. If the number of calcualted eigenvectors is less than the columns in 'm', EEIGENSIZE will be returned. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01223">1223</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01373">1373</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01353">zsl_mtx_svd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01521">zsl_mtx_svd()</a>.</p>
 
 </div>
 </div>
@@ -563,9 +608,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00736">736</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00737">737</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00788">zsl_mtx_gauss_elim_d()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00789">zsl_mtx_gauss_elim_d()</a>.</p>
 
 </div>
 </div>
@@ -619,9 +664,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00788">788</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00789">789</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00794">zsl_mtx_gauss_reduc()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00795">zsl_mtx_gauss_reduc()</a>.</p>
 
 </div>
 </div>
@@ -668,9 +713,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00794">794</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00795">795</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01223">zsl_mtx_eigenvectors()</a>, and <a class="el" href="matrices_8c_source.html#l00938">zsl_mtx_inv()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01373">zsl_mtx_eigenvectors()</a>, and <a class="el" href="matrices_8c_source.html#l00992">zsl_mtx_inv()</a>.</p>
 
 </div>
 </div>
@@ -710,14 +755,14 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01194">1194</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00850">850</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01223">zsl_mtx_eigenvectors()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01373">zsl_mtx_eigenvectors()</a>.</p>
 
 </div>
 </div>
-<a id="ga3a384f8829a4962e9c26e32fee4b96d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3a384f8829a4962e9c26e32fee4b96d2">&#9670;&nbsp;</a></span>zsl_mtx_householder()</h2>
+<a id="gafa8cbce5a3094d2292f1e4ec3402b470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa8cbce5a3094d2292f1e4ec3402b470">&#9670;&nbsp;</a></span>zsl_mtx_householder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -732,7 +777,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
-          <td class="paramname"><em>h</em>&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hessenberg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -742,19 +793,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Performs the householder transformation on matrix 'm'. Used as part of QR decomposition. </p>
+<p>Calculates the householder reflection of 'm'. Used as part of QR decomposition. When 'hessenberg' is active, it calculates the householder reflection but without using the first line of 'm'. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">m</td><td>Pointer to the input square matrix to use. </td></tr>
-    <tr><td class="paramname">h</td><td>Pointer to the output square matrix where the transformation results should be assigned.</td></tr>
+    <tr><td class="paramname">m</td><td>Pointer to the input matrix to use. </td></tr>
+    <tr><td class="paramname">hessenberg</td><td>If set to true, the first line in 'm' is ignored. </td></tr>
+    <tr><td class="paramname">h</td><td>Pointer to the output square matrix where the values of the householder reflection should be assigned.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00990">990</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01125">1125</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01035">zsl_mtx_qrd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01188">zsl_mtx_qrd()</a>.</p>
 
 </div>
 </div>
@@ -794,7 +846,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if this isn't a square matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00938">938</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00992">992</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
 </div>
 </div>
@@ -834,9 +886,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if this isn't a 3x3 matrix. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00883">883</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00937">937</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00938">zsl_mtx_inv()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00992">zsl_mtx_inv()</a>.</p>
 
 </div>
 </div>
@@ -897,9 +949,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00839">839</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00893">893</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00877">zsl_mtx_norm_elem_d()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00931">zsl_mtx_norm_elem_d()</a>.</p>
 
 </div>
 </div>
@@ -953,9 +1005,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00877">877</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00931">931</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00794">zsl_mtx_gauss_reduc()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00795">zsl_mtx_gauss_reduc()</a>.</p>
 
 </div>
 </div>
@@ -1002,12 +1054,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01435">1435</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01603">1603</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
 </div>
 </div>
-<a id="gac2b5fe73262d6091eb13d905b7d94a32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac2b5fe73262d6091eb13d905b7d94a32">&#9670;&nbsp;</a></span>zsl_mtx_qrd()</h2>
+<a id="gaf9b76643a6acf826c442cfa24e5fe83d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf9b76643a6acf826c442cfa24e5fe83d">&#9670;&nbsp;</a></span>zsl_mtx_qrd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1028,7 +1080,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">struct <a class="el" href="structzsl__mtx.html">zsl_mtx</a> *&#160;</td>
-          <td class="paramname"><em>r</em>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hessenberg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1038,21 +1096,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>QR decomposition, which is a factorisation of matrix 'm' into an orthogonal matrix (q) and an upper triangular matrix (r). This function uses the householder method. </p>
-<p>This function makes use of the householder method to perform the QR decomposition, which introduces the zeros below the diagonal of matrix 'r'. Other algorithms exist, such as the Gram-Schmidt process, but they tend to be less stable than the householder method for a similar computational cost.</p>
+<p>If 'hessenberg' is set to false, this function performs the QR decomposition, which is a factorisation of matrix 'm' into an orthogonal matrix (q) and an upper triangular matrix (r). If 'hessenberg' is set to true, this function puts the matrix 'm' into hessenberg form. This function uses the householder reflections. </p>
+<p>One of the uses of this function is to make use of the householder method to perform the QR decomposition, which introduces the zeros below the diagonal of matrix 'r'. Other algorithms exist, such as the Gram-Schmidt process, but they tend to be less stable than the householder method for a similar computational cost.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>Pointer to the input square matrix. </td></tr>
     <tr><td class="paramname">q</td><td>Pointer to the output orthoogonal square matrix. </td></tr>
-    <tr><td class="paramname">r</td><td>Pointer to the output upper triangular square matrix.</td></tr>
+    <tr><td class="paramname">r</td><td>Pointer to the output upper triangular square matrix or hessenberg matrix if set to true. </td></tr>
+    <tr><td class="paramname">hessenberg</td><td>Sets the matrix to hessenberg format if 'true'.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01035">1035</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01188">1188</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01075">zsl_mtx_qrd_iter()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01267">zsl_mtx_eigenvalues()</a>, and <a class="el" href="matrices_8c_source.html#l01239">zsl_mtx_qrd_iter()</a>.</p>
 
 </div>
 </div>
@@ -1099,9 +1158,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01075">1075</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01239">1239</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01117">zsl_mtx_eigenvalues()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01267">zsl_mtx_eigenvalues()</a>.</p>
 
 </div>
 </div>
@@ -1157,7 +1216,7 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00585">585</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00683">zsl_mtx_deter()</a>, and <a class="el" href="matrices_8c_source.html#l00619">zsl_mtx_reduce_iter()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00550">zsl_mtx_adjoint()</a>, <a class="el" href="matrices_8c_source.html#l00684">zsl_mtx_deter()</a>, and <a class="el" href="matrices_8c_source.html#l00620">zsl_mtx_reduce_iter()</a>.</p>
 
 </div>
 </div>
@@ -1197,9 +1256,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00619">619</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00620">620</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01035">zsl_mtx_qrd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01188">zsl_mtx_qrd()</a>.</p>
 
 </div>
 </div>
@@ -1252,17 +1311,17 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">m</td><td>The input mxn matrix to use. </td></tr>
     <tr><td class="paramname">u</td><td>The placeholder for the output mxm matrix u. </td></tr>
-    <tr><td class="paramname">v</td><td>The placeholder for the output mxn matrix sigma. </td></tr>
-    <tr><td class="paramname">u</td><td>The placeholder for the output nxn matrix v. </td></tr>
+    <tr><td class="paramname">e</td><td>The placeholder for the output mxn matrix sigma. </td></tr>
+    <tr><td class="paramname">v</td><td>The placeholder for the output nxn matrix v. </td></tr>
     <tr><td class="paramname">iter</td><td>The number of times that 'zsl_mtx_qrd' should be called. during the QR decomposition phase.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, otherwise an appropriate error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01353">1353</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l01521">1521</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01435">zsl_mtx_pinv()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01603">zsl_mtx_pinv()</a>.</p>
 
 </div>
 </div>
@@ -1302,9 +1361,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if everything executed correctly, or -EINVAL if ma and mb are not compatibly shaped. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00514">514</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrices_8c_source.html#l00492">492</a> of file <a class="el" href="matrices_8c_source.html">matrices.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l00990">zsl_mtx_householder()</a>, <a class="el" href="matrices_8c_source.html#l01435">zsl_mtx_pinv()</a>, <a class="el" href="matrices_8c_source.html#l01035">zsl_mtx_qrd()</a>, and <a class="el" href="matrices_8c_source.html#l01353">zsl_mtx_svd()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="matrices_8c_source.html#l01125">zsl_mtx_householder()</a>, <a class="el" href="matrices_8c_source.html#l01603">zsl_mtx_pinv()</a>, <a class="el" href="matrices_8c_source.html#l01188">zsl_mtx_qrd()</a>, and <a class="el" href="matrices_8c_source.html#l01521">zsl_mtx_svd()</a>.</p>
 
 </div>
 </div>

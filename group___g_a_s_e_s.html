@@ -62,7 +62,8 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Gases<div class="ingroups"><a class="el" href="group___p_h_y_s_i_c_s.html">Physics</a></div></div>  </div>
 </div><!--header-->
@@ -76,9 +77,233 @@ Files</h2></td></tr>
 <tr class="memitem:gases_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gases_8h.html">gases.h</a></td></tr>
 <tr class="memdesc:gases_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">API header file for gases in zscilib. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga655e8d229913fa969e6e459fc075dbe6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#ga655e8d229913fa969e6e459fc075dbe6">zsl_phy_gas_av_vel</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> m, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *v)</td></tr>
+<tr class="memdesc:ga655e8d229913fa969e6e459fc075dbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the average velocity of a gas molecule based on the mass of gas (m), its temperature (t) and the number of moles of gas (n).  <a href="#ga655e8d229913fa969e6e459fc075dbe6">More...</a><br /></td></tr>
+<tr class="separator:ga655e8d229913fa969e6e459fc075dbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadddf0f278d52c6269151e198f31160b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#gadddf0f278d52c6269151e198f31160b3">zsl_phy_gas_press</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> v, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> n, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *p)</td></tr>
+<tr class="memdesc:gadddf0f278d52c6269151e198f31160b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the pressure of an ideal gas based on the number of moles, the temperature and the volume of gas.  <a href="#gadddf0f278d52c6269151e198f31160b3">More...</a><br /></td></tr>
+<tr class="separator:gadddf0f278d52c6269151e198f31160b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb4e7fe2f0310e12ce289121a6368e04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#gadb4e7fe2f0310e12ce289121a6368e04">zsl_phy_gas_boyle</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> pi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> pf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vf)</td></tr>
+<tr class="memdesc:gadb4e7fe2f0310e12ce289121a6368e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the initial and final pressure, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing the temperature hasn't changed through the process.  <a href="#gadb4e7fe2f0310e12ce289121a6368e04">More...</a><br /></td></tr>
+<tr class="separator:gadb4e7fe2f0310e12ce289121a6368e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30b852c320f8b79a960dff7f8bc22410"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_s_e_s.html#ga30b852c320f8b79a960dff7f8bc22410">zsl_phy_gas_charles_lussac</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> ti, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> tf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vf)</td></tr>
+<tr class="memdesc:ga30b852c320f8b79a960dff7f8bc22410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the initial and final temperature, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing its pressure hasn't changed through the process.  <a href="#ga30b852c320f8b79a960dff7f8bc22410">More...</a><br /></td></tr>
+<tr class="separator:ga30b852c320f8b79a960dff7f8bc22410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Gas functions. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga655e8d229913fa969e6e459fc075dbe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga655e8d229913fa969e6e459fc075dbe6">&#9670;&nbsp;</a></span>zsl_phy_gas_av_vel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_gas_av_vel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the average velocity of a gas molecule based on the mass of gas (m), its temperature (t) and the number of moles of gas (n). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Mass of gas in kilograms. </td></tr>
+    <tr><td class="paramname">n</td><td>Number of moles of gas. </td></tr>
+    <tr><td class="paramname">t</td><td>Temperature in kelvins. </td></tr>
+    <tr><td class="paramname">v</td><td>Pointer to the calculated velocity in meters per second. Will be set to NAN if the temperature, mass or moles of gas are negative, or if m = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gadb4e7fe2f0310e12ce289121a6368e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb4e7fe2f0310e12ce289121a6368e04">&#9670;&nbsp;</a></span>zsl_phy_gas_boyle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_gas_boyle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>pi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>pf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>vf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given the initial and final pressure, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing the temperature hasn't changed through the process. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pi</td><td>Initial pressure in pascals. </td></tr>
+    <tr><td class="paramname">vi</td><td>Initial volume in meters cubed. </td></tr>
+    <tr><td class="paramname">pf</td><td>Final pressure in pascals. </td></tr>
+    <tr><td class="paramname">vf</td><td>Pointer to the output final volume in meters cubed. Will be set to NAN if any of the input values are negative or if pf = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga30b852c320f8b79a960dff7f8bc22410"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30b852c320f8b79a960dff7f8bc22410">&#9670;&nbsp;</a></span>zsl_phy_gas_charles_lussac()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_gas_charles_lussac </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>ti</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>tf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>vf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given the initial and final temperature, and the initial volume of an ideal gas, this function calculates the final volume of the gas supposing its pressure hasn't changed through the process. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ti</td><td>Initial temperature in kelvins. </td></tr>
+    <tr><td class="paramname">vi</td><td>Initial volume in meters cubed. </td></tr>
+    <tr><td class="paramname">tf</td><td>Final temperature in kelvins. </td></tr>
+    <tr><td class="paramname">vf</td><td>Pointer to the output final volume in meters cubed. Will be set to NAN if any of the input values are negative or if ti = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gadddf0f278d52c6269151e198f31160b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadddf0f278d52c6269151e198f31160b3">&#9670;&nbsp;</a></span>zsl_phy_gas_press()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_gas_press </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the pressure of an ideal gas based on the number of moles, the temperature and the volume of gas. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Volume of gas in meters cubed. </td></tr>
+    <tr><td class="paramname">n</td><td>Number of moles of gas. </td></tr>
+    <tr><td class="paramname">t</td><td>Temperature in kelvins. </td></tr>
+    <tr><td class="paramname">p</td><td>Pointer to the placeholder for calculated pressure in pascals. Will be set to NAN if the temperature, volume or moles of gas are negative, or if v = 0.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

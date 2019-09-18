@@ -83,6 +83,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga75bb7e3fbf75b7f7efea41b30d7b334d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#ga75bb7e3fbf75b7f7efea41b30d7b334d">zsl_phy_kin_dist</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> time, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> accel, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *dist)</td></tr>
 <tr class="memdesc:ga75bb7e3fbf75b7f7efea41b30d7b334d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the change in distance based on initial velocity, time and acceleration.  <a href="#ga75bb7e3fbf75b7f7efea41b30d7b334d">More...</a><br /></td></tr>
 <tr class="separator:ga75bb7e3fbf75b7f7efea41b30d7b334d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb4e1d4e95b6d2b5f389e9cd9c1f8560"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gabb4e1d4e95b6d2b5f389e9cd9c1f8560">zsl_phy_kin_init_pos</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> xf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *xi)</td></tr>
+<tr class="memdesc:gabb4e1d4e95b6d2b5f389e9cd9c1f8560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the initial position of a moving body based on the final position (xf), the initial velocity (vi), acceleration (a) and time (t).  <a href="#gabb4e1d4e95b6d2b5f389e9cd9c1f8560">More...</a><br /></td></tr>
+<tr class="separator:gabb4e1d4e95b6d2b5f389e9cd9c1f8560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b5e3352431092cb4d58e48d2f36e1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#ga8b5e3352431092cb4d58e48d2f36e1b9">zsl_phy_kin_init_pos2</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> xf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *xi)</td></tr>
+<tr class="memdesc:ga8b5e3352431092cb4d58e48d2f36e1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the initial position of a moving body based on the final position (xf), the initial velocity (vi), the final velocity (vf) and acceleration (a).  <a href="#ga8b5e3352431092cb4d58e48d2f36e1b9">More...</a><br /></td></tr>
+<tr class="separator:ga8b5e3352431092cb4d58e48d2f36e1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf8ce290170338aa56fdd401a78da8e45"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gaf8ce290170338aa56fdd401a78da8e45">zsl_phy_kin_time</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> accel, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *time)</td></tr>
 <tr class="memdesc:gaf8ce290170338aa56fdd401a78da8e45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the time in seconds that it takes an object to change its velocity from vi to vf under a constant acceleration (accel).  <a href="#gaf8ce290170338aa56fdd401a78da8e45">More...</a><br /></td></tr>
 <tr class="separator:gaf8ce290170338aa56fdd401a78da8e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -92,6 +98,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa172e829cae60dcf616e1f3b0e4af58d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gaa172e829cae60dcf616e1f3b0e4af58d">zsl_phy_kin_vel2</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vi, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> accel, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vf)</td></tr>
 <tr class="memdesc:gaa172e829cae60dcf616e1f3b0e4af58d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the velocity in meters per second of an object under a constant acceleration (accel) based on its initial velocity (vi) and the distance traveled from the starting point (dist).  <a href="#gaa172e829cae60dcf616e1f3b0e4af58d">More...</a><br /></td></tr>
 <tr class="separator:gaa172e829cae60dcf616e1f3b0e4af58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad65f8a205063e0ee825bbd182277f5de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gad65f8a205063e0ee825bbd182277f5de">zsl_phy_kin_init_vel</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vi)</td></tr>
+<tr class="memdesc:gad65f8a205063e0ee825bbd182277f5de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on its final velocity (vf) and time (t).  <a href="#gad65f8a205063e0ee825bbd182277f5de">More...</a><br /></td></tr>
+<tr class="separator:gad65f8a205063e0ee825bbd182277f5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabec11f46df09d3bce2290154640ffaa6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gabec11f46df09d3bce2290154640ffaa6">zsl_phy_kin_init_vel2</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> t, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vi)</td></tr>
+<tr class="memdesc:gabec11f46df09d3bce2290154640ffaa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on the distance it has travelled (dist) and time (t).  <a href="#gabec11f46df09d3bce2290154640ffaa6">More...</a><br /></td></tr>
+<tr class="separator:gabec11f46df09d3bce2290154640ffaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeeca39b8a543ab1afb2f7fb9e44413e3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#gaeeca39b8a543ab1afb2f7fb9e44413e3">zsl_phy_kin_init_vel3</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> vf, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> a, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vi)</td></tr>
+<tr class="memdesc:gaeeca39b8a543ab1afb2f7fb9e44413e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on the distance it has travelled (dist) and the final velocity (vf).  <a href="#gaeeca39b8a543ab1afb2f7fb9e44413e3">More...</a><br /></td></tr>
+<tr class="separator:gaeeca39b8a543ab1afb2f7fb9e44413e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4cfbd65b19b20aaa640885b077c0cadf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_e_m_a_t_i_c_s.html#ga4cfbd65b19b20aaa640885b077c0cadf">zsl_phy_kin_av_vel</a> (<a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> dist, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> time, <a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *vel)</td></tr>
 <tr class="memdesc:ga4cfbd65b19b20aaa640885b077c0cadf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the average velocity in meters per second of a moving object based on the time and distance.  <a href="#ga4cfbd65b19b20aaa640885b077c0cadf">More...</a><br /></td></tr>
 <tr class="separator:ga4cfbd65b19b20aaa640885b077c0cadf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,7 +162,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vi</td><td>Initial velocity in meters per second. </td></tr>
-    <tr><td class="paramname">vi</td><td>Final velocity in meters per second. </td></tr>
+    <tr><td class="paramname">vf</td><td>Final velocity in meters per second. </td></tr>
     <tr><td class="paramname">time</td><td>Time in seconds. </td></tr>
     <tr><td class="paramname">accel</td><td>Pointer to the output acceleration in meters per second squared. Will be set to NAN if the time is negative or zero.</td></tr>
   </table>
@@ -292,6 +307,280 @@ Functions</h2></td></tr>
     <tr><td class="paramname">v</td><td>Velocity of the object in meters per second. </td></tr>
     <tr><td class="paramname">m</td><td>Mass of the object in kilograms. </td></tr>
     <tr><td class="paramname">ke</td><td>Pointer to the output kinetic energy in joules. Will be set to NAN if the mass is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gabb4e1d4e95b6d2b5f389e9cd9c1f8560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb4e1d4e95b6d2b5f389e9cd9c1f8560">&#9670;&nbsp;</a></span>zsl_phy_kin_init_pos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_kin_init_pos </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>xf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>xi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the initial position of a moving body based on the final position (xf), the initial velocity (vi), acceleration (a) and time (t). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vi</td><td>Initial velocity in meters per second. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">a</td><td>Acceleration in meters per second squared. </td></tr>
+    <tr><td class="paramname">xf</td><td>Final position in meters. </td></tr>
+    <tr><td class="paramname">xi</td><td>Pointer to the placeholder for the initial position in meters. Will be set to NAN if time is a negative value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga8b5e3352431092cb4d58e48d2f36e1b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b5e3352431092cb4d58e48d2f36e1b9">&#9670;&nbsp;</a></span>zsl_phy_kin_init_pos2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_kin_init_pos2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>xf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>xi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the initial position of a moving body based on the final position (xf), the initial velocity (vi), the final velocity (vf) and acceleration (a). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vi</td><td>Initial velocity in meters per second. </td></tr>
+    <tr><td class="paramname">vf</td><td>Final velocity in meters per second. </td></tr>
+    <tr><td class="paramname">a</td><td>Acceleration in meters per second squared. </td></tr>
+    <tr><td class="paramname">xf</td><td>Final position in meters. </td></tr>
+    <tr><td class="paramname">xi</td><td>Pointer to the placeholder for the initial position in meters. Will be set to NAN if the acceleration's value is zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gad65f8a205063e0ee825bbd182277f5de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad65f8a205063e0ee825bbd182277f5de">&#9670;&nbsp;</a></span>zsl_phy_kin_init_vel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_kin_init_vel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>vi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on its final velocity (vf) and time (t). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vf</td><td>Final velocity in meters per second. </td></tr>
+    <tr><td class="paramname">a</td><td>Acceleration in meters per second squared. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">vi</td><td>Pointer to the output initial velocity in meters per second. Will be set to NAN if the time is negative.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gabec11f46df09d3bce2290154640ffaa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabec11f46df09d3bce2290154640ffaa6">&#9670;&nbsp;</a></span>zsl_phy_kin_init_vel2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_kin_init_vel2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>dist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>vi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on the distance it has travelled (dist) and time (t). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dist</td><td>Distance in meters. </td></tr>
+    <tr><td class="paramname">a</td><td>Acceleration in meters per second squared. </td></tr>
+    <tr><td class="paramname">t</td><td>Time in seconds. </td></tr>
+    <tr><td class="paramname">vi</td><td>Pointer to the output initial velocity in meters per second. Will be set to NAN if the time is negative or zero.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, and non-zero error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="gaeeca39b8a543ab1afb2f7fb9e44413e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeeca39b8a543ab1afb2f7fb9e44413e3">&#9670;&nbsp;</a></span>zsl_phy_kin_init_vel3()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zsl_phy_kin_init_vel3 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>vf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a>&#160;</td>
+          <td class="paramname"><em>dist</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="zsl_8h.html#a057fbb03c8054ee788abfe8231ad8c81">zsl_real_t</a> *&#160;</td>
+          <td class="paramname"><em>vi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the initial velocity in meters per second of an object under a constant acceleration (a) based on the distance it has travelled (dist) and the final velocity (vf). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vf</td><td>Final velocity in meters per second. </td></tr>
+    <tr><td class="paramname">a</td><td>Acceleration in meters per second squared. </td></tr>
+    <tr><td class="paramname">dist</td><td>Distance in meters. </td></tr>
+    <tr><td class="paramname">vi</td><td>Pointer to the output initial velocity in meters per second. Will be set to NAN if the output velocity takes a complex value.</td></tr>
   </table>
   </dd>
 </dl>
