@@ -18,7 +18,7 @@
  */
 
 /**
- * @addtogroup PHOTONS Photons.
+ * @addtogroup PHOTONS Photons
  *
  * @brief Photon-related functions.
  *

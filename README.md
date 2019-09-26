@@ -107,52 +107,98 @@ $ bin/zscilib
 
 ## Current Features
 
+The feature tables below indicate whether implemented functions support:
+
+- **f32**: Single-precision floating-point operations
+- **f64**: Double-precision floating-point operations
+- **ARM**: Optimised ARM Thumb-2 ASM implementation
+
 ### Vector Operations
 
-- Add
-- Subtract
-- Negate
-- Sum (two or more vectors)
-- Magnitude
-- Scalar add
-- Scalar multiply
-- Scalar divide
-- Distance (between two vectors)
-- Norm/absolute value
-- To Unit Vector
-- Dot product
-- Cross product
-- Sum of squares
-- Component-wise mean (two or more vectors)
-- Arithmetic mean (single vector)
-- Reverse
-- Equality check (size and values)
-- Not-negative check
-- Contains (occurrences of 'x')
+| Feature         | Func                  | f32 | f64 | ARM | Notes           |
+|-----------------|-----------------------|-----|-----|-----|-----------------|
+| Array to vector | `zsl_vec_from_arr`    | x   | x   |     |                 |
+| Copy            | `zsl_vec_copy`        | x   | x   |     |                 |
+| Get subset      | `zsl_vec_get_subset`  | x   | x   |     |                 |
+| Add             | `zsl_vec_add`         | x   | x   |     |                 |
+| Subtract        | `zsl_vec_sub`         | x   | x   |     |                 |
+| Negate          | `zsl_vec_neg`         | x   | x   |     |                 |
+| Sum             | `zsl_vec_sum`         | x   | x   |     | 2 or more vects |
+| Scalar add      | `zsl_vec_scalar_add`  | x   | x   |     |                 |
+| Scalar multiply | `zsl_vec_scalar_mult` | x   | x   |     |                 |
+| Scalar divide   | `zsl_vec_scalar_div`  | x   | x   |     |                 |
+| Distance        | `zsl_vec_dist`        | x   | x   |     | Between 2 vects |
+| Dot product     | `zsl_vec_dot`         | x   | x   |     |                 |
+| Norm/abs value  | `zsl_vec_norm`        | x   | x   |     |                 |
+| Project         | `zsl_vec_project`     | x   | x   |     |                 |
+| To unit vector  | `zsl_vec_to_unit`     | x   | x   |     |                 |
+| Cross product   | `zsl_vec_cross`       | x   | x   |     |                 |
+| Sum of squares  | `zsl_vec_sum_of_sqrs` | x   | x   |     |                 |
+| Comp-wise mean  | `zsl_vec_mean`        | x   | x   |     |                 |
+| Arithmetic mean | `zsl_vec_ar_mean`     | x   | x   |     |                 |
+| Reverse         | `zsl_vec_rev`         | x   | x   |     |                 |
+| Zero to end     | `zsl_vec_zte`         | x   | x   |     | 0 vals to end   |
+| Equality check  | `zsl_vec_is_equal`    | x   | x   |     |                 |
+| Non-neg check   | `zsl_vec_is_nonneg`   | x   | x   |     | All values >= 0 |
+| Contains        | `zsl_vec_contains`    | x   | x   |     |                 |
+| Print           | `zsl_vec_print`       | x   | x   |     |                 |
 
 ### Matrix Operations
 
-- Copy
-- Add
-- Subtract
-- Multiply
-- Scalar multiply
-- Transpose
-- Adjoint (3x3 and nxn)
-- Determinant (3x3 and nxn)
-- Inverse (3x3 and nxn)
-- Eigenvectors/values
-- Gauss-Jordan elimination
-- Singular value decomposition (SVD)
-- Pseudoinverse (AKA Moore-Penrose inverse)
-- Get/set row/column vector
-- Min/max value or index
-- Equality test (shape and values)
-- Not-negative check
+| Feature         | Func                  | f32 | f64 | ARM | Notes           |
+|-----------------|-----------------------|-----|-----|-----|-----------------|
+| Array to matrix | `zsl_mtx_from_arr`    | x   | x   |     |                 |
+| Copy            | `zsl_mtx_copy`        | x   | x   |     |                 |
+| Get value       | `zsl_mtx_get`         | x   | x   |     |                 |
+| Set value       | `zsl_mtx_set`         | x   | x   |     |                 |
+| Get row         | `zsl_mtx_get_row`     | x   | x   |     |                 |
+| Set row         | `zsl_mtx_set_row`     | x   | x   |     |                 |
+| Get col         | `zsl_mtx_get_col`     | x   | x   |     |                 |
+| Set col         | `zsl_mtx_set_col`     | x   | x   |     |                 |
+| Add             | `zsl_mtx_add`         | x   | x   |     |                 |
+| Add (d)         | `zsl_mtx_add_d`       | x   | x   |     | Destructive     |
+| Sum rows        | `zsl_mtx_sum_rows_d`  | x   | x   |     | Destructive     |
+| Sum rows scaled | `zsl_mtx_sum_rows_scaled_d` | x | x |   | Destructive     |
+| Subtract        | `zsl_mtx_sub`         | x   | x   |     |                 |
+| Subtract (d)    | `zsl_mtx_sub_d`       | x   | x   |     | Destructive     |
+| Multiply        | `zsl_mtx_mult`        | x   | x   |     |                 |
+| Multiply (d)    | `zsl_mtx_mult_d`      | x   | x   |     | Destructive     |
+| Multiply row (d)| `zsl_mtx_mult_row_d`  | x   | x   |     | Destructive     |
+| Transpose       | `zsl_mtx_trans`       | x   | x   |     |                 |
+| Adjoint         | `zsl_mtx_adjoint`     | x   | x   |     |                 |
+| Reduce          | `zsl_mtx_reduce`      | x   | x   |     | Row+col removal |
+| Reduce (iter)   | `zsl_mtx_reduce_iter` | x   | x   |     | Iterative ver.  |
+| Augment         | `zsl_mtx_augm_diag`   | x   | x   |     | Adds row+col(s) |
+| Determinant     | `zsl_mtx_deter`       | x   | x   |     |                 |
+| Gaussian El.    | `zsl_mtx_gauss_elim`  | x   | x   |     |                 |
+| Gaussian El. (d)| `zsl_mtx_gauss_elim_d`| x   | x   |     | Destructive     |
+| Gaussian Rd.    | `zsl_mtx_gauss_reduc` | x   | x   |     |                 |
+| Column norm.    | `zsl_mtx_cols_norm`   | x   | x   |     | Unitary col vals|
+| Elem. norm.     | `zsl_mtx_norm_elem`   | x   | x   |     | Norm vals to i,j|
+| Elem. norm. (d) | `zsl_mtx_norm_elem_d` | x   | x   |     | Destructive     |
+| Gram-Schmidt    | `zsl_mtx_gram_schmidt`| x   | x   |     |                 |
+| Invert          | `zsl_mtx_inv`         | x   | x   |     |                 |
+| Balance         | `zsl_mtx_balance`     | x   | x   |     |                 |
+| Householder Ref.| `zsl_mtx_householder` | x   | x   |     |                 |
+| QR decomposition| `zsl_mtx_qrd`         | x   | x   |     |                 |
+| QR decomp. iter.| `zsl_mtx_qrd_iter`    |     | x   |     |                 |
+| Eigenvalues     | `zsl_mtx_eigenvalues` |     | x   |     |                 |
+| Eigenvectors    | `zsl_mtx_eigenvectors`|     | x   |     |                 |
+| SVD             | `zsl_mtx_svd`         |     | x   |     |                 |
+| Pseudoinverse   | `zsl_mtx_pinv`        |     | x   |     |                 |
+| Min value       | `zsl_mtx_min`         | x   | x   |     |                 |
+| Max value       | `zsl_mtx_max`         | x   | x   |     |                 |
+| Min index       | `zsl_mtx_min_idx`     | x   | x   |     |                 |
+| Max index       | `zsl_mtx_max_idx`     | x   | x   |     |                 |
+| Equality check  | `zsl_mtx_is_equal`    | x   | x   |     |                 |
+| Non-neg check   | `zsl_mtx_is_notneg`   | x   | x   |     | All values >= 0 |
+| Symmetr. check  | `zsl_mtx_is_sym`      | x   | x   |     |                 |
+| Print           | `zsl_mtx_print`       | x   | x   |     |                 |
 
 #### Unary matrix operations
 
-The following component-wise unary operations can be executed on a matrix:
+The following component-wise unary operations can be executed on a matrix
+using the `zsl_mtx_unary_op` function:
 
 - Increment (`++`)
 - Decrement (`--`)
@@ -173,7 +219,7 @@ The following component-wise unary operations can be executed on a matrix:
 #### Binary matrix operations
 
 The following component-wise binary operations can be executed on a pair
-of symmetric matrices:
+of symmetric matrices using the `zsl_mtx_binary_op` function:
 
 - Add (`a + b`)
 - Subtract (`a - b`)
@@ -200,70 +246,6 @@ of symmetric matrices:
 - Nearest neighbour (AKA 'piecewise constant')
 - Linear (AKA 'piecewise linear')
 - Natural cubic spline
-
-## Planned Features
-
-The Zephyr scientific library is still in very early planning, but the
-features listed below have been defined as key future goals.
-
-Contributions to this project can take the form of any of the following
-requirements around these planned features and functions:
-
-- Function implementation in C
-- Optimised function implementation (ARM ASM, etc.) where appropriate
-- Unit tests to ensure reliable execution
-- Meaningful documentation (doxygen and `doc/topic.md` as appropriate)
-- Sample project(s) showing how these functions can be used in the real world
-
-
-> Any suggested additions to this list are highly welcome at this early stage.
-
-### Numerical Analysis
-
-#### Scalar Operations
-
-- Fast trigonometry approximations
-
-#### Statistics Operations
-
-- Mean
-- Median
-- Quantile
-- Quartile
-- Mode
-- Data range
-- De-mean
-- Variance
-- Standard deviation
-- Interquartile range
-- Covariance
-- Covariance Matrix
-- Correlation
-- Error
-
-#### Probability Operations
-
-- Uniform probability density function (PDF)
-- Uniform cumulative distribution function (CDF)
-- Normal probability density function
-- Normal cumulative distribution function
-- Inverse normal cumulative distribution function
-- Information entropy
-
-### Digital Signal Processing
-
-- Simple moving average filter
-- Windowed moving average filter
-- Weighted moving average filter
-- Other basic IIR and FIR-type filters and helper functions.
-
-### Machine Learning
-
-#### Neural Networks
-
-- Basic neural network processing
-- Simplistic training of models
-- Feeding data through a trained network
 
 ### Physics
 
@@ -465,22 +447,64 @@ TBD
 - Bohr orbital energy
 - Bragg's law
 
-#### Misc.
-
-TODO: Where to classify these?
-
-- Percent error (statistics?)
-- Efficiency
-- Quadratic formula
-
 ### Chemistry
 
 - Periodic table data including:
   - Full name
   - Abbreviation
-  - Atomic number (done)
-  - Standard atomic weight (done)
-  - TBD
+  - Atomic number
+  - Standard atomic weight
+
+## Planned Features
+
+Help is welcome on the following planned or desirable features.
+
+### Numerical Analysis
+
+#### Scalar Operations
+
+- Fast trigonometry approximations
+
+#### Statistics Operations
+
+- Mean
+- Median
+- Quantile
+- Quartile
+- Mode
+- Data range
+- De-mean
+- Variance
+- Standard deviation
+- Interquartile range
+- Covariance
+- Covariance Matrix
+- Correlation
+- Error
+
+#### Probability Operations
+
+- Uniform probability density function (PDF)
+- Uniform cumulative distribution function (CDF)
+- Normal probability density function
+- Normal cumulative distribution function
+- Inverse normal cumulative distribution function
+- Information entropy
+
+### Digital Signal Processing
+
+- Simple moving average filter
+- Windowed moving average filter
+- Weighted moving average filter
+- Other basic IIR and FIR-type filters and helper functions.
+
+### Machine Learning
+
+#### Neural Networks
+
+- Basic neural network processing
+- Simplistic training of models
+- Feeding data through a trained network
 
 ### Misc. Domain-Specific Operations
 
@@ -498,6 +522,12 @@ TODO: Where to classify these?
 - Radiometric data to lux
 - Radiometric data to CCT/Duv
 - Spectral analysis
+
+#### Misc.
+
+- Percent error (statistics?)
+- Efficiency
+- Quadratic formula
 
 ## Motivation
 
