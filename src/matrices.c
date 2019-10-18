@@ -202,9 +202,6 @@ zsl_mtx_unary_op(struct zsl_mtx *m, zsl_mtx_unary_op_t op)
 		case ZSL_MTX_UNARY_OP_NEGATIVE:
 			m->data[i] = -m->data[i];
 			break;
-		case ZSL_MTX_UNARY_OP_LOGICAL_NEGATION:
-			m->data[i] = !m->data[i];
-			break;
 		case ZSL_MTX_UNARY_OP_ROUND:
 			m->data[i] = ZSL_ROUND(m->data[i]);
 			break;
@@ -610,7 +607,7 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 			}
 		}
 	}
-	
+
 	zsl_mtx_from_arr(mr, v);
 
 	return 0;
@@ -1498,7 +1495,7 @@ zsl_mtx_eigenvectors(struct zsl_mtx *m, struct zsl_mtx *mev, size_t iter,
 	/* Since 'b' is the number of eigenvectors, reduce 'mev' (of size
 	 * m->sz_rows times b) to erase columns of zeros. */
 	mev->sz_cols = b;
-	
+
 	for (size_t s = 0; s < b; s++) {
 		zsl_mtx_get_col(&mev2, s, f.data);
 		zsl_mtx_set_col(mev, s, f.data);

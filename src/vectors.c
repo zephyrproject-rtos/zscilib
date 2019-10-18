@@ -110,7 +110,7 @@ int zsl_vec_neg(struct zsl_vec *v)
 
 int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
 {
-	int sz_last;
+	size_t sz_last;
 
 	if (!n) {
 		return -EINVAL;
