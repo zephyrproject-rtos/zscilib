@@ -6,19 +6,54 @@
 
 #define EPSILON 1e-4
 
+int gauss_reduc_test()
+{
+	int rc = 0;
+
+	ZSL_MATRIX_DEF(va, 3, 3);
+	ZSL_MATRIX_DEF(vb, 3, 3);
+
+	/* Input matrix with range 3. */
+	zsl_real_t data[9] = { 4.0,  3.0,  0.0,
+			       2.0,  1.0, -3.0,
+			       -4.0, -5.0, -8.0 };
+
+	struct zsl_mtx ma = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data
+	};
+
+	/* Input matrix with range 2. */
+	zsl_real_t datb[9] = { 4.0,  2.0,  0.0,
+			       2.0,  1.0, -3.0,
+			       -4.0, -2.0, -8.0 };
+
+	struct zsl_mtx mb = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = datb
+	};
+
+	rc = zsl_mtx_gauss_reduc(&ma, &vb, &va);
+
+	zsl_mtx_print(&va);
+	printf("\n\n");
+}
+
 int svd_test()
 {
 	size_t q = 18;
 	size_t p = 3;
-	
-	zsl_real_t vi[3 * 18] = { 3.2, 5.0,-4.2,-3.1, 5.4,-2.2, 7.7, 8.7,
-				  9.9, 8.9, 0.6, 5.4, 3.7,-3.3, 7.2,-5.4,
-				  -0.6, 8.4, 2.4, 5.1,-5.7, 6.9,-2.1, 0.4,
-				  6.4,-9.1,-4.4, 0.1, 7.4, 0.0, 6.1,-2.3,
-				  5.5, 6.1,-8.4,-6.6, 7.1, 2.3, 4.1,-0.8,
-				  -4.7, 9.9,-3.1, 1.2, 5.2, 6.4,-6.3, 5.2,
-				  8.8, 7.3, 4.2,-4.7, 0.0,-0.4 };
-		
+
+	zsl_real_t vi[3 * 18] = { 3.2, 5.0, -4.2, -3.1, 5.4, -2.2, 7.7, 8.7,
+				  9.9, 8.9, 0.6, 5.4, 3.7, -3.3, 7.2, -5.4,
+				  -0.6, 8.4, 2.4, 5.1, -5.7, 6.9, -2.1, 0.4,
+				  6.4, -9.1, -4.4, 0.1, 7.4, 0.0, 6.1, -2.3,
+				  5.5, 6.1, -8.4, -6.6, 7.1, 2.3, 4.1, -0.8,
+				  -4.7, 9.9, -3.1, 1.2, 5.2, 6.4, -6.3, 5.2,
+				  8.8, 7.3, 4.2, -4.7, 0.0, -0.4 };
+
 	/* Define the 18x3 matrix, assigning the values from 'vi'. */
 	ZSL_MATRIX_DEF(mep, q, p);
 	zsl_mtx_from_arr(&mep, vi);
@@ -63,7 +98,7 @@ int svd_test()
 	printf("U * Sigma * V^t:\n");
 	zsl_mtx_print(&uevt);
 	printf("\n");
-	
+
 	return 0;
 }
 
@@ -71,15 +106,15 @@ int pinv_test()
 {
 	size_t q = 18;
 	size_t p = 3;
-	
-	zsl_real_t vi[3 * 18] = { 3.2, 5.0,-4.2,-3.1, 5.4,-2.2, 7.7, 8.7,
-				  9.9, 8.9, 0.6, 5.4, 3.7,-3.3, 7.2,-5.4,
-				  -0.6, 8.4, 2.4, 5.1,-5.7, 6.9,-2.1, 0.4,
-				  6.4,-9.1,-4.4, 0.1, 7.4, 0.0, 6.1,-2.3,
-				  5.5, 6.1,-8.4,-6.6, 7.1, 2.3, 4.1,-0.8,
-				  -4.7, 9.9,-3.1, 1.2, 5.2, 6.4,-6.3, 5.2,
-				  8.8, 7.3, 4.2,-4.7, 0.0,-0.4 };
-	
+
+	zsl_real_t vi[3 * 18] = { 3.2, 5.0, -4.2, -3.1, 5.4, -2.2, 7.7, 8.7,
+				  9.9, 8.9, 0.6, 5.4, 3.7, -3.3, 7.2, -5.4,
+				  -0.6, 8.4, 2.4, 5.1, -5.7, 6.9, -2.1, 0.4,
+				  6.4, -9.1, -4.4, 0.1, 7.4, 0.0, 6.1, -2.3,
+				  5.5, 6.1, -8.4, -6.6, 7.1, 2.3, 4.1, -0.8,
+				  -4.7, 9.9, -3.1, 1.2, 5.2, 6.4, -6.3, 5.2,
+				  8.8, 7.3, 4.2, -4.7, 0.0, -0.4 };
+
 	/* Define the 18x3 matrix, assigning the chosen values. */
 	ZSL_MATRIX_DEF(mep, q, p);
 	zsl_mtx_from_arr(&mep, vi);
@@ -99,51 +134,22 @@ int pinv_test()
 	printf("--------------------------\n");
 	zsl_mtx_print(&pinv);
 	printf("\n");
-	
+
 	return 0;
 }
 
 int
 main(void)
 {
-        printf("Hello, zscilib!\n\n");
-	
-	int rc = 0;
-	
-	ZSL_MATRIX_DEF(va, 3, 3);
-	ZSL_MATRIX_DEF(vb, 3, 3);
-	
-	/* Input matrix with range 3. */
-	zsl_real_t data[9] = { 4.0,  3.0,  0.0,
-			       2.0,  1.0, -3.0,
-			      -4.0, -5.0, -8.0 };
-	
-	struct zsl_mtx ma = {
-		.sz_rows = 3,
-		.sz_cols = 3,
-		.data = data
-	};
-	
-	/* Input matrix with range 2. */
-	zsl_real_t datb[9] = { 4.0,  2.0,  0.0,
-			       2.0,  1.0, -3.0,
-			      -4.0, -2.0, -8.0 };
-	
-	struct zsl_mtx mb = {
-		.sz_rows = 3,
-		.sz_cols = 3,
-		.data = datb
-	};
-	
-	rc = zsl_mtx_gauss_reduc(&ma, &vb, &va);
-	
-	zsl_mtx_print(&va);
-	printf("\n\n");
-	
+	printf("Hello, zscilib!\n\n");
+
 	rc = zsl_mtx_gauss_reduc(&mb, &va, &vb);
-	
+
 	zsl_mtx_print(&vb);
 	printf("\n\n");
 
-        return 0;
+	svd_test();
+	pinv_test();
+
+	return 0;
 }

@@ -27,6 +27,20 @@
 
 // TODO: Introduce local macros for bounds/shape checks to avoid duplication!
 
+/* To avoid declaring multiple matrices on the stack, two chunks of
+ * statically declared memory are made available here for reuse in
+ * zsl_mtx_qrd_iter. */
+#if CONFIG_ZSL_MATRIX_QRD_USE_SCRATCH
+static zsl_real_t scrd_1[CONFIG_ZSL_MATRIX_QRD_SCRATCH_SIZE];
+static zsl_real_t scrd_2[CONFIG_ZSL_MATRIX_QRD_SCRATCH_SIZE];
+#define ZSL_QRD_SCRATCH_1_CLEAR (memset(scrd_1, 0,			     \
+					CONFIG_ZSL_MATRIX_QRD_SCRATCH_SIZE * \
+					sizeof(zsl_real_t)))
+#define ZSL_QRD_SCRATCH_2_CLEAR (memset(scrd_2, 0,			     \
+					CONFIG_ZSL_MATRIX_QRD_SCRATCH_SIZE * \
+					sizeof(zsl_real_t)))
+#endif
+
 int
 zsl_mtx_entry_fn_empty(struct zsl_mtx *m, size_t i, size_t j)
 {
@@ -565,7 +579,7 @@ zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
 	for (size_t i = 0; i < m->sz_cols; i++) {
 		for (size_t j = 0; j < m->sz_cols; j++) {
 			sign = 1.0;
-			if ((i+j) % 2 != 0) {
+			if ((i + j) % 2 != 0) {
 				sign = -1.0;
 			}
 			zsl_mtx_reduce(m, &mr, i, j);
@@ -1073,9 +1087,9 @@ zsl_mtx_balance(struct zsl_mtx *m, struct zsl_mtx *mout)
 			/* Calculate sum of components of each row, column. */
 			for (size_t j = 0; j < m->sz_cols; j++) {
 				row += ZSL_ABS(mout->data[(i * m->sz_rows) +
-					       j]);
+							  j]);
 				col += ZSL_ABS(mout->data[(j * m->sz_rows) +
-					       i]);
+							  i]);
 			}
 
 			/* TODO: Extend with a check against epsilon? */
@@ -1237,8 +1251,28 @@ zsl_mtx_qrd_iter(struct zsl_mtx *m, struct zsl_mtx *mout, size_t iter)
 {
 	int rc;
 
+	/* Use scratch memory to avoid stack overflow when these functions
+	 * are called recursively. */
+	#ifdef CONFIG_ZSL_MATRIX_QRD_USE_SCRATCH
+	ZSL_QRD_SCRATCH_1_CLEAR;
+	struct zsl_mtx q = {
+		.sz_rows = m->sz_rows,
+		.sz_cols = m->sz_rows,
+		.data = scrd_1
+	};
+
+	ZSL_QRD_SCRATCH_2_CLEAR;
+	struct zsl_mtx r = {
+		.sz_rows = m->sz_rows,
+		.sz_cols = m->sz_rows,
+		.data = scrd_2
+	};
+	#else
+	/* Use stack ... this will get HUGE though!!! */
 	ZSL_MATRIX_DEF(q, m->sz_rows, m->sz_rows);
 	ZSL_MATRIX_DEF(r, m->sz_rows, m->sz_rows);
+	#endif
+
 
 	/* Make a copy of 'm'. */
 	rc = zsl_mtx_copy(mout, m);

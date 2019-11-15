@@ -32,7 +32,7 @@ config ZSL_SINGLE_PRECISION
 	  double-precision (64-bits).
 
 config ZSL_PLATFORM_OPT
-    int "Platform optimisations"
+	int "Platform optimisations"
 	default 0
 	range 0 2
 	help
@@ -56,7 +56,7 @@ config ZSL_MATRIX_INLINE
 	  Enabling this option will cause common matrix functions to use inline
 	  versions, avoiding the overhead of function calls at the expense of
 	  a larger firmware image.
-
+	
 config ZSL_BOUNDS_CHECKS
 	bool "Enable bounds checking in functions."
 	default y
@@ -74,5 +74,25 @@ config ZSL_BOUNDS_CHECKS
 	  easily lead to stack corruption and critical firmware failures. This
 	  should only be disabled as a final option, and only on known-gppd and
 	  thoroughly tested code.
+
+config ZSL_MATRIX_QRD_USE_SCRATCH
+	bool "Use scratch memory for zsl_mtx_qrd_iter"
+	default n if ZSL_SINGLE_PRECISION
+	help
+	  If set to true, the library will use statically declared scratch
+	  memory to allocate the matrices in zsl_mtx_qrd_iter, rather than
+	  using stack memory for each iterative call to the function. The
+	  scratch memory size is defined by ZSL_MATRIX_QRD_SCRATCH_SIZE.
+
+config ZSL_MATRIX_QRD_SCRATCH_SIZE
+	int "Number of record for scratch memory in zsl_mtx_qrd_iter"
+	default 100
+	help
+	  In order to avoid a huge amount of stack memory allocation when
+	  calling zsl_mtx_qrd_iter, two zsl_real_t arrays can be defined and
+	  reused during iterative calls to the function. This value defines
+	  the number of entries in each of the two arrays, with the result
+	  that total memory use will be ZSL_MATRIX_QRD_SCRATCH_SIZE * 2 *
+	  sizeof(zsl_real_t).
 
 endif
