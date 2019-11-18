@@ -24,127 +24,127 @@ $(ODIR)/%.o: %.c
 
 all: $(TARGET)
 
-obj/matrices.o: ../../src/matrices.c
+$(ODIR)/matrices.o: ../../src/matrices.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/matrices.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/vectors.o: ../../src/vectors.c
+$(ODIR)/vectors.o: ../../src/vectors.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/vectors.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/zsl.o: ../../src/zsl.c
+$(ODIR)/zsl.o: ../../src/zsl.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/zsl.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/atomic.o: ../../src/physics/atomic.c
+$(ODIR)/atomic.o: ../../src/physics/atomic.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/atomic.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/dynamics.o: ../../src/physics/dynamics.c
+$(ODIR)/dynamics.o: ../../src/physics/dynamics.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/dynamics.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/eleccomp.o: ../../src/physics/eleccomp.c
+$(ODIR)/eleccomp.o: ../../src/physics/eleccomp.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/eleccomp.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/electric.o: ../../src/physics/electric.c
+$(ODIR)/electric.o: ../../src/physics/electric.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/electric.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/energy.o: ../../src/physics/energy.c
+$(ODIR)/energy.o: ../../src/physics/energy.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/energy.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/fluids.o: ../../src/physics/fluids.c
+$(ODIR)/fluids.o: ../../src/physics/fluids.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/fluids.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/gases.o: ../../src/physics/gases.c
+$(ODIR)/gases.o: ../../src/physics/gases.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/gases.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/gravitation.o: ../../src/physics/gravitation.c
+$(ODIR)/gravitation.o: ../../src/physics/gravitation.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/gravitation.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/kinematics.o: ../../src/physics/kinematics.c
+$(ODIR)/kinematics.o: ../../src/physics/kinematics.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/kinematics.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/magnetics.o: ../../src/physics/magnetics.c
+$(ODIR)/magnetics.o: ../../src/physics/magnetics.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/magnetics.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/mass.o: ../../src/physics/mass.c
+$(ODIR)/mass.o: ../../src/physics/mass.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/mass.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/misc.o: ../../src/physics/misc.c
+$(ODIR)/misc.o: ../../src/physics/misc.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/misc.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/momentum.o: ../../src/physics/momentum.c
+$(ODIR)/momentum.o: ../../src/physics/momentum.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/momentum.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/optics.o: ../../src/physics/optics.c
+$(ODIR)/optics.o: ../../src/physics/optics.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/optics.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/photons.o: ../../src/physics/photons.c
+$(ODIR)/photons.o: ../../src/physics/photons.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/photons.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/projectiles.o: ../../src/physics/projectiles.c
+$(ODIR)/projectiles.o: ../../src/physics/projectiles.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/projectiles.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/relativity.o: ../../src/physics/relativity.c
+$(ODIR)/relativity.o: ../../src/physics/relativity.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/relativity.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/rotation.o: ../../src/physics/rotation.c
+$(ODIR)/rotation.o: ../../src/physics/rotation.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/rotation.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/sound.o: ../../src/physics/sound.c
+$(ODIR)/sound.o: ../../src/physics/sound.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/sound.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/thermo.o: ../../src/physics/thermo.c
+$(ODIR)/thermo.o: ../../src/physics/thermo.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/thermo.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/waves.o: ../../src/physics/waves.c
+$(ODIR)/waves.o: ../../src/physics/waves.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/waves.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
-obj/work.o: ../../src/physics/work.c
+$(ODIR)/work.o: ../../src/physics/work.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/work.o
 	@$(CC) -c -o $@ $< $(CFLAGS)

@@ -6,41 +6,6 @@
 
 #define EPSILON 1e-4
 
-int gauss_reduc_test()
-{
-	int rc = 0;
-
-	ZSL_MATRIX_DEF(va, 3, 3);
-	ZSL_MATRIX_DEF(vb, 3, 3);
-
-	/* Input matrix with range 3. */
-	zsl_real_t data[9] = { 4.0,  3.0,  0.0,
-			       2.0,  1.0, -3.0,
-			       -4.0, -5.0, -8.0 };
-
-	struct zsl_mtx ma = {
-		.sz_rows = 3,
-		.sz_cols = 3,
-		.data = data
-	};
-
-	/* Input matrix with range 2. */
-	zsl_real_t datb[9] = { 4.0,  2.0,  0.0,
-			       2.0,  1.0, -3.0,
-			       -4.0, -2.0, -8.0 };
-
-	struct zsl_mtx mb = {
-		.sz_rows = 3,
-		.sz_cols = 3,
-		.data = datb
-	};
-
-	rc = zsl_mtx_gauss_reduc(&ma, &vb, &va);
-
-	zsl_mtx_print(&va);
-	printf("\n\n");
-}
-
 int svd_test()
 {
 	size_t q = 18;
@@ -143,12 +108,12 @@ main(void)
 {
 	printf("Hello, zscilib!\n\n");
 
-	rc = zsl_mtx_gauss_reduc(&mb, &va, &vb);
-
-	zsl_mtx_print(&vb);
-	printf("\n\n");
-
+	printf("SVD TEST\n");
+	printf("--------\n");
 	svd_test();
+
+	printf("PSEUDOINVERSE TEST\n");
+	printf("------------------\n");
 	pinv_test();
 
 	return 0;
