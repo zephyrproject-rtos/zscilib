@@ -39,7 +39,8 @@ Compiling obj/fluids.o
 Compiling obj/gases.o
 Compiling obj/gravitation.o
 Compiling obj/kinematics.o
-Compiling obj/magnetics.oCompiling obj/mass.o
+Compiling obj/magnetics.o
+Compiling obj/mass.o
 Compiling obj/misc.o
 Compiling obj/momentum.o
 Compiling obj/optics.o
@@ -61,11 +62,9 @@ You can then run the resulting binary as follows:
 bin/zscilib
 ```
 
-Which will yield the partial output shown below:
-
-```bash
+Which should give you the following partial results:
+```
 ...
-
 PSEUDOINVERSE TEST
 ------------------
 INPUT (18x3 MATRIX)
