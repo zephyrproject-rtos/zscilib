@@ -72,8 +72,8 @@ config ZSL_BOUNDS_CHECKS
 
 	  EXTREME CARE should be taken when disabling this option since it can
 	  easily lead to stack corruption and critical firmware failures. This
-	  should only be disabled as a final option, and only on known-gppd and
-	  thoroughly tested code.
+	  should only be disabled as a final option, and only on known-good
+	  and thoroughly tested code.
 
 config ZSL_MATRIX_QRD_USE_SCRATCH
 	bool "Use scratch memory for zsl_mtx_qrd_iter"
@@ -86,6 +86,7 @@ config ZSL_MATRIX_QRD_USE_SCRATCH
 
 config ZSL_MATRIX_QRD_SCRATCH_SIZE
 	int "Number of record for scratch memory in zsl_mtx_qrd_iter"
+	depends on ZSL_MATRIX_QRD_USE_SCRATCH
 	default 100
 	help
 	  In order to avoid a huge amount of stack memory allocation when
