@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Kevin Townsend (KTOWN)
+ * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -32,16 +32,54 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_
 #define ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_
 
+#if !asm_vec_scalar_add
+#if CONFIG_ZSL_PLATFORM_OPT == 2
+/* TODO: ARM Thumb2 GNU implementation. */
+int zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s)
+{
+	for (size_t i = 0; i < v->sz; i++) {
+		v->data[i] += s;
+	}
+
+	return 0;
+}
+#define asm_vec_scalar_add 1
+#endif
+#endif
+
 #if !asm_vec_scalar_mult
+#if CONFIG_ZSL_PLATFORM_OPT == 2
+/* TODO: ARM Thumb2 GNU implementation. */
 int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
 {
-    for (size_t i = 0; i < v->sz; i++) {
-        v->data[i] *= s;
-    }
+	for (size_t i = 0; i < v->sz; i++) {
+		v->data[i] *= s;
+	}
 
-    return 0;
+	return 0;
 }
 #define asm_vec_scalar_mult 1
+#endif /* CONFIG_ZSL_PLATFORM_OPT == 2 */
+#endif
+
+#if !asm_vec_scalar_div
+#if CONFIG_ZSL_PLATFORM_OPT == 2
+/* TODO: ARM Thumb2 GNU implementation. */
+int zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s)
+{
+	/* Avoid divide by zero errors. */
+	if (s == 0) {
+		return -EINVAL;
+	}
+
+	for (size_t i = 0; i < v->sz; i++) {
+		v->data[i] /= s;
+	}
+
+	return 0;
+}
+#define asm_vec_scalar_div 1
+#endif /* CONFIG_ZSL_PLATFORM_OPT == 2 */
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_ */

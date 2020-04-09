@@ -138,6 +138,7 @@ int zsl_vec_sum(struct zsl_vec **v, size_t n, struct zsl_vec *w)
 	return 0;
 }
 
+#if !asm_vec_scalar_add
 int zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s)
 {
 	for (size_t i = 0; i < v->sz; i++) {
@@ -146,6 +147,7 @@ int zsl_vec_scalar_add(struct zsl_vec *v, zsl_real_t s)
 
 	return 0;
 }
+#endif
 
 #if !asm_vec_scalar_mult
 int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
@@ -158,6 +160,7 @@ int zsl_vec_scalar_mult(struct zsl_vec *v, zsl_real_t s)
 }
 #endif
 
+#if !asm_vec_scalar_div
 int zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s)
 {
 	/* Avoid divide by zero errors. */
@@ -171,6 +174,7 @@ int zsl_vec_scalar_div(struct zsl_vec *v, zsl_real_t s)
 
 	return 0;
 }
+#endif
 
 zsl_real_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 {
