@@ -15,6 +15,8 @@ library is the [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr),
 it tries to be as portable as possible, and a standalone reference project
 is included to use this library in non-Zephyr-based projects.
 
+This version of zscilib has been developed and tested against **Zephyr 2.2**.
+
 ## Quick Start: Zephyr
 
 ### Adding zscilib to your project via `west`
@@ -87,19 +89,15 @@ to ensure that the stack pointer is double-word aligned).
 
 ## Quick Start: Standalone
 
-A standard makefile-based project is included in `samples/standalone` showing
-how zscilib can be built by itself with GCC (without using Zephyr).
+A few makefile-based projects are included in `samples/standalone` showing
+how zscilib can be used independent of Zephyr.
 
-If you already have an appropriate GNU toolchain and build tools (`make`, etc.) installed, you can simply execute the following commands:
+If you already have an appropriate GNU toolchain and build tools (`make`, etc.)
+installed, you can simply execute the following commands:
 
 ```
-$ cd samples/standalone
+$ cd samples/standalone/svd_pinv
 $ make
-  Compiling obj/main.o
-  Compiling obj/matrices.o
-  Compiling obj/vectors.o
-  Compiling obj/zsl.o
-  gcc obj/main.o obj/matrices.o obj/vectors.o obj/zsl.o  -o bin/zscilib -Wall -I. -I../../include -lm
 $ bin/zscilib
   Hello, zscilib!
   ...

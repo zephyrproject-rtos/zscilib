@@ -32,6 +32,27 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_
 #define ZEPHYR_INCLUDE_ZSL_ASM_ARM_VECTORS_H_
 
+#if !asm_vec_add
+#if CONFIG_ZSL_PLATFORM_OPT == 2
+int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure v and w are equal length. */
+	if ((v->sz != w->sz) || (v->sz != x->sz)) {
+		return -EINVAL;
+	}
+#endif
+
+	for (size_t i = 0; i < v->sz; i++) {
+		x->data[i] = v->data[i] + w->data[i];
+	}
+
+	return 0;
+}
+#define asm_vec_add 1
+#endif
+#endif
+
 #if !asm_vec_scalar_add
 #if CONFIG_ZSL_PLATFORM_OPT == 2
 /* TODO: ARM Thumb2 GNU implementation. */

@@ -67,6 +67,7 @@ int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
 	return 0;
 }
 
+#if !asm_vec_add
 int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
@@ -82,6 +83,7 @@ int zsl_vec_add(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 
 	return 0;
 }
+#endif
 
 int zsl_vec_sub(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *x)
 {
