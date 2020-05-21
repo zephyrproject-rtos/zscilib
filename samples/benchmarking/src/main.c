@@ -1,9 +1,9 @@
 /*
+ * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
  * Copyright (c) 2016 Intel Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
 
 #include <zephyr.h>
 #include <sys/printk.h>

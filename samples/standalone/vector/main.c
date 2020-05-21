@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>

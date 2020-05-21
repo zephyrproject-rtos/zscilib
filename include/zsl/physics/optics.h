@@ -1,20 +1,7 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -121,7 +108,7 @@ int zsl_phy_opt_power(zsl_real_t f, zsl_real_t *p);
 int zsl_phy_opt_magn(zsl_real_t y1, zsl_real_t y2, zsl_real_t *m);
 
 /**
- * @brief Calculates the distance between two objects when a light beam of 
+ * @brief Calculates the distance between two objects when a light beam of
  *        wavelenght comparable to the distance passes through them and difracts
  *        producing spectral lines.
  *
