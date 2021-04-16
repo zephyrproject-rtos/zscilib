@@ -1,19 +1,19 @@
+common:
+  min_ram: 16
 tests:
   # C functions in single and double precision
   zsl.core.c.double:
-    extra_args: CONFIG_ZSL_PLATFORM_OPT=0
-    min_ram: 16
+    extra_configs:
+      - CONFIG_ZSL_PLATFORM_OPT=0
   zsl.core.c.single:
-    extra_args: CONFIG_ZSL_PLATFORM_OPT=0 CONFIG_ZSL_SINGLE_PRECISION=y
-    min_ram: 16
+    extra_configs:
+      - CONFIG_ZSL_PLATFORM_OPT=0
+      - CONFIG_ZSL_SINGLE_PRECISION=y
   # CARM THUMB functions in single and double precision
   zsl.core.thumb2.double:
-    arch_whitelist: arm
-    platform_whitelist: qemu_cortex_m3
-    extra_args: CONFIG_ZSL_PLATFORM_OPT=2
-    min_ram: 16
+    extra_configs:
+      - CONFIG_ZSL_PLATFORM_OPT=2
   zsl.core.thumb2.single:
-    arch_whitelist: arm
-    platform_whitelist: qemu_cortex_m3
-    extra_args: CONFIG_ZSL_PLATFORM_OPT=2 CONFIG_ZSL_SINGLE_PRECISION=y
-    min_ram: 16
+    extra_configs:
+      - CONFIG_ZSL_PLATFORM_OPT=2
+      - CONFIG_ZSL_SINGLE_PRECISION=y
