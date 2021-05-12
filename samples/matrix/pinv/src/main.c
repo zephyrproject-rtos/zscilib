@@ -43,6 +43,12 @@ void pinv_demo(void)
 		-4.7,  0.0, -0.4
 	};
 
+	/* Large stack space warning. */
+	printf("WARNING: Operations involving large matrices and eigenvectors\n");
+	printf("         require a large amount of stack memory. This sample\n");
+	printf("         may not work on small embedded devices, and may\n");
+	printf("         cause a stack overflow.\n\n");
+
 	/* Define the 18x3 matrix, assigning the chosen values. */
 	ZSL_MATRIX_DEF(mep, q, p);
 	zsl_mtx_from_arr(&mep, vi);

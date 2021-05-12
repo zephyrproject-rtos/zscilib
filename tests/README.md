@@ -2,14 +2,14 @@
 
 This folder contains unit tests for zsl.
 
-## Running tests via `sanitycheck`
+## Running tests via `twister`
 
 To run these units tests, make sure that you have previously run
 `source zephyr-env.sh` (or it's equivalent for your system), and
 execute the following command to start the test-runner:
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T [zscilib_tests_folder]
+$ twister -p qemu_cortex_m3 -T [zscilib_tests_folder]
 ```
 
 > **Tip**: If you wish to have **verbose output** to see any errors in

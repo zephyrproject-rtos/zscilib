@@ -1,5 +1,5 @@
 build/
-sanity-out/
+twister-out/
 
 # Prerequisites
 *.d

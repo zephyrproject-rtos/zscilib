@@ -44,7 +44,7 @@ void test_mtx_mult_demo(void)
 		return;
 	}
 
-	printf("mtx multiply output:\n\n");
+	printf("mtx multiply output (4x3 * 3x4 = 4x4):\n\n");
 	zsl_mtx_print(&mc);
 }
 
@@ -55,6 +55,6 @@ void main(void)
 	test_mtx_mult_demo();
 
 	while (1) {
-		k_sleep(100);
+		k_sleep(K_FOREVER);
 	}
 }

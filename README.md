@@ -15,7 +15,7 @@ library is the [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr),
 it tries to be as portable as possible, and a standalone reference project
 is included to use this library in non-Zephyr-based projects.
 
-This version of zscilib has been developed and tested against **Zephyr 2.2**.
+This version of zscilib has been developed and tested against **Zephyr 2.5.0**.
 
 ## Quick Start: Zephyr
 
@@ -63,21 +63,81 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T modules/lib/zscilib/tests
+$ twister -p qemu_cortex_m3 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
 
+
+### Debugging with QEMU
+
+If you wish to debug using QEMU (and with minor variation actual hardware),
+you can run the following commands to start a new GDB debug session.
+
+> For an overview of debugging in GDB, you may find the following presentation
+  useful: [LVC21-308: Essential ARM Cortex-M Debugging with GDB][LV21-308]
+
+[LV21-308]: https://connect.linaro.org/resources/lvc21/lvc21-308/
+
+In one terminal window, run:
+
+```bash
+$ west build -p auto -b qemu_cortex_m3 modules/lib/zscilib/samples/matrix/pinv
+```
+
+Once the ELF file has been built, we can start a GDB server on the default
+`1234` socket, and wait for a new connection via:
+
+```bash
+$ cd build
+$ ninja debugserver
+```
+
+In a new terminal window, connect to the GDB server via:
+
+```bash
+$ cd <zephyr_path>
+$ arm-none-eabi-gdb-py \
+  --eval-command="target remote localhost:1234" \
+  --se=build/zephyr/zephyr.elf
+```
+
+> The `-py` extension is optional, and makes use of a version of GDB from the
+  ARM GNU toolchain releases that enables Python scripts to be used with your
+  debug sessions. See the [LVC21-308][LV21-308] presentation at the top of this
+  section for details.
+
+From here, you can start debugging with the `(gdb)` prompt.
+
+For example:
+
+```
+(gdb) b main
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at modules/lib/zscilib/samples/matrix/pinv/src/main.c:70
+70              printf("\n\nzscilib pseudo-inverse demo\n\n");
+(gdb) n
+72              pinv_demo();
+(gdb) step
+pinv_demo () at modules/lib/zscilib/samples/matrix/pinv/src/main.c:25
+25              zsl_real_t vi[18 * 3] = {
+(gdb) n
+... 
+(gdb) quit
+```
+
 ### Note: Float Stack Usage in Zephyr
 
-The sample code in this library typically has the `CONFIG_FLOAT` option set,
+The sample code in this library typically has the `CONFIG_FPU` option set,
 meaning that floating-point support is configured for
 [Unshared FP registers mode][2]. This mode is used when the application
 has a **single thread** that uses floating point registers.
 
 If your application makes use of **multiple threads**, and more than one of
 these threads uses floating-point operations, you should also enable the
-`CONFIG_FP_SHARING` config flag, which configures the kernel for
+`CONFIG_FPU_SHARING` config flag, which configures the kernel for
 [Shared FP registers mode][3]. In this mode, the floating point registers are
 saved and restored during each context switch, even when the associated threads
 are not using them. This feature comes at the expense of an extra 72 bytes of

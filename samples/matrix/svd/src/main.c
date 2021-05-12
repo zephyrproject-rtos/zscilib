@@ -43,6 +43,12 @@ void svd_demo(void)
 		-4.7,  0.0, -0.4
 	};
 
+	/* Large stack space warning. */
+	printf("WARNING: Operations involving large matrices and eigenvectors\n");
+	printf("         require a large amount of stack memory. This sample\n");
+	printf("         may not work on small embedded devices, and may\n");
+	printf("         cause a stack overflow.\n\n");
+
 	/* Define the 18x3 matrix, assigning the values from 'vi'. */
 	ZSL_MATRIX_DEF(mep, q, p);
 	zsl_mtx_from_arr(&mep, vi);
@@ -64,7 +70,7 @@ void svd_demo(void)
 	printf("\n");
 
 	/* Calculate and display the SVD using 150 iterations. */
-	zsl_mtx_svd(&mep, &u, &e, &v, 15);
+	zsl_mtx_svd(&mep, &u, &e, &v, 150);
 	printf("SVD OUTPUT\n");
 	printf("----------\n");
 	printf("U matrix (18x18):\n");

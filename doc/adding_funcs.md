@@ -227,7 +227,7 @@ At this point, you can run the unit tests for the new function as follows:
 > This assumes you have already run **`$ source zephyr/zephyr-env.sh`**
 
 ```
-$ sanitycheck -p qemu_cortex_m3 -T [zscilib_tests_folder]
+$ twister -p qemu_cortex_m3 -T [zscilib_tests_folder]
 ```
 
 #### Resolving build/test failures
@@ -236,11 +236,11 @@ If you can any errors during the test run, they will generally be on of the
 following two types:
 
 -  **build** errors, indicating a problem with the source code in your new
-  function, indicated the following warning from `sanitycheck`:
+  function, indicated the following warning from `twister`:
 
 ```
 qemu_cortex_m3    zsl.core.thumb2.double        FAILED: handler_crash
-        see: sanity-out/qemu_cortex_m3/zsl.core.thumb2.double/build.log
+        see: twister-out/qemu_cortex_m3/zsl.core.thumb2.double/build.log
 ```
 
 - **handler** errors, indicating that one of the tests in your unit test code
@@ -249,7 +249,7 @@ qemu_cortex_m3    zsl.core.thumb2.double        FAILED: handler_crash
 
 ```
 qemu_cortex_m3    zsl.core.thumb2.double        FAILED: failed
-        see: sanity-out/qemu_cortex_m3/zsl.core.thumb2.double/handler.log
+        see: twister-out/qemu_cortex_m3/zsl.core.thumb2.double/handler.log
 ```
 
 To find the exact source of the error, simply examines the appropriate `.log`

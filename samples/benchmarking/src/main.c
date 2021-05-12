@@ -112,6 +112,6 @@ void main(void)
 
 	while (1) {
 		test_vec_add();
-		k_sleep(5000);
+		k_sleep(K_FOREVER);
 	}
 }
