@@ -169,11 +169,11 @@ The feature tables below indicate whether implemented functions support:
 
 - **f32**: Single-precision floating-point operations
 - **f64**: Double-precision floating-point operations
-- **ARM**: Optimised ARM Thumb-2 ASM implementation
+- **ARM**: Optimised Arm Thumb-2 ASM implementation
 
 ### Vector Operations
 
-| Feature         | Func                  | f32 | f64 | ARM | Notes           |
+| Feature         | Func                  | f32 | f64 | Arm | Notes           |
 |-----------------|-----------------------|-----|-----|-----|-----------------|
 | Array to vector | `zsl_vec_from_arr`    | x   | x   |     |                 |
 | Copy            | `zsl_vec_copy`        | x   | x   |     |                 |
@@ -203,7 +203,7 @@ The feature tables below indicate whether implemented functions support:
 
 ### Matrix Operations
 
-| Feature         | Func                  | f32 | f64 | ARM | Notes           |
+| Feature         | Func                  | f32 | f64 | Arm | Notes           |
 |-----------------|-----------------------|-----|-----|-----|-----------------|
 | Array to matrix | `zsl_mtx_from_arr`    | x   | x   |     |                 |
 | Copy            | `zsl_mtx_copy`        | x   | x   |     |                 |
@@ -636,7 +636,7 @@ At present, this feature isn't being actively used or developed, but an aim
 of zscilib is to add optimised versions of key functions to try to get the
 best possible performance out of limited resources.
 
-Initial optimisation will target the **ARM Cortex-M** family of devices and the
+Initial optimisation will target the **Arm Cortex-M** family of devices and the
 **Thumb** and **Thumb-2** instruction sets, though other architectures can be
 accommodated if necessary or useful.
 
