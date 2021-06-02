@@ -556,18 +556,11 @@ Help is welcome on the following planned or desirable features.
 - Weighted moving average filter
 - Other basic IIR and FIR-type filters and helper functions.
 
-### Machine Learning
-
-#### Neural Networks
-
-- Basic neural network processing
-- Simplistic training of models
-- Feeding data through a trained network
-
 ### Misc. Domain-Specific Operations
 
 #### Motion and Orientation
 
+- Quaternions (magnitude, normalisation, scaling, etc.)
 - Acceleration/magnetic field -> orientation
 - Sensor fusion (accel/mag/gyro -> quaternion)
 - Euler/Quaternion conversion
