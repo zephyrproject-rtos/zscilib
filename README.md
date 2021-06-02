@@ -611,13 +611,13 @@ they tend to have the following two problems in an embedded context:
   appropriate for small, resource constrained devices like the ARM Cortex M
   family.
 - They are missing many of the domain-specific features required to convert
-  raw sensor data into actionable information (CMSIS-DAP, Lis).
+  raw sensor data into actionable information (CMSIS-DSP, Lis).
 
 The second item is of particular importance, since the goal of embedded systems
 is often 'sensing' via raw data, correlating that data, and acting on the final
 data points or passing them on for further analysis.
 
-CMSIS-DAP contains a number of highly efficient algorithms for filtering
+CMSIS-DSP contains a number of highly efficient algorithms for filtering
 raw sensor data, but it doesn't offer any domain-specific assistance converting
 filtered accelerometer vectors into orientation data, for example, or reading
 a set of photodiodes and converting that data into a useful photometric value
