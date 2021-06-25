@@ -58,7 +58,7 @@ enum zsl_dt_si_scale {
 
 /**
  * @brief Standard SI units (16-bits).
- * 
+ *
  * @note Base and derived SI units can be represented in 8-bits, while
  * combined units require 16-bits to represent.
  *
@@ -67,7 +67,8 @@ enum zsl_dt_si_scale {
  *   - 0x0010..0x001F = SI base units
  *   - 0x0020..0x003F = SI derived units
  *   - 0x0040..0x00FF = Reserved
- *   - 0x0100..0xFEFF = Combined units
+ *   - 0x0100..0xFDFF = Combined units
+ *   - 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.)
  *   - 0xFF00..0xFFFE = User defined units
  */
 enum zsl_dt_si_unit {
@@ -128,6 +129,44 @@ enum zsl_dt_si_unit {
 	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_METER_2_PER_HZ = 0x1B12,       /**< W/sr/m^2/Hz */
 	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_METER_2_PER_NM = 0x1B13,       /**< W/sr/m^2/nm */
 	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_NM             = 0x1B14,       /**< W/sr/nm */
+
+	/* 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.). */
+	ZSL_DT_SI_UNIT_ZSC_BOOL                                 = 0xFD00,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL32                        = 0xFD10,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL64                        = 0xFD11,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL128                       = 0xFD12,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S8                            = 0xFD13,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S16                           = 0xFD14,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S32                           = 0xFD15,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                           = 0xFD16,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                           = 0xFD17,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U8                            = 0xFD18,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U16                           = 0xFD19,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U32                           = 0xFD1A,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U64                           = 0xFD1B,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U128                          = 0xFD1C,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                        = 0xFD30,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_2                      = 0xFD31,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_3                      = 0xFD32,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_4                      = 0xFD33,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                        = 0xFD34,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_2                      = 0xFD35,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_3                      = 0xFD36,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_4                      = 0xFD37,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                        = 0xFD40,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_2X2                    = 0xFD41,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_3X3                    = 0xFD42,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_4X4                    = 0xFD43,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                        = 0xFD44,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_2X2                    = 0xFD45,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_3X3                    = 0xFD46,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_4X4                    = 0xFD47,
+
+	/* 0xFF00..0xFFFE = User defined units. */
+	ZSL_DT_SI_UNIT_USER_DEFINED_1                           = 0xFF00,
+	ZSL_DT_SI_UNIT_USER_DEFINED_254                         = 0xFFFE,
+
+	ZSL_DT_SI_UNIT_MAX                                      = 0xFFFF
 };
 
 #ifdef __cplusplus

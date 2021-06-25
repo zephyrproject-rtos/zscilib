@@ -30,14 +30,16 @@ extern "C" {
 
 /* 
  * TODO: A macro and lookup table is required to associate each data 'type'
- * with the correct SI unit.
+ * with the correct default SI unit.
  */ 
 
 /**
- * @brief Base data type. An 8-bit value representing the family of data
- *        types used. This base type can be further specified from it's
- *        default type by using of an 8-bit extended data type that is
- *        specific to it's parent 'base' value.
+ * @brief Base data type. An 8-bit value representing a family or class of
+ *        measured values or data samples. This base type can be further
+ *        specialised from it's default type by using of an 8-bit extended
+ *        type that is associated with the parent ('base') value. Base types
+ *        have common default values if an extended type is not specified
+ *        (extended type = 0).
  *
  * Memory map:
  *   - 0 = Undefined
@@ -93,13 +95,22 @@ enum zsl_dt_base {
 };
 
 /**
- * @brief Defines a specific data type for a data sample, based on
- *        an 8-bit base type, and an optional 8-bit extended type.
+ * @brief Defines a specific measurement type and SI unit for a data sample.
+ *        Composed of an 8-bit base measurement type (base_type), an optional
+ *        8-bit extended type (ext_type), and a 16-bit SI unit that indicates
+ *        what SI unit and scale the measurement type makes use of (unit).
  *
- * Using a base and extended data type pair allows for specialisation
- * from the default unit and scale associated with just the base type. It
- * should be possible to represent any reasonably standard unit and scale
+ * Using a base and extended value pair for measurement type allows for
+ * specialisation from the default type associated with a measurement family.
+ * It should be possible to represent any reasonably standard unit and scale
  * using these value pairs in a 16-bit space.
+ * 
+ * Indicating the SI unit (and scale) alongside the measurement type allows
+ * for better control over the samples, and the ability to choose a more
+ * appropriate scale depending on the source of the measurement (uA versus A,
+ * for example).
+ *
+ * @note Must be in little-endian format.
  *
  * @note When the extended type is left at 0, the base type's default unit and
  *       scale will be used (mA for ZSL_DT_BASE_CURRENT, for example).
@@ -108,27 +119,36 @@ struct zsl_dt_type {
 	union {
 		struct {
 			/**
-			 * @brief The base data type, which will be associated with
-			 * a specific default unit and scale.
+			 * @brief The base measurement type, which will be associated with
+			 * a specific default SI unit and scale.
 			 */
 			uint8_t base_type;
 
 			/**
-			 * @brief The extended data type, which allows for specialisation
-			 * from the base type. This field must be interpretted relative to
-			 * the sample's base_type.
+			 * @brief The extended measurement type, which allows for
+			 * specialisation of the base type. This field must be interpretted
+			 * relative to the sample's base_type.
 			 *
 			 * Leaving this value at 0 indicates that the base_type's default
-			 * unit and scale should be used.
+			 * SI unit and scale should be used.
 			 */
 			uint8_t ext_type;
 		};
 		/**
-		 * @brief Represents the base and extended data types. Must be
-		 * in little-endian format.
+		 * @brief Represents the base and extended data types.
 		 */
 		uint16_t type;
 	};
+
+	/**
+	 * @brief The SI unit and scale used for this measurement. Must be
+	 * a member of zsl_dt_si_unit. 
+	 * 
+	 * @note This will normally use the default unit associated with the
+	 * measurement type, but can optionally be overriden by the producer to
+	 * adjust for scale, for example.
+	 */
+	uint16_t unit;
 };
 
 #ifdef __cplusplus
