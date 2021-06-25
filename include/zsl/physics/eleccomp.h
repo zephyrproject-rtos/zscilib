@@ -95,7 +95,7 @@ int zsl_phy_ecmp_ener_induc(zsl_real_t l, zsl_real_t i, zsl_real_t *u);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_ecmp_trans(u8_t t1, zsl_real_t v1, u8_t t2, zsl_real_t *v2);
+int zsl_phy_ecmp_trans(uint8_t t1, zsl_real_t v1, uint8_t t2, zsl_real_t *v2);
 
 /**
  * @brief Calculates the total voltage of a RCL circuit based on the voltage in

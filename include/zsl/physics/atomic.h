@@ -38,7 +38,7 @@ extern "C" {
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r);
+int zsl_phy_atom_nucl_radius(uint8_t a, zsl_real_t *r);
 
 /**
  * @brief Calculates the radius of the orbit of an electron in the n-th orbit
@@ -51,7 +51,7 @@ int zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_radius(u8_t z, u8_t n, zsl_real_t *r);
+int zsl_phy_atom_bohr_orb_radius(uint8_t z, uint8_t n, zsl_real_t *r);
 
 /**
  * @brief Calculates the velocity in kilometers per second of an electron in the
@@ -65,7 +65,7 @@ int zsl_phy_atom_bohr_orb_radius(u8_t z, u8_t n, zsl_real_t *r);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v);
+int zsl_phy_atom_bohr_orb_vel(uint8_t z, uint8_t n, zsl_real_t *v);
 
 /**
  * @brief Calculates the energy in electronvolts of an electron in the n-th
@@ -79,7 +79,7 @@ int zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bohr_orb_ener(u8_t z, u8_t n, zsl_real_t *e);
+int zsl_phy_atom_bohr_orb_ener(uint8_t z, uint8_t n, zsl_real_t *e);
 
 /**
  * @brief Calculates the radioactive activity in becquerels of a sample of
@@ -112,7 +112,7 @@ int zsl_phy_atom_rad_decay(zsl_real_t qi, zsl_real_t t, zsl_real_t lambda,
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_atom_bragg(u8_t n, zsl_real_t theta, zsl_real_t lambda,
+int zsl_phy_atom_bragg(uint8_t n, zsl_real_t theta, zsl_real_t lambda,
 		       zsl_real_t *d);
 
 #ifdef __cplusplus

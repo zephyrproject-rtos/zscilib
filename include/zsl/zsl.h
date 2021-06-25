@@ -17,6 +17,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <zsl/consts.h>
 
 #ifdef __cplusplus
@@ -48,32 +49,6 @@ extern const char * zsl_version;
 typedef float zsl_real_t;
 #else
 typedef double zsl_real_t;
-#endif
-
-#if !defined(s8_t)
-typedef signed char         s8_t;
-#endif
-#if !defined(s16_t)
-typedef signed short        s16_t;
-#endif
-#if !defined(s32_t)
-typedef signed int          s32_t;
-#endif
-#if !defined(s64_t)
-typedef signed long long    s64_t;
-#endif
-
-#if !defined(u8_t)
-typedef unsigned char       u8_t;
-#endif
-#if !defined(u16_t)
-typedef unsigned short      u16_t;
-#endif
-#if !defined(u32_t)
-typedef unsigned int        u32_t;
-#endif
-#if !defined(u64_t)
-typedef unsigned long long  u64_t;
 #endif
 
 /* Map math functions based on single or double precision. */

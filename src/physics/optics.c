@@ -90,7 +90,7 @@ zsl_phy_opt_magn(zsl_real_t y1, zsl_real_t y2, zsl_real_t *m)
 }
 
 int
-zsl_phy_opt_dif(u8_t n, zsl_real_t lambda, zsl_real_t o, zsl_real_t *d)
+zsl_phy_opt_dif(uint8_t n, zsl_real_t lambda, zsl_real_t o, zsl_real_t *d)
 {	
 	if (lambda < 0 || ZSL_SIN(o) <= 0) {
 		*d = NAN;

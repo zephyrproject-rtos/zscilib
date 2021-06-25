@@ -13,17 +13,17 @@
 #if !CONFIG_BOARD_QEMU_CORTEX_M3 && \
 	(CONFIG_CPU_CORTEX_M3 || CONFIG_CPU_CORTEX_M4)
 /* Use DWT cycle counter for precision timing if this is a HW M3/M4 core. */
-u32_t dwt_count;
+uint32_t dwt_count;
 #define DWT_RESET_CYCLECOUNTER    do {				  \
 		CoreDebug->DEMCR = CoreDebug->DEMCR | 0x01000000; \
 		DWT->CYCCNT = 0;				  \
 		DWT->CTRL = DWT->CTRL | 1; } while(0)
 #else
 /* Use the high-precision kernel clock. */
-u32_t start_time;
-u32_t stop_time;
-u32_t cycles_spent;
-u32_t nanoseconds_spent;
+uint32_t start_time;
+uint32_t stop_time;
+uint32_t cycles_spent;
+uint32_t nanoseconds_spent;
 #endif
 
 /** The number of times to execute the code under test. */
@@ -83,7 +83,7 @@ void test_vec_add(void)
 	start_time = k_cycle_get_32();
 #endif
 
-	for (u32_t i = 0; i < BENCH_LOOPS; i++) {
+	for (uint32_t i = 0; i < BENCH_LOOPS; i++) {
 		zsl_vec_add(&va, &vb, &vc);
 	}
 
@@ -94,7 +94,7 @@ void test_vec_add(void)
 	stop_time = k_cycle_get_32();
 	/* compute how long the work took (assumes no counter rollover) */
 	cycles_spent = stop_time - start_time;
-	nanoseconds_spent = (u32_t)k_cyc_to_ns_floor64(cycles_spent);
+	nanoseconds_spent = (uint32_t)k_cyc_to_ns_floor64(cycles_spent);
 #endif
 
 #if !CONFIG_BOARD_QEMU_CORTEX_M3 && \

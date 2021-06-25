@@ -119,7 +119,7 @@ struct zsl_dt_type {
 			 * @brief The base data type, which will be associated with
 			 * a specific default unit and scale.
 			 */
-			u8_t base_type;
+			uint8_t base_type;
 
 			/**
 			 * @brief The extended data type, which allows for specialisation
@@ -129,13 +129,13 @@ struct zsl_dt_type {
 			 * Leaving this value at 0 indicates that the base_type's default
 			 * unit and scale should be used.
 			 */
-			u8_t ext_type;
+			uint8_t ext_type;
 		};
 		/**
 		 * @brief Represents the base and extended data types. Must be
 		 * in little-endian format.
 		 */
-		u16_t type;
+		uint16_t type;
 	};
 };
 

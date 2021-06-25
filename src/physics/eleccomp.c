@@ -52,7 +52,7 @@ zsl_phy_ecmp_ener_induc(zsl_real_t l, zsl_real_t i, zsl_real_t *u)
 }
 
 int
-zsl_phy_ecmp_trans(u8_t t1, zsl_real_t v1, u8_t t2, zsl_real_t *v2)
+zsl_phy_ecmp_trans(uint8_t t1, zsl_real_t v1, uint8_t t2, zsl_real_t *v2)
 {
 	if (t1 == 0) {
 		*v2 = NAN;

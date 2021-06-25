@@ -10,7 +10,7 @@
 #include <zsl/physics/atomic.h>
 
 int
-zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r)
+zsl_phy_atom_nucl_radius(uint8_t a, zsl_real_t *r)
 {
 	if (a == 0) {
 		*r = NAN;
@@ -23,7 +23,7 @@ zsl_phy_atom_nucl_radius(u8_t a, zsl_real_t *r)
 }
 
 int
-zsl_phy_atom_bohr_orb_radius(u8_t z, u8_t n, zsl_real_t *r)
+zsl_phy_atom_bohr_orb_radius(uint8_t z, uint8_t n, zsl_real_t *r)
 {
 	if (z == 0) {
 		*r = NAN;
@@ -39,7 +39,7 @@ zsl_phy_atom_bohr_orb_radius(u8_t z, u8_t n, zsl_real_t *r)
 }
 
 int
-zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v)
+zsl_phy_atom_bohr_orb_vel(uint8_t z, uint8_t n, zsl_real_t *v)
 {
 	if (z == 0) {
 		*v = NAN;
@@ -53,7 +53,7 @@ zsl_phy_atom_bohr_orb_vel(u8_t z, u8_t n, zsl_real_t *v)
 }
 
 int
-zsl_phy_atom_bohr_orb_ener(u8_t z, u8_t n, zsl_real_t *e)
+zsl_phy_atom_bohr_orb_ener(uint8_t z, uint8_t n, zsl_real_t *e)
 {
 	if (z == 0) {
 		*e = NAN;
@@ -82,7 +82,7 @@ zsl_phy_atom_rad_decay(zsl_real_t qi, zsl_real_t t, zsl_real_t lambda,
 }
 
 int
-zsl_phy_atom_bragg(u8_t n, zsl_real_t theta, zsl_real_t lambda,
+zsl_phy_atom_bragg(uint8_t n, zsl_real_t theta, zsl_real_t lambda,
 		   zsl_real_t *d)
 {
 	if (lambda < 0 || sin(theta) <= 0) {

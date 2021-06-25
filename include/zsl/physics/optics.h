@@ -122,7 +122,7 @@ int zsl_phy_opt_magn(zsl_real_t y1, zsl_real_t y2, zsl_real_t *m);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_opt_dif(u8_t n, zsl_real_t lambda, zsl_real_t o, zsl_real_t *d);
+int zsl_phy_opt_dif(uint8_t n, zsl_real_t lambda, zsl_real_t o, zsl_real_t *d);
 
 #ifdef __cplusplus
 }
