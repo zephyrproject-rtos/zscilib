@@ -5,7 +5,7 @@
  */
 
 /**
- * @addtogroup DATATYPES_LIGHT ZSL_DT_BASE_LIGHT data types
+ * @addtogroup DATATYPES_LIGHT Light
  *
  * @brief Extended datatypes for ZSL_DT_BASE_LIGHT.
  *
@@ -92,9 +92,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiant flux per wavelength. Measured in watts per nanometer
 	 * (W/nm).
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_FLUX_NM         = 0x14,
 
@@ -113,9 +110,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiant intensity per wavelength. Measured in watt per
 	 * steradian per nanometer (W/sr/nm).
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_INTENSITY_NM    = 0x17,
 
@@ -135,9 +129,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiance of a surface per wavelength. Measured in watt per
 	 * steradian per square meter per nanometer (W/sr/m^2/nm)
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_RADIANCE_NM     = 0x1A,
 
@@ -156,9 +147,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Irraidance of a surface per wavelength. Measured in watt per
 	 * square meter per nanometer (W/m^2/nm). AKA Spectral Flux Density.
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_IRRADIANCE_NM   = 0x1D,
 
@@ -177,9 +165,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiosity of a surface per unit wavelength. Measured in watt per
 	 * square meter per nanometer (W/m^2/nm).
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_RADIOSITY_NM    = 0x20,
 
@@ -198,9 +183,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiant exitance of a surface per wavelength. Measured in watt
 	 * per square meter per nanometer (W/m^2/nm).
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_EXITANCE_NM     = 0x23,
 
@@ -220,9 +202,6 @@ enum zsl_dt_ext_light {
 	/**
 	 * @brief Radiant exposure of a surface per wavelength. Measured in joule
 	 * per square meter per nanometer (J/m^2/nm).
-	 *
-	 * @note Units are given in nanometers here rather than the standard meters
-	 *       since nm is a more common and practical unit of measure.
 	 */
 	ZSL_DT_EXT_LIGHT_RADIO_SPECTRAL_EXPOSURE_NM     = 0x26,
 

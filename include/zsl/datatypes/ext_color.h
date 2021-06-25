@@ -5,7 +5,7 @@
  */
 
 /**
- * @addtogroup DATATYPES_COLOR ZSL_DT_BASE_COLOR data types
+ * @addtogroup DATATYPES_COLOR Color
  *
  * @brief Extended datatypes for ZSL_DT_BASE_COLOR.
  *
