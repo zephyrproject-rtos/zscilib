@@ -245,7 +245,7 @@ enum zsl_dt_ext_light {
 
 	/**
 	 * @brief Luminous flux per unit solid angle per unit projected source
-	 * area. Measured in candela per square meter (cd/m^2 or lm/(sr m^2)).
+	 * area. Measured in candela per square meter (cd/m^2).
 	 */
 	ZSL_DT_EXT_LIGHT_PHOTO_LUMINANCE                = 0x43,
 

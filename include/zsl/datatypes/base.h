@@ -22,122 +22,16 @@
 #define ZEPHYR_INCLUDE_ZSL_DATATYPES_BASE_H_
 
 #include <zsl/zsl.h>
+#include <zsl/datatypes/si.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * @brief Standard SI units.
- *
- * Memory map:
- *   - 0 = Undefined
- *   - 0x10..0x1F = SI base units
- *   - 0x20..0x3F = SI derived units
- *   - 0x40..0xFE = Reserved
- */
-enum zsl_dt_si_unit {
-	ZSL_DT_SI_UNIT_UNDEFINED        = 0,
-
-	/* 0x10..0x1F (16-31): SI Base Units. */
-	ZSL_DT_SI_UNIT_SECOND           = 0x10, /**< s: time */
-	ZSL_DT_SI_UNIT_METER            = 0x11, /**< m: length */
-	ZSL_DT_SI_UNIT_KILOGRAM         = 0x12, /**< kg: mass */
-	ZSL_DT_SI_UNIT_AMPERE           = 0x13, /**< A: electric current */
-	ZSL_DT_SI_UNIT_KELVIN           = 0x14, /**< K: thermodynamic temp. */
-	ZSL_DT_SI_UNIT_MOLE             = 0x15, /**< mol: Amount of substance */
-	ZSL_DT_SI_UNIT_CANDELA          = 0x16, /**< cd: Luminous intensity */
-
-	/* 0x20..0x3F (32-63): SI Derived Units. */
-	ZSL_DT_SI_UNIT_RADIAN           = 0x20, /**< rad: plane angle, m/m */
-	ZSL_DT_SI_UNIT_STERADIAN        = 0x21, /**< sr: solid angle, m^2/m^2 */
-	ZSL_DT_SI_UNIT_HERTZ            = 0x22, /**< Hz: frequency, 1/s */
-	ZSL_DT_SI_UNIT_NEWTON           = 0x23, /**< N: force, m*kg/s^2 */
-	ZSL_DT_SI_UNIT_PASCAL           = 0x24, /**< Pa: pressure, stress, N/m^2 or kg/m*s^2 */
-	ZSL_DT_SI_UNIT_JOULE            = 0x25, /**< J, energy, work, N*m or kg*m^2/s^2 */
-	ZSL_DT_SI_UNIT_WATT             = 0x26, /**< W: power, radiant flux, J/s or kg*m^2/s^3 */
-	ZSL_DT_SI_UNIT_COULOMB          = 0x27, /**< C: electric charge, A*s */
-	ZSL_DT_SI_UNIT_VOLT             = 0x28, /**< V: elec. poten. diff, W/A or kg*m^2/A*s^3 */
-	ZSL_DT_SI_UNIT_FARAD            = 0x29, /**< F: elec. capaticance, C/V or s^4*A^2/m^2*kg */
-	ZSL_DT_SI_UNIT_OHM              = 0x2A, /**< electric resistence, V/A or kg*m^2/s^3*A^2*/
-	ZSL_DT_SI_UNIT_SIEMENS          = 0x2B, /**< S: electric conductance, A/V */
-	ZSL_DT_SI_UNIT_WEBER            = 0x2C, /**< Wb: magnetic flux, V*s or kg*m^2/s^2*A */
-	ZSL_DT_SI_UNIT_TESLA            = 0x2D, /**< T: magn. flux dens., Wb/m^2 or kg/A*s^2*/
-	ZSL_DT_SI_UNIT_HENRY            = 0x2E, /**< H: electric inductance, Wb/A or kg*m^2/s^2*A^2 */
-	ZSL_DT_SI_UNIT_DEGREE_CELSIUS   = 0x2F, /**< C: Celsius temp, K */
-	ZSL_DT_SI_UNIT_LUMEN            = 0x30, /**< lm: Luminous flux, cd*sr */
-	ZSL_DT_SI_UNIT_LUX              = 0x31, /**< lx: illuminance, lm/m^2 */
-	ZSL_DT_SI_UNIT_BECQUEREL        = 0x32, /**< Bq: radionucl. activity, 1/s */
-	ZSL_DT_SI_UNIT_GRAY             = 0x33, /**< Gy: Absorbed dose, J/kg or m^2/s^2 */
-	ZSL_DT_SI_UNIT_SIEVERT          = 0x34, /**< Sv: Dose equivalent, J/kg or m^2/s^2 */
-	ZSL_DT_SI_UNIT_KATAL            = 0x35, /**< kat: Catamytic activ., mol/s */
-};
-
-/**
- * @brief Standard SI scales/powers.
- */
-enum zsl_dt_si_scale {
-	ZSL_DT_SCALE_YOTTA      = 24,   /**< Y: Septillion */
-	ZSL_DT_SCALE_ZETTA      = 21,   /**< Z: Sextillion */
-	ZSL_DT_SCALE_EXA        = 18,   /**< E: Quintillion */
-	ZSL_DT_SCALE_PETA       = 15,   /**< P: Quadrillion */
-	ZSL_DT_SCALE_TERA       = 12,   /**< T: Trillion */
-	ZSL_DT_SCALE_GIGA       = 9,    /**< G: Billion */
-	ZSL_DT_SCALE_MEGA       = 6,    /**< M: Million */
-	ZSL_DT_SCALE_KILO       = 3,    /**< k: Thousand */
-	ZSL_DT_SCALE_HECTO      = 2,    /**< h: Hundred */
-	ZSL_DT_SCALE_DECA       = 1,    /**< da: Ten*/
-	ZSL_DT_SCALE_NONE       = 0,    /**< One */
-	ZSL_DT_SCALE_DECI       = -1,   /**< d: Tenth */
-	ZSL_DT_SCALE_CENTI      = -2,   /**< c: Hundredth */
-	ZSL_DT_SCALE_MILLI      = -3,   /**< m: Thousandth */
-	ZSL_DT_SCALE_MICRO      = -6,   /**< u: Millionth */
-	ZSL_DT_SCALE_NANO       = -9,   /**< n: Billionth */
-	ZSL_DT_SCALE_PICO       = -12,  /**< p: Trillionth */
-	ZSL_DT_SCALE_FEMTO      = -15,  /**< f: Quadrillionth */
-	ZSL_DT_SCALE_ATTO       = -18,  /**< a: Quintillionth */
-	ZSL_DT_SCALE_ZEPTO      = -21,  /**< z: Sextillionth */
-	ZSL_DT_SCALE_YOCTO      = -24,  /**< y: Septillionth */
-};
-
-/**
- * @brief Defines a specific SI or standard unit for a data sample, based on
- *        an 8-bit base type, and an optional 8-bit extended type.
- *
- * Using this pair of base and extended data types allows for specialisation
- * from the default unit and scale associated with the base type. It
- * should be possible to represent any reasonably standard sample value
- * using these value pairs in a 16-bit space.
- *
- * @note When the extended type is left at 0, the base type's default unit and
- *       scale will be used (mA for ZSL_DT_BASE_CURRENT, for example).
- */
-struct zsl_dt_type {
-	union {
-		struct {
-			/**
-			 * @brief The base data type, which will be associated with
-			 * a specific default unit and scale.
-			 */
-			uint8_t base_type;
-
-			/**
-			 * @brief The extended data type, which allows for specialisation
-			 * from the base type. This field must be interpretted relative to
-			 * the sample's base_type.
-			 *
-			 * Leaving this value at 0 indicates that the base_type's default
-			 * unit and scale should be used.
-			 */
-			uint8_t ext_type;
-		};
-		/**
-		 * @brief Represents the base and extended data types. Must be
-		 * in little-endian format.
-		 */
-		uint16_t type;
-	};
-};
+/* 
+ * TODO: A macro and lookup table is required to associate each data 'type'
+ * with the correct SI unit.
+ */ 
 
 /**
  * @brief Base data type. An 8-bit value representing the family of data
@@ -198,10 +92,49 @@ enum zsl_dt_base {
 	ZSL_DT_BASE_MAX                 = 0xFF  /** Reserved. */
 };
 
+/**
+ * @brief Defines a specific data type for a data sample, based on
+ *        an 8-bit base type, and an optional 8-bit extended type.
+ *
+ * Using a base and extended data type pair allows for specialisation
+ * from the default unit and scale associated with just the base type. It
+ * should be possible to represent any reasonably standard unit and scale
+ * using these value pairs in a 16-bit space.
+ *
+ * @note When the extended type is left at 0, the base type's default unit and
+ *       scale will be used (mA for ZSL_DT_BASE_CURRENT, for example).
+ */
+struct zsl_dt_type {
+	union {
+		struct {
+			/**
+			 * @brief The base data type, which will be associated with
+			 * a specific default unit and scale.
+			 */
+			uint8_t base_type;
+
+			/**
+			 * @brief The extended data type, which allows for specialisation
+			 * from the base type. This field must be interpretted relative to
+			 * the sample's base_type.
+			 *
+			 * Leaving this value at 0 indicates that the base_type's default
+			 * unit and scale should be used.
+			 */
+			uint8_t ext_type;
+		};
+		/**
+		 * @brief Represents the base and extended data types. Must be
+		 * in little-endian format.
+		 */
+		uint16_t type;
+	};
+};
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_DATATYPES_BASE_H_ */
 
-/** @} */ /* End of datatypes group */
+/** @} */ /* End of DATATYPES group */
