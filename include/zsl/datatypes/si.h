@@ -72,101 +72,211 @@ enum zsl_dt_si_scale {
  *   - 0xFF00..0xFFFE = User defined units
  */
 enum zsl_dt_si_unit {
-	ZSL_DT_SI_UNIT_UNDEFINED                                = 0,
+	ZSL_DT_SI_UNIT_UNDEFINED                                        = 0,
 
 	/* 0x0010..0x001F (16-31): SI Base Units. */
-	ZSL_DT_SI_UNIT_AMPERE                                   = 0x10, /**< A: electric current */
-	ZSL_DT_SI_UNIT_CANDELA                                  = 0x11, /**< cd: Luminous intensity */
-	ZSL_DT_SI_UNIT_KELVIN                                   = 0x12, /**< K: thermodynamic temp. */
-	ZSL_DT_SI_UNIT_KILOGRAM                                 = 0x13, /**< kg: mass */
-	ZSL_DT_SI_UNIT_METER                                    = 0x14, /**< m: length */
-	ZSL_DT_SI_UNIT_MOLE                                     = 0x15, /**< mol: Amount of substance */
-	ZSL_DT_SI_UNIT_SECOND                                   = 0x16, /**< s: time */
+	/** @brief A, electric current */
+	ZSL_DT_SI_UNIT_AMPERE                                           = 0x10,
+	/** @brief cd, Luminous intensity */
+	ZSL_DT_SI_UNIT_CANDELA                                          = 0x11,
+	/** @brief K, thermodynamic temp. */
+	ZSL_DT_SI_UNIT_KELVIN                                           = 0x12,
+	/** @brief kg, mass */
+	ZSL_DT_SI_UNIT_KILOGRAM                                         = 0x13,
+	/** @brief m, length */
+	ZSL_DT_SI_UNIT_METER                                            = 0x14,
+	/** @brief mol, Amount of substance */
+	ZSL_DT_SI_UNIT_MOLE                                             = 0x15,
+	/** @brief s, time */
+	ZSL_DT_SI_UNIT_SECOND                                           = 0x16,
 
 	/* 0x0020..0x003F (32-63): SI Derived Units. */
-	ZSL_DT_SI_UNIT_BECQUEREL                                = 0x20, /**< Bq: radionucl. activity, 1/s */
-	ZSL_DT_SI_UNIT_COULOMB                                  = 0x21, /**< C: electric charge, A*s */
-	ZSL_DT_SI_UNIT_DEGREE_CELSIUS                           = 0x22, /**< C: Celsius temp, K */
-	ZSL_DT_SI_UNIT_FARAD                                    = 0x23, /**< F: elec. capaticance, C/V or s^4*A^2/m^2*kg */
-	ZSL_DT_SI_UNIT_GRAY                                     = 0x24, /**< Gy: Absorbed dose, J/kg or m^2/s^2 */
-	ZSL_DT_SI_UNIT_HENRY                                    = 0x25, /**< H: electric inductance, Wb/A or kg*m^2/s^2*A^2 */
-	ZSL_DT_SI_UNIT_HERTZ                                    = 0x26, /**< Hz: frequency, 1/s */
-	ZSL_DT_SI_UNIT_JOULE                                    = 0x27, /**< J, energy, work, N*m or kg*m^2/s^2 */
-	ZSL_DT_SI_UNIT_KATAL                                    = 0x28, /**< kat: Catamytic activ., mol/s */
-	ZSL_DT_SI_UNIT_LUMEN                                    = 0x29, /**< lm: Luminous flux, cd*sr */
-	ZSL_DT_SI_UNIT_LUX                                      = 0x2A, /**< lx: illuminance, lm/m^2 */
-	ZSL_DT_SI_UNIT_NEWTON                                   = 0x2B, /**< N: force, m*kg/s^2 */
-	ZSL_DT_SI_UNIT_OHM                                      = 0x2C, /**< electric resistence, V/A or kg*m^2/s^3*A^2*/
-	ZSL_DT_SI_UNIT_PASCAL                                   = 0x2D, /**< Pa: pressure, stress, N/m^2 or kg/m*s^2 */
-	ZSL_DT_SI_UNIT_RADIAN                                   = 0x2E, /**< rad: plane angle, m/m */
-	ZSL_DT_SI_UNIT_SIEMENS                                  = 0x2F, /**< S: electric conductance, A/V */
-	ZSL_DT_SI_UNIT_SIEVERT                                  = 0x30, /**< Sv: Dose equivalent, J/kg or m^2/s^2 */
-	ZSL_DT_SI_UNIT_STERADIAN                                = 0x31, /**< sr: solid angle, m^2/m^2 */
-	ZSL_DT_SI_UNIT_TESLA                                    = 0x32, /**< T: magn. flux dens., Wb/m^2 or kg/A*s^2*/
-	ZSL_DT_SI_UNIT_VOLT                                     = 0x33, /**< V: elec. poten. diff, W/A or kg*m^2/A*s^3 */
-	ZSL_DT_SI_UNIT_WATT                                     = 0x34, /**< W: power, radiant flux, J/s or kg*m^2/s^3 */
-	ZSL_DT_SI_UNIT_WEBER                                    = 0x35, /**< Wb: magnetic flux, V*s or kg*m^2/s^2*A */
+	/** @brief Bq, radionucl. activity, 1/s */
+	ZSL_DT_SI_UNIT_BECQUEREL                                        = 0x20,
+	/** @brief C, electric charge, A*s */
+	ZSL_DT_SI_UNIT_COULOMB                                          = 0x21,
+	/** @brief Degrees C, Celsius temp, K */
+	ZSL_DT_SI_UNIT_DEGREE_CELSIUS                                   = 0x22,
+	/** @brief F, elec. capaticance, C/V or s^4*A^2/m^2*kg */
+	ZSL_DT_SI_UNIT_FARAD                                            = 0x23,
+	/** @brief Gy, Absorbed dose, J/kg or m^2/s^2 */
+	ZSL_DT_SI_UNIT_GRAY                                             = 0x24,
+	/** @brief H, electric inductance, Wb/A or kg*m^2/s^2*A^2 */
+	ZSL_DT_SI_UNIT_HENRY                                            = 0x25,
+	/** @brief Hz, frequency, 1/s */
+	ZSL_DT_SI_UNIT_HERTZ                                            = 0x26,
+	/** @brief J, energy, work, N*m or kg*m^2/s^2 */
+	ZSL_DT_SI_UNIT_JOULE                                            = 0x27,
+	/** @brief kat, Catamytic activ., mol/s */
+	ZSL_DT_SI_UNIT_KATAL                                            = 0x28,
+	/** @brief lm, Luminous flux, cd*sr */
+	ZSL_DT_SI_UNIT_LUMEN                                            = 0x29,
+	/** @brief lx, illuminance, lm/m^2 */
+	ZSL_DT_SI_UNIT_LUX                                              = 0x2A,
+	/** @brief N, force, m*kg/s^2 */
+	ZSL_DT_SI_UNIT_NEWTON                                           = 0x2B,
+	/** @brief electric resistence, V/A or kg*m^2/s^3*A^2*/
+	ZSL_DT_SI_UNIT_OHM                                              = 0x2C,
+	/** @brief Pa, pressure, stress, N/m^2 or kg/m*s^2 */
+	ZSL_DT_SI_UNIT_PASCAL                                           = 0x2D,
+	/** @brief rad, plane angle, m/m */
+	ZSL_DT_SI_UNIT_RADIAN                                           = 0x2E,
+	/** @brief S, electric conductance, A/V */
+	ZSL_DT_SI_UNIT_SIEMENS                                          = 0x2F,
+	/** @brief Sv, Dose equivalent, J/kg or m^2/s^2 */
+	ZSL_DT_SI_UNIT_SIEVERT                                          = 0x30,
+	/** @brief sr, solid angle, m^2/m^2 */
+	ZSL_DT_SI_UNIT_STERADIAN                                        = 0x31,
+	/** @brief T, magn. flux dens., Wb/m^2 or kg/A*s^2*/
+	ZSL_DT_SI_UNIT_TESLA                                            = 0x32,
+	/** @brief V, elec. poten. diff, W/A or kg*m^2/A*s^3 */
+	ZSL_DT_SI_UNIT_VOLT                                             = 0x33,
+	/** @brief W, power, radiant flux, J/s or kg*m^2/s^3 */
+	ZSL_DT_SI_UNIT_WATT                                             = 0x34,
+	/** @brief Wb, magnetic flux, V*s or kg*m^2/s^2*A */
+	ZSL_DT_SI_UNIT_WEBER                                            = 0x35,
 
-	/* 0x1B00..0x1BFF: SL_DT_EXT_LIGHT Combined Units. */
-	ZSL_DT_SI_UNIT_C_CANDELA_PER_METER_2                    = 0x1B00,       /**< cd/m^2 */
-	ZSL_DT_SI_UNIT_C_JOULE_PER_METER_2                      = 0x1B01,       /**< J/m^2 */
-	ZSL_DT_SI_UNIT_C_JOULE_PER_METER_2_PER_HZ               = 0x1B02,       /**< J/m^2/Hz */
-	ZSL_DT_SI_UNIT_C_JOULE_PER_METER_2_PER_NM               = 0x1B03,       /**< J/m^2/nm */
-	ZSL_DT_SI_UNIT_C_JOULE_PER_METER_3                      = 0x1B04,       /**< Energy density, J/m^3 */
-	ZSL_DT_SI_UNIT_C_LUMEN_PER_METER_2                      = 0x1B05,       /**< lm/m^2 */
-	ZSL_DT_SI_UNIT_C_LUMEN_PER_WATT                         = 0x1B06,       /**< lm/W */
-	ZSL_DT_SI_UNIT_C_LUMEN_SECOND                           = 0x1B07,       /**< AKA talbot */
-	ZSL_DT_SI_UNIT_C_LUMEN_SECOND_PER_METER_3               = 0x1B08,       /**< lm s/m^3 */
-	ZSL_DT_SI_UNIT_C_LUX_SECOND                             = 0x1B09,       /**< lx s */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_HERTZ                        = 0x1B0A,       /**< W/Hz */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_METER_2                      = 0x1B0B,       /**< W/m^2 */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_METER_2_PER_HZ               = 0x1B0C,       /**< W/m^2/Hz */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_METER_2_PER_NM               = 0x1B0D,       /**< W/m^2/nm */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_NM                           = 0x1B0E,       /**< W/nm */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN                    = 0x1B0F,       /**< W/sr */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_HERTZ          = 0x1B10,       /**< W/sr/Hz */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_METER_2        = 0x1B11,       /**< W/sr/m^2 */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_METER_2_PER_HZ = 0x1B12,       /**< W/sr/m^2/Hz */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_METER_2_PER_NM = 0x1B13,       /**< W/sr/m^2/nm */
-	ZSL_DT_SI_UNIT_C_WATTS_PER_STERADIAN_PER_NM             = 0x1B14,       /**< W/sr/nm */
+	/* 0x1000..0x10FF: ZSL_DT_BASE_AREA Combined Units. */
+	ZSL_DT_SI_UNIT_METERS_2                                         = 0x1000,
+
+	/* 0x1100..0x11FF: ZSL_DT_BASE_ACCELERATION Combined Units. */
+	ZSL_DT_SI_UNIT_METER_PER_SECOND_2                               = 0x1100,
+
+	/* 0x1200..0x12FF: ZSL_DT_BASE_AMPLITUDE Combined Units. */
+
+	/* 0x1300..0x13FF: ZSL_DT_BASE_CAPACITANCE Combined Units. */
+
+	/* 0x1400..0x14FF: ZSL_DT_BASE_COLOR Combined Units. */
+
+	/* 0x1500..0x15FF: ZSL_DT_BASE_COORDINATES Combined Units. */
+
+	/* 0x1600..0x16FF: ZSL_DT_BASE_CURRENT Combined Units. */
+
+	/* 0x1700..0x17FF: ZSL_DT_BASE_DIMENSION Combined Units. */
+
+	/* 0x1800..0x18FF: ZSL_DT_BASE_FREQUENCYY Combined Units. */
+
+	/* 0x1900..0x19FF: ZSL_DT_BASE_HUMIDITY Combined Units. */
+
+	/* 0x1A00..0x1AFF: ZSL_DT_BASE_INDUCTANCE Combined Units. */
+
+	/* 0x1B00..0x1BFF: ZSL_DT_BASE_LIGHT Combined Units. */
+	/** @brief cd/m^2 */
+	ZSL_DT_SI_UNIT_CANDELA_PER_METER_2                              = 0x1B00,
+	/** @brief J/m^2 */
+	ZSL_DT_SI_UNIT_JOULE_PER_METER_2                                = 0x1B01,
+	/** @brief J/m^2/Hz */
+	ZSL_DT_SI_UNIT_JOULE_PER_METER_2_PER_HZ                         = 0x1B02,
+	/** @brief J/m^2/nm */
+	ZSL_DT_SI_UNIT_JOULE_PER_METER_2_PER_NM                         = 0x1B03,
+	/** @brief Energy density, J/m^3 */
+	ZSL_DT_SI_UNIT_JOULE_PER_METER_3                                = 0x1B04,
+	/** @brief lm/m^2 */
+	ZSL_DT_SI_UNIT_LUMEN_PER_METER_2                                = 0x1B05,
+	/** @brief lm/W */
+	ZSL_DT_SI_UNIT_LUMEN_PER_WATT                                   = 0x1B06,
+	/** @brief lm s, AKA talbot */
+	ZSL_DT_SI_UNIT_LUMEN_SECOND                                     = 0x1B07,
+	/** @brief lm s/m^3 */
+	ZSL_DT_SI_UNIT_LUMEN_SECOND_PER_METER_3                         = 0x1B08,
+	/** @brief lx s */
+	ZSL_DT_SI_UNIT_LUX_SECOND                                       = 0x1B09,
+	/** @brief W/Hz */
+	ZSL_DT_SI_UNIT_WATTS_PER_HERTZ                                  = 0x1B0A,
+	/** @brief W/m^2 */
+	ZSL_DT_SI_UNIT_WATTS_PER_METER_2                                = 0x1B0B,
+	/** @brief W/m^2/Hz */
+	ZSL_DT_SI_UNIT_WATTS_PER_METER_2_PER_HZ                         = 0x1B0C,
+	/** @brief W/m^2/nm */
+	ZSL_DT_SI_UNIT_WATTS_PER_METER_2_PER_NM                         = 0x1B0D,
+	/** @brief W/nm */
+	ZSL_DT_SI_UNIT_WATTS_PER_NM                                     = 0x1B0E,
+	/** @brief W/sr */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN                              = 0x1B0F,
+	/** @brief W/sr/Hz */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN_PER_HERTZ                    = 0x1B10,
+	/** @brief W/sr/m^2 */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN_PER_METER_2                  = 0x1B11,
+	/** @brief W/sr/m^2/Hz */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN_PER_METER_2_PER_HZ           = 0x1B12,
+	/** @brief W/sr/m^2/nm */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN_PER_METER_2_PER_NM           = 0x1B13,
+	/** @brief W/sr/nm */
+	ZSL_DT_SI_UNIT_WATTS_PER_STERADIAN_PER_NM                       = 0x1B14,
+
+	/* 0x1C00..0x1CFF: ZSL_DT_BASE_MAGNETIC_FIELD Combined Units. */
+	/** @brief uT */
+	ZSL_DT_SI_UNIT_MICROTESLA                                       = 0x1C00,
+
+	/* 0x1D00..0x1DFF: ZSL_DT_BASE_MASS Combined Units. */
+	/** @brief g */
+	ZSL_DT_SI_UNIT_GRAMS                                            = 0x1D00,
+
+	/* 0x1E00..0x1EFF: ZSL_DT_BASE_MOMENTUM Combined Units. */
+
+	/* 0x1F00..0x1FFF: ZSL_DT_BASE_ORIENTATION Combined Units. */
+
+	/* 0x2000..0x20FF: ZSL_DT_BASE_PHASE Combined Units. */
+
+	/* 0x2100..0x21FF: ZSL_DT_BASE_PRESSURE Combined Units. */
+	/** @brief hPA */
+	ZSL_DT_SI_UNIT_HECTOPASCAL                                      = 0x2100,
+
+	/* 0x2200..0x22FF: ZSL_DT_BASE_RESISTANCE Combined Units. */
+
+	/* 0x2300..0x23FF: ZSL_DT_BASE_SOUND Combined Units. */
+
+	/* 0x2400..0x24FF: ZSL_DT_BASE_TEMPERATURE Combined Units. */
+
+	/* 0x2500..0x25FF: ZSL_DT_BASE_TIME Combined Units. */
+
+	/* 0x2600..0x26FF: ZSL_DT_BASE_VELOCITY Combined Units. */
+
+	/* 0x2700..0x27FF: ZSL_DT_BASE_VOLTAGE Combined Units. */
+	/** @brief mV */
+	ZSL_DT_SI_UNIT_MILLIVOLTS                                       = 0x2700,
+
+	/* 0x2800..0x28FF: ZSL_DT_BASE_VOLUME Combined Units. */
+	/** @brief m^3 */
+	ZSL_DT_SI_UNIT_METER_3                                          = 0x2800,
 
 	/* 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.). */
-	ZSL_DT_SI_UNIT_ZSC_BOOL                                 = 0xFD00,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL32                        = 0xFD10,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL64                        = 0xFD11,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL128                       = 0xFD12,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S8                            = 0xFD13,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S16                           = 0xFD14,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S32                           = 0xFD15,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                           = 0xFD16,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                           = 0xFD17,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U8                            = 0xFD18,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U16                           = 0xFD19,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U32                           = 0xFD1A,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U64                           = 0xFD1B,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U128                          = 0xFD1C,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                        = 0xFD30,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_2                      = 0xFD31,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_3                      = 0xFD32,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_4                      = 0xFD33,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                        = 0xFD34,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_2                      = 0xFD35,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_3                      = 0xFD36,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_4                      = 0xFD37,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                        = 0xFD40,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_2X2                    = 0xFD41,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_3X3                    = 0xFD42,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_4X4                    = 0xFD43,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                        = 0xFD44,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_2X2                    = 0xFD45,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_3X3                    = 0xFD46,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_4X4                    = 0xFD47,
+	ZSL_DT_SI_UNIT_ZSC_BOOL                                         = 0xFD00,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL32                                = 0xFD10,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL64                                = 0xFD11,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL128                               = 0xFD12,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S8                                    = 0xFD13,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S16                                   = 0xFD14,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S32                                   = 0xFD15,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                                   = 0xFD16,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                                   = 0xFD17,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U8                                    = 0xFD18,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U16                                   = 0xFD19,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U32                                   = 0xFD1A,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U64                                   = 0xFD1B,
+	ZSL_DT_SI_UNIT_ZSC_SCALAR_U128                                  = 0xFD1C,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                                = 0xFD30,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_2                              = 0xFD31,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_3                              = 0xFD32,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_4                              = 0xFD33,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                                = 0xFD34,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_2                              = 0xFD35,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_3                              = 0xFD36,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_4                              = 0xFD37,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                                = 0xFD40,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_2X2                            = 0xFD41,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_3X3                            = 0xFD42,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_4X4                            = 0xFD43,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                                = 0xFD44,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_2X2                            = 0xFD45,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_3X3                            = 0xFD46,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_4X4                            = 0xFD47,
 
 	/* 0xFF00..0xFFFE = User defined units. */
-	ZSL_DT_SI_UNIT_USER_DEFINED_1                           = 0xFF00,
-	ZSL_DT_SI_UNIT_USER_DEFINED_254                         = 0xFFFE,
+	ZSL_DT_SI_UNIT_USER_DEFINED_1                                   = 0xFF00,
+	ZSL_DT_SI_UNIT_USER_DEFINED_255                                 = 0xFFFE,
 
-	ZSL_DT_SI_UNIT_MAX                                      = 0xFFFF
+	ZSL_DT_SI_UNIT_MAX                                              = 0xFFFF
 };
 
 #ifdef __cplusplus

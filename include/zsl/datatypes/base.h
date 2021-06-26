@@ -28,10 +28,10 @@
 extern "C" {
 #endif
 
-/* 
+/*
  * TODO: A macro and lookup table is required to associate each data 'type'
  * with the correct default SI unit.
- */ 
+ */
 
 /**
  * @brief Base data type. An 8-bit value representing a family or class of
@@ -50,14 +50,14 @@ extern "C" {
 enum zsl_dt_base {
 	ZSL_DT_BASE_UNDEFINED           = 0,
 
-	ZSL_DT_BASE_AREA                = 0x10,
+	ZSL_DT_BASE_AREA                = 0x10, /**< m^2 */
 	ZSL_DT_BASE_ACCELERATION        = 0x11, /**< m/s^2: linear, gravity, etc. */
 	ZSL_DT_BASE_AMPLITUDE           = 0x12, /**< 0..1.0 */
 	ZSL_DT_BASE_CAPACITANCE         = 0x13, /**< uF */
 	ZSL_DT_BASE_COLOR               = 0x14, /**< See extended type */
-	ZSL_DT_BASE_COORDINATES         = 0x15,
+	ZSL_DT_BASE_COORDINATES         = 0x15, /**< XY vector? */
 	ZSL_DT_BASE_CURRENT             = 0x16, /**< mA */
-	ZSL_DT_BASE_DIMENSION           = 0x17, /**< cm (length, width, distance, etc.) Name??? */
+	ZSL_DT_BASE_DIMENSION           = 0x17, /**< m (length, width, distance, etc.) */
 	ZSL_DT_BASE_FREQUENCY           = 0x18, /**< kHz */
 	ZSL_DT_BASE_HUMIDITY            = 0x19, /**< relative humidity in percent */
 	ZSL_DT_BASE_INDUCTANCE          = 0x1A, /**< nH? */
@@ -65,15 +65,16 @@ enum zsl_dt_base {
 	ZSL_DT_BASE_MAGNETIC_FIELD      = 0x1C, /**< micro-Tesla */
 	ZSL_DT_BASE_MASS                = 0x1D, /**< Grams */
 	ZSL_DT_BASE_MOMENTUM            = 0x1E, /**< Angular, Linear, Inertia */
-	ZSL_DT_BASE_ORIENTATION         = 0x1F,
+	ZSL_DT_BASE_ORIENTATION         = 0x1F, /**< XYZ vector */
 	ZSL_DT_BASE_PHASE               = 0x20, /**< radians? */
 	ZSL_DT_BASE_PRESSURE            = 0x21, /**< hectopascal (hPa) */
 	ZSL_DT_BASE_RESISTANCE          = 0x22, /**< Ohms */
-	ZSL_DT_BASE_SOUND               = 0x23,
+	ZSL_DT_BASE_SOUND               = 0x23, /**< Hz? */
 	ZSL_DT_BASE_TEMPERATURE         = 0x24, /**< Celsius */
-	ZSL_DT_BASE_TIME                = 0x25, /**< Default = Epoch, Duration? */
-	ZSL_DT_BASE_VELOCITY            = 0x26,
-	ZSL_DT_BASE_VOLTAGE             = 0x27, /**< mV? */
+	ZSL_DT_BASE_TIME                = 0x25, /**< Seconds */
+	ZSL_DT_BASE_VELOCITY            = 0x26, /**< m/s */
+	ZSL_DT_BASE_VOLTAGE             = 0x27, /**< V */
+	ZSL_DT_BASE_VOLUME              = 0x28, /**< m^3 */
 
 	ZSL_DT_BASE_USER_1              = 0xF0, /**< User-defined value 1. */
 	ZSL_DT_BASE_USER_2              = 0xF1, /**< User-defined value 2. */
@@ -104,7 +105,7 @@ enum zsl_dt_base {
  * specialisation from the default type associated with a measurement family.
  * It should be possible to represent any reasonably standard unit and scale
  * using these value pairs in a 16-bit space.
- * 
+ *
  * Indicating the SI unit (and scale) alongside the measurement type allows
  * for better control over the samples, and the ability to choose a more
  * appropriate scale depending on the source of the measurement (uA versus A,
@@ -142,8 +143,8 @@ struct zsl_dt_type {
 
 	/**
 	 * @brief The SI unit and scale used for this measurement. Must be
-	 * a member of zsl_dt_si_unit. 
-	 * 
+	 * a member of zsl_dt_si_unit.
+	 *
 	 * @note This will normally use the default unit associated with the
 	 * measurement type, but can optionally be overriden by the producer to
 	 * adjust for scale, for example.
