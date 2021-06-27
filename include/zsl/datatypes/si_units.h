@@ -234,7 +234,7 @@ enum zsl_dt_si_unit {
 
 	/* 0x2600..0x26FF: ZSL_DT_BASE_VELOCITY Combined Units. */
 	/** @brief m^3/s, flow rate. */
-	ZSL_DT_SI_UNIT_CUBIC_METERS_SECOND                              = 0x2601,
+	ZSL_DT_SI_UNIT_METERS_3_SECOND                                  = 0x2601,
 
 	/* 0x2700..0x27FF: ZSL_DT_BASE_VOLTAGE Combined Units. */
 	/** @brief mV */
@@ -242,7 +242,7 @@ enum zsl_dt_si_unit {
 
 	/* 0x2800..0x28FF: ZSL_DT_BASE_VOLUME Combined Units. */
 	/** @brief m^3 */
-	ZSL_DT_SI_UNIT_METER_3                                          = 0x2800,
+	ZSL_DT_SI_UNIT_METERS_3                                         = 0x2800,
 
 	/* 0x2900..0x29FF: ZSL_DT_BASE_ACIDITY Combined Units. */
 	/** @brief pH level (not actually a unit, shhh!) */
