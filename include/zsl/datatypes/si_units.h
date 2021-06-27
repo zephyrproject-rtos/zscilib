@@ -20,8 +20,8 @@
  * represent data samples or values in zscilib.
  */
 
-#ifndef ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_H_
-#define ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_H_
+#ifndef ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_UNITS_H_
+#define ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_UNITS_H_
 
 #include <zsl/zsl.h>
 
@@ -33,27 +33,27 @@ extern "C" {
  * @brief Standard SI scales/powers.
  */
 enum zsl_dt_si_scale {
-	ZSL_DT_SCALE_YOTTA      = 24,   /**< Y: Septillion */
-	ZSL_DT_SCALE_ZETTA      = 21,   /**< Z: Sextillion */
-	ZSL_DT_SCALE_EXA        = 18,   /**< E: Quintillion */
-	ZSL_DT_SCALE_PETA       = 15,   /**< P: Quadrillion */
-	ZSL_DT_SCALE_TERA       = 12,   /**< T: Trillion */
-	ZSL_DT_SCALE_GIGA       = 9,    /**< G: Billion */
-	ZSL_DT_SCALE_MEGA       = 6,    /**< M: Million */
-	ZSL_DT_SCALE_KILO       = 3,    /**< k: Thousand */
-	ZSL_DT_SCALE_HECTO      = 2,    /**< h: Hundred */
-	ZSL_DT_SCALE_DECA       = 1,    /**< da: Ten*/
-	ZSL_DT_SCALE_NONE       = 0,    /**< One */
-	ZSL_DT_SCALE_DECI       = -1,   /**< d: Tenth */
-	ZSL_DT_SCALE_CENTI      = -2,   /**< c: Hundredth */
-	ZSL_DT_SCALE_MILLI      = -3,   /**< m: Thousandth */
-	ZSL_DT_SCALE_MICRO      = -6,   /**< u: Millionth */
-	ZSL_DT_SCALE_NANO       = -9,   /**< n: Billionth */
-	ZSL_DT_SCALE_PICO       = -12,  /**< p: Trillionth */
-	ZSL_DT_SCALE_FEMTO      = -15,  /**< f: Quadrillionth */
-	ZSL_DT_SCALE_ATTO       = -18,  /**< a: Quintillionth */
-	ZSL_DT_SCALE_ZEPTO      = -21,  /**< z: Sextillionth */
-	ZSL_DT_SCALE_YOCTO      = -24,  /**< y: Septillionth */
+	ZSL_DT_SI_SCALE_YOTTA      = 24,   /**< Y: Septillion */
+	ZSL_DT_SI_SCALE_ZETTA      = 21,   /**< Z: Sextillion */
+	ZSL_DT_SI_SCALE_EXA        = 18,   /**< E: Quintillion */
+	ZSL_DT_SI_SCALE_PETA       = 15,   /**< P: Quadrillion */
+	ZSL_DT_SI_SCALE_TERA       = 12,   /**< T: Trillion */
+	ZSL_DT_SI_SCALE_GIGA       = 9,    /**< G: Billion */
+	ZSL_DT_SI_SCALE_MEGA       = 6,    /**< M: Million */
+	ZSL_DT_SI_SCALE_KILO       = 3,    /**< k: Thousand */
+	ZSL_DT_SI_SCALE_HECTO      = 2,    /**< h: Hundred */
+	ZSL_DT_SI_SCALE_DECA       = 1,    /**< da: Ten*/
+	ZSL_DT_SI_SCALE_NONE       = 0,    /**< One */
+	ZSL_DT_SI_SCALE_DECI       = -1,   /**< d: Tenth */
+	ZSL_DT_SI_SCALE_CENTI      = -2,   /**< c: Hundredth */
+	ZSL_DT_SI_SCALE_MILLI      = -3,   /**< m: Thousandth */
+	ZSL_DT_SI_SCALE_MICRO      = -6,   /**< u: Millionth */
+	ZSL_DT_SI_SCALE_NANO       = -9,   /**< n: Billionth */
+	ZSL_DT_SI_SCALE_PICO       = -12,  /**< p: Trillionth */
+	ZSL_DT_SI_SCALE_FEMTO      = -15,  /**< f: Quadrillionth */
+	ZSL_DT_SI_SCALE_ATTO       = -18,  /**< a: Quintillionth */
+	ZSL_DT_SI_SCALE_ZEPTO      = -21,  /**< z: Sextillionth */
+	ZSL_DT_SI_SCALE_YOCTO      = -24,  /**< y: Septillionth */
 };
 
 /**
@@ -68,8 +68,7 @@ enum zsl_dt_si_scale {
  *   - 0x0020..0x003F = SI derived units
  *   - 0x0040..0x00FF = Reserved
  *   - 0x0100..0x7FFF = Combined units 
- *   - 0x8000..0xFCFF = Reserved
- *   - 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.)
+ *   - 0x8000..0xFEFF = Reserved
  *   - 0xFF00..0xFFFE = User defined units
  */
 enum zsl_dt_si_unit {
@@ -253,28 +252,6 @@ enum zsl_dt_si_unit {
 	/** @brief S/m */
 	ZSL_DT_SI_UNIT_SIEMENS_PER_METER                                = 0x2A00,
 
-	/* 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.). */
-	ZSL_DT_SI_UNIT_ZSC_BOOL                                         = 0xFD00,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL32                                = 0xFD10,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL64                                = 0xFD11,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_REAL128                               = 0xFD12,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S8                                    = 0xFD13,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S16                                   = 0xFD14,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S32                                   = 0xFD15,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                                   = 0xFD16,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_S64                                   = 0xFD17,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U8                                    = 0xFD18,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U16                                   = 0xFD19,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U32                                   = 0xFD1A,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U64                                   = 0xFD1B,
-	ZSL_DT_SI_UNIT_ZSC_SCALAR_U128                                  = 0xFD1C,
-	ZSL_DT_SI_UNIT_ZSC_COMPLEX_32                                   = 0xFD30,
-	ZSL_DT_SI_UNIT_ZSC_COMPLEX_64                                   = 0xFD31,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                                = 0xFD40,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                                = 0xFD41,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                                = 0xFD50,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                                = 0xFD51,
-
 	/* 0xFF00..0xFFFE = User defined units. */
 	ZSL_DT_SI_UNIT_USER_DEFINED_1                                   = 0xFF00,
 	ZSL_DT_SI_UNIT_USER_DEFINED_255                                 = 0xFFFE,
@@ -286,6 +263,6 @@ enum zsl_dt_si_unit {
 }
 #endif
 
-#endif /* ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_H_ */
+#endif /* ZEPHYR_INCLUDE_ZSL_DATATYPES_SI_UNITS_H_ */
 
 /** @} */ /* End of DATATYPES_SI group */
