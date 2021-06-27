@@ -67,7 +67,8 @@ enum zsl_dt_si_scale {
  *   - 0x0010..0x001F = SI base units
  *   - 0x0020..0x003F = SI derived units
  *   - 0x0040..0x00FF = Reserved
- *   - 0x0100..0xFDFF = Combined units
+ *   - 0x0100..0x7FFF = Combined units 
+ *   - 0x8000..0xFCFF = Reserved
  *   - 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.)
  *   - 0xFF00..0xFFFE = User defined units
  */
@@ -137,9 +138,11 @@ enum zsl_dt_si_unit {
 	ZSL_DT_SI_UNIT_WEBER                                            = 0x35,
 
 	/* 0x1000..0x10FF: ZSL_DT_BASE_AREA Combined Units. */
+	/** @brief m^2 */
 	ZSL_DT_SI_UNIT_METERS_2                                         = 0x1000,
 
 	/* 0x1100..0x11FF: ZSL_DT_BASE_ACCELERATION Combined Units. */
+	/** @brief m/s^2 */
 	ZSL_DT_SI_UNIT_METER_PER_SECOND_2                               = 0x1100,
 
 	/* 0x1200..0x12FF: ZSL_DT_BASE_AMPLITUDE Combined Units. */
@@ -231,6 +234,8 @@ enum zsl_dt_si_unit {
 	/* 0x2500..0x25FF: ZSL_DT_BASE_TIME Combined Units. */
 
 	/* 0x2600..0x26FF: ZSL_DT_BASE_VELOCITY Combined Units. */
+	/** @brief m^3/s, flow rate. */
+	ZSL_DT_SI_UNIT_CUBIC_METERS_SECOND                              = 0x2601,
 
 	/* 0x2700..0x27FF: ZSL_DT_BASE_VOLTAGE Combined Units. */
 	/** @brief mV */
@@ -239,6 +244,14 @@ enum zsl_dt_si_unit {
 	/* 0x2800..0x28FF: ZSL_DT_BASE_VOLUME Combined Units. */
 	/** @brief m^3 */
 	ZSL_DT_SI_UNIT_METER_3                                          = 0x2800,
+
+	/* 0x2900..0x29FF: ZSL_DT_BASE_ACIDITY Combined Units. */
+	/** @brief pH level (not actually a unit, shhh!) */
+	ZSL_DT_SI_UNIT_PH                                               = 0x2900,
+
+	/* 0x2A00..0x2AFF: ZSL_DT_BASE_CONDUCTIVITY Combined Units. */
+	/** @brief S/m */
+	ZSL_DT_SI_UNIT_SIEMENS_PER_METER                                = 0x2A00,
 
 	/* 0xFD00..0xFEFE = zscilib units (matrix, vector, etc.). */
 	ZSL_DT_SI_UNIT_ZSC_BOOL                                         = 0xFD00,
@@ -255,22 +268,12 @@ enum zsl_dt_si_unit {
 	ZSL_DT_SI_UNIT_ZSC_SCALAR_U32                                   = 0xFD1A,
 	ZSL_DT_SI_UNIT_ZSC_SCALAR_U64                                   = 0xFD1B,
 	ZSL_DT_SI_UNIT_ZSC_SCALAR_U128                                  = 0xFD1C,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                                = 0xFD30,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_2                              = 0xFD31,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_3                              = 0xFD32,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32_4                              = 0xFD33,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                                = 0xFD34,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_2                              = 0xFD35,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_3                              = 0xFD36,
-	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64_4                              = 0xFD37,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                                = 0xFD40,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_2X2                            = 0xFD41,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_3X3                            = 0xFD42,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32_4X4                            = 0xFD43,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                                = 0xFD44,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_2X2                            = 0xFD45,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_3X3                            = 0xFD46,
-	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64_4X4                            = 0xFD47,
+	ZSL_DT_SI_UNIT_ZSC_COMPLEX_32                                   = 0xFD30,
+	ZSL_DT_SI_UNIT_ZSC_COMPLEX_64                                   = 0xFD31,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL32                                = 0xFD40,
+	ZSL_DT_SI_UNIT_ZSC_VECTOR_REAL64                                = 0xFD41,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL32                                = 0xFD50,
+	ZSL_DT_SI_UNIT_ZSC_MATRIX_REAL64                                = 0xFD51,
 
 	/* 0xFF00..0xFFFE = User defined units. */
 	ZSL_DT_SI_UNIT_USER_DEFINED_1                                   = 0xFF00,

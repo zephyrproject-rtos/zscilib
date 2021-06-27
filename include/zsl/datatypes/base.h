@@ -75,6 +75,8 @@ enum zsl_dt_base {
 	ZSL_DT_BASE_VELOCITY            = 0x26, /**< m/s */
 	ZSL_DT_BASE_VOLTAGE             = 0x27, /**< V */
 	ZSL_DT_BASE_VOLUME              = 0x28, /**< m^3 */
+	ZSL_DT_BASE_ACIDITY             = 0x29, /**< pH */
+	ZSL_DT_BASE_CONDUCTIVITY        = 0x2A, /**< Siemens/m */
 
 	ZSL_DT_BASE_USER_1              = 0xF0, /**< User-defined value 1. */
 	ZSL_DT_BASE_USER_2              = 0xF1, /**< User-defined value 2. */
