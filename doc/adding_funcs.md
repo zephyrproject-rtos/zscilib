@@ -24,7 +24,7 @@ Note the following points concering the doxygen example below:
 - The return value should be documented, **particularly any error codes that may
   be returned by this function**.
 
-```
+```c
 /**
  * @brief Gets a single value from the specified row (i) and column (j).
  *
@@ -47,24 +47,11 @@ new header file with the following format:
 > Replace GROUPNAME and related strings with appropriate values. See existing
   header files as a reference.
 
-```
+```c
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Copyright (c) 2019 Author Name Here
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -111,7 +98,7 @@ appears in the header file**.
 
 Use the following example as a starting point for formatting, etc.:
 
-```
+```c
 int
 zsl_mtx_get(struct zsl_mtx *m, size_t i, size_t j, zsl_real_t *x)
 {
@@ -133,7 +120,7 @@ If necessary to create a new logical source module, the following template
 must be followed for the .c file, replacing `zsl/groupname.h` with a reference
 to the appropriate header file mentioned earlier in this guide.
 
-```
+```c
 /*
  * Copyright (c) 2019 Author Name Here
  *
@@ -151,7 +138,7 @@ to the appropriate header file mentioned earlier in this guide.
 
 ## Unit Tests
 
-Unit tests are **mandatory for all new functions**, and changes or additions
+Unit tests **MUST be added for all new functions**, and changes or additions
 will not be merged into the codebase without appropriate unit test coverage.
 
 ### Adding a unit test reference
@@ -159,7 +146,7 @@ will not be merged into the codebase without appropriate unit test coverage.
 To add a new unit test, open `tests/src/main.c`, and add a function prototype
 for the new unit test with an appropriate name:
 
-```
+```c
 extern void test_matrix_get(void);
 ```
 
@@ -168,7 +155,7 @@ Then add a call using that prototype inside `void test_main(void)`:
 > Note the trailing comma (`,`) at the end of the function call. This must
 be present unless the new function is the last entry in the test function list.
 
-```
+```c
 void test_main(void) {
         ...
         ztest_unit_test(test_matrix_get),
@@ -182,7 +169,7 @@ To implement the unit test, open (or create) the appropriate `groupname_tests.c`
 file and add a function to the file matching the unit test created above in
 `main.c`:
 
-```
+```c
 void test_matrix_get(void)
 {
         int rc;
@@ -226,31 +213,32 @@ At this point, you can run the unit tests for the new function as follows:
 
 > This assumes you have already run **`$ source zephyr/zephyr-env.sh`**
 
-```
-$ twister -p qemu_cortex_m3 -T [zscilib_tests_folder]
+```bash
+$ twister -p qemu_cortex_m3 -T modules/lib/zscilib/tests
 ```
 
 #### Resolving build/test failures
 
-If you can any errors during the test run, they will generally be on of the
-following two types:
+If you encounter any errors during the test run, they will generally be one of
+the following two types:
 
--  **build** errors, indicating a problem with the source code in your new
-  function, indicated the following warning from `twister`:
+- **build errors**, indicating a problem compiling the source code in your
+  new function, indicated via the following warning:
 
 ```
 qemu_cortex_m3    zsl.core.thumb2.double        FAILED: handler_crash
         see: twister-out/qemu_cortex_m3/zsl.core.thumb2.double/build.log
 ```
 
-- **handler** errors, indicating that one of the tests in your unit test code
-  has failed, which may be a problem with the function or an error in the unit
-  test implemenation itself.
+- **handler errors**, indicating that one of the test checks in your unit test
+  code has failed during execution, which may be a problem with the function
+  or an error in the unit test implemenation itself:
 
 ```
 qemu_cortex_m3    zsl.core.thumb2.double        FAILED: failed
         see: twister-out/qemu_cortex_m3/zsl.core.thumb2.double/handler.log
 ```
 
-To find the exact source of the error, simply examines the appropriate `.log`
-file mentionned in the error message (`$ cat filename.log`, etc.)
+To find the exact source of the error, simply examine the appropriate `.log`
+file mentionned in the error message (`$ cat filename.log`,
+`$ cat filename.log` etc.)
