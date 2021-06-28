@@ -58,6 +58,8 @@ enum zsl_dt_unit_scale {
 
 /**
  * @brief C type used to represent a unit in memory (8-bits).
+ * 
+ * @note All types are little-endian.
  *
  * Memory map:
  *   - 0 = Undefined
@@ -70,14 +72,14 @@ enum zsl_dt_unit_ctype {
 	ZSL_DT_UNIT_CTYPE_UNDEFINED             = 0x00,
 
 	/* 0x10..0x3F: Standard C types. */
-	ZSL_DT_UNIT_CTYPE_FLOAT32               = 0x10,
-	ZSL_DT_UNIT_CTYPE_FLOAT64               = 0x11,
-	ZSL_DT_UNIT_CTYPE_FLOAT128              = 0x12,
+	ZSL_DT_UNIT_CTYPE_IEEE754_FLOAT32       = 0x10,
+	ZSL_DT_UNIT_CTYPE_IEEE754_FLOAT64       = 0x11,
+	ZSL_DT_UNIT_CTYPE_IEEE754_FLOAT128      = 0x12,
 	ZSL_DT_UNIT_CTYPE_S8                    = 0x13,
 	ZSL_DT_UNIT_CTYPE_S16                   = 0x14,
 	ZSL_DT_UNIT_CTYPE_S32                   = 0x15,
 	ZSL_DT_UNIT_CTYPE_S64                   = 0x16,
-	ZSL_DT_UNIT_CTYPE_S64                   = 0x17,
+	ZSL_DT_UNIT_CTYPE_S128                  = 0x17,
 	ZSL_DT_UNIT_CTYPE_U8                    = 0x18,
 	ZSL_DT_UNIT_CTYPE_U16                   = 0x19,
 	ZSL_DT_UNIT_CTYPE_U32                   = 0x1A,
