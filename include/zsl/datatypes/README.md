@@ -8,7 +8,7 @@ It encodes measurement descriptions into two components:
 
 - **Measurement type** (`zsl_dt_meas_type`): which consist of two 8-bit
   values:
-  - **Base type** (`zsl_dt_mes_base`): which identifies measurement families.
+  - **Base type** (`zsl_dt_meas_base`): which identifies measurement families.
   - **Extended type**: which optionally specialises on the base type.
 - **Unit** (`zsl_dt_unit_type`): The SI unit used to represent the measurement
   type, which consists of a:
@@ -23,8 +23,8 @@ It encodes measurement descriptions into two components:
 ## Example
 
 - Measurement Type:
-  - Base: ZSL_DT_MES_BASE_LIGHT
-  - Extended: ZSL_DT_MES_EXT_LIGHT_PHOTO_ILLUMINANCE
+  - Base: ZSL_DT_MEAS_BASE_LIGHT
+  - Extended: ZSL_DT_MEAS_EXT_LIGHT_PHOTO_ILLUMINANCE
 - Unit:
   - Unit: ZSL_DT_UNIT_SI_LUMEN_PER_METER_2
   - CType: ZSL_DT_UNIT_CTYPE_FLOAT32
