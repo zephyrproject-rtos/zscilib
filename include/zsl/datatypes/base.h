@@ -11,6 +11,14 @@
  */
 
 /**
+ * @addtogroup DATATYPES_BASE Base
+ *
+ * @brief Base datatypes.
+ *
+ * \ingroup DATATYPES
+ *  @{ */
+
+/**
  * @file
  * @brief Standard data type definitions for zscilib.
  *
@@ -32,11 +40,14 @@ extern "C" {
  * @brief Base data type.
  * 
  * An 8-bit value with a default unit type representing a family or class of
- * measurements or data samples. This base type can be further specialised from
- * its default unit/type by making use of an 8-bit extended type value, that
- * extends or refines thee type of meassurements that can be represented. If an
- * extended type is not specified (extended type = 0), the default 'base' unit
- * will be used.
+ * measurements or data samples. 
+ * 
+ * This base type can be further specialised from its default unit/type by
+ * making use of an 8-bit extended type value, that extends or refines the
+ * type of meassurements that can be represented.
+ * 
+ * If an extended type is not specified (extended type = 0), the default
+ * bases unit will be used.
  *
  * Memory map:
  *   - 0 = Undefined
@@ -49,14 +60,14 @@ enum zsl_dt_mes_base {
 
 	ZSL_DT_MES_BASE_AREA            = 0x10,         /**< ZSL_DT_UNIT_SI_METERS_2 */
 	ZSL_DT_MES_BASE_ACCELERATION    = 0x11,         /**< ZSL_DT_UNIT_SI_METER_PER_SECOND_2 (linear, gravity) */
-	ZSL_DT_MES_BASE_AMPLITUDE       = 0x12,         /**< 0..1.0 */
+	ZSL_DT_MES_BASE_AMPLITUDE       = 0x12,         /**< ZSL_DT_UNIT_SI_INTERVAL */
 	ZSL_DT_MES_BASE_CAPACITANCE     = 0x13,         /**< ZSL_DT_UNIT_SI_FARAD */
 	ZSL_DT_MES_BASE_COLOR           = 0x14,         /**< See extended type */
 	ZSL_DT_MES_BASE_COORDINATES     = 0x15,         /**< XY vector? */
 	ZSL_DT_MES_BASE_CURRENT         = 0x16,         /**< ZSL_DT_UNIT_SI_AMPERE */
 	ZSL_DT_MES_BASE_DIMENSION       = 0x17,         /**< ZSL_DT_UNIT_SI_METER (length, width, radius, distance, etc.) */
 	ZSL_DT_MES_BASE_FREQUENCY       = 0x18,         /**< ZSL_DT_UNIT_SI_HERTZ */
-	ZSL_DT_MES_BASE_HUMIDITY        = 0x19,         /**< relative humidity in percent */
+	ZSL_DT_MES_BASE_HUMIDITY        = 0x19,         /**< ZSL_DT_UNIT_SI_RELATIVE_HUMIDITY */
 	ZSL_DT_MES_BASE_INDUCTANCE      = 0x1A,         /**< ZSL_DT_UNIT_SI_HENRY */
 	ZSL_DT_MES_BASE_LIGHT           = 0x1B,         /**< ZSL_DT_UNIT_SI_LUX */
 	ZSL_DT_MES_BASE_MAGNETIC_FIELD  = 0x1C,         /**< ZSL_DT_UNIT_SI_TESLA */
@@ -198,4 +209,4 @@ struct zsl_dt_unit_type {
 
 #endif /* ZEPHYR_INCLUDE_ZSL_DATATYPES_BASE_H_ */
 
-/** @} */ /* End of DATATYPES group */
+/** @} */ /* End of DATATYPES_BASE group */

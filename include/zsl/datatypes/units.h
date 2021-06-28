@@ -69,7 +69,7 @@ enum zsl_dt_unit_scale {
 enum zsl_dt_unit_ctype {
 	ZSL_DT_UNIT_CTYPE_UNDEFINED             = 0x00,
 
-	/** 0x10..0x3F: Standard C types. */
+	/* 0x10..0x3F: Standard C types. */
 	ZSL_DT_UNIT_CTYPE_FLOAT32               = 0x10,
 	ZSL_DT_UNIT_CTYPE_FLOAT64               = 0x11,
 	ZSL_DT_UNIT_CTYPE_FLOAT128              = 0x12,
@@ -83,17 +83,27 @@ enum zsl_dt_unit_ctype {
 	ZSL_DT_UNIT_CTYPE_U32                   = 0x1A,
 	ZSL_DT_UNIT_CTYPE_U64                   = 0x1B,
 	ZSL_DT_UNIT_CTYPE_U128                  = 0x1C,
-	ZSL_DT_UNIT_CTYPE_BOOL                  = 0x1D,
+	ZSL_DT_UNIT_CTYPE_BOOL                  = 0x1D,	/**< ZSL_DT_UNIT_CTYPE_U8 */
 	ZSL_DT_UNIT_CTYPE_COMPLEX_32            = 0x30,
 	ZSL_DT_UNIT_CTYPE_COMPLEX_64            = 0x31,
 
-	/** 0x40..0x7F: zscilib types (matrix, vector, etc.). */
-	ZSL_DT_UNIT_CTYPE_ZSL_VECTOR_REAL32     = 0x40,
-	ZSL_DT_UNIT_CTYPE_ZSL_VECTOR_REAL64     = 0x41,
-	ZSL_DT_UNIT_CTYPE_ZSL_MATRIX_REAL32     = 0x50,
-	ZSL_DT_UNIT_CTYPE_ZSL_MATRIX_REAL64     = 0x51,
+	/* 0x40..0x7F: zscilib types (matrix, vector, etc.). */
+	ZSL_DT_UNIT_CTYPE_ZSL_VECTOR_32         = 0x40,
+	ZSL_DT_UNIT_CTYPE_ZSL_VECTOR_64         = 0x41,
+	ZSL_DT_UNIT_CTYPE_ZSL_MATRIX_32         = 0x50,
+	ZSL_DT_UNIT_CTYPE_ZSL_MATRIX_64         = 0x51,
 
-	/** 0xF0..0xFE: User-defined types. */
+	/* 0x80..0x8F: Range types (unit interval, percent, etc.) */
+	/** @brief 0..1.0 inclusive, ZSL_DT_UNIT_CTYPE_FLOAT32. */
+	ZSL_DT_UNIT_CTYPE_RANG_UNIT_INTERVAL_32 = 0x80,
+	/** @brief 0..1.0 inclusive, ZSL_DT_UNIT_CTYPE_FLOAT64. */
+	ZSL_DT_UNIT_CTYPE_RANG_UNIT_INTERVAL_64 = 0x81,
+	/** @brief 0.0..100.0 inclusive, ZSL_DT_UNIT_CTYPE_FLOAT32. */
+	ZSL_DT_UNIT_CTYPE_RANG_PERCENT_32       = 0x82,
+	/** @brief 0.0..100.0 inclusive, ZSL_DT_UNIT_CTYPE_FLOAT64. */
+	ZSL_DT_UNIT_CTYPE_RANG_PERCENT_64       = 0x83,
+
+	/* 0xF0..0xFE: User-defined types. */
 	ZSL_DT_UNIT_CTYPE_USER_1                = 0xF0,
 	ZSL_DT_UNIT_CTYPE_USER_2                = 0xF1,
 	ZSL_DT_UNIT_CTYPE_USER_3                = 0xF2,
@@ -123,7 +133,9 @@ enum zsl_dt_unit_ctype {
  *   - 0              = Undefined
  *   - 0x0010..0x001F = SI base units
  *   - 0x0020..0x003F = SI derived units
- *   - 0x0040..0x00FF = Reserved
+ *   - 0x0040..0x007F = Reserved
+ *   - 0x0080..0x008F = Unitless values (percent, etc.)
+ *   - 0x0090..0x00FF = Reserved
  *   - 0x0100..0x7FFF = Combined units 
  *   - 0x8000..0xFEFF = Reserved
  *   - 0xFF00..0xFFFE = User defined units
@@ -193,6 +205,12 @@ enum zsl_dt_unit_si {
 	/** @brief Wb, magnetic flux, V*s or kg*m^2/s^2*A */
 	ZSL_DT_UNIT_SI_WEBER                                            = 0x35,
 
+	/* 0x0080..0x008F (128-143): 'Unitless' Units. */
+	/** @brief %, 0.0 .. 100.0 inclusive. */
+	ZSL_DT_UNIT_SI_PERCENT                                          = 0x80,
+	/** @brief 0.0 .. 1.0 inclusive. */
+	ZSL_DT_UNIT_SI_INTERVAL                                         = 0x81,
+
 	/* 0x1000..0x10FF: ZSL_DT_BASE_AREA Combined Units. */
 	/** @brief m^2 */
 	ZSL_DT_UNIT_SI_METERS_2                                         = 0x1000,
@@ -216,6 +234,8 @@ enum zsl_dt_unit_si {
 	/* 0x1800..0x18FF: ZSL_DT_BASE_FREQUENCYY Combined Units. */
 
 	/* 0x1900..0x19FF: ZSL_DT_BASE_HUMIDITY Combined Units. */
+	/** @brief Percent */
+	ZSL_DT_UNIT_SI_RELATIVE_HUMIDITY                                = 0x1900,
 
 	/* 0x1A00..0x1AFF: ZSL_DT_BASE_INDUCTANCE Combined Units. */
 

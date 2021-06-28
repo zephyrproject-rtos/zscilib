@@ -5,7 +5,7 @@
  */
 
 /**
- * @addtogroup DATATYPES_COLOR Color
+ * @addtogroup DATATYPES_COLOR Extended: Color
  *
  * @brief Extended datatypes for ZSL_DT_MES_BASE_COLOR.
  *

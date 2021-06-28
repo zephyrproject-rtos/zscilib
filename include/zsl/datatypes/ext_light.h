@@ -5,7 +5,7 @@
  */
 
 /**
- * @addtogroup DATATYPES_LIGHT Light
+ * @addtogroup DATATYPES_LIGHT Extended: Light
  *
  * @brief Extended datatypes for ZSL_DT_MES_BASE_LIGHT.
  *
