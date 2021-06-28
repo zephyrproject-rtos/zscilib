@@ -189,7 +189,7 @@ struct zsl_dt_unit_type {
 			uint8_t ctype;
 
 			/**
-			 * @brief The amount to scale the value up or down (as a power),
+			 * @brief The amount to scale the value up or down (10^n),
 			 * starting from the unit and scale indicated by si_unit.
 			 * Typically, but not necessarily a member of zsl_dt_unit_scale.
 			 */
