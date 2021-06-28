@@ -309,6 +309,10 @@ enum zsl_dt_unit_si {
 	/** @brief S/m */
 	ZSL_DT_UNIT_SI_SIEMENS_PER_METER                                = 0x2A00,
 
+	/* 0x2B00..0x2BFF: ZSL_DT_BASE_FORCE Combined Units. */
+
+	/* 0x2C00..0x2CFF: ZSL_DT_BASE_ENERGY Combined Units. */
+
 	/* 0xFF00..0xFFFE = User defined units. */
 	ZSL_DT_UNIT_SI_USER_DEFINED_1                                   = 0xFF00,
 	ZSL_DT_UNIT_SI_USER_DEFINED_255                                 = 0xFFFE,

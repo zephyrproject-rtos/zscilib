@@ -54,7 +54,7 @@ enum zsl_dt_mes_base {
 	ZSL_DT_MES_BASE_COLOR           = 0x14,         /**< See extended type */
 	ZSL_DT_MES_BASE_COORDINATES     = 0x15,         /**< XY vector? */
 	ZSL_DT_MES_BASE_CURRENT         = 0x16,         /**< ZSL_DT_UNIT_SI_AMPERE */
-	ZSL_DT_MES_BASE_DIMENSION       = 0x17,         /**< ZSL_DT_UNIT_SI_METER (length, width, distance, etc.) */
+	ZSL_DT_MES_BASE_DIMENSION       = 0x17,         /**< ZSL_DT_UNIT_SI_METER (length, width, radius, distance, etc.) */
 	ZSL_DT_MES_BASE_FREQUENCY       = 0x18,         /**< ZSL_DT_UNIT_SI_HERTZ */
 	ZSL_DT_MES_BASE_HUMIDITY        = 0x19,         /**< relative humidity in percent */
 	ZSL_DT_MES_BASE_INDUCTANCE      = 0x1A,         /**< ZSL_DT_UNIT_SI_HENRY */
@@ -74,6 +74,8 @@ enum zsl_dt_mes_base {
 	ZSL_DT_MES_BASE_VOLUME          = 0x28,         /**< ZSL_DT_UNIT_SI_METERS_3 */
 	ZSL_DT_MES_BASE_ACIDITY         = 0x29,         /**< ZSL_DT_UNIT_SI_PH */
 	ZSL_DT_MES_BASE_CONDUCTIVITY    = 0x2A,         /**< ZSL_DT_UNIT_SI_SIEMENS_PER_METER */
+	ZSL_DT_MES_BASE_FORCE           = 0x2B,         /**< ZSL_DT_UNIT_SI_NEWTON */
+	ZSL_DT_MES_BASE_ENERGY          = 0x2C,         /**< ZSL_DT_UNIT_SI_JOULE */
 
 	ZSL_DT_MES_BASE_USER_1          = 0xF0,         /**< User-defined value 1. */
 	ZSL_DT_MES_BASE_USER_2          = 0xF1,         /**< User-defined value 2. */
