@@ -61,18 +61,18 @@ void test_phy_photon_wavelenght(void)
 	int rc;
 	zsl_real_t lambda;
 	
-	rc = zsl_phy_photon_wavelenght(5.5E8, &lambda);
+	rc = zsl_phy_photon_wavelength(5.5E8, &lambda);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(lambda, 0.5450771964, 1E-6), NULL);
 
 	/* Example for negative frequency. */
-	rc = zsl_phy_photon_wavelenght(-5.5E8, &lambda);
+	rc = zsl_phy_photon_wavelength(-5.5E8, &lambda);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(lambda != lambda, NULL);
 	
 	/* Example for zero frequency. */
-	rc = zsl_phy_photon_wavelenght(0.0, &lambda);
+	rc = zsl_phy_photon_wavelength(0.0, &lambda);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
 	zassert_true(lambda != lambda, NULL);

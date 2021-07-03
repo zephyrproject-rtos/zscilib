@@ -96,7 +96,7 @@ int zsl_phy_opt_power(zsl_real_t f, zsl_real_t *p);
 
 /**
  * @brief Calculates the magnification of a lens based on the real length of an
- *        object and its apparent lenght through the lens.
+ *        object and its apparent length through the lens.
  *
  * @param y1    Real length of the object in meters.
  * @param y2    Apparent length of the object in meters.
@@ -109,11 +109,11 @@ int zsl_phy_opt_magn(zsl_real_t y1, zsl_real_t y2, zsl_real_t *m);
 
 /**
  * @brief Calculates the distance between two objects when a light beam of
- *        wavelenght comparable to the distance passes through them and difracts
- *        producing spectral lines.
+ *        wavelength comparable to the distance passes through them and
+ *        difracts producing spectral lines.
  *
  * @param n        Number of the spectral line.
- * @param lambda   Wavelenght of the light beam in nanometers.
+ * @param lambda   Wavelength of the light beam in nanometers.
  * @param o        Angle between the center of the distance and the n-th
  *                 spectral line in radians.
  * @param d        Pointer to the output distance in nanometers. Will be set to

@@ -61,7 +61,7 @@ int zsl_phy_photon_mom(zsl_real_t lambda, zsl_real_t *p);
  *
  * @return 0 if everything executed properly, error code on failure.
  */
-int zsl_phy_photon_wavelenght(zsl_real_t f, zsl_real_t *lambda);
+int zsl_phy_photon_wavelength(zsl_real_t f, zsl_real_t *lambda);
 
 /**
  * @brief Calculates the frequency of a photon in hertz given its wavelength.

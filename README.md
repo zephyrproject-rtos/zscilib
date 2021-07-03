@@ -65,7 +65,23 @@ zscilib aims to find a middle ground between these two, allowing for richer
 processing of raw data, but within the confines and limitations of the class
 of microcontrollers commonly used on low-cost sensor endnodes.
 
-## Quick Start: Zephyr
+## Quick Start: Standalone
+
+A few makefile-based projects are included in `samples/standalone` showing
+how zscilib can be used independent of Zephyr.
+
+If you already have an appropriate GNU toolchain and build tools (`make`, etc.)
+installed, you can simply execute the following commands:
+
+```bash
+$ cd samples/standalone/svd_pinv
+$ make
+$ bin/zscilib
+  Hello, zscilib!
+  ...
+```
+
+## Quick Start: Zephyr RTOS
 
 ### Adding zscilib to your project via `west`
 
@@ -74,7 +90,7 @@ zscilib by adding the following sections to `zephyr/west.yml`:
 
 1. In the `manifest/remotes` section add:
 
-```
+```yaml
 remotes:
   - name: zscilib
     url-base: https://github.com/zscilib
@@ -82,7 +98,7 @@ remotes:
 
 2. In the `manifest/projects` section add:
 
-```
+```yaml
 - name: zscilib
   remote: zscilib
   path: modules/lib/zscilib
@@ -93,15 +109,27 @@ remotes:
 latest version of zscilib from Github, or whatever `revision` was specified
 above.
 
-### Running the benchmark sample
+### Running a sample application
 
-To run the benchmark sample using qemu, run the following commands:
+To run one of the sample applications using qemu, run the following commands:
 
 > Be sure to run `source zephyr/zephyr-env.sh` (OS X or Linux) or
-  `.\zephyr\zephyr-env.cmd` (Windows) before the commands below!
+  `.\zephyr\zephyr-env.cmd` (Windows) before the commands below! This also
+  assumes `qemu-system-arm` is available on your local system.
 
 ```
-$ west build -p -b qemu_cortex_m3 modules/lib/zscilib/samples/benchmarking -t run
+$ west build -p -b qemu_cortex_m3 \
+  modules/lib/zscilib/samples/matrix/mult -t run
+...
+*** Booting Zephyr OS build zephyr-v2.6.0-536-g89212a7fbf5f  ***
+zscilib matrix mult demo
+
+mtx multiply output (4x3 * 3x4 = 4x4):
+
+14.000000 17.000000 20.000000 23.000000 
+35.000000 44.000000 53.000000 62.000000 
+56.000000 71.000000 86.000000 101.000000 
+7.000000 9.000000 11.000000 13.000000 
 ```
 
 Press **`CTRL+A`** then **`x`** to quit qemu.
@@ -110,7 +138,7 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 
 To run the unit tests for this library, run the following command:
 
-```
+```bash
 $ twister -p qemu_cortex_m3 -T modules/lib/zscilib/tests
 ```
 
@@ -195,31 +223,21 @@ to ensure that the stack pointer is double-word aligned).
 [2]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#unshared-fp-registers-mode
 [3]: https://github.com/zephyrproject-rtos/zephyr/blob/master/doc/reference/kernel/other/float.rst#shared-fp-registers-mode
 
-## Quick Start: Standalone
-
-A few makefile-based projects are included in `samples/standalone` showing
-how zscilib can be used independent of Zephyr.
-
-If you already have an appropriate GNU toolchain and build tools (`make`, etc.)
-installed, you can simply execute the following commands:
-
-```
-$ cd samples/standalone/svd_pinv
-$ make
-$ bin/zscilib
-  Hello, zscilib!
-  ...
-```
-
 ## Current Features
 
-The feature tables below indicate whether implemented functions support:
+> Features marked with the
+  [v0.2.0](https://github.com/zscilib/zscilib/projects/2) flag are in progress
+  or planned as part of the current release cycle, and may be partially
+  implemented or stubbed at present.
+  [v0.3.0](https://github.com/zscilib/zscilib/projects/3) indicates features planned for that later release.
+
+### Linear Algebra
+
+#### Vector Operations
 
 - **f32**: Single-precision floating-point operations
 - **f64**: Double-precision floating-point operations
 - **ARM**: Optimised Arm Thumb-2 ASM implementation
-
-### Vector Operations
 
 | Feature         | Func                  | f32 | f64 | Arm | Notes           |
 |-----------------|-----------------------|-----|-----|-----|-----------------|
@@ -249,7 +267,11 @@ The feature tables below indicate whether implemented functions support:
 | Contains        | `zsl_vec_contains`    | x   | x   |     |                 |
 | Print           | `zsl_vec_print`       | x   | x   |     |                 |
 
-### Matrix Operations
+#### Matrix Operations
+
+- **f32**: Single-precision floating-point operations
+- **f64**: Double-precision floating-point operations
+- **ARM**: Optimised Arm Thumb-2 ASM implementation
 
 | Feature         | Func                  | f32 | f64 | Arm | Notes           |
 |-----------------|-----------------------|-----|-----|-----|-----------------|
@@ -301,321 +323,386 @@ The feature tables below indicate whether implemented functions support:
 | Symmetr. check  | `zsl_mtx_is_sym`      | x   | x   |     |                 |
 | Print           | `zsl_mtx_print`       | x   | x   |     |                 |
 
-#### Unary matrix operations
+##### Unary matrix operations
 
 The following component-wise unary operations can be executed on a matrix
 using the `zsl_mtx_unary_op` function:
 
-- Increment (`++`)
-- Decrement (`--`)
-- Negative (`-`)
-- Logical negation (`!`)
-- Round
-- Abs
-- Floor
-- Ceiling
-- Exponent
-- Natural log
-- Log10
-- Square root
-- Sin, cos, tan
-- Asin, acos, atan
-- Sinh, cosh, tanh
+- [x] Increment (`++`)
+- [x] Decrement (`--`)
+- [x] Negative (`-`)
+- [x] Logical negation (`!`)
+- [x] Round
+- [x] Abs
+- [x] Floor
+- [x] Ceiling
+- [x] Exponent
+- [x] Natural log
+- [x] Log10
+- [x] Square root
+- [x] Sin, cos, tan
+- [x] Asin, acos, atan
+- [x] Sinh, cosh, tanh
 
-#### Binary matrix operations
+##### Binary matrix operations
 
 The following component-wise binary operations can be executed on a pair
 of symmetric matrices using the `zsl_mtx_binary_op` function:
 
-- Add (`a + b`)
-- Subtract (`a - b`)
-- Multiply (`a * b`)
-- Divide (`a / b`)
-- Mean (`mean(a, b`)
-- Exponent (`a^b`)
-- Min (`min(a, b)`)
-- Max (`max(a, b)`)
-- Equal (`a == b`)
-- Not equal (`a != b`)
-- Less than (`a < b`)
-- Greater than (`a > b`)
-- Less than or equal to (`a <= b`)
-- Greater than or equal to (`a >= b`)
+- [x] Add (`a + b`)
+- [x] Subtract (`a - b`)
+- [x] Multiply (`a * b`)
+- [x] Divide (`a / b`)
+- [x] Mean (`mean(a, b`)
+- [x] Exponent (`a^b`)
+- [x] Min (`min(a, b)`)
+- [x] Max (`max(a, b)`)
+- [x] Equal (`a == b`)
+- [x] Not equal (`a != b`)
+- [x] Less than (`a < b`)
+- [x] Greater than (`a > b`)
+- [x] Less than or equal to (`a <= b`)
+- [x] Greater than or equal to (`a >= b`)
 
 > **NOTE**: Component-wise **unary** and **binary** matrix operations can also
   make use of user-defined functions at the application level if the existing
   operand list is not sufficient. See `zsl_mtx_unary_func` and
   `zsl_mtx_binary_func` for details.
 
+### Chemistry
+
+- [ ] Periodic table data including:
+  - [ ] Full name
+  - [ ] Abbreviation
+  - [x] Atomic number
+  - [x] Standard atomic weight
+
 ### Interpolation
 
-- Nearest neighbour (AKA 'piecewise constant')
-- Linear (AKA 'piecewise linear')
-- Natural cubic spline
+- [x] Nearest neighbour (AKA 'piecewise constant')
+- [x] Linear (AKA 'piecewise linear')
+- [x] Natural cubic spline
 
 ### Physics
 
-#### Kinematics
+#### Atomic
 
-- Change in distance (initial velocity, time, acceleration)
-- Change in time (initial and final velocity, acceleration)
-- Instantaneous velocity (initial velocity, time, acceleration)
-- Velocity (initial velocity, distance, acceleration)
-- Average velocity (distance, time)
-- Acceleration (initial and final velocity, time)
-- Centripetal acceleration (radius, period, via radius/speed or radius/period)
-
-#### Projectiles
-
-- Horizontal and vertical velocity components (initial velocity, theta)
-- Total time of flight
-  - Formula 1: gravity, y2, y1, Vy
-  - Formula 2: initial and final vertical velocity and gravity
-- Vertical motion: position at time (Vy, gravity, time, initial height)
-- Horizontal motion: horizontal change of distance at time
-- Velocity (overall velocity from vertical and horizontal components)
-- Theta (and between vertical and horizontal velocity)
-- Range (distance travelled from ground using initial velocity, gravity, angle)
+- [x] Nuclear radius
+- [x] Atomic Radioactive decay
+- [x] Bohr orbital radius
+- [x] Bohr orbital velocity
+- [x] Bohr orbital energy
+- [x] Bragg's law
 
 #### Dynamics
 
-- Newton's second law
-- Mass-acceleration relationship
-- Friction (Fn, uK/s)
-- Normal force on an incline (in newtons based on mass, gravity, angle)
-
-#### Work
-
-- Work done over an interval of distance and constant applied force
-- Work done cosine (as above but with x-component or on an incline)
-- Work done sine (as above but with y-component or on an incline)
-- Work-KE theorem
-
-#### Energy
-
-- Kinetic energy
-- Elastic potential energy
-- Gravitational potential energy
-- Power (work/energy over time)
-- Energy lost to friction
-- Energy of a photon
-- Mechanical energy of a system
-- Total energy of a system
-
-#### Momentum
-
-- Calculate momentum (mass, velocity)
-- Impulse (force, time)
-- Change in momentum/force (mass, initial and final velocity)
-- Elastic collision (when two objects collide and bounce)
-- Inelastic collision (when two objects collide and stick)
-
-#### Gravitation
-
-- Orbital period
-- Escape velocity
-- Gravitational acceleration
-- Orbital velocity
-- Gravitational force
-- Gravitational potential energy
-
-#### Rotation
-
-- Change in theta (analog to distance in kinematics)
-- Change in time (analog to time in kinematics)
-- Instantaneous angular velocity
-- Angular velocity
-- Average angular velocity
-- Angular acceleration
-- Rotational kinetic energy
-- Power (torque multiplied by angular velocity)
-
-#### Waves
-
-TBD
-
-#### Sound
-
-- Pressure amplitude
-- Decibels (sound level between two intensities of the same frequency)
-- Intensity (pressure amplitude, bulk modulus, density)
-- Shock wave angle (speed of sound and velocity through medium)
-- Doppler effect
-- Beats (frequency resulting from overlap of two similar frequencies)
-
-#### Gases
-
-- Kinetic theory of gases
-- Ideal gas law
-- Combined gas law (relationship of pressure, volume, temperature)
-- Boyle's law (relationship of pressure, volume)
-- Charles/Gay-Lussac law (relationship of pressure, volume)
-
-#### Fluids
-
-- Density (of substance in Kg/m^2)
-- Simple pressure (force, area)
-- Pressure in a fluid (at a certain height/depth, gravity, density, surf. pres.)
-- Fluid flow rate proportion
-- Fluid force rate proportion
-- Bernoulli's equation
-  - To known pressure
-  - Calculate pressure and equate
-- Volume flow rate
-
-#### Thermodynamics
-
-- Temperature conversion (fahrenheit, celsius, kelvin)
-- Latent heat of fusion/vaporisation
-- Heat (in joules of a material based on mass, specific heat and delta temp)
-- Linear expansion of metal (length, alpha constant, change in temperature)
-- Average velocity of molecules (RMS velocity of molecules in a gas)
-- Mean free path
-- Efficiency of a heat engine (based on energy of hot and cold chambers)
-- Carnot engine proportion
-
-#### Center of Mass
-
-- Calculate the CoM of a group of objects based on their mass and distance from
-  an arbitrary point
-
-#### Electric
-
-- Coulomb's law
-- Charge density
-- Potential energy
-- Electric field
-- Coulombs potential
-- Electric flux
-- Force from a charge
-
-#### Electricity
-
-- Current (charge per second)
-- Resistors in series/parallel
-- Capacitors in series/parallel
-- Resistivity of wire
-  - Include constants like aluminium, copper, steel, silicon, etc.
-- Ohm's law
-- Power
-  - Current, voltage
-  - Voltage, resistance
-  - Current, resistance
+- [x] Newton's second law
+- [x] Mass-acceleration relationship
+- [x] Friction (Fn, uK/s)
+- [x] Normal force on an incline (in newtons based on mass, gravity, angle)
+- [x] Tension
+- [x] Dynamic lever
+- [x] Pendulums
+  - [x] Period
+  - [x] Max Speed
 
 #### Electrical Components
 
-- Capacitance
-  - Charge, voltage
-  - Area, distance
-- Energy stored in capacitor
-- Energy stored in inductor
-- Transformer turns to voltage
-- Resistor/inductor/capacitor voltage relationship
-- Resistor/capacitor charge/discharge
-  - Current during charge
-  - Current during discharge
-  - Charge (in coulombs) during charge
-  - Charge (in coulombs) during discharge
-- Inductor/capacitor energising/de-energising
-  - Energising
-  - De-energising
+- [x] Capacitance
+  - [x] Charge, voltage
+  - [x] Area, distance
+- [x] Energy stored in capacitor
+- [x] Energy stored in inductor
+- [x] Transformer turns to voltage
+- [x] Resistor/inductor/capacitor voltage relationship
+- [x] Resistor/capacitor charge/discharge
+  - [x] Current during charge
+  - [x] Current during discharge
+  - [x] Charge (in coulombs) during charge
+  - [x] Charge (in coulombs) during discharge
+- [x] Current of RL circuit in time
+
+#### Electric
+
+- [x] Coulomb's law
+- [x] Charge density
+- [x] Potential energy
+- [x] Electric field
+- [x] Coulombs potential
+- [x] Electric flux
+- [x] Force from a charge
+
+#### Electricity (v0.2.0)
+
+- [ ] Current (charge per second)
+- [ ] Resistors in series/parallel
+- [ ] Capacitors in series/parallel
+- [ ] Resistivity of wire
+  - Include constants like aluminium, copper, steel, silicon, etc.
+- [ ] Ohm's law
+- [ ] Power
+  - [ ] Current, voltage
+  - [ ] Voltage, resistance
+  - [ ] Current, resistance
+
+#### Energy
+
+- [x] Kinetic energy
+- [x] Elastic potential energy
+- [x] Gravitational potential energy
+- [x] Power (work/energy over time)
+- [x] Energy lost to friction
+- [x] Energy of a photon
+- [x] Mechanical energy of a system
+- [x] Total energy of a system
+
+#### Fluids
+
+- [x] Density (of substance in Kg/m^2)
+- [x] Simple pressure (force, area)
+- [x] Pressure in a fluid (at a certain height/depth, gravity, density, surf. pres.)
+- [x] Bouyant Force
+- [x] Fluid flow rate proportion
+- [x] Fluid force rate proportion
+- [x] Bernoulli's equation
+- [x] Volume flow rate
+
+#### Gases
+
+- [x] Average velocity of a gas molecule (mass, temp, moles)
+- [x] Ideal gas law (pressure based on moles, temp, volume)
+- [x] Boyle's law (relationship of pressure, volume)
+- [x] Charles/Gay-Lussac law (relationship of pressure, volume)
+
+#### Gravitation
+
+- [x] Orbital period
+- [x] Escape velocity
+- [x] Gravitational acceleration
+- [x] Orbital velocity
+- [x] Gravitational force
+- [x] Gravitational potential energy
+
+#### Kinematics
+
+- [x] Change in distance (initial velocity, time, acceleration)
+- [x] Initial position (final pos, init velocity, accel, time)
+- [x] Initial position (final pos, init velocity, final velocity, accel)
+- [x] Change in time (initial and final velocity, acceleration)
+- [x] Instantaneous velocity (initial velocity, time, acceleration)
+- [x] Velocity (initial velocity, distance, acceleration)
+- [x] Average velocity (distance, time)
+- [x] Acceleration (initial and final velocity, time)
+- [x] Centripetal acceleration (radius, period, via radius/speed or radius/period)
 
 #### Magnetics
 
-- Magnetic force
-- Force on current carrying wire
-- Torque on current loop
-- Potential energy from a dipole
-- Orbital radius in magnetic field
-- Magnetic flux
-- Magnetic moment
+- [x] Magnetic force
+- [x] Force on current carrying wire
+- [x] Torque on current loop
+- [x] Potential energy from a dipole
+- [x] Orbital radius in magnetic field
+- [x] Magnetic flux
+- [x] Magnetic moment
+
+#### Mass
+
+- [x] Calculate the CoM of a group of objects based on their mass and
+      distance from an arbitrary point
+
+#### Momentum
+
+- [x] Calculate momentum (mass, velocity)
+- [x] Impulse (force, time)
+- [x] Change in momentum/force (mass, initial and final velocity)
+- [x] Elastic collision (when two objects collide and bounce)
+- [x] Inelastic collision (when two objects collide and stick)
 
 #### Optics
 
+- [x] Refraction index
+- [x] Snell's law
+- [x] Focus distance
+- [x] Critical angle of incision
+- [x] Power (based on focal length)
+- [x] Magnification (real and apparent length)
+- [x] Diffraction
+
+#### Photons
+
+- [x] Energy
+- [x] Linear momentum
+- [x] Wavelength
+- [x] Frequency
+- [x] Kinetic energy of photoelectric effect
+
+#### Projectiles
+
+- [x] Horizontal and vertical velocity components (initial velocity, theta)
+- [x] Total time of flight
+  - Formula 1: gravity, y2, y1, Vy
+  - Formula 2: initial and final vertical velocity and gravity
+- [x] Vertical motion: position at time (Vy, gravity, time, initial height)
+- [x] Horizontal motion: horizontal change of distance at time
+- [x] Velocity (overall velocity from vertical and horizontal components)
+- [x] Trajectory
+- [x] Theta (angle between vertical and horizontal velocity)
+- [x] Range (distance travelled from ground using initial velocity, gravity, angle)
+
+#### Relativity (v0.3.0)
+
+- [ ] Time dilatation
+- [ ] Lorentz contraction
+- [ ] Relativistic momentum
+- [ ] Kinetic energy
+- [ ] Mass to energy
+- [ ] Lorenz velocity transformation
+- [ ] Relativistic doppler affect
+
+#### Rotation
+
+- [x] Change in theta (analog to distance in kinematics)
+- [x] Distance travelled in circular motion
+- [x] Number of rotations around circle
+- [x] Change in time (analog to time in kinematics)
+- [x] Instantaneous angular velocity
+- [x] Angular velocity
+- [x] Average angular velocity
+- [x] Angular acceleration
+- [x] Rotational kinetic energy
+- [x] Rotational period
+- [x] Rotational frequency
+- [x] Centripetal acceleration
+- [x] Total acceleration
+- [x] Mechanical power (torque multiplied by angular velocity)
+
+#### Sound
+
+- [x] Pressure amplitude
+- [x] Decibels (sound level between two intensities of the same frequency)
+- [x] Intensity (pressure amplitude, bulk modulus, density)
+- [x] Shock wave angle (speed of sound and velocity through medium)
+- [x] Doppler effect
+- [x] Beats (frequency resulting from overlap of two similar frequencies)
+
+#### Thermodynamics
+
+- [x] Temperature conversion (fahrenheit, celsius, kelvin)
+- [x] Latent heat of fusion/vaporisation
+- [x] Heat (in joules of a material based on mass, specific heat and delta temp)
+- [x] Linear expansion of metal (length, alpha constant, change in temperature)
+- [x] Mean free path
+- [x] Efficiency of a heat engine (based on energy of hot and cold chambers)
+- [x] Carnot engine proportion
+
+#### Waves
+
 - TBD
 
-#### Relativity
+#### Work
 
-- Time dilatation
-- Lorentz contraction
-- Relativistic momentum
-- Kinetic energy
-- Mass to energy
-- Lorenz velocity transformation
-- Relativistic doppler affect
-
-#### Atomic
-
-- Nuclear radius
-- Radioactive decay
-- Bohr orbital radius
-- Bohr orbital velocity
-- Bohr orbital energy
-- Bragg's law
-
-### Chemistry
-
-- Periodic table data including:
-  - Full name
-  - Abbreviation
-  - Atomic number
-  - Standard atomic weight
-
-## Planned Features
-
-Help is welcome on the following planned or desirable features.
+- [x] Work done over an interval of distance and constant applied force
+- [x] Work done cosine (as above but with x-component or on an incline)
+- [x] Work done sine (as above but with y-component or on an incline)
+- [x] Work-KE theorem
 
 ### Numerical Analysis
 
-#### Scalar Operations
+#### Statistics (v0.2.0)
+
+- [ ] Mean
+- [ ] Median
+- [ ] Quantile
+- [ ] Quartile
+- [ ] Mode
+- [ ] Data range
+- [ ] De-mean
+- [ ] Variance
+- [ ] Standard deviation
+- [ ] Interquartile range
+- [ ] Covariance
+- [ ] Covariance Matrix
+- [ ] Correlation
+- [ ] Error
+
+#### Probability Operations (v0.2.0)
+
+- [ ] Uniform probability density function (PDF)
+- [ ] Uniform cumulative distribution function (CDF)
+- [ ] Normal probability density function
+- [ ] Normal cumulative distribution function
+- [ ] Inverse normal cumulative distribution function
+- [ ] Information entropy
+
+### Motion and Orientation
+
+#### Quaternions (v0.2.0)
+
+- [ ] Basic struct definitions
+- [ ] Magnitude
+- [ ] Normalisation
+- [ ] Scaling
+- [ ] Multiplication
+- [ ] Conjugate
+- [ ] Inverse
+- [ ] Difference
+- [ ] Exp
+- [ ] Log
+- [ ] Exponentiation
+- [ ] Interpolation
+  - [ ] Slerp
+- [ ] Conversion
+  - [ ] Euler
+  - [ ] Rotation Matrix
+- [ ] Special Forms
+  - [ ] Identity
+
+### Measurement API (v0.2.0)
+
+The `zsl_measurement` struct is a proof of concept attempt at representing
+SI measurements in a standard, concise, unambiguous manner. It consists of a
+measurement type (Base Type + Extended Type), represented in a specific SI
+unit (SI Unit Type), and implemented in a specific C type in memory (C Type).
+
+There is an option to adjust the measurement's scale in +/- 10^n steps (Scale
+Factor) from the default SI unit and scale indicated by the SI Unit Type.
+For example, if 'Ampere' is indicated as the SI unit, the measurement could
+indicate that the value is in uA by setting the scale factor to -6.
+
+- [x] Measurement struct(s) (see: `zsl_measurement`)
+- [x] Base Measurement Types
+- [ ] Extended Measurement Types
+  - [x] Color
+  - [x] Light
+  - [x] Temperature
+  - [ ] Other groups TBD
+- [x] SI Units
+- [x] SI Scales
+- [x] C Types
+
+## Longer Term Planned Features
+
+Help is welcome on the following planned or desirable features.
+
+### Scalar Operations
 
 - Fast trigonometry approximations
 
-#### Statistics Operations
-
-- Mean
-- Median
-- Quantile
-- Quartile
-- Mode
-- Data range
-- De-mean
-- Variance
-- Standard deviation
-- Interquartile range
-- Covariance
-- Covariance Matrix
-- Correlation
-- Error
-
-#### Probability Operations
-
-- Uniform probability density function (PDF)
-- Uniform cumulative distribution function (CDF)
-- Normal probability density function
-- Normal cumulative distribution function
-- Inverse normal cumulative distribution function
-- Information entropy
-
-### Digital Signal Processing
+### Digital Signal Processing (v0.3.0)
 
 - Simple moving average filter
 - Windowed moving average filter
 - Weighted moving average filter
 - Other basic IIR and FIR-type filters and helper functions.
 
-### Misc. Domain-Specific Operations
+### Motion/Orientation
 
-#### Motion and Orientation
-
-- Quaternions (magnitude, normalisation, scaling, etc.)
 - Acceleration/magnetic field -> orientation
 - Sensor fusion (accel/mag/gyro -> quaternion)
-- Euler/Quaternion conversion
 - Functions for acceleration, time/distance, etc. (see `Physics` above)
 - Frame of reference conversion (Aerospace, Android, etc.)
 
-#### Spectrometry
+### Spectrometry
 
 - Conversion between radiometric and photometric units
 - Radiometric data to lux

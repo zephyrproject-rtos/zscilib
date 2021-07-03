@@ -36,7 +36,7 @@ zsl_phy_photon_mom(zsl_real_t lambda, zsl_real_t *p)
 }
 
 int
-zsl_phy_photon_wavelenght(zsl_real_t f, zsl_real_t *lambda)
+zsl_phy_photon_wavelength(zsl_real_t f, zsl_real_t *lambda)
 {
 	if (f <= 0) {
 		*lambda = NAN;
