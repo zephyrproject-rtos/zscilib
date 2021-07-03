@@ -622,12 +622,6 @@ Help is welcome on the following planned or desirable features.
 - Radiometric data to CCT/Duv
 - Spectral analysis
 
-#### Misc.
-
-- Percent error (statistics?)
-- Efficiency
-- Quadratic formula
-
 ## Architecture-Specific Optimisations
 
 Basic tooling has been added to allow for optimised architecture-specific
