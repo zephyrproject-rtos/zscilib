@@ -715,11 +715,12 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 ##### CIE Standard Observer Models
 
 - [x] CIE 1931 2 degree standard observer color matching functions
-- [ ] CIE 1964 10 degree standard observer color matching functions
+- [x] CIE 1964 10 degree standard observer color matching functions
 
 ##### CIE Luminous Efficiency Functions
 
 - [x] CIE 1988 Photopic
+- [x] CIE 1951 Scotopic
 - [x] CIE LERP interpolation helper function
 
 ##### XYZ to RGB Color Space Correlation Matrices
