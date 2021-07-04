@@ -41,6 +41,12 @@ extern "C" {
 /**
  * @brief List of supported CIE standard observer models. All models cover
  *        the 360 nm to 830 nm range in 5 nm steps.
+ *
+ * CIE standard observers define a model that enables the correlation of
+ * spectral data to human visual assessments of color. The older 2 degree
+ * model is widely used in scientific measurements and instruments, but the
+ * 10 degree model is considered a more accurate approximation of how normal
+ * human vision perceives color.
  */
 enum zsl_clr_obs {
 	/**
@@ -115,18 +121,46 @@ enum zsl_clr_illum {
 
 /**
  * @brief List of supported CIE luminous efficiency functions. All functions
- *        cover the 380 nm to 780 nm range in 5 nm steps.
+ * cover the 380 nm to 780 nm range in 5 nm steps.
+ *
+ * Luminous efficiency functions enable conversion from radiometric units,
+ * representing radiant or electromagnetic energy, into photometric units,
+ * representing luminous energy as perceived by the human eye.
+ *
+ * For example:
+ *
+ * Irradiance is a radiometric unit usually represented in W/m^2, and has a
+ * direct relationship to energy (watts). It is a measure of the
+ * electromagnetic energy within a specified area, visible or not.
+ *
+ * Luminance is a photometric unit, and indicates luminous intensity per unit
+ * area, as perceived by normal human vision, and is usually represented in
+ * cd/m^2.
+ *
+ * Irradiance can be converted to luminance by means of an appropriate
+ * luminous efficiency function, shaping the radiometric measurement into
+ * an approximation of how a human with normal vision would perceive the
+ * visible aspects of the radiometric phenomenon.
+ *
+ * Two major luminous efficiency functions are widely used, depending on if
+ * human vision is being modelled in normal daylight conditions, where color
+ * can be perceived, or in night-time conditions where sensitivity to
+ * brightness is dominant.
  */
 enum zsl_clr_lef {
 	/**
-	 * CIE 1988 Photopic Luminous Efficiency Function.
+	 * CIE 1988 Photopic Luminous Efficiency Function, which models typical
+	 * human vision in well-lit conditions, and is based on the response of
+	 * color-sensitive cones in the human eye.
 	 */
-	ZSL_CLR_LEF_CIE88_PHOTOPIC = 0,
+	ZSL_CLR_LEF_CIE88_PHOTOPIC      = 0,
 
 	/**
-	 * CIE 1951 Scotopic Luminous Efficiency Function.
+	 * CIE 1951 Scotopic Luminous Efficiency Function, which models typical
+	 * human vision in dark conditions, and is based on the response of
+	 * rods in the human eye.
 	 */
-	ZSL_CLR_LEF_CIE51_SCOTOPIC = 1,
+	ZSL_CLR_LEF_CIE51_SCOTOPIC      = 1,
 };
 
 /**
