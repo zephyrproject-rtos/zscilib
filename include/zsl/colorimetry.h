@@ -125,20 +125,47 @@ enum zsl_clr_lef {
 };
 
 /**
- * @brief List of included 3x3 XYZ to RGB correlation matrices..
+ * @brief List of included 3x3 XYZ to RGB color space correlation matrices.
  */
 enum zsl_clr_rgb_ccm {
-	/** XYZ to sRGB (D65). */
+	/** XYZ to linear sRGB (D65 white point). */
 	ZSL_CLR_RGB_CCM_SRGB_D65 = 0,
 
-	/** XYZ to sRGB (D50). */
+	/** XYZ to linear sRGB (D50 white point). */
 	ZSL_CLR_RGB_CCM_SRGB_D50,
 
 	/** AdobeRGB98. */
 	ZSL_CLR_RGB_CCM_ADOBERGB98,
 
 	/** Sony S-Gamut3.cine D65. */
-	ZSL_CLR_RGB_CCM_SONY_SGAMUT3_CINE
+	ZSL_CLR_RGB_CCM_SONY_SGAMUT3_CINE,
+
+	/** NTSC. */
+	ZSL_CLR_RGB_CCM_NTSC,
+
+	/** PAL/SECAM. */
+	ZSL_CLR_RGB_CCM_PAL_SECAM,
+
+	/** ITU-R BT.709. */
+	ZSL_CLR_RGB_CCM_BT_709,
+
+	/** ITU-R BT.2020. */
+	ZSL_CLR_RGB_CCM_BT_2020,
+
+	/** ACES Primaries #0 (AP0). */
+	ZSL_CLR_RGB_CCM_ACES_P0,
+
+	/** ACES Primaries #1 (AP1). */
+	ZSL_CLR_RGB_CCM_ACES_P1,
+
+	/** DCI-P3. */
+	ZSL_CLR_RGB_CCM_DCI_P3,
+
+	/** DCI-P3+. */
+	ZSL_CLR_RGB_CCM_DCI_P3_PLUS,
+
+	/** CIE linear RGB. */
+	ZSL_CLR_RGB_CCM_CIE_RGB,
 };
 
 /**
@@ -807,9 +834,10 @@ void zsl_clr_lef_get(enum zsl_clr_lef lef, const struct zsl_clr_spd **data);
 int zsl_clr_lef_lerp(enum zsl_clr_lef lef, unsigned int nm, zsl_real_t *val);
 
 /**
- * @brief   Retrieves a pointer to a standard 3x3 XYZ to RGB correlation matrix.
+ * @brief   Retrieves a pointer to a standard 3x3 XYZ to RGB color space
+ *          correlation matrix.
  *
- * @param ccm   The XYZ to RGB correlation matrix to retrieve.
+ * @param ccm   The XYZ to RGB color space correlation matrix to retrieve.
  * @param data  Pointer to the pointer where the const zsl_mtx data should
  *              be made accessible.
  *

@@ -696,6 +696,8 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
   - [x] Ohno 2014
 - [x] CIE 1931 XYZ tristimulus to 8-bit RGBA (supplied XYZ to RGB color space correlation matrix)
 - [x] CIE 1931 XYZ tristimulus to float RGBA (supplied XYZ to RGB color space correlation matrix)
+- [ ] Gamma encode
+- [ ] Gamma decode
 
 #### Color Data
 
@@ -720,11 +722,21 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] CIE 1988 Photopic
 - [x] CIE LERP interpolation helper function
 
-##### 3x3 XYZ to RGB Correlation Matrices
+##### XYZ to RGB Color Space Correlation Matrices
 
-- [x] XYZ to sRGB (D65)
-- [x] XYZ to sRGB (D50)
-- [x] Adobe RGB 98
+- [x] XYZ to linear sRGB (D65)
+- [x] XYZ to linear sRGB (D50)
+- [x] XYZ to Adobe RGB 98
+- [x] XYZ to Sony S-Gamut3.cine D65
+- [x] XYZ to NTSC
+- [x] XYZ to PAL/SECAM
+- [x] XYZ to ITU-R BT.709
+- [x] XYZ to ITU-R BT.2020
+- [x] XYZ to ACES Primaries #0 (AP0)
+- [x] XYZ to ACES Primaries #1 (AP1)
+- [x] XYZ to DCI-P3
+- [x] XYZ to DCI-P3+
+- [x] XYZ to CIE RGB
 
 ### Measurement API (v0.2.0)
 
