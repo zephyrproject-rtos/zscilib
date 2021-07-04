@@ -121,7 +121,12 @@ enum zsl_clr_lef {
 	/**
 	 * CIE 1988 Photopic Luminous Efficiency Function.
 	 */
-	ZSL_CLR_LEF_CIE88_PHOTOPIC = 0
+	ZSL_CLR_LEF_CIE88_PHOTOPIC = 0,
+
+	/**
+	 * CIE 1951 Scotopic Luminous Efficiency Function.
+	 */
+	ZSL_CLR_LEF_CIE51_SCOTOPIC = 1,
 };
 
 /**
