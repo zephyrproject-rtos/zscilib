@@ -6,6 +6,14 @@
 
 #include <ztest.h>
 
+extern void test_conv_spd_xyz(void);
+extern void test_conv_ct_xyz(void);
+extern void test_conv_ct_rgb8(void);
+extern void test_conv_cct_xyy(void);
+extern void test_conv_cct_xyz(void);
+extern void test_conv_uv60_cct_ohno2011(void);
+extern void test_conv_uv60_cct_ohno2014(void);
+
 extern void test_complex_add(void);
 
 extern void test_interp_lerp(void);
@@ -270,6 +278,14 @@ extern void test_phy_work_kin(void);
 void test_main(void)
 {
 	ztest_test_suite(zsl_tests,
+
+	ztest_unit_test(test_conv_spd_xyz),
+	ztest_unit_test(test_conv_ct_xyz),
+	ztest_unit_test(test_conv_ct_rgb8),
+	ztest_unit_test(test_conv_cct_xyy),
+	ztest_unit_test(test_conv_cct_xyz),
+	ztest_unit_test(test_conv_uv60_cct_ohno2011),
+	ztest_unit_test(test_conv_uv60_cct_ohno2014),
 
 	ztest_unit_test(test_complex_add),
 

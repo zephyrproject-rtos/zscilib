@@ -5,6 +5,13 @@ zephyr_include_directories(include)
 
 zephyr_library()
 zephyr_library_sources(
+    src/colorimetry/colorimetry.c
+    src/colorimetry/conv.c
+    src/colorimetry/illuminants.c
+    src/colorimetry/lumeff.c
+    src/colorimetry/norm.c
+    src/colorimetry/observers.c
+    src/colorimetry/rgbccms.c
     src/physics/atomic.c
     src/physics/dynamics.c
     src/physics/eleccomp.c
@@ -30,6 +37,7 @@ zephyr_library_sources(
     src/chemistry.c
     src/interp.c
     src/matrices.c
+    src/shell.c
     src/vectors.c
     src/zsl.c
 )

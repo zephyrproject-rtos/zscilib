@@ -96,4 +96,15 @@ config ZSL_MATRIX_QRD_SCRATCH_SIZE
 	  that total memory use will be ZSL_MATRIX_QRD_SCRATCH_SIZE * 2 *
 	  sizeof(zsl_real_t).
 
+config ZSL_SHELL
+	bool "Enable the 'zsl' and 'color' shell commands"
+	depends on SHELL
+	help
+	  Enabling this option will make the 'zsls' and 'color' shell commands
+	  available.
+
+config ZSL_CLR_RGBF_BOUND_CAP
+	bool "Limit RGB float values to the 0.0..1.0 range"
+	default y
+
 endif

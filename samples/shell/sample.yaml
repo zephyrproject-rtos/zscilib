@@ -1,0 +1,8 @@
+sample:
+  name: zscilib shell example
+tests:
+  test:
+    tags: zscilib colorimetry
+    # The filters below are from DTS
+    filter: LED0_GPIO_CONTROLLER
+    depends_on: gpio

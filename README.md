@@ -657,17 +657,91 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [ ] Special Forms
   - [ ] Identity
 
+### Colorimetry
+
+#### Types/Structs
+
+- [x] Spectral power distribution (SPD)
+- [x] CIE 1931 XYZ tristimulus
+- [x] CIE 1931 xyY chromaticity
+- [x] CIE 1960 UCS chromaticity
+- [x] CIE 1976 UCS chromaticity
+- [x] RGBA color using floating-space notation (0.0 .. 1.0)
+- [x] RGBA color using 8-bit values
+- [x] RGBA color using 16-bit values
+- [x] CIE 1960 CCT, Duv value pair
+- [x] CIE 1931 XYZ tristimulus values for a standard illuminant
+- [x] CIE 1931 XYZ tristimulus values for a standard observer model
+
+#### Functions
+
+- [x] SPD normalisation
+- [x] SPD to XYZ tristimulus
+- [x] CIE 1931 xyY chromaticity to XYZ tristimulus
+- [x] CIE 1931 XYZ tristimulus values to xyY chromaticity
+- [x] CIE 1931 xyY chromaticity to CIE 1960 uv
+- [x] CIE 1931 XYZ tristimulus to CIE 1960 uv
+- [x] CIE 1960 uv to CIE 1931 XYZ tristimulus
+- [x] CIE 1960 uv to CIE 1931 xyY chromaticity
+- [x] CIE 1960 uv to CIE 1976 u'v'
+- [x] CIE 1976 u'v' value to CIE 1960 uv
+- [x] Color temperature to (u,v) chromaticity
+- [x] CIE 1960 CCT (Duv = 0.0) to CIE 1931 XYZ tristimulus
+- [x] CIE 1960 CCT (Duv = 0.0) to 8-bit RGBA (supplied XYZ to RGB color space correlation matrix)
+- [x] CIE 1960 CCT (Duv = 0.0) to float RGBA (supplied XYZ to RGB color space correlation matrix)
+- [x] CIE 1960 CCT and Duv pair to CIE 1931 xyY chromaticity
+- [x] CIE 1960 CCT and Duv pair to CIE 1931 XYZ tristimulus
+- [x] CIE 1960 (u, v) pair to CIE 1960 CCT and Duv pair using:
+  - [x] McCamy
+  - [x] Ohno 2014
+- [x] CIE 1931 XYZ tristimulus to 8-bit RGBA (supplied XYZ to RGB color space correlation matrix)
+- [x] CIE 1931 XYZ tristimulus to float RGBA (supplied XYZ to RGB color space correlation matrix)
+
+#### Color Data
+
+##### Illuminants
+
+- [x] A
+- [x] B
+- [x] C
+- [x] D50
+- [x] D55
+- [x] D65
+- [x] E
+- [x] ICC
+
+##### CIE Standard Observer Models
+
+- [x] CIE 1931 2 degree standard observer color matching functions
+- [ ] CIE 1964 10 degree standard observer color matching functions
+
+##### CIE Luminous Efficiency Functions
+
+- [x] CIE 1988 Photopic
+- [x] CIE LERP interpolation helper function
+
+##### 3x3 XYZ to RGB Correlation Matrices
+
+- [x] XYZ to sRGB (D65)
+- [x] XYZ to sRGB (D50)
+- [x] Adobe RGB 98
+
 ### Measurement API (v0.2.0)
 
 The `zsl_measurement` struct is a proof of concept attempt at representing
-SI measurements in a standard, concise, unambiguous manner. It consists of a
-measurement type (Base Type + Extended Type), represented in a specific SI
-unit (SI Unit Type), and implemented in a specific C type in memory (C Type).
+measurements in a concise but unambiguous manner.
 
-There is an option to adjust the measurement's scale in +/- 10^n steps (Scale
-Factor) from the default SI unit and scale indicated by the SI Unit Type.
-For example, if 'Ampere' is indicated as the SI unit, the measurement could
-indicate that the value is in uA by setting the scale factor to -6.
+It consists of:
+
+- A **measurement type** (Base Type + Extended Type)
+- The **SI unit** it uses (SI Unit Type)
+- The specific **C type** used to represent it in memory (C Type)
+- Additional meta-data to help interpret the measurement payload
+
+There is an option to adjust the measurement's **scale** in +/- 10^n steps
+(Scale Factor) from the default SI unit and scale indicated by the SI Unit
+Type. For example, if 'Ampere' is indicated as the SI unit, the measurement
+could indicate that the value is in uA by setting the scale factor to -6.
 
 - [x] Measurement struct(s) (see: `zsl_measurement`)
 - [x] Base Measurement Types
