@@ -1,12 +1,15 @@
 var searchData=
 [
-  ['photons_65',['Photons',['../group___p_h_o_t_o_n_s.html',1,'']]],
-  ['photons_2eh_66',['photons.h',['../photons_8h.html',1,'']]],
-  ['phy_5ftest_67',['phy_test',['../physics_8h.html#a47a83486e8f03dd03621ab82f78d1ebf',1,'physics.h']]],
-  ['physics_68',['Physics',['../group___p_h_y_s_i_c_s.html',1,'']]],
-  ['physics_2eh_69',['physics.h',['../physics_8h.html',1,'']]],
-  ['probability_70',['Probability',['../group___p_r_o_b_a_b_i_l_i_t_y.html',1,'']]],
-  ['probability_2eh_71',['probability.h',['../probability_8h.html',1,'']]],
-  ['projectiles_72',['Projectiles',['../group___p_r_o_j_e_c_t_i_l_e_s.html',1,'']]],
-  ['projectiles_2eh_73',['projectiles.h',['../projectiles_8h.html',1,'']]]
+  ['magnetics_90',['Magnetics',['../group___m_a_g_n_e_t_i_c_s.html',1,'']]],
+  ['magnetics_2eh_91',['magnetics.h',['../magnetics_8h.html',1,'']]],
+  ['mass_2eh_92',['mass.h',['../mass_8h.html',1,'']]],
+  ['matrices_93',['Matrices',['../group___m_a_t_r_i_c_e_s.html',1,'']]],
+  ['matrices_2ec_94',['matrices.c',['../matrices_8c.html',1,'']]],
+  ['matrices_2eh_95',['matrices.h',['../matrices_8h.html',1,'']]],
+  ['measurements_96',['Measurements',['../group___m_e_a_s_u_r_e_m_e_n_t.html',1,'']]],
+  ['measurement_2eh_97',['measurement.h',['../measurement_8h.html',1,'']]],
+  ['misc_2eh_98',['misc.h',['../misc_8h.html',1,'']]],
+  ['momentum_99',['Momentum',['../group___m_o_m_e_n_t_u_m.html',1,'']]],
+  ['momentum_2eh_100',['momentum.h',['../momentum_8h.html',1,'']]],
+  ['misc_2e_20physics_20functions_101',['Misc. physics functions',['../group___p_h_y_s_i_c_s___m_i_s_c.html',1,'']]]
 ];

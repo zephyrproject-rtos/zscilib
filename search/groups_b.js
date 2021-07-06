@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['neural_20networks_1100',['Neural Networks',['../group___n_e_u_r_a_l.html',1,'']]]
+  ['normalisation_20functions_1893',['Normalisation Functions',['../group___n_o_r_m.html',1,'']]]
 ];

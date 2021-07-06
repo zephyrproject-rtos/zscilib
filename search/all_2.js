@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['center_20of_20mass_6',['Center of mass',['../group___c_e_n_t_e_r___o_f___m_a_s_s.html',1,'']]],
-  ['chemistry_7',['Chemistry',['../group___c_h_e_m_i_s_t_r_y.html',1,'']]],
-  ['chemistry_2ec_8',['chemistry.c',['../chemistry_8c.html',1,'']]],
-  ['chemistry_2eh_9',['chemistry.h',['../chemistry_8h.html',1,'']]],
-  ['comparison_10',['Comparison',['../group___m_t_x___c_o_m_p_a_r_i_s_o_n.html',1,'(Global Namespace)'],['../group___v_e_c___c_o_m_p_a_r_e.html',1,'(Global Namespace)']]],
-  ['constants_11',['Constants',['../group___c_o_n_s_t_a_n_t_s.html',1,'']]],
-  ['consts_2eh_12',['consts.h',['../consts_8h.html',1,'']]]
+  ['b_6',['b',['../structzsl__clr__rgbf.html#a398da6ec94cf817ea1dd9cac14d5f5b6',1,'zsl_clr_rgbf::b()'],['../structzsl__clr__rgb8.html#ae34f05910df2aebca1d0c17c874fef8b',1,'zsl_clr_rgb8::b()'],['../structzsl__clr__rgb16.html#acd26ba5f8bd86ce677b445565e42967e',1,'zsl_clr_rgb16::b()']]],
+  ['b_5finvalid_7',['b_invalid',['../structzsl__clr__rgbf.html#a3ebb2b546cdebecc9e380d51f9977571',1,'zsl_clr_rgbf::b_invalid()'],['../structzsl__clr__rgb8.html#a29bdcb029728f3def637ca51f115a7c8',1,'zsl_clr_rgb8::b_invalid()'],['../structzsl__clr__rgb16.html#ab3589958dd14ae4a74fc831d3e887994',1,'zsl_clr_rgb16::b_invalid()']]],
+  ['base_2eh_8',['base.h',['../base_8h.html',1,'']]],
+  ['base_5ftype_9',['base_type',['../structzsl__mes__header.html#a754de7e9d11c150f2b1ac2155a8549cf',1,'zsl_mes_header']]],
+  ['bit_5fdepth_10',['bit_depth',['../structzsl__clr__rgb16.html#a7af87f6b7eaf046a03e50d49f6e5940e',1,'zsl_clr_rgb16']]],
+  ['base_20types_11',['Base Types',['../group___m_e_a_s_u_r_e_m_e_n_t___b_a_s_e.html',1,'']]],
+  ['basic_20math_12',['Basic Math',['../group___m_t_x___b_a_s_i_c_m_a_t_h.html',1,'']]],
+  ['basic_20math_13',['Basic Math',['../group___v_e_c___b_a_s_i_c_m_a_t_h.html',1,'']]]
 ];

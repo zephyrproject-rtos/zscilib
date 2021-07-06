@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['basic_20math_1073',['Basic Math',['../group___m_t_x___b_a_s_i_c_m_a_t_h.html',1,'(Global Namespace)'],['../group___v_e_c___b_a_s_i_c_m_a_t_h.html',1,'(Global Namespace)']]]
+  ['base_20types_1854',['Base Types',['../group___m_e_a_s_u_r_e_m_e_n_t___b_a_s_e.html',1,'']]],
+  ['basic_20math_1855',['Basic Math',['../group___m_t_x___b_a_s_i_c_m_a_t_h.html',1,'']]],
+  ['basic_20math_1856',['Basic Math',['../group___v_e_c___b_a_s_i_c_m_a_t_h.html',1,'']]]
 ];

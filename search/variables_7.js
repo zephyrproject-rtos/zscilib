@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_855',['x',['../structzsl__interp__xy.html#a6e6fd9aae1ab2873c702f1034ccb2e35',1,'zsl_interp_xy::x()'],['../structzsl__interp__xyc.html#a1a807cc556db69aa0758139ded78a0b0',1,'zsl_interp_xyc::x()']]]
+  ['g_1333',['g',['../structzsl__clr__rgbf.html#ac8dd16c1ab029129e3c604ca8bca53f2',1,'zsl_clr_rgbf::g()'],['../structzsl__clr__rgb8.html#af32615326baedff8498a9c242c3c848a',1,'zsl_clr_rgb8::g()'],['../structzsl__clr__rgb16.html#a9660f2e555580ff08d4e9751526e2e6a',1,'zsl_clr_rgb16::g()']]],
+  ['g_5finvalid_1334',['g_invalid',['../structzsl__clr__rgbf.html#a377d41cdd8b34e6a69871702b1b82ea9',1,'zsl_clr_rgbf::g_invalid()'],['../structzsl__clr__rgb8.html#a4cec54203506218c4dd069d6f9afee3f',1,'zsl_clr_rgb8::g_invalid()'],['../structzsl__clr__rgb16.html#a1002350597927f8ccae6aa83f933f6e9',1,'zsl_clr_rgb16::g_invalid()']]]
 ];
