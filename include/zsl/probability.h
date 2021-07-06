@@ -5,10 +5,12 @@
  */
 
 /**
- * \defgroup PROBABILITY Probability
+ * @defgroup PROBABILITY Probability
  *
  * @brief Probability-related functions.
- */
+ * 
+ * @ingroup PROBABILITY
+ *  @{ */
 
 /**
  * @file

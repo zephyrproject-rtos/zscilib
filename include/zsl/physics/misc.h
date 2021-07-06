@@ -9,7 +9,7 @@
  *
  * @brief Misc. physics functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

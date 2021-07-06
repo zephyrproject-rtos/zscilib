@@ -5,10 +5,12 @@
  */
 
 /**
- * \defgroup EULER Euler Angles
+ * @defgroup EULER Euler Angles
  *
  * @brief Euler angle manipulation.
- */
+ * 
+ * @ingroup EULER
+ *  @{ */
 
 /**
  * @file

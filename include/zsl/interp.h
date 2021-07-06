@@ -5,7 +5,7 @@
  */
 
 /**
- * \defgroup INTERPOLATE Interpolation
+ * @defgroup INTERPOLATE Interpolation
  *
  * @brief Various functions for linear, cubic spline and nearest-neighbour
  * interpolation of X,Y data.
@@ -33,7 +33,7 @@ extern "C" {
  *
  * Common interpolation-related structs and enums.
  *
- * \ingroup INTERPOLATE
+ * @ingroup INTERPOLATE
  *  @{ */
 
 /** @brief XY struct for nearest neighbour and linear interpolation. */
@@ -56,7 +56,7 @@ struct zsl_interp_xyc {
  *
  * Helper functions to interpolate between known values.
  *
- * \ingroup INTERPOLATE
+ * @ingroup INTERPOLATE
  *  @{ */
 
 /**

@@ -9,7 +9,7 @@
  *
  * @brief Wave functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

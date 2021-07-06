@@ -9,7 +9,7 @@
  *
  * @brief Momentum functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

@@ -9,7 +9,7 @@
  *
  * @brief Sound functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

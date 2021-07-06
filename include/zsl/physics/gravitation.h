@@ -9,7 +9,7 @@
  *
  * @brief Gravitation functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

@@ -5,7 +5,7 @@
  */
 
 /**
- * \defgroup STATISTICS Statistics
+ * @defgroup STATISTICS Statistics
  *
  * @brief Statistics-related functions.
  */

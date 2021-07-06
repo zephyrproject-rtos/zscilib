@@ -5,9 +5,9 @@
  */
 
 /**
- * \defgroup COLORIMETRY Colorimetry
+ * @defgroup COLORIMETRY Colorimetry
  *
- * Various conversion and mathematic functions to work with different color
+ * @brief Various conversion and mathematic functions to work with different color
  * systems and values.
  */
 
@@ -31,11 +31,11 @@ extern "C" {
 #endif
 
 /**
- * @addtogroup STRUCTS Structs and Enums
+ * @addtogroup COLOR_STRUCTS Structs and Enums
  *
- * Common colorimetry-related structs and enums.
+ * @brief Common colorimetry-related structs and enums.
  *
- * \ingroup COLORIMETRY
+ * @ingroup COLORIMETRY
  *  @{ */
 
 /**
@@ -530,7 +530,7 @@ struct zsl_clr_spd {
  *
  * Helper functions to convert between color systems and coordinates.
  *
- * \ingroup COLORIMETRY
+ * @ingroup COLORIMETRY
  *  @{ */
 
 /**
@@ -760,7 +760,7 @@ int zsl_clr_conv_xyz_rgbf(struct zsl_clr_xyz *xyz, struct zsl_mtx *mtx,
  *
  * Helper functions to normalise data sets.
  *
- * \ingroup COLORIMETRY
+ * @ingroup COLORIMETRY
  *  @{ */
 
 /**
@@ -780,7 +780,7 @@ int zsl_clr_norm_spd(struct zsl_clr_spd *spd);
  *
  * Function to access various colorimetry datasets.
  *
- * \ingroup COLORIMETRY
+ * @ingroup COLORIMETRY
  *  @{ */
 
 /**

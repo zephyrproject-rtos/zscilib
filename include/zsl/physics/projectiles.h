@@ -9,7 +9,7 @@
  *
  * @brief Projectile functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

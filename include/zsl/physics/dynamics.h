@@ -9,7 +9,7 @@
  *
  * @brief Dynamics functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

@@ -9,7 +9,7 @@
  *
  * @brief Definitions for SI base, derived and combined units and scales.
  *
- * \ingroup MEASUREMENT
+ * @ingroup MES_STRUCTS
  *  @{ */
 
 /**

@@ -5,11 +5,11 @@
  */
 
 /**
- * @addtogroup MEASUREMENT_COLOR Extended: Color
+ * @addtogroup MEASUREMENT_COLOR Extended Type: Color
  *
  * @brief Extended meassurement types for ZSL_MES_TYPE_COLOR.
  *
- * \ingroup MEASUREMENT
+ * @ingroup MES_STRUCTS
  *  @{ */
 
 /**

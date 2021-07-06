@@ -9,7 +9,7 @@
  *
  * @brief Optics functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

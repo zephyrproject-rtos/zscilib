@@ -9,7 +9,7 @@
  *
  * @brief Kinematics functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

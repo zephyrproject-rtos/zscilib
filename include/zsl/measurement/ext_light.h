@@ -5,11 +5,11 @@
  */
 
 /**
- * @addtogroup MEASUREMENT_LIGHT Extended: Light
+ * @addtogroup MEASUREMENT_LIGHT Extended Type: Light
  *
  * @brief Extended measurement types for ZSL_MES_TYPE_LIGHT.
  *
- * \ingroup MEASUREMENT
+ * @ingroup MES_STRUCTS
  *  @{ */
 
 /**

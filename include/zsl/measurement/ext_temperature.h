@@ -5,11 +5,11 @@
  */
 
 /**
- * @addtogroup MEASUREMENT_TEMP Extended: Temperature
+ * @addtogroup MEASUREMENT_TEMP Extended Type: Temperature
  *
  * @brief Extended measurement types for ZSL_MES_TYPE_TEMPERATURE.
  *
- * \ingroup MEASUREMENT
+ * @ingroup MES_STRUCTS
  *  @{ */
 
 /**

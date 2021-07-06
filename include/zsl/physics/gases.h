@@ -9,7 +9,7 @@
  *
  * @brief Gas functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

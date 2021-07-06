@@ -9,7 +9,7 @@
  *
  * @brief Magnetics functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

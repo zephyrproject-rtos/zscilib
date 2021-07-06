@@ -9,7 +9,7 @@
  *
  * @brief Electrical component functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

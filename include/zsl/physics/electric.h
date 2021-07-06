@@ -9,7 +9,7 @@
  *
  * @brief Electric functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

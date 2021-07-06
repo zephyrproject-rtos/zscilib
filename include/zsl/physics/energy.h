@@ -9,7 +9,7 @@
  *
  * @brief Energy functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

@@ -9,7 +9,7 @@
  *
  * @brief Thermo-dynamic functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

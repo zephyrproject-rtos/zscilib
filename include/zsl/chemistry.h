@@ -5,7 +5,7 @@
  */
 
 /**
- * \defgroup CHEMISTRY Chemistry
+ * @defgroup CHEMISTRY Chemistry
  *
  * @brief Chemistry functions.
  */
@@ -25,6 +25,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @addtogroup CHEM_STRUCTS Structs and Enums
+ *
+ * Common chemistry-related structs and enums.
+ *
+ * @ingroup CHEMISTRY
+ *  @{ */
 
 /**
  * @brief List of all elements in the periodic table, where the value

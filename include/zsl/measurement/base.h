@@ -5,11 +5,11 @@
  */
 
 /**
- * @addtogroup MEASUREMENT_BASE Base
+ * @addtogroup MEASUREMENT_BASE Base Types
  *
  * @brief Base measurement types.
  *
- * \ingroup MEASUREMENT
+ * @ingroup MES_STRUCTS
  *  @{
  */
 

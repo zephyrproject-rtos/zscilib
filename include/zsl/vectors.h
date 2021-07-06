@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- /**
-  * \defgroup VECTORS Vectors
-  *
-  * @brief Vectors functions
-  *
-  * TODO: Expand with examples, better high-level documentation, etc.
-  */
+/**
+ * @defgroup VECTORS Vectors
+ *
+ * @brief Vectors functions
+ *
+ * TODO: Expand with examples, better high-level documentation, etc.
+ */
 
 /**
  * @file
@@ -33,7 +33,7 @@ extern "C" {
  *
  * @brief Various struct, enums and macros related to vectors.
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /** @brief Represents a vector. */
@@ -63,7 +63,7 @@ struct zsl_vec {
  *
  * @brief Vector initisialisation.
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /**
@@ -109,7 +109,7 @@ int zsl_vec_copy(struct zsl_vec *vdest, struct zsl_vec *vsrc);
  *
  * @brief Functions used to access subsets of the vector.
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /**
@@ -134,7 +134,7 @@ int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
  *
  * @brief Basic mathematical operations (add, sum, norm, etc.).
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /**
@@ -353,7 +353,7 @@ int zsl_vec_zte(struct zsl_vec *v);
  *
  * @brief Functions used to compare or verify vectors.
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /**
@@ -396,7 +396,7 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
  *
  * @brief Functions used to present vectors in a user-friendly format.
  *
- * \ingroup VECTORS
+ * @ingroup VECTORS
  *  @{ */
 
 /**

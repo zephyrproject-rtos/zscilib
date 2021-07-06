@@ -9,7 +9,7 @@
  *
  * @brief Work functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

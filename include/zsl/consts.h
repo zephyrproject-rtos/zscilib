@@ -5,10 +5,12 @@
  */
 
 /**
- * \defgroup CONSTANTS Constants
+ * @defgroup CONSTANTS Constants
  *
  * @brief Constant values used by or with zscilib.
- */
+ * 
+ * @ingroup CONSTANTS
+ *  @{ */
 
 /**
  * @file

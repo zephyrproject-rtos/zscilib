@@ -9,7 +9,7 @@
  *
  * @brief Relativity functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

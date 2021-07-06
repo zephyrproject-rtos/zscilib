@@ -9,7 +9,7 @@
  *
  * @brief Center of mass functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

@@ -5,7 +5,7 @@
  */
 
 /**
- * \defgroup MATRICES Matrices
+ * @defgroup MATRICES Matrices
  *
  * @brief Various mxn matrices functions.
  *
@@ -29,18 +29,18 @@
 extern "C" {
 #endif
 
-/** The number of eigenvectors is less than the matrice's dimension. */
-#define EEIGENSIZE   (100)
-/** Occurs when the input matrix has complex eigenvalues. */
-#define ECOMPLEXVAL  (101)
-
 /**
  * @addtogroup MTX_STRUCTS Structs and Macros
  *
  * @brief Common structs and macros for working with matrices.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
+
+/** Error: The number of eigenvectors is less than the matrice's dimension. */
+#define EEIGENSIZE   (100)
+/** Error: Occurs when the input matrix has complex eigenvalues. */
+#define ECOMPLEXVAL  (101)
 
 /** @brief Represents a m x n matrix, with data stored in row-major order. */
 struct zsl_mtx {
@@ -74,7 +74,7 @@ struct zsl_mtx {
  * @brief Unary and binary operands that can be performed on matrix
  *        coefficients.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /** @brief Component-wise unary operations. */
@@ -126,7 +126,7 @@ typedef enum zsl_mtx_binary_op {
  *
  * @brief Functions used to initialise matrices.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -251,7 +251,7 @@ int zsl_mtx_copy(struct zsl_mtx *mdest, struct zsl_mtx *msrc);
  * @brief Functions used to access or modify matrix rows, columns or
  *        coefficients.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -339,7 +339,7 @@ int zsl_mtx_set_col(struct zsl_mtx *m, size_t j, zsl_real_t *v);
 /** @} */ /* End of MTX_DATAACCESS group */
 
 /**
- * \ingroup MTX_OPERANDS
+ * @ingroup MTX_OPERANDS
  *  @{ */
 
 /**
@@ -401,7 +401,7 @@ int zsl_mtx_binary_func(struct zsl_mtx *ma, struct zsl_mtx *mb,
  *
  * @brief Basic mathematical operations for matrices (add, substract, etc.).
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -538,7 +538,7 @@ int zsl_mtx_scalar_mult_row_d(struct zsl_mtx *m, size_t i, zsl_real_t s);
  * @brief Transformation functions for matrices (transpose, inverse, guassian
  *        elimination, etc.).
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -929,7 +929,7 @@ int zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter);
  *
  * @brief Min/max helpers to determine the range of the matrice's coefficients.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -993,7 +993,7 @@ int zsl_mtx_max_idx(struct zsl_mtx *m, size_t *i, size_t *j);
  *
  * @brief Functions used to compare or verify matrices.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**
@@ -1033,7 +1033,7 @@ bool zsl_mtx_is_sym(struct zsl_mtx *m);
  *
  * @brief Functions used to present matrices in a user-friendly format.
  *
- * \ingroup MATRICES
+ * @ingroup MATRICES
  *  @{ */
 
 /**

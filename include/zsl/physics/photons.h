@@ -9,7 +9,7 @@
  *
  * @brief Photon-related functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

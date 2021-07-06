@@ -5,12 +5,13 @@
  */
 
 /**
- * \defgroup QUATERNIONS Quaternions
+ * @defgroup QUATERNIONS Quaternions
  *
- * @brief Quaternion math.
+ * @brief Functions and structs for dealing with unit quaternions and
+ *        orientation in 3D space.
  *
- * @note These functions deal largely with unit quaternions. Further work is
- *       required to support arbitrary queternion math.
+ * These functions deal largely with <b>unit quaternions</b>. Further work is
+ * required to support arbitrary queternion math.
  *
  * Quaternions can be thought of in one of three ways:
  *
@@ -19,6 +20,10 @@
  *    space (i, j, k)
  * 3. As a hypercomplex number consisting of a scalar real number (r),
  *    and three imaginary numbers (i, j, k)
+ *
+ * When working with unit quaternions and orientation or rotation, we'll
+ * generally look at quaternions from the second point-of-view, as a scalar
+ * and three component vector in 3D space.
  *
  * @note The component parts of quaternions are sometimes referred to
  * with a "w, x, y, z" notation instead of the "r, i, j, k" notation used in
@@ -38,7 +43,7 @@
  *
  * Gimbal lock occurs when two axes in the Eular angle coincide after a
  * rotation by a multiple of 90 degrees about the third axis, resulting in the
- * loss of a degree of freedom. This leaves uss with an unclear value for the
+ * loss of a degree of freedom. This leaves us with an unclear value for the
  * logitude of the north or south poles, i.e. "which way is up?!?".
  *
  * Quaternions also enable not just LINEAR interpolation (lerp) between two
@@ -46,6 +51,7 @@
  * between two points in a sphere, travelling across the surface of the
  * sphere rather than in a straight line. This enables us to interpolate
  * between arbitrary orientations (x, y, z), not just arbitrary points (x, y).
+ * 
  */
 
 /**
@@ -63,6 +69,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @addtogroup QUAT_STRUCTS Structs, Enums and Macros
+ * 
+ * @brief Various structs, enums and macros related to quaternions.
+ * 
+ * @ingroup QUATERNIONS
+ *  @{ */
 
 /**
  * @brief Represents a quaternion, a 4D vector capable of representing 3D
@@ -113,6 +127,16 @@ enum zsl_quat_type {
 	ZSL_QUAT_TYPE_IDENTITY  = 1,
 };
 
+/** @} */ /* End of VEC_STRUCTS group */
+
+/**
+ * @addtogroup QUAT_INIT Initialisation
+ *
+ * @brief Quaternion initisialisation.
+ *
+ * @ingroup QUATERNIONS
+ *  @{ */
+
 /**
  * @brief Convenience function to set the supplied quaternion into a known
  *        state.
@@ -121,6 +145,16 @@ enum zsl_quat_type {
  * @param type 	The memory layout to use when initialising the quaternion.
  */
 void zsl_quat_init(struct zsl_quat *q, enum zsl_quat_type type);
+
+/** @} */ /* End of QUAT_INIT group */
+
+/**
+ * @addtogroup QUAT_FUNCTIONS Functions
+ *
+ * @brief Quaternion APIU functionsn.
+ *
+ * @ingroup QUATERNIONS
+ *  @{ */
 
 /**
  * @brief Calculates the magnitude (or length) of the quaternion, a scalar
@@ -138,8 +172,10 @@ zsl_real_t zsl_quat_magn(struct zsl_quat *q);
 
 /**
  * @brief Normalises the input to be a "unit" or "rotation" quaternion, AKA
- *        a versor, such that the sum of the squares of the four componeents
- *        equals 1.0. This allows a quaternion to represent an rotation;
+ *        a versor, such that the square root of the sum of the squares of the
+ *        four componeents, sqrt(r^2+i^2+j^2+k^2), equals 1.0. This
+ *        normalisation process is what allows a quaternion to represent an
+ *        rotation.
  *
  * Quaternion normalisation is required to represent rotation of objects
  * in 3D space, and for transforming orientation coordinates in said space.
@@ -149,6 +185,8 @@ zsl_real_t zsl_quat_magn(struct zsl_quat *q);
  * Normalisation is accomplished by dividing each of the components by the
  * square root of the sum of the squares of the four quaternion components
  * (AKA the Euclidean norm).
+ * 
+ * To check if a quaternion is a unit quaternion, see @ref zsl_quat_is_unit.
  *
  * @param q 	The source quaternion.
  * @param qn 	The normalised output quaternion.
@@ -238,8 +276,8 @@ int zsl_quat_exp(struct zsl_quat *q, struct zsl_quat *qe);
 int zsl_quat_log(struct zsl_quat *q, struct zsl_quat *ql);
 
 /**
- * @brief Multiples the supplied unit quaternions to power 'exp', and stores
- *        the results in qout (where qout = qa^pow).
+ * @brief Multiples the supplied unit quaternions to the specified exponent,
+ *        and stores the results in qout (where qout = qa^pow).
  *
  * @param q 	The input unit quaternion.
  * @param exp 	The exponent to use, where qa^exp.
@@ -308,10 +346,11 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi);
 
+
+/** @} */ /* End of QUAT_FUNCTIONS group */
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_ */
-
-/** @} */ /* End of quaternions group */

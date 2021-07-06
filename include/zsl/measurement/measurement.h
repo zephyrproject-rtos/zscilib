@@ -5,21 +5,36 @@
  */
 
 /**
- * \defgroup MEASUREMENT Measurements
+ * @defgroup MATRICES Matrices
  *
- * @brief SI-based measurement classification system
- * 
- * Measurements consist of a measurement type (Base Type + Extended Type),
- * represented in a specific SI unit (SI Unit Type), and implemented in a
- * specific C type in memory (C Type).
+ * @brief Various mxn matrices functions.
  *
- * There is an option to adjust the measurement's scale in +/- 10^n steps (Scale
- * Factor) from the default SI unit and scale indicated by the SI Unit Type.
- * For example, if 'Ampere' is indicated as the SI unit, the measurement could
- * indicate that the value is in uA by setting the scale factor to -6.
+ * TODO: Expand with examples, better high-level documentation, etc.
+ */
+
+/**
+ * @defgroup MEASUREMENT Measurements
+ *
+ * @brief SI-based measurement representation API
  * 
- * \ingroup MEASUREMENT
- *  @{
+ * The measurement API, based around the @ref zsl_measurement struct, is a
+ * proof of concept attempt at representing measurements in a concise but 
+ * unambiguous manner.
+ * 
+ * It consists of a payload and a @ref zsl_mes_header which describes:
+ * 
+ * - A compound **measurement type** (@ref zsl_mes_type + Extended Type)
+ * - The **SI unit** it uses (@ref zsl_mes_unit_si)
+ * - The specific **C type** used to represent it in memory
+ *   (@ref zsl_mes_unit_ctype)
+ * - An optional **scale factor** to adjust thee default SI unit scale in
+ *   +/- 10^n steps (ex. -6 for uA instead of A)
+ * - Additional meta-data to help interpret the measurement payload
+ */
+
+/**
+ * @file measurement.h
+ * @brief API header file for ZSL measurements.
  */
 
 #ifndef ZSL_MEASUREMENT_H__
@@ -32,14 +47,17 @@
 #include <zsl/measurement/ext_temperature.h>
 #include <zsl/measurement/unit.h>
 
-/**
- * @file measurement.h
- * @brief API header file for ZSL measurements.
- */
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @addtogroup MES_STRUCTS Structs, Enums and Macros
+ *
+ * @brief Common structs and macros for working with measuremeets.
+ *
+ * @ingroup MEASUREMENT
+ *  @{ */
 
 /** Measurement header. All fields in little endian. */
 struct zsl_mes_header {
@@ -187,6 +205,19 @@ enum zsl_mes_timestamp {
 };
 
 /**
+ * @}	End MES_STRUCTS
+ */
+
+/*
+ * @addtogroup MES_FUNCTIONS Functions
+ *
+ * @brief Measurement API functions
+ *
+ * @ingroup MEASUREMENT
+ *  @{
+ */
+
+/**
  * @brief Helper function to display the contents of the zsl_measurement.
  *
  * @param sample zsl_measurement to print.
@@ -198,7 +229,7 @@ void zsl_mes_print(struct zsl_measurement *sample);
 #endif
 
 /**
- * @}
+ * @}	End MEASUREMENTS
  */
 
 #endif /* ZSL_MEASUREMENT_H_ */

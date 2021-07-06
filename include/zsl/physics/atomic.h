@@ -9,7 +9,7 @@
  *
  * @brief Atomic functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

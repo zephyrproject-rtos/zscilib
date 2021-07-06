@@ -9,7 +9,7 @@
  *
  * @brief Fluids functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**

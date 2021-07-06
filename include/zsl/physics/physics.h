@@ -5,7 +5,7 @@
  */
 
 /**
- * \defgroup PHYSICS Physics
+ * @defgroup PHYSICS Physics
  *
  * @brief Physics functions.
  */

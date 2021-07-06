@@ -9,7 +9,7 @@
  *
  * @brief Rotation functions.
  *
- * \ingroup PHYSICS
+ * @ingroup PHYSICS
  *  @{ */
 
 /**
