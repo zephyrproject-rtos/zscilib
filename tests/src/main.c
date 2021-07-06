@@ -275,6 +275,20 @@ extern void test_phy_work_x(void);
 extern void test_phy_work_y(void);
 extern void test_phy_work_kin(void);
 
+extern void test_quat_init(void);
+extern void test_quat_magn(void);
+extern void test_quat_to_unit(void);
+extern void test_quat_is_unit(void);
+extern void test_quat_scale(void);
+extern void test_quat_mult(void);
+extern void test_quat_exp(void);
+extern void test_quat_log(void);
+extern void test_quat_pow(void);
+extern void test_quat_conj(void);
+extern void test_quat_inv(void);
+extern void test_quat_diff(void);
+extern void test_quat_slerp(void);
+
 void test_main(void)
 {
 	ztest_test_suite(zsl_tests,
@@ -537,8 +551,21 @@ void test_main(void)
 	ztest_unit_test(test_phy_work_module),
 	ztest_unit_test(test_phy_work_x),
 	ztest_unit_test(test_phy_work_y),
-	ztest_unit_test(test_phy_work_kin)
+	ztest_unit_test(test_phy_work_kin),
 
+	ztest_unit_test(test_quat_init),
+	ztest_unit_test(test_quat_magn),
+	ztest_unit_test(test_quat_to_unit),
+	ztest_unit_test(test_quat_is_unit),
+	ztest_unit_test(test_quat_scale),
+	ztest_unit_test(test_quat_mult),
+	ztest_unit_test(test_quat_exp),
+	ztest_unit_test(test_quat_log),
+	ztest_unit_test(test_quat_pow),
+	ztest_unit_test(test_quat_conj),
+	ztest_unit_test(test_quat_inv),
+	ztest_unit_test(test_quat_diff),
+	ztest_unit_test(test_quat_slerp)
 	);
 
 	ztest_run_test_suite(zsl_tests);

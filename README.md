@@ -638,24 +638,24 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 
 #### Quaternions (v0.2.0)
 
-- [ ] Basic struct definitions
-- [ ] Magnitude
-- [ ] Normalisation
-- [ ] Scaling
-- [ ] Multiplication
-- [ ] Conjugate
-- [ ] Inverse
-- [ ] Difference
-- [ ] Exp
-- [ ] Log
-- [ ] Exponentiation
-- [ ] Interpolation
-  - [ ] Slerp
+- [x] Basic struct definitions
+- [x] Magnitude
+- [x] Scaling
+- [x] Multiplication
+- [x] Conjugate
+- [x] Inverse
+- [x] Difference
+- [x] Exp
+- [x] Log
+- [x] Exponentiation
+- [x] Interpolation
+  - [x] Slerp
 - [ ] Conversion
-  - [ ] Euler
-  - [ ] Rotation Matrix
-- [ ] Special Forms
-  - [ ] Identity
+  - [x] To Unit (Normalisation)
+  - [ ] To Euler
+  - [ ] To Rotation Matrix
+- [x] Special Forms
+  - [x] Identity
 
 ### Colorimetry
 

@@ -9,7 +9,7 @@ To run these units tests, make sure that you have previously run
 execute the following command to start the test-runner:
 
 ```
-$ twister -p qemu_cortex_m3 -T [zscilib_tests_folder]
+$ twister --inline-logs -p qemu_cortex_m3 -T [zscilib_tests_folder]
 ```
 
 > **Tip**: If you wish to have **verbose output** to see any errors in

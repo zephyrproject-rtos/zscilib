@@ -37,6 +37,7 @@ zephyr_library_sources(
     src/chemistry.c
     src/interp.c
     src/matrices.c
+    src/quaternions.c
     src/shell.c
     src/vectors.c
     src/zsl.c

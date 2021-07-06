@@ -258,8 +258,9 @@ zsl_real_t zsl_vec_norm(struct zsl_vec *v);
 int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
 
 /**
- * @brief Converts vector 'v' to a unit vector (a vector of length 1).
- *        This is accomploished by dividing each element by the it's norm.
+ * @brief Converts (normalises) vector 'v' to a unit vector (a vector of
+ *        length 1). This is accomploished by dividing each element by the
+ *        it's norm.
  *
  * @param v The vector to convert to a unit vector.
  *
