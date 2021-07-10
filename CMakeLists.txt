@@ -12,6 +12,9 @@ zephyr_library_sources(
     src/colorimetry/norm.c
     src/colorimetry/observers.c
     src/colorimetry/rgbccms.c
+    src/orientation/ahrs.c
+    src/orientation/euler.c
+    src/orientation/quaternions.c
     src/physics/atomic.c
     src/physics/dynamics.c
     src/physics/eleccomp.c
@@ -37,7 +40,6 @@ zephyr_library_sources(
     src/chemistry.c
     src/interp.c
     src/matrices.c
-    src/quaternions.c
     src/shell.c
     src/vectors.c
     src/zsl.c

@@ -275,6 +275,14 @@ extern void test_phy_work_x(void);
 extern void test_phy_work_y(void);
 extern void test_phy_work_kin(void);
 
+extern void test_att_to_vec(void);
+extern void test_att_to_euler(void);
+extern void test_att_from_euler(void);
+extern void test_att_from_accelmag(void);
+extern void test_att_from_accel(void);
+
+extern void test_eul_to_vec(void);
+
 extern void test_quat_init(void);
 extern void test_quat_magn(void);
 extern void test_quat_to_unit(void);
@@ -288,6 +296,10 @@ extern void test_quat_conj(void);
 extern void test_quat_inv(void);
 extern void test_quat_diff(void);
 extern void test_quat_slerp(void);
+extern void test_quat_to_euler(void);
+extern void test_quat_from_euler(void);
+extern void test_quat_to_rot_mtx(void);
+extern void test_quat_from_rot_mtx(void);
 
 void test_main(void)
 {
@@ -553,6 +565,14 @@ void test_main(void)
 	ztest_unit_test(test_phy_work_y),
 	ztest_unit_test(test_phy_work_kin),
 
+	ztest_unit_test(test_att_to_vec),
+	ztest_unit_test(test_att_to_euler),
+	ztest_unit_test(test_att_from_euler),
+	ztest_unit_test(test_att_from_accelmag),
+	ztest_unit_test(test_att_from_accel),
+
+	ztest_unit_test(test_eul_to_vec),
+
 	ztest_unit_test(test_quat_init),
 	ztest_unit_test(test_quat_magn),
 	ztest_unit_test(test_quat_to_unit),
@@ -565,7 +585,11 @@ void test_main(void)
 	ztest_unit_test(test_quat_conj),
 	ztest_unit_test(test_quat_inv),
 	ztest_unit_test(test_quat_diff),
-	ztest_unit_test(test_quat_slerp)
+	ztest_unit_test(test_quat_slerp),
+	ztest_unit_test(test_quat_to_euler),
+	ztest_unit_test(test_quat_from_euler),
+	ztest_unit_test(test_quat_to_rot_mtx),
+	ztest_unit_test(test_quat_from_rot_mtx)
 	);
 
 	ztest_run_test_suite(zsl_tests);

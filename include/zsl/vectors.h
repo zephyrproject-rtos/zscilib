@@ -224,7 +224,9 @@ zsl_real_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w);
 
 /**
  * @brief Computes the dot (aka scalar) product of two equal-length vectors
- *        (the sum of their component-wise products).
+ *        (the sum of their component-wise products). The dot product is an
+ *        indicator of the "agreement" between two vectors, or can be used
+ *        to determine how far vector w deviates from vector v.
  *
  * @param v The first vector.
  * @param w The second vector.
@@ -259,8 +261,11 @@ int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
 
 /**
  * @brief Converts (normalises) vector 'v' to a unit vector (a vector of
- *        length 1). This is accomploished by dividing each element by the
- *        it's norm.
+ *        magnitude or length 1). This is accomploished by dividing each
+ *        element by the it's norm.
+ * 
+ * @note Unit vectors are important since they have the ability to provide
+ *       'directional' information, without requiring a specific magnitude.
  *
  * @param v The vector to convert to a unit vector.
  *

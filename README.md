@@ -257,6 +257,7 @@ to ensure that the stack pointer is double-word aligned).
 | Project         | `zsl_vec_project`     | x   | x   |     |                 |
 | To unit vector  | `zsl_vec_to_unit`     | x   | x   |     |                 |
 | Cross product   | `zsl_vec_cross`       | x   | x   |     |                 |
+| Wedge product   | `zsl_vec_wedge`       |     |     |     |                 |
 | Sum of squares  | `zsl_vec_sum_of_sqrs` | x   | x   |     |                 |
 | Comp-wise mean  | `zsl_vec_mean`        | x   | x   |     |                 |
 | Arithmetic mean | `zsl_vec_ar_mean`     | x   | x   |     |                 |
@@ -648,12 +649,15 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] Exp
 - [x] Log
 - [x] Exponentiation
+- [ ] Rotate
 - [x] Interpolation
   - [x] Slerp
 - [ ] Conversion
   - [x] To Unit (Normalisation)
   - [ ] To Euler
+  - [ ] From Euler
   - [ ] To Rotation Matrix
+  - [ ] From Rotation Matrix
 - [x] Special Forms
   - [x] Identity
 
@@ -795,6 +799,12 @@ Help is welcome on the following planned or desirable features.
 - Radiometric data to lux
 - Radiometric data to CCT/Duv
 - Spectral analysis
+
+### Calibration
+
+- Offset management
+- Correlation matrix generation
+- Non-linear compensation
 
 ## Architecture-Specific Optimisations
 

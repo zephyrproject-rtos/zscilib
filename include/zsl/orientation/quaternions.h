@@ -51,8 +51,9 @@
  * between two points in a sphere, travelling across the surface of the
  * sphere rather than in a straight line. This enables us to interpolate
  * between arbitrary orientations (x, y, z), not just arbitrary points (x, y).
- * 
- */
+ *
+ * @ingroup ORIENTATION
+ *  @{ */
 
 /**
  * @file
@@ -65,6 +66,8 @@
 #define ZEPHYR_INCLUDE_ZSL_QUATERNIONS_H_
 
 #include <zsl/zsl.h>
+#include <zsl/matrices.h>
+#include <zsl/orientation/euler.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,42 +75,31 @@ extern "C" {
 
 /**
  * @addtogroup QUAT_STRUCTS Structs, Enums and Macros
- * 
+ *
  * @brief Various structs, enums and macros related to quaternions.
- * 
+ *
  * @ingroup QUATERNIONS
  *  @{ */
 
 /**
- * @brief Represents a quaternion, a 4D vector capable of representing 3D
+ * @brief Represents a quaternion, a 4D structure capable of representing 3D
  *        rigid body orientations.
- *
- * @note Quaternions can represent vectors by setting the scalar part (r) to 0.
  */
 struct zsl_quat {
 	union {
 		struct {
-			/** @brief The real component. Equal to "alias.w". */
-			zsl_real_t r;
-			/** @brief The first imaginary component. Equal to "alias.x". */
-			zsl_real_t i;
-			/** @brief The second imaginary component. Equal to "alias.y". */
-			zsl_real_t j;
-			/** @brief The third imaginary component. Equal to "alias.z". */
-			zsl_real_t k;
+			zsl_real_t r;   /**< @brief The real component. */
+			zsl_real_t i;   /**< @brief The first imaginary component. */
+			zsl_real_t j;   /**< @brief The second imaginary component */
+			zsl_real_t k;   /**< @brief The third imaginary component. */
 		};
 		struct {
-			/** @brief The real component. Equal to "r". */
-			zsl_real_t w;
-			/** @brief The first imaginary component. Equal to "i". */
-			zsl_real_t x;
-			/** @brief The second imaginary component. Equal to "j". */
-			zsl_real_t y;
-			/** @brief The third imaginary component. Equal to "k". */
-			zsl_real_t z;
+			zsl_real_t w;   /**< @brief The scalar component. */
+			zsl_real_t x;   /**< @brief The first vector component. */
+			zsl_real_t y;   /**< @brief The second vector component. */
+			zsl_real_t z;   /**< @brief The third vector component. */
 		} alias;
-		/** @brief Allows access to values as an array in rijk order. */
-		zsl_real_t idx[4];
+		zsl_real_t idx[4];      /**< @brief Allows access as an array. */
 	};
 };
 
@@ -117,7 +109,7 @@ struct zsl_quat {
  */
 enum zsl_quat_type {
 	/**
-	 * @brief An empty quaternion where all values are set to 0.
+	 * @brief
 	 */
 	ZSL_QUAT_TYPE_EMPTY     = 0,
 	/**
@@ -127,7 +119,7 @@ enum zsl_quat_type {
 	ZSL_QUAT_TYPE_IDENTITY  = 1,
 };
 
-/** @} */ /* End of VEC_STRUCTS group */
+/** @} */ /* End of QUAT_STRUCTS group */
 
 /**
  * @addtogroup QUAT_INIT Initialisation
@@ -185,7 +177,7 @@ zsl_real_t zsl_quat_magn(struct zsl_quat *q);
  * Normalisation is accomplished by dividing each of the components by the
  * square root of the sum of the squares of the four quaternion components
  * (AKA the Euclidean norm).
- * 
+ *
  * To check if a quaternion is a unit quaternion, see @ref zsl_quat_is_unit.
  *
  * @param q 	The source quaternion.
@@ -207,9 +199,9 @@ int zsl_quat_to_unit_d(struct zsl_quat *q);
 /**
  * @brief Verifies that this is a "unit" quaternion, meaning that it has a
  *        magnitude of 1, where sqrt(r^2+i^2+j^2+k^2) = 1.0.
- * 
+ *
  * @param q 	The quaternion to verify.
- * 
+ *
  * @return true		If this is a unit quaternion.
  * @return false 	If this is not a unit quaternion.
  */
@@ -301,6 +293,10 @@ int zsl_quat_conj(struct zsl_quat *q, struct zsl_quat *qc);
 /**
  * @brief Calculates the multiplicative inverse of unit quaternion 'q'.
  *
+ * @note This function only works for unit quaternions, which have the unique
+ *       property that their inverse is equal to the quaternion's conjugate
+ *       (since qq' = 1), so we can simply negate the three imaginary values.
+ *
  * @param q 	The input unit quaternion.
  * @param qi 	The inverted output;
  *
@@ -346,8 +342,51 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi);
 
+/**
+ * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
+ *        values expressed in radians.
+ *
+ * @param q 	Pointer to the unit quaternion to convert.
+ * @param e 	Pointer to the Euler angle placeholder. Expressed in radians.
+ *
+ * @return 0 if everything executed normally, or a negative error code.
+ */
+int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e);
+
+/**
+ * @brief Converts a Euler angle to a unit quaternion. Euler values expressed
+ *        in radians.
+ *
+ * @param e 	Pointer to the Euler angle to convert. Expressed in radians.
+ * @param q 	Pointer to the unit quaternion placeholder.
+ *
+ * @return 0 if everything executed normally, or a negative error code.
+ */
+int zsl_quat_from_euler(struct zsl_euler *e, struct zsl_quat *q);
+
+/**
+ * @brief Converts a unit quaternion to it's equivalent rotation matrix.
+ *
+ * @param q 	Pointer to the unit quaternion to convert.
+ * @param r 	Pointer to the 4x4 rotation matrix.
+ *
+ * @return 0 if everything executed normally, or a negative error code.
+ */
+int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m);
+
+/**
+ * @brief Converts a rotation matrix to it's equivalent unit quaternion.
+ *
+ * @param e 	Pointer to the 4x4 rotation matrix.
+ * @param q 	Pointer to the unit quaternion to convert.
+ *
+ * @return 0 if everything executed normally, or a negative error code.
+ */
+int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q);
 
 /** @} */ /* End of QUAT_FUNCTIONS group */
+
+/** @} */ /* End of QUATERNIONS group */
 
 #ifdef __cplusplus
 }

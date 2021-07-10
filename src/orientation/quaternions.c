@@ -7,8 +7,8 @@
 #include <math.h>
 #include <errno.h>
 #include <zsl/zsl.h>
-#include <zsl/quaternions.h>
 #include <zsl/vectors.h>
+#include <zsl/orientation/quaternions.h>
 
 /**
  * @brief Helper function to compare float values.
@@ -275,14 +275,14 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi)
 {
 	int rc = 0;
-	struct zsl_quat q1, q2;	/* Interim quats. */
-	zsl_real_t dot;			/* qa->r * qb->r. */
-	zsl_real_t phi;			/* arccos(dot). */
-	zsl_real_t phi_s;		/* sin(phi). */
-	zsl_real_t phi_st;		/* sin(phi * (t)). */
-	zsl_real_t phi_smt;		/* sin(phi * (1.0 - t)). */
-	
-	/* 
+	struct zsl_quat q1, q2; /* Interim quats. */
+	zsl_real_t dot;         /* qa->r * qb->r. */
+	zsl_real_t phi;         /* arccos(dot). */
+	zsl_real_t phi_s;       /* sin(phi). */
+	zsl_real_t phi_st;      /* sin(phi * (t)). */
+	zsl_real_t phi_smt;     /* sin(phi * (1.0 - t)). */
+
+	/*
 	 * Unit quaternion slerp = qa * (qa^-1 * qb)^t
 	 *
 	 * We get there in a round-about way in this code, but we avoid pushing
@@ -312,7 +312,7 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	q1.r = phi_smt / phi_s * qa->r;
 	q1.i = phi_smt / phi_s * qa->i;
 	q1.j = phi_smt / phi_s * qa->j;
-	q1.k = phi_smt / phi_s * qa->k;	
+	q1.k = phi_smt / phi_s * qa->k;
 	q2.r = phi_st / phi_s * qb->r;
 	q2.i = phi_st / phi_s * qb->i;
 	q2.j = phi_st / phi_s * qb->j;
@@ -324,5 +324,116 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	qi->j = q1.j + q2.j;
 	qi->k = q1.k + q2.k;
 
+	return rc;
+}
+
+int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e)
+{
+	int rc = 0;
+
+	/* TODO: Convert quaternion to euler. */
+
+	return rc;
+}
+
+int zsl_quat_from_euler(struct zsl_euler *e, struct zsl_quat *q)
+{
+	int rc = 0;
+
+	// zsl_real_t yaw_c = ZSL_COS(e->x * 0.5);
+	// zsl_real_t yaw_s = ZSL_SIN(e->x * 0.5);
+	// zsl_real_t pitch_c = ZSL_COS(e->y * 0.5);
+	// zsl_real_t pitch_s = ZSL_SIN(e->y * 0.5);
+	// zsl_real_t roll_c = ZSL_COS(e->z * 0.5);
+	// zsl_real_t roll_s = ZSL_SIN(e->z * 0.5);
+
+	// q->r = yaw_c * roll_c * pitch_c + yaw_s * roll_s * pitch_s;
+	// q->i = yaw_s * roll_c * pitch_c - yaw_c * roll_s * pitch_s;
+	// q->j = yaw_c * roll_c * pitch_s + yaw_s * roll_s * pitch_c;
+	// q->k = yaw_c * roll_s * pitch_c - yaw_s * roll_c * pitch_s;
+
+	return rc;
+}
+
+int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the rotation matrix has an appropriate shape and size. */
+	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	/*
+	 * To enable multiplication of a quaternion (treated as a 4x1 matrix) with
+	 * a 3x3 rotation matrix, we can extend the 3x3 rotation matrix to a 4x4
+	 * identify matrix, placing the rotation matrix in the first three rows and
+	 * columns, as follows:
+	 *
+	 *  --            --
+	 *  |  x  x  x  0  |
+	 *  |  x  x  x  0  |
+	 *  |  x  x  x  0  |
+	 *  |  0  0  0  1  |
+	 *  --            --
+	 */
+
+	zsl_mtx_init(m, NULL);
+
+	/* Note: This can be optimised by pre-calculating shared values. */
+
+	/* Row 0. */
+	zsl_mtx_set(m, 0, 0, 1.0 - 2.0 * (q->j * q->j + q->k * q->k));
+	zsl_mtx_set(m, 0, 1, 2.0 * (q->i * q->j - q->k * q->r));
+	zsl_mtx_set(m, 0, 2, 2.0 * (q->i * q->k + q->j * q->r));
+
+	/* Row 1. */
+	zsl_mtx_set(m, 1, 0, 2.0 * (q->i * q->j + q->k * q->r));
+	zsl_mtx_set(m, 1, 1, 1.0 - 2.0 * (q->i * q->i + q->k * q->k));
+	zsl_mtx_set(m, 1, 2, 2.0 * (q->j * q->k - q->i * q->r));
+
+	/* Row 2. */
+	zsl_mtx_set(m, 2, 0, 2.0 * (q->i * q->k - q->j * q->r));
+	zsl_mtx_set(m, 2, 1, 2.0 * (q->j * q->k + q->i * q->r));
+	zsl_mtx_set(m, 2, 2, 1.0 - 2.0 * (q->i * q->i + q->j * q->j));
+
+	zsl_mtx_set(m, 3, 3, 1.0);
+
+err:
+	return rc;
+}
+
+int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q)
+{
+	int rc = 0;
+	zsl_real_t ichk = 0.0;
+	zsl_real_t r4;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the rotation matrix has an appropriate shape and size. */
+	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	/* Make sure this is an appropriately-configured identity matrix. */
+	zsl_mtx_get(m, 3, 3, &ichk);
+	if (zsl_quat_val_is_equal(ichk, 1.0, 1E-6) == false) {
+		rc = -EINVAL;
+		goto err;
+	}
+
+	/* Convert rotation matrix to unit quaternion. */
+	q->r = ZSL_SQRT(m->data[0] + m->data[5] + m->data[10] + m->data[15]) / 2.0;
+	r4 = q->r * 4.0;
+	q->i = (m->data[9] - m->data[6]) / r4;
+	q->j = (m->data[2] - m->data[8]) / r4;
+	q->k = (m->data[4] - m->data[1]) / r4;
+
+err:
 	return rc;
 }
