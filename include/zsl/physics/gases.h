@@ -35,7 +35,7 @@ extern "C" {
  * @param m    Mass of gas in kilograms.
  * @param n    Number of moles of gas.
  * @param t    Temperature in kelvins.
- * @param v    Pointer to the  calculated velocity in meters per second. Will be
+ * @param v    Pointer to the calculated velocity in meters per second. Will be
  *             set to NAN if the temperature, mass or moles of gas are negative,
  *             or if m = 0.
  *

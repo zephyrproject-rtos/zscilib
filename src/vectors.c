@@ -426,6 +426,90 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps)
 	return count;
 }
 
+/**
+ * @brief Quicksort implementation used by zsl_vec_sort.
+ *
+ * @param v    	Unsorted input vector.
+ * @param low 	Low index value.
+ * @param high  High index value.
+ *
+ * @return 0 if everything executed properly, otherwise a negative error code.
+ */
+static int zsl_vec_quicksort(struct zsl_vec *v, size_t low, size_t high)
+{
+	size_t i, j, p;
+	zsl_real_t t;
+
+	if (low < high) {
+		p = low;
+		i = low;
+		j = high;
+
+		while (i < j) {
+			while (v->data[i] <= v->data[p] && i <= high) {
+				i++;
+			}
+			while (v->data[j] > v->data[p] && j >= low) {
+				j--;
+			}
+			if (i < j) {
+				t = v->data[i];
+				v->data[i] = v->data[j];
+				v->data[j] = t;
+			}
+		}
+
+		t = v->data[j];
+		v->data[j] = v->data[p];
+		v->data[p] = t;
+
+		zsl_vec_quicksort(v, low, i - 1);
+		zsl_vec_quicksort(v, j + 1, high);
+	}
+
+	return 0;
+}
+
+int zsl_vec_sort(struct zsl_vec *v, struct zsl_vec *w)
+{
+	/* Set counters to zero. */
+	size_t count = 0;
+	size_t count2 = 0;
+	size_t i, j, k;
+
+	ZSL_VECTOR_DEF(u, v->sz);
+	zsl_vec_init(&u);
+
+	/* Copy the vector 'v' into the vector 'u' with no repeated values. */
+	for (j = 0; j < v->sz; j++) {
+		if (v->data[j] >= 1E-5 || v->data[j] <= 1E-5) {
+			if (zsl_vec_contains(&u, v->data[j], 1E-5) == 0) {
+				u.data[count] = v->data[j];
+				count++;
+			}
+		}
+	}
+
+	if (zsl_vec_contains(v, 0.0, 1E-5) > 0) {
+		count++;
+	}
+
+	u.sz = count;
+
+	/* Sort the vector with no repeated values 'u'. */
+	zsl_vec_quicksort(&u, 0, count - 1);
+
+	/* Add back the repeated values in the correct order into the vector 'w'. */
+	for (i = 0; i < count; i++) {
+		for (k = 0; k < zsl_vec_contains(v, u.data[i], 1E-5); k++) {
+			w->data[count2] = u.data[i];
+			count2++;
+		}
+	}
+
+	return 0;
+}
+
 int zsl_vec_print(struct zsl_vec *v)
 {
 	for (size_t g = 0; g < v->sz; g++) {

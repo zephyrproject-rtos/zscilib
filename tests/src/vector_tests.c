@@ -379,7 +379,7 @@ void test_vector_dot(void)
 	rc = zsl_vec_dot(&v, &w, &d);
 	zassert_true(rc == 0, NULL);
 
-	/* Chack the output. */
+	/* Check the output. */
 	zassert_true(val_is_equal(d, 3.5, 1E-6), NULL);
 
 	/* Calculate the dot product of 'v' and 'u'. An error is expected due
@@ -799,8 +799,8 @@ void test_vector_is_nonneg(void)
 	ZSL_VECTOR_DEF(v, 5);
 	ZSL_VECTOR_DEF(w, 5);
 
-	zsl_real_t a[7] = { 3.0, 4.5, -3.5, 0.0, -1.0 };
-	zsl_real_t b[7] = { 4.0, 6.0, 1.5, 0.0, 3.5 };
+	zsl_real_t a[5] = { 3.0, 4.5, -3.5, 0.0, -1.0 };
+	zsl_real_t b[5] = { 4.0, 6.0, 1.5, 0.0, 3.5 };
 
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&v, a);
@@ -841,4 +841,70 @@ void test_vector_contains(void)
 	zassert_equal(count, 2, NULL);
 	count = zsl_vec_contains(&v, 3.0, 1E-5);
 	zassert_equal(count, 0, NULL);
+}
+
+void test_vector_sort(void)
+{
+	int rc;
+
+	ZSL_VECTOR_DEF(v, 5);
+	ZSL_VECTOR_DEF(vs, 5);
+	ZSL_VECTOR_DEF(vp, 5);
+	ZSL_VECTOR_DEF(w, 5);
+	ZSL_VECTOR_DEF(ws, 5);
+	ZSL_VECTOR_DEF(wp, 5);
+
+	/* Vector with no repeated values. */
+	zsl_real_t a[5] = { 3.0, 4.5, -3.5, 0.0, -1.0 };
+	zsl_real_t b[5] = { -3.5, -1.0, 0.0, 3.0, 4.5 };
+
+	/* Vector with repeated values. */
+	zsl_real_t c[5] = { -1.0, 4.5, 4.5, 0.0, -1.0 };
+	zsl_real_t d[5] = { -1.0, -1.0, 0.0, 4.5, 4.5 };
+
+	/* Assign arrays to vectors. */
+	rc = zsl_vec_from_arr(&v, a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&vs, b);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&w, c);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&ws, d);
+	zassert_true(rc == 0, NULL);
+
+	/* Perform the sorting operation. */
+	rc = zsl_vec_sort(&v, &vp);
+	zassert_true(rc == 0, NULL);
+	zassert_equal(vp.data[0], vs.data[0], NULL);
+	zassert_equal(vp.data[1], vs.data[1], NULL);
+	zassert_equal(vp.data[2], vs.data[2], NULL);
+	zassert_equal(vp.data[3], vs.data[3], NULL);
+	zassert_equal(vp.data[4], vs.data[4], NULL);
+
+	/* Test the function on an already sorted vector. */
+	rc = zsl_vec_sort(&vs, &vp);
+	zassert_true(rc == 0, NULL);
+	zassert_equal(vp.data[0], vs.data[0], NULL);
+	zassert_equal(vp.data[1], vs.data[1], NULL);
+	zassert_equal(vp.data[2], vs.data[2], NULL);
+	zassert_equal(vp.data[3], vs.data[3], NULL);
+	zassert_equal(vp.data[4], vs.data[4], NULL);
+
+	/* Perform the sorting operation. */
+	rc = zsl_vec_sort(&w, &wp);
+	zassert_true(rc == 0, NULL);
+	zassert_equal(wp.data[0], ws.data[0], NULL);
+	zassert_equal(wp.data[1], ws.data[1], NULL);
+	zassert_equal(wp.data[2], ws.data[2], NULL);
+	zassert_equal(wp.data[3], ws.data[3], NULL);
+	zassert_equal(wp.data[4], ws.data[4], NULL);
+
+	/* Test the function on an already sorted vector. */
+	rc = zsl_vec_sort(&ws, &wp);
+	zassert_true(rc == 0, NULL);
+	zassert_equal(wp.data[0], ws.data[0], NULL);
+	zassert_equal(wp.data[1], ws.data[1], NULL);
+	zassert_equal(wp.data[2], ws.data[2], NULL);
+	zassert_equal(wp.data[3], ws.data[3], NULL);
+	zassert_equal(wp.data[4], ws.data[4], NULL);
 }

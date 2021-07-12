@@ -139,7 +139,7 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```bash
-$ twister -p qemu_cortex_m3 -T modules/lib/zscilib/tests
+$ twister -p auto --inline-logs qemu_cortex_m3 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
@@ -370,13 +370,39 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
   operand list is not sufficient. See `zsl_mtx_unary_func` and
   `zsl_mtx_binary_func` for details.
 
-### Chemistry
+### Numerical Analysis
 
-- [ ] Periodic table data including:
-  - [ ] Full name
-  - [ ] Abbreviation
-  - [x] Atomic number
-  - [x] Standard atomic weight
+#### Statistics
+
+- [x] Mean
+- [x] De-mean
+- [x] Percentile
+- [x] Median
+- [ ] Quantile
+- [x] Quartile
+- [x] Interquartile range
+- [x] Mode
+- [x] Data range
+- [x] Variance
+- [x] Standard deviation
+- [x] Covariance
+- [x] Covariance matrix
+- [x] Simple linear regression (slope, intercept, correlation coefficient)
+- [ ] Multiple linear regression
+- [x] Absolute error
+- [x] Relative error
+
+#### Probability Operations
+
+- [X] Uniform probability density function (PDF)
+- [X] Uniform cumulative distribution function (CDF)
+- [X] Uniform distribution mean
+- [X] Uniform distribution variance
+- [X] Normal probability density function
+- [X] Normal cumulative distribution function
+- [X] Inverse erf(x) function
+- [X] Inverse normal cumulative distribution function
+- [X] Information entropy
 
 ### Interpolation
 
@@ -433,18 +459,17 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] Electric flux
 - [x] Force from a charge
 
-#### Electricity (v0.2.0)
+#### Electricity
 
-- [ ] Current (charge per second)
-- [ ] Resistors in series/parallel
-- [ ] Capacitors in series/parallel
-- [ ] Resistivity of wire
-  - Include constants like aluminium, copper, steel, silicon, etc.
-- [ ] Ohm's law
-- [ ] Power
-  - [ ] Current, voltage
-  - [ ] Voltage, resistance
-  - [ ] Current, resistance
+- [x] Current (charge per second)
+- [x] Resistors in series/parallel
+- [x] Capacitors in series/parallel
+- [x] Resistivity of wire
+- [x] Ohm's law
+- [x] Power
+  - [x] Current, voltage
+  - [x] Voltage, resistance
+  - [x] Current, resistance
 
 #### Energy
 
@@ -607,37 +632,26 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] Work done sine (as above but with y-component or on an incline)
 - [x] Work-KE theorem
 
-### Numerical Analysis
-
-#### Statistics (v0.2.0)
-
-- [ ] Mean
-- [ ] Median
-- [ ] Quantile
-- [ ] Quartile
-- [ ] Mode
-- [ ] Data range
-- [ ] De-mean
-- [ ] Variance
-- [ ] Standard deviation
-- [ ] Interquartile range
-- [ ] Covariance
-- [ ] Covariance Matrix
-- [ ] Correlation
-- [ ] Error
-
-#### Probability Operations (v0.2.0)
-
-- [ ] Uniform probability density function (PDF)
-- [ ] Uniform cumulative distribution function (CDF)
-- [ ] Normal probability density function
-- [ ] Normal cumulative distribution function
-- [ ] Inverse normal cumulative distribution function
-- [ ] Information entropy
-
 ### Motion and Orientation
 
-#### Quaternions (v0.2.0)
+#### AHRS/Attitude (Degrees)
+
+- [x] Basic struct definitions
+- [x] Conversion
+  - [x] To vector (access vector API)
+  - [x] To Euler (degrees to radian)
+  - [x] From Euler (radians to degrees)
+  - [ ] From Accel + Mag (roll, pitch, yaw)
+  - [ ] From Accel (roll, pitch)
+- [ ] Frame of reference conversion (Aerospace, Android, etc.) ???
+
+#### Euler Angles (Radians)
+
+- [x] Basic struct definitions
+- [x] Conversion
+  - [x] To vector (access vector API)
+
+#### Quaternions
 
 - [x] Basic struct definitions
 - [x] Magnitude
@@ -652,14 +666,26 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [ ] Rotate
 - [x] Interpolation
   - [x] Slerp
+- [ ] Integration
+  - [ ] Angular velocity (rad/s + time + current value)
+  - [ ] Angular momentum (Same as above, plus rotational mass)
 - [ ] Conversion
-  - [x] To Unit (Normalisation)
-  - [ ] To Euler
-  - [ ] From Euler
-  - [ ] To Rotation Matrix
-  - [ ] From Rotation Matrix
+  - [x] To unit (Normalise)
+  - [ ] To Euler (radians)
+  - [ ] From Euler (radians)
+  - [x] To rotation matrix
+  - [x] From rotation matrix
+  - [ ] To axis-angle
+  - [ ] From axis-angle
 - [x] Special Forms
   - [x] Identity
+
+#### Sensor Fusion
+
+- [x] Define generic fusion interface/struct (accel+mag+gyro -> quaternion)
+- [ ] Implementations
+  - [ ] Madgwick
+  - [ ] Mahoney
 
 ### Colorimetry
 
@@ -743,6 +769,14 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] XYZ to DCI-P3+
 - [x] XYZ to CIE RGB
 
+### Chemistry
+
+- [ ] Periodic table data including:
+  - [ ] Full name
+  - [ ] Abbreviation
+  - [x] Atomic number
+  - [x] Standard atomic weight
+
 ### Measurement API (v0.2.0)
 
 The `zsl_measurement` struct is a proof of concept attempt at representing
@@ -785,13 +819,6 @@ Help is welcome on the following planned or desirable features.
 - Windowed moving average filter
 - Weighted moving average filter
 - Other basic IIR and FIR-type filters and helper functions.
-
-### Motion/Orientation
-
-- Acceleration/magnetic field -> orientation
-- Sensor fusion (accel/mag/gyro -> quaternion)
-- Functions for acceleration, time/distance, etc. (see `Physics` above)
-- Frame of reference conversion (Aerospace, Android, etc.)
 
 ### Spectrometry
 

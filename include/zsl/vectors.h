@@ -38,23 +38,23 @@ extern "C" {
 
 /** @brief Represents a vector. */
 struct zsl_vec {
-        /** The number of elements in the vector. */
-        size_t sz;
-        /** The array of real number values assigned to the vector. */
-        zsl_real_t *data;
+	/** The number of elements in the vector. */
+	size_t sz;
+	/** The array of real number values assigned to the vector. */
+	zsl_real_t *data;
 };
 
 /** Macro to declare a vector of size `n`.
-*
-* Be sure to also call 'zsl_vec_init' on the vector after this macro, since
-* matrices declared on the stack may have non-zero values by default!
-*/
-#define ZSL_VECTOR_DEF(name, n) \
-        zsl_real_t name ## _vec[n]; \
-        struct zsl_vec name = { \
-                .sz   = n, \
-                .data = name ## _vec \
-        }
+ *
+ * Be sure to also call 'zsl_vec_init' on the vector after this macro, since
+ * matrices declared on the stack may have non-zero values by default!
+ */
+#define ZSL_VECTOR_DEF(name, n)	     \
+	zsl_real_t name ## _vec[n];  \
+	struct zsl_vec name = {	     \
+		.sz = n,	     \
+		.data = name ## _vec \
+	}
 
 /** @} */ /* End of VEC_STRUCTS group */
 
@@ -125,7 +125,7 @@ int zsl_vec_copy(struct zsl_vec *vdest, struct zsl_vec *vsrc);
  * @return 0 on success, -EINVAL on a size of index error.
  */
 int zsl_vec_get_subset(struct zsl_vec *v, size_t offset, size_t len,
-                       struct zsl_vec* vsub);
+		       struct zsl_vec *vsub);
 
 /** @} */ /* End of VEC_SELECTION group */
 
@@ -263,7 +263,7 @@ int zsl_vec_project(struct zsl_vec *u, struct zsl_vec *v, struct zsl_vec *w);
  * @brief Converts (normalises) vector 'v' to a unit vector (a vector of
  *        magnitude or length 1). This is accomploished by dividing each
  *        element by the it's norm.
- * 
+ *
  * @note Unit vectors are important since they have the ability to provide
  *       'directional' information, without requiring a specific magnitude.
  *
@@ -394,6 +394,17 @@ bool zsl_vec_is_nonneg(struct zsl_vec *v);
  */
 int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
 
+/**
+ * @brief Sorts the values in vector v from smallest to largest using quicksort,
+ *        and assigns the sorted output to vector w.
+ *
+ * @param v     The unsorted, input vector.
+ * @param w     The sorted, output vector.
+ *
+ * @return 0 if everything executed properly, otherwise a negative error code.
+ */
+int zsl_vec_sort(struct zsl_vec *v, struct zsl_vec *w);
+
 /** @} */ /* End of VEC_COMPARE group */
 
 /**
@@ -414,7 +425,7 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
  */
 int zsl_vec_print(struct zsl_vec *v);
 
-//int      zsl_vec_fprint(FILE *stream, zsl_vec *v);
+// int      zsl_vec_fprint(FILE *stream, zsl_vec *v);
 
 /** @} */ /* End of VEC_DISPLAY group */
 

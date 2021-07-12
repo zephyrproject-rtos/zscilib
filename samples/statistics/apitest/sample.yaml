@@ -1,0 +1,5 @@
+sample:
+  name: zscilib statistics API test sample
+tests:
+  test:
+    tags: zscilib

@@ -18,6 +18,7 @@ zephyr_library_sources(
     src/physics/atomic.c
     src/physics/dynamics.c
     src/physics/eleccomp.c
+    src/physics/electricity.c
     src/physics/electric.c
     src/physics/energy.c
     src/physics/fluids.c
@@ -40,7 +41,9 @@ zephyr_library_sources(
     src/chemistry.c
     src/interp.c
     src/matrices.c
+    src/probability.c
     src/shell.c
+    src/statistics.c
     src/vectors.c
     src/zsl.c
 )

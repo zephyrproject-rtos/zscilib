@@ -43,7 +43,7 @@ extern "C" {
 #define ZSL_VERSION_STATUS      "-alpha"
 #define ZSL_VERSION_DATE        __DATE__
 
-extern const char * zsl_version;
+extern const char *zsl_version;
 
 #if CONFIG_ZSL_SINGLE_PRECISION
 typedef float zsl_real_t;
@@ -74,6 +74,8 @@ typedef double zsl_real_t;
 #define ZSL_SINH       sinhf
 #define ZSL_COSH       coshf
 #define ZSL_TANH       tanhf
+#define ZSL_ERF        erff
+#define ZSL_FMA        fmaf
 #else
 #define ZSL_CEIL       ceil
 #define ZSL_FLOOR      floor
@@ -95,6 +97,8 @@ typedef double zsl_real_t;
 #define ZSL_SINH       sinh
 #define ZSL_COSH       cosh
 #define ZSL_TANH       tanh
+#define ZSL_ERF        erf
+#define ZSL_FMA        fma
 #endif
 
 
