@@ -204,7 +204,42 @@ pinv_demo () at modules/lib/zscilib/samples/matrix/pinv/src/main.c:25
 (gdb) quit
 ```
 
-### Note: Float Stack Usage in Zephyr
+## Floating-Point Usage
+
+zscilib can be configured to make use of single-precision (32-bit) or
+double-precision (64-bit) floating point values via the
+`CONFIG_ZSL_SINGLE_PRECISION` flag, which will determine the size of
+`zsl_real_t` used throughout the library. The default setting for this
+flag is `n`, meaning **64-bit values are used by default**.
+
+There is a tradeoff between the added range and precision that 64-bit
+(double-precision) floating point values offer, and the memory and performance
+gains of the smaller, less-precise but faster 32-bit (single-precision)
+operations.
+
+> Due to the reduced precision of single-precision values, certain complex
+  functions in zscilib are **only available when double-precision is enabled**
+  (PINV, SVD, etc.).
+
+### Comparison 
+
+#### Single-Precision (32-bit) Floats
+
+- Require 4 bytes of memory to store
+- Have about **7 significant digits of precision**
+- Have a range of about 1.E-36 to 1.E+36
+- HW acceleration available on Cortex-M4F, Cortex-M7 and most Cortex-M33 MCUs.
+- Generates smaller, more efficient code than double
+
+#### Double-Precision (64-bit) Floats
+
+- Requires 8 bytes of memory to store
+- Have about **13 significant digits of precision**
+- Have a range of about 1.E-303 to 1.E+303
+- HW acceleration generally only available on large, Cortex-M7 MCUs
+- Generates larger code, with more processing overhead per operation
+
+### Float Stack Usage in Zephyr
 
 The sample code in this library typically has the `CONFIG_FPU` option set,
 meaning that floating-point support is configured for
@@ -376,9 +411,8 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 
 - [x] Mean
 - [x] De-mean
-- [x] Percentile
+- [x] Percentile (AKA quantile)
 - [x] Median
-- [ ] Quantile
 - [x] Quartile
 - [x] Interquartile range
 - [x] Mode
