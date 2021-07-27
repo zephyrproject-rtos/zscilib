@@ -466,6 +466,114 @@ void test_quat_rot(void)
 
 }
 
+void test_quat_lerp(void)
+{
+	int rc;
+	struct zsl_quat qa = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
+	struct zsl_quat qb = { .r = 0.0, .i = 1.0, .j = 0.0, .k = 0.0 };
+	struct zsl_quat qi;
+
+	/* Make sure inputs are unit quaternions. */
+	zassert_true(zsl_quat_is_unit(&qa), NULL);
+	zassert_true(zsl_quat_is_unit(&qb), NULL);
+
+	/* t = 0.0 */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.0, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, qa.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, qa.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, qa.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, qa.k, 1E-6), NULL);
+
+	/* t = 0.2 */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.2, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, 0.9701425001453318, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, 0.2425356250363329, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+
+	/* t = 0.8 */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.8, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, 0.2425356250363329, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, 0.9701425001453318, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+
+	/* t = 1.0 */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 1.0, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, qb.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, qb.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, qb.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, qb.k, 1E-6), NULL);
+
+	/* t = 1.7. An error is expected. */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 1.7, &qi);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* t = -1.1. An error is expected. */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, -1.1, &qi);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* Non unit quaternions. */
+	qa.r = 3.0;
+	qa.i = 5.0;
+	qa.j = -1.3;
+	qa.k = 0.0;
+
+	qb.r = -2.0;
+	qb.i = 9.0;
+	qb.j = 0.6;
+	qb.k = -2.9;
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.7, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, 0.0065594554771123, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, 0.9737279382225760, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, -0.0236596309754489, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, -0.2263870529221157, 1E-6), NULL);
+
+	/* qa = qb. */
+	qb.r = 3.0;
+	qb.i = 5.0;
+	qb.j = -1.3;
+	qb.k = 0.0;
+
+	struct zsl_quat qa_u;
+	zsl_quat_to_unit(&qa, &qa_u);
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.3, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6), NULL);
+
+	/* qa = -qb. */
+	qb.r *= -1.0;
+	qb.i *= -1.0;
+	qb.j *= -1.0;
+	qb.k *= -1.0;
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_lerp(&qa, &qb, 0.5, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+}
+
 void test_quat_slerp(void)
 {
 	int rc;
@@ -512,6 +620,62 @@ void test_quat_slerp(void)
 	zassert_true(val_is_equal(qi.i, qb.i, 1E-6), NULL);
 	zassert_true(val_is_equal(qi.j, qb.j, 1E-6), NULL);
 	zassert_true(val_is_equal(qi.k, qb.k, 1E-6), NULL);
+
+	/* t = 1.7. An error is expected. */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_slerp(&qa, &qb, 1.7, &qi);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* t = -1.1. An error is expected. */
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_slerp(&qa, &qb, -1.1, &qi);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* Non unit quaternions. */
+	qa.r = 3.0;
+	qa.i = 5.0;
+	qa.j = -1.3;
+	qa.k = 0.0;
+
+	qb.r = -2.0;
+	qb.i = 9.0;
+	qb.j = 0.6;
+	qb.k = -2.9;
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_slerp(&qa, &qb, 0.7, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, 0.0144930459747461, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, 0.9742497802658620, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, -0.0268229081092286, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, -0.2234006465318697, 1E-6), NULL);
+
+	/* qa = qb. */
+	qb.r = 3.0;
+	qb.i = 5.0;
+	qb.j = -1.3;
+	qb.k = 0.0;
+
+	struct zsl_quat qa_u;
+	zsl_quat_to_unit(&qa, &qa_u);
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_slerp(&qa, &qb, 0.3, &qi);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6), NULL);
+
+	/* qa = -qb. An error is expected, impossible spherical interpolation.  */
+	qb.r *= -1.0;
+	qb.i *= -1.0;
+	qb.j *= -1.0;
+	qb.k *= -1.0;
+
+	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
+	rc = zsl_quat_slerp(&qa, &qb, 0.3, &qi);
+	zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_quat_from_ang_vel(void)
@@ -535,7 +699,7 @@ void test_quat_from_ang_vel(void)
 
 	/* Calcuate the orientation from the previous orientation, the time and the
 	 * angular velocity. */
-	rc = zsl_quat_from_ang_vel(&w, &qin, &t, &qout);
+	rc = zsl_quat_from_ang_vel(&w, &qin, t, &qout);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
 	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
@@ -544,16 +708,16 @@ void test_quat_from_ang_vel(void)
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular veolcity vector. */
-	rc = zsl_quat_from_ang_vel(&w2, &qin, &t, &qout);
+	rc = zsl_quat_from_ang_vel(&w2, &qin, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular veolcity vector. */
-	rc = zsl_quat_from_ang_vel(&w3, &qin, &t, &qout);
+	rc = zsl_quat_from_ang_vel(&w3, &qin, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to a negative time. */
-	rc = zsl_quat_from_ang_vel(&w, &qin, &t2, &qout);
+	rc = zsl_quat_from_ang_vel(&w, &qin, t2, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 }
 
@@ -579,7 +743,7 @@ void test_quat_from_ang_mom(void)
 
 	/* Calcuate the orientation from the previous orientation, the time and the
 	 * angular momentum and inertia. */
-	rc = zsl_quat_from_ang_mom(&l, &qin, &i, &t, &qout);
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i, t, &qout);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
 	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
@@ -588,24 +752,24 @@ void test_quat_from_ang_mom(void)
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular momentum vector. */
-	rc = zsl_quat_from_ang_mom(&l2, &qin, &i, &t, &qout);
+	rc = zsl_quat_from_ang_mom(&l2, &qin, &i, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular momentum vector. */
-	rc = zsl_quat_from_ang_mom(&l3, &qin, &i, &t, &qout);
+	rc = zsl_quat_from_ang_mom(&l3, &qin, &i, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to a negative time. */
-	rc = zsl_quat_from_ang_mom(&l, &qin, &i, &t2, &qout);
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i, t2, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to zero inertia. */
-	rc = zsl_quat_from_ang_mom(&l, &qin, &i2, &t, &qout);
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i2, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 
 	/* In this case, an error is expected due to a negative inertia. */
-	rc = zsl_quat_from_ang_mom(&l, &qin, &i3, &t, &qout);
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i3, t, &qout);
 	zassert_true(rc == -EINVAL, NULL);
 }
 
@@ -824,23 +988,4 @@ void test_quat_from_axis_angle(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_madgwick(void)
-{
-
-}
-
-void test_quat_madgwick_IMU(void)
-{
-
-}
-
-void test_quat_mahony(void)
-{
-
-}
-
-void test_quat_mahony_IMU(void)
-{
-
-}
 

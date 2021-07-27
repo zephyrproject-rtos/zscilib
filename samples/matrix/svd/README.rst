@@ -28,7 +28,7 @@ the result to the console:
 .. code-block:: console
 
     $ rm -rf build
-    $ west build -b qemu_cortex_m3 samples/matrix/svd -t run
+    $ west build -b mps2_an521 samples/matrix/svd -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b BOARD``

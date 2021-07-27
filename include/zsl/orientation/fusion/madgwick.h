@@ -31,14 +31,25 @@ extern "C" {
 #endif
 
 /**
+ * @brief Config settings for the Madwick filter.
+ */
+struct zsl_fus_madg_cfg {
+	/**
+	 * @brief ToDo: Document!
+	 */
+	zsl_real_t beta;
+};
+
+/**
  * @brief Sets the sample frequency (in Hz) for the algorithm.
  *
  * @param freq  Sampling frequency in Hz.
+ * @param cfg   Pointer to the config struct for this algorithm.
  * 
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
-int zsl_fus_madg_init(uint32_t freq);
+int zsl_fus_madg_init(uint32_t freq, void *cfg);
 
 /**
  * @brief Madgwick sensor fusion algorithm implementation.
@@ -47,12 +58,13 @@ int zsl_fus_madg_init(uint32_t freq);
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
  * @param q     Pointer to the output @ref zsl_quat.
+ * @param cfg   Pointer to the config struct for this algorithm.
  *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
 int zsl_fus_madg_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q);
+		      struct zsl_vec *g, struct zsl_quat *q, void *cfg);
 
 /**
  * @brief Default error handler for the Madgwick sensor fusion driver.

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
- * Copyright (c) 2016 Intel Corporation
+ * Copyright (c) 2021 Kevin Townsend (KTOWN)
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,22 +8,7 @@
 #include <sys/printk.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
-
-#if !CONFIG_BOARD_QEMU_CORTEX_M3 && \
-	(CONFIG_CPU_CORTEX_M3 || CONFIG_CPU_CORTEX_M4)
-/* Use DWT cycle counter for precision timing if this is a HW M3/M4 core. */
-uint32_t dwt_count;
-#define DWT_RESET_CYCLECOUNTER    do {				  \
-		CoreDebug->DEMCR = CoreDebug->DEMCR | 0x01000000; \
-		DWT->CYCCNT = 0;				  \
-		DWT->CTRL = DWT->CTRL | 1; } while(0)
-#else
-/* Use the high-precision kernel clock. */
-uint32_t start_time;
-uint32_t stop_time;
-uint32_t cycles_spent;
-uint32_t nanoseconds_spent;
-#endif
+#include <zsl/instrumentation.h>
 
 /** The number of times to execute the code under test. */
 #define BENCH_LOOPS (10000U)
@@ -61,6 +45,9 @@ void print_settings(void)
 
 void test_vec_add(void)
 {
+	uint32_t instr;
+	uint32_t instr_total = 0;
+
 	ZSL_VECTOR_DEF(va, 3);
 	ZSL_VECTOR_DEF(vb, 3);
 	ZSL_VECTOR_DEF(vc, 3);
@@ -75,34 +62,14 @@ void test_vec_add(void)
 	/* Init vc with zero values. */
 	zsl_vec_init(&vc);
 
-#if !CONFIG_BOARD_QEMU_CORTEX_M3 && \
-	(CONFIG_CPU_CORTEX_M3 || CONFIG_CPU_CORTEX_M4)
-	DWT_RESET_CYCLECOUNTER;
-#else
-	/* Perform the add operation, tracking start and end times. */
-	start_time = k_cycle_get_32();
-#endif
-
+	ZSL_INSTR_START(instr);
 	for (uint32_t i = 0; i < BENCH_LOOPS; i++) {
 		zsl_vec_add(&va, &vb, &vc);
 	}
+	ZSL_INSTR_STOP(instr);
+	instr_total += instr;
 
-#if !CONFIG_BOARD_QEMU_CORTEX_M3 && \
-	(CONFIG_CPU_CORTEX_M3 || CONFIG_CPU_CORTEX_M4)
-	dwt_count = DWT->CYCCNT;
-#else
-	stop_time = k_cycle_get_32();
-	/* compute how long the work took (assumes no counter rollover) */
-	cycles_spent = stop_time - start_time;
-	nanoseconds_spent = (uint32_t)k_cyc_to_ns_floor64(cycles_spent);
-#endif
-
-#if !CONFIG_BOARD_QEMU_CORTEX_M3 && \
-	(CONFIG_CPU_CORTEX_M3 || CONFIG_CPU_CORTEX_M4)
-	printk("zsl_vec_add : %u cycles\n", dwt_count / BENCH_LOOPS);
-#else
-	printk("zsl_vec_add : %u ns\n", nanoseconds_spent / BENCH_LOOPS);
-#endif
+	printk("zsl_vec_add (avg): %u ns\n", instr_total / BENCH_LOOPS);
 }
 
 void main(void)

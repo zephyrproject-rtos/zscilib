@@ -28,7 +28,7 @@ the result to the console:
 
 .. code-block:: console
 
-    $ west build -p -b qemu_cortex_m3 samples/matrix/pinv -t run
+    $ west build -p -b mps2_an521 samples/matrix/pinv -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b BOARD``

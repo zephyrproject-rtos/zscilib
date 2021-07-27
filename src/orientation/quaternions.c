@@ -120,10 +120,24 @@ int zsl_quat_mult(struct zsl_quat *qa, struct zsl_quat *qb,
 {
 	int rc = 0;
 
-	qm->i = qa->r * qb->i + qa->i * qb->r + qa->j * qb->k - qa->k * qb->j;
-	qm->j = qa->r * qb->j - qa->i * qb->k + qa->j * qb->r + qa->k * qb->i;
-	qm->k = qa->r * qb->k + qa->i * qb->j - qa->j * qb->i + qa->k * qb->r;
-	qm->r = qa->r * qb->r - qa->i * qb->i - qa->j * qb->j - qa->k * qb->k;
+	/* Make copies so this function can be used as a destructive one. */
+	struct zsl_quat qac;
+	struct zsl_quat qbc;
+
+	qac.r = qa->r;
+	qac.i = qa->i;
+	qac.j = qa->j;
+	qac.k = qa->k;
+
+	qbc.r = qb->r;
+	qbc.i = qb->i;
+	qbc.j = qb->j;
+	qbc.k = qb->k;
+
+	qm->i = qac.r * qbc.i + qac.i * qbc.r + qac.j * qbc.k - qac.k * qbc.j;
+	qm->j = qac.r * qbc.j - qac.i * qbc.k + qac.j * qbc.r + qac.k * qbc.i;
+	qm->k = qac.r * qbc.k + qac.i * qbc.j - qac.j * qbc.i + qac.k * qbc.r;
+	qm->r = qac.r * qbc.r - qac.i * qbc.i - qac.j * qbc.j - qac.k * qbc.k;
 
 	return rc;
 }
@@ -296,12 +310,59 @@ err:
 	return rc;
 }
 
+int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
+		   zsl_real_t t, struct zsl_quat *qi)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure t is between 0 and 1 (included). */
+	if (t < 0.0 || t > 1.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	struct zsl_quat q1, q2;
+
+	/* Turn input quaternions into unit quaternions. */
+	struct zsl_quat qa_u;
+	struct zsl_quat qb_u;
+	zsl_quat_to_unit(qa, &qa_u);
+	zsl_quat_to_unit(qb, &qb_u);
+
+	/* Calculate intermediate quats. */
+	zsl_quat_scale(&qa_u, 1.0 - t, &q1);
+	zsl_quat_scale(&qb_u, t, &q2);
+
+	/* Final result = q1 + q2. */
+	qi->r = q1.r + q2.r;
+	qi->i = q1.i + q2.i;
+	qi->j = q1.j + q2.j;
+	qi->k = q1.k + q2.k;
+
+	/* Normalize output quaternion. */
+	zsl_quat_to_unit_d(qi);
+
+err:
+	return rc;
+}
+
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi)
 {
 	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure t is between 0 and 1 (included). */
+	if (t < 0.0 || t > 1.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
 	struct zsl_quat q1, q2; /* Interim quats. */
-	zsl_real_t dot;         /* qa->r * qb->r. */
+	zsl_real_t dot;         /* Dot product bewteen qa and qb. */
 	zsl_real_t phi;         /* arccos(dot). */
 	zsl_real_t phi_s;       /* sin(phi). */
 	zsl_real_t phi_st;      /* sin(phi * (t)). */
@@ -314,13 +375,46 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	 * and popping values on the stack with trivial calls to helper functions.
 	 */
 
-	/* TODO: When t = 0.0 or t = 1.0, just memcpy qa or qb. */
+	/* Turn input quaternions into unit quaternions. */
+	struct zsl_quat qa_u;
+	struct zsl_quat qb_u;
+	zsl_quat_to_unit(qa, &qa_u);
+	zsl_quat_to_unit(qb, &qb_u);
 
-	/* Make sure t is in a valid range. */
-	t = t < 0.0 ? 0.0 : t;
-	t = t > 1.0 ? 1.0 : t;
+	/* When t = 0.0 or t = 1.0, just memcpy qa or qb. */
+	if (t == 0.0) {
+		qi->r = qa_u.r;
+		qi->i = qa_u.i;
+		qi->j = qa_u.j;
+		qi->k = qa_u.k;
+		return rc;
+	} else if (t == 1.0) {
+		qi->r = qb_u.r;
+		qi->i = qb_u.i;
+		qi->j = qb_u.j;
+		qi->k = qb_u.k;
+		return rc;
+	}
 
-	dot = qa->r * qb->r;
+	/* Compute the dot product of the two normalized input quaternions. */
+	dot = qa_u.r * qb_u.r + qa_u.i * qb_u.i + qa_u.j * qb_u.j + qa_u.k * qb_u.k;
+
+	/* The value dot is always between -1 and 1. If dot = 1.0, qa = qb and there
+	 * is no interpolation. */
+	if (ZSL_ABS(dot - 1.0) < 1E-6) {
+		qi->r = qa_u.r;
+		qi->i = qa_u.i;
+		qi->j = qa_u.j;
+		qi->k = qa_u.k;
+		return rc;
+	}
+
+	/* If dot = -1, then qa = - qb and the interpolation is invald. */
+	if (ZSL_ABS(dot + 1.0) < 1E-6) {
+		rc = -EINVAL;
+		return rc;
+	}
+
 
 	/*
 	 * Slerp often has problems with angles close to zero. Consider handling
@@ -334,14 +428,8 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	phi_smt = ZSL_SIN(phi * (1.0 - t));
 
 	/* Calculate intermediate quats. */
-	q1.r = phi_smt / phi_s * qa->r;
-	q1.i = phi_smt / phi_s * qa->i;
-	q1.j = phi_smt / phi_s * qa->j;
-	q1.k = phi_smt / phi_s * qa->k;
-	q2.r = phi_st / phi_s * qb->r;
-	q2.i = phi_st / phi_s * qb->i;
-	q2.j = phi_st / phi_s * qb->j;
-	q2.k = phi_st / phi_s * qb->k;
+	zsl_quat_scale(&qa_u, phi_smt / phi_s, &q1);
+	zsl_quat_scale(&qb_u, phi_st / phi_s, &q2);
 
 	/* Final result = q1 + q2. */
 	qi->r = q1.r + q2.r;
@@ -349,18 +437,19 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	qi->j = q1.j + q2.j;
 	qi->k = q1.k + q2.k;
 
+err:
 	return rc;
 }
 
 int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
-			  zsl_real_t *t, struct zsl_quat *qout)
+			  zsl_real_t t, struct zsl_quat *qout)
 {
 	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure time is positive or zero and the angular velocity is a
 	 * tridimensional vector. */
-	if (w->sz != 3 || *t < 0.0) {
+	if (w->sz != 3 || t < 0.0) {
 		rc = -EINVAL;
 		goto err;
 	}
@@ -378,8 +467,7 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
 
 	zsl_quat_to_unit(qin, &qin2);
 	zsl_quat_mult(&wquat, &qin2, &wq);
-	zsl_quat_scale_d(&wq, 0.5 * *t);
-
+	zsl_quat_scale_d(&wq, 0.5 * t);
 	qout2.r = qin2.r + wq.r;
 	qout2.i = qin2.i + wq.i;
 	qout2.j = qin2.j + wq.j;
@@ -392,14 +480,14 @@ err:
 }
 
 int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
-			  zsl_real_t *i, zsl_real_t *t, struct zsl_quat *qout)
+			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout)
 {
 	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure time is positive or zero and the angular velocity is a
 	 * tridimensional vector. Inertia can't be negative or zero. */
-	if (l->sz != 3 || *t < 0.0 || *i <= 0.0) {
+	if (l->sz != 3 || t < 0.0 || *i <= 0.0) {
 		rc = -EINVAL;
 		goto err;
 	}

@@ -290,6 +290,7 @@ extern void test_phy_work_kin(void);
 extern void test_sta_mean(void);
 extern void test_sta_trim_mean(void);
 extern void test_sta_weighted_mean(void);
+extern void test_sta_time_weighted_mean(void);
 extern void test_sta_demean(void);
 extern void test_sta_percentile(void);
 extern void test_sta_median(void);
@@ -355,6 +356,7 @@ extern void test_quat_conj(void);
 extern void test_quat_inv(void);
 extern void test_quat_diff(void);
 extern void test_quat_rot(void);
+extern void test_quat_lerp(void);
 extern void test_quat_slerp(void);
 extern void test_quat_from_ang_vel(void);
 extern void test_quat_from_ang_mom(void);
@@ -364,10 +366,13 @@ extern void test_quat_to_rot_mtx(void);
 extern void test_quat_from_rot_mtx(void);
 extern void test_quat_to_axis_angle(void);
 extern void test_quat_from_axis_angle(void);
-extern void test_quat_madgwick(void);
-extern void test_quat_madgwick_IMU(void);
-extern void test_quat_mahony(void);
-extern void test_quat_mahony_IMU(void);
+
+extern void test_fus_madgwick(void);
+extern void test_fus_mahony(void);
+extern void test_fus_saam(void);
+extern void test_fus_complementary(void);
+extern void test_fus_aqua(void);
+extern void test_fus_kalman(void);
 
 void test_main(void)
 {
@@ -648,6 +653,7 @@ void test_main(void)
 			 ztest_unit_test(test_sta_mean),
 			 ztest_unit_test(test_sta_trim_mean),
 			 ztest_unit_test(test_sta_weighted_mean),
+			 ztest_unit_test(test_sta_time_weighted_mean),
 			 ztest_unit_test(test_sta_demean),
 			 ztest_unit_test(test_sta_percentile),
 			 ztest_unit_test(test_sta_median),
@@ -705,6 +711,7 @@ void test_main(void)
 			 ztest_unit_test(test_quat_inv),
 			 ztest_unit_test(test_quat_diff),
 			 ztest_unit_test(test_quat_rot),
+			 ztest_unit_test(test_quat_lerp),
 			 ztest_unit_test(test_quat_slerp),
 			 ztest_unit_test(test_quat_from_ang_vel),
 			 ztest_unit_test(test_quat_from_ang_mom),
@@ -714,10 +721,13 @@ void test_main(void)
 			 ztest_unit_test(test_quat_from_rot_mtx),
 			 ztest_unit_test(test_quat_to_axis_angle),
 			 ztest_unit_test(test_quat_from_axis_angle),
-			 ztest_unit_test(test_quat_madgwick),
-			 ztest_unit_test(test_quat_madgwick_IMU),
-			 ztest_unit_test(test_quat_mahony),
-			 ztest_unit_test(test_quat_mahony_IMU)
+
+			 ztest_unit_test(test_fus_madgwick),
+			 ztest_unit_test(test_fus_mahony),
+			 ztest_unit_test(test_fus_saam),
+			 ztest_unit_test(test_fus_complementary),
+			 ztest_unit_test(test_fus_aqua),
+			 ztest_unit_test(test_fus_kalman)
 			 );
 
 	ztest_run_test_suite(zsl_tests);

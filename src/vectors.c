@@ -221,7 +221,9 @@ zsl_real_t zsl_vec_norm(struct zsl_vec *v)
 	/*
 	 * |v| = sqrt( v[0]^2 + v[1]^2 + V[...]^2 )
 	 */
-
+	if (v == NULL) {
+		return 0;
+	}
 	return ZSL_SQRT(zsl_vec_sum_of_sqrs(v));
 }
 
