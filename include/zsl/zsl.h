@@ -71,6 +71,7 @@ typedef double zsl_real_t;
 #define ZSL_ASIN       asinf
 #define ZSL_ACOS       acosf
 #define ZSL_ATAN       atanf
+#define ZSL_ATAN2      atan2f
 #define ZSL_SINH       sinhf
 #define ZSL_COSH       coshf
 #define ZSL_TANH       tanhf
@@ -94,6 +95,7 @@ typedef double zsl_real_t;
 #define ZSL_ASIN       asin
 #define ZSL_ACOS       acos
 #define ZSL_ATAN       atan
+#define ZSL_ATAN2      atan2
 #define ZSL_SINH       sinh
 #define ZSL_COSH       cosh
 #define ZSL_TANH       tanh

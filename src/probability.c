@@ -148,12 +148,138 @@ zsl_real_t zsl_prob_normal_cdf_inv(zsl_real_t *m, zsl_real_t *s, zsl_real_t *p)
 	return y;
 }
 
+int zsl_prob_factorial(int *n)
+{
+	if (*n == 0 || *n == 1) {
+		return 1;
+	} else if (*n < 0) {
+		return -EINVAL;
+	}
+	
+	int n2 = *n;
+	for (int i = 1; i < *n; i++) {
+		n2 *= (*n - i); 
+	}
+
+	return n2;
+}
+
+int zsl_prob_binomial_coef(int *n, int *k, int *c)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure n is positive or zero. */
+	if (*n < 0) {
+		return -EINVAL;
+	}
+#endif
+
+	if (*k > *n || *k < 0) {
+		*c = 0;
+		return 0;
+	}
+
+	int kn = *n - *k;
+	*c = zsl_prob_factorial(n) /
+	(zsl_prob_factorial(k) * zsl_prob_factorial(&kn));
+
+	return 0;
+}
+
+zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 1. */
+	if (*p > 1.0 || *p < 0.0) {
+		return -EINVAL;
+	}
+	/* Make sure n is positive or zero. */
+	if (*n < 0) {
+		return -EINVAL;
+	}
+#endif
+
+	int c;
+	zsl_prob_binomial_coef(n, x, &c);
+	
+	return c * ZSL_POW(*p, *x) * ZSL_POW((1. - *p), (*n - *x));
+}
+
+int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 1. */
+	if (*p > 1.0 || *p < 0.0) {
+		return -EINVAL;
+	}
+	/* Make sure n is positive or zero. */
+	if (*n < 0) {
+		return -EINVAL;
+	}
+#endif
+
+	*m = *n * *p;
+	
+	return 0;
+}
+
+int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 1. */
+	if (*p > 1.0 || *p < 0.0) {
+		return -EINVAL;
+	}
+	/* Make sure n is positive or zero. */
+	if (*n < 0) {
+		return -EINVAL;
+	}
+#endif
+
+	*v = *n * *p * (1. - *p);
+	
+	return 0;
+}
+
+zsl_real_t zsl_prob_binomial_cdf(int *n, zsl_real_t *p, int *x)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 1. */
+	if (*p > 1.0 || *p < 0.0) {
+		return -EINVAL;
+	}
+	/* Make sure n is positive or zero. */
+	if (*n < 0) {
+		return -EINVAL;
+	}
+#endif
+	if (*x < 0) {
+		return 0;
+	}
+
+	zsl_real_t y = 0.0;
+	int c;
+
+	for (int i = 0; i <= *x; i++) {
+		zsl_prob_binomial_coef(n, &i, &c);
+		y += c * ZSL_POW(*p, i) * ZSL_POW((1. - *p), (*n - i));
+	}
+	
+	
+	return y;
+}
+
+
+
 int zsl_prob_entropy(struct zsl_vec *v, zsl_real_t *h)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
-	/* Make sure the sum of all coefficients in v is 1. */
+	/* Make sure the sum of all coefficients in v is 1 and that each
+	 * probability is greater or equal than 0. */
 	zsl_real_t sum = -1.0;
 	for (size_t i = 0; i < v->sz; i++) {
+		if (v->data[i] < 0.0) {
+			return -EINVAL;
+		}
 		sum += v->data[i];
 	}
 	if (ZSL_ABS(sum) > 1E-6) {
@@ -167,6 +293,28 @@ int zsl_prob_entropy(struct zsl_vec *v, zsl_real_t *h)
 	}
 
 	*h /= ZSL_LOG(2.);
+
+	return 0;
+}
+
+int zsl_prob_bayes(zsl_real_t *pa, zsl_real_t *pb, zsl_real_t *pba,
+			 zsl_real_t *pab)
+{
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure every probability is between 0 and 1, and pb is not zero. */
+	if (*pa < 0.0 || *pa > 1.0) {
+		return -EINVAL;
+	}
+	if (*pb <= 0.0 || *pb > 1.0 || *pb < *pa * *pba) {
+		return -EINVAL;
+	}
+	if (*pba < 0.0 || *pba > 1.0) {
+		return -EINVAL;
+	}
+#endif
+
+	*pab = (*pba * *pa) / *pb;
 
 	return 0;
 }

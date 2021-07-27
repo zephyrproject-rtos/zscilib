@@ -173,6 +173,197 @@ void test_prob_normal_cdf_inv(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
+void test_prob_factorial(void)
+{
+	int rc;
+	int n;
+	
+	n = 0;
+	rc = zsl_prob_factorial(&n);
+	zassert_true(val_is_equal(rc, 1, 1E-6), NULL);
+
+	n = 1;
+	rc = zsl_prob_factorial(&n);
+	zassert_true(val_is_equal(rc, 1, 1E-6), NULL);
+
+	n = 8;
+	rc = zsl_prob_factorial(&n);
+	zassert_true(val_is_equal(rc, 40320, 1E-6), NULL);
+}
+
+void test_prob_binomial_coef(void)
+{
+	int rc;
+	int n = 7, k, c;
+	
+	k = 6;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 7, 1E-6), NULL);
+
+	k = 4;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 35, 1E-6), NULL);
+
+	k = 0;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 1, 1E-6), NULL);
+
+	k = 1;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 7, 1E-6), NULL);
+
+	k = -3;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 0, 1E-6), NULL);
+
+	k = 9;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 0, 1E-6), NULL);
+
+	n = 0;
+	k = 0;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(c, 1, 1E-6), NULL);
+
+	/* n has to be positive. Negative n should return an error. */
+	n = -1;
+	rc = zsl_prob_binomial_coef(&n, &k, &c);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_prob_binomial_pdf(void)
+{
+	zsl_real_t rc;
+	zsl_real_t p = 0.3;
+	int n = 5, x;
+
+	x = -3;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.0, 1E-6), NULL);
+
+	x = 0;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.16807, 1E-6), NULL);
+
+	x = 4;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.02835, 1E-6), NULL);
+
+	x = 7;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.0, 1E-6), NULL);
+
+	/* Errors. */
+	p = -0.1;
+	x = 4;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 3.1;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 0.3;
+	n = -5;
+	rc = zsl_prob_binomial_pdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_prob_binomial_mean(void)
+{
+	zsl_real_t rc;
+	zsl_real_t p = 0.3, m;
+	int n = 5;
+
+	rc = zsl_prob_binomial_mean(&n, &p, &m);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(m, 1.5, 1E-6), NULL);
+
+	/* Errors. */
+	p = -0.1;
+	rc = zsl_prob_binomial_mean(&n, &p, &m);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 3.1;
+	rc = zsl_prob_binomial_mean(&n, &p, &m);
+	zassert_true(rc == -EINVAL, NULL);
+
+	n = -5;
+	p = 0.3;
+	rc = zsl_prob_binomial_mean(&n, &p, &m);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_prob_binomial_variance(void)
+{
+	zsl_real_t rc;
+	zsl_real_t p = 0.3, v;
+	int n = 5;
+
+	rc = zsl_prob_binomial_var(&n, &p, &v);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(v, 1.05, 1E-6), NULL);
+
+	/* Errors. */
+	p = -0.1;
+	rc = zsl_prob_binomial_var(&n, &p, &v);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 3.1;
+	rc = zsl_prob_binomial_var(&n, &p, &v);
+	zassert_true(rc == -EINVAL, NULL);
+
+	n = -5;
+	p = 0.3;
+	rc = zsl_prob_binomial_var(&n, &p, &v);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_prob_binomial_cdf(void)
+{
+	zsl_real_t rc;
+	zsl_real_t p = 0.3;
+	int n = 5, x;
+
+	x = -3;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.0, 1E-6), NULL);
+
+	x = 0;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.16807, 1E-6), NULL);
+
+	x = 4;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 0.99757, 1E-6), NULL);
+
+	x = 7;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(val_is_equal(rc, 1.0, 1E-6), NULL);
+
+	/* Errors. */
+	p = -0.1;
+	x = 4;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 3.1;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+
+	p = 0.3;
+	n = -5;
+	rc = zsl_prob_binomial_cdf(&n, &p, &x);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
 void test_prob_entropy(void)
 {
 	zsl_real_t rc;
@@ -195,7 +386,66 @@ void test_prob_entropy(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(h, 2.2037016960573483, 1E-6), NULL);
 
-	/* Compute the entropy of vb. It should return an error */
+	/* Compute the entropy of vb. It should return an error. */
 	rc = zsl_prob_entropy(&vb, &h);
 	zassert_true(rc == -EINVAL, NULL);	
+
+	/* Compute the entropy of va, which now has a negative probability. It
+	 * should return an error. */
+	va.data[2] *= -1.0;
+	rc = zsl_prob_entropy(&va, &h);
+	zassert_true(rc == -EINVAL, NULL);	
+}
+
+void test_prob_bayes(void)
+{
+	zsl_real_t rc;
+	zsl_real_t pa = 0.15, pb = 0.2, pba = 0.4, pab;
+
+	/* Calculate the probability of A given B (pab). */
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(pab, 0.3, 1E-6), NULL);
+
+	/* Case for negative and bigger than one probabilities. */
+	pa *= -1.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	pb *= -1.;
+	pa *= -1.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	pba *= -1.;
+	pb *= -1.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	pa += 2.;
+	pba *= -1.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+	
+	pb += 2.;
+	pa -= 2.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	pba += 2.;
+	pb -= 2.;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	pba -= 2.;
+	pb = 0.0;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* Case for P(A) * P(B|A) > P(B). */
+	pa = 0.9;
+	pb = 0.1;
+	pba = 0.8;
+	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
+	zassert_true(rc == -EINVAL, NULL);
 }

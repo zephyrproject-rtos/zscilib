@@ -694,6 +694,18 @@ zsl_mtx_deter_3x3(struct zsl_mtx *m, zsl_real_t *d)
 int
 zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 {
+	/* Shortcut for 1x1 matrices. */
+	if (m->sz_rows == 1) {
+		*d = m->data[0];
+		return 0;
+	}
+	
+	/* Shortcut for 2x2 matrices. */
+	if (m->sz_rows == 2) {
+		*d = m->data[0] * m->data[3] - m->data[2] * m->data[1];
+		return 0;
+	}
+
 	/* Shortcut for 3x3 matrices. */
 	if (m->sz_rows == 3) {
 		return zsl_mtx_deter_3x3(m, d);
@@ -1821,6 +1833,8 @@ zsl_mtx_print(struct zsl_mtx *m)
 		}
 		printf("\n");
 	}
+
+	printf("\n");
 
 	return 0;
 }

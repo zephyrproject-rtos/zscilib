@@ -80,12 +80,74 @@ void test_att_from_euler(void)
 
 void test_att_from_accelmag(void)
 {
+	int rc;
+	ZSL_VECTOR_DEF(accel, 3);
+	ZSL_VECTOR_DEF(accel2, 4);
+	ZSL_VECTOR_DEF(mag, 3);
+	ZSL_VECTOR_DEF(mag2, 4);
+	struct zsl_attitude att;
+	struct zsl_attitude acmp = {
+		.roll = 131.185925,
+		.pitch = -52.790738,
+		.yaw = -58.180353
+	};
+	
+	zsl_real_t a[3] = { 7.0, 4.0, -3.5 };
+	zsl_real_t b[3] = { 0.1, -5.0, 123.0 };
 
+	/* Assign arrays to the accelerometer and magnetometer vectors. */
+	rc = zsl_vec_from_arr(&accel, a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&mag, b);
+	zassert_true(rc == 0, NULL);
+
+	/* Calculate the attitude from the accelerometer vector. */
+	rc = zsl_att_from_accelmag(&accel, &mag, &att);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6), NULL);
+	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6), NULL);
+	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-4), NULL);
+
+	/* In this case, the dimension of the accelerometer data vector is 4, which
+	 * should return an error. */
+	rc = zsl_att_from_accelmag(&accel2, &mag, &att);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, the dimension of the magnetometer data vector is 4, which
+	 * should return an error. */
+	rc = zsl_att_from_accelmag(&accel, &mag2, &att);
+	zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_att_from_accel(void)
 {
+	int rc;
+	ZSL_VECTOR_DEF(accel, 3);
+	ZSL_VECTOR_DEF(accel2, 4);
+	struct zsl_attitude att;
+	struct zsl_attitude acmp = {
+		.roll = 131.185925,
+		.pitch = -52.790738,
+		.yaw = 0.0
+	};
+	
+	zsl_real_t a[3] = { 7.0, 4.0, -3.5 };
 
+	/* Assign array to the accelerometer vector. */
+	rc = zsl_vec_from_arr(&accel, a);
+	zassert_true(rc == 0, NULL);
+
+	/* Calculate the attitude from the accelerometer vector. */
+	rc = zsl_att_from_accel(&accel, &att);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6), NULL);
+	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6), NULL);
+	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-6), NULL);
+
+	/* In this case, the dimension of the accelerometer data vector is 4, which
+	 * should return an error. */
+	rc = zsl_att_from_accel(&accel2, &att);
+	zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_eul_to_vec(void)
@@ -223,8 +285,8 @@ void test_quat_mult(void)
 	struct zsl_quat qm;
 
 	zsl_quat_init(&qm, ZSL_QUAT_TYPE_EMPTY);
-	rc = zsl_quat_mult(&qa, &qb, &qm);
 
+	rc = zsl_quat_mult(&qa, &qb, &qm);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(qm.r, 0.125, 1E-6), NULL);
 	zassert_true(val_is_equal(qm.i, 0.5, 1E-6), NULL);
@@ -234,17 +296,75 @@ void test_quat_mult(void)
 
 void test_quat_exp(void)
 {
-	/* TODO: Verify results! */
+	int rc;
+	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat qe;
+
+	zsl_quat_init(&qe, ZSL_QUAT_TYPE_EMPTY);
+
+	rc = zsl_quat_exp(&q, &qe);
+	zassert_true(rc == 0, NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(qe.r, -129.799958, 1E-3), NULL);
+	zassert_true(val_is_equal(qe.i, -0.935867, 1E-4), NULL);
+	zassert_true(val_is_equal(qe.j, 1.228326, 1E-4), NULL);
+	zassert_true(val_is_equal(qe.k, -71.944785, 1E-3), NULL);
+#else
+	zassert_true(val_is_equal(qe.r, -129.799958, 1E-6), NULL);
+	zassert_true(val_is_equal(qe.i, -0.935867, 1E-6), NULL);
+	zassert_true(val_is_equal(qe.j, 1.228326, 1E-6), NULL);
+	zassert_true(val_is_equal(qe.k, -71.944785, 1E-6), NULL);
+#endif
+
 }
 
 void test_quat_log(void)
 {
-	/* TODO: Verify results! */
+	int rc;
+	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat ql;
+
+	zsl_quat_init(&ql, ZSL_QUAT_TYPE_EMPTY);
+
+	rc = zsl_quat_log(&q, &ql);
+	zassert_true(rc == 0, NULL);
+
+	zassert_true(val_is_equal(ql.r, 4.813240, 1E-6), NULL);
+	zassert_true(val_is_equal(ql.i, 0.019900, 1E-6), NULL);
+	zassert_true(val_is_equal(ql.j, -0.026119, 1E-6), NULL);
+	zassert_true(val_is_equal(ql.k, 1.529825, 1E-6), NULL);
 }
 
 void test_quat_pow(void)
 {
-	/* TODO: Verify results! */
+	int rc;
+	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat qp;
+
+	zsl_quat_init(&qp, ZSL_QUAT_TYPE_EMPTY);
+
+	rc = zsl_quat_pow(&q, 1. / 3., &qp);
+	zassert_true(rc == 0, NULL);
+
+	zassert_true(val_is_equal(qp.r, 4.341708, 1E-6), NULL);
+	zassert_true(val_is_equal(qp.i, 0.031588, 1E-6), NULL);
+	zassert_true(val_is_equal(qp.j, -0.041460, 1E-6), NULL);
+	zassert_true(val_is_equal(qp.k, 2.428350, 1E-6), NULL);
+
+	rc = zsl_quat_pow(&q, 3., &qp);
+	zassert_true(rc == 0, NULL);
+
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(qp.r, -226914.550000, 10), NULL);
+	zassert_true(val_is_equal(qp.i, -24097.552000, 10), NULL);
+	zassert_true(val_is_equal(qp.j, 31628.037000, 10), NULL);
+	zassert_true(val_is_equal(qp.k, -1852499.310000, 10), NULL);
+#else
+	zassert_true(val_is_equal(qp.r, -226914.550000, 1E-3), NULL);
+	zassert_true(val_is_equal(qp.i, -24097.552000, 1E-3), NULL);
+	zassert_true(val_is_equal(qp.j, 31628.037000, 1E-3), NULL);
+	zassert_true(val_is_equal(qp.k, -1852499.310000, 1E-3), NULL);
+#endif
 }
 
 void test_quat_conj(void)
@@ -311,6 +431,41 @@ void test_quat_diff(void)
 	zassert_true(val_is_equal(qb.k, qcomp.k, 1E-6), NULL);
 }
 
+void test_quat_rot(void)
+{
+	int rc;
+	struct zsl_quat qa = { 
+		.r = -0.936457,
+		.i = -0.093751,
+		.j = -0.281252,
+		.k = -0.187502 
+	};
+	struct zsl_quat qb = { .r = 0.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat qr;
+
+	zsl_quat_init(&qr, ZSL_QUAT_TYPE_EMPTY);
+
+	rc = zsl_quat_rot(&qa, &qb, &qr);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qr.r, 0.0, 1E-6), NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(qr.i, 70.976938, 1E-4), NULL);
+	zassert_true(val_is_equal(qr.j, -9.893547, 1E-4), NULL);
+	zassert_true(val_is_equal(qr.k, 100.001810, 1E-4), NULL);
+#else
+	zassert_true(val_is_equal(qr.i, 70.976938, 1E-6), NULL);
+	zassert_true(val_is_equal(qr.j, -9.893547, 1E-6), NULL);
+	zassert_true(val_is_equal(qr.k, 100.001810, 1E-6), NULL);
+#endif
+	
+	/* The quaternion qb must be a pure quaternion (zero real part). */
+	qb.r = 1.0;
+	rc = zsl_quat_rot(&qa, &qb, &qr);
+	zassert_true(rc == -EINVAL, NULL);	
+
+
+}
+
 void test_quat_slerp(void)
 {
 	int rc;
@@ -359,37 +514,163 @@ void test_quat_slerp(void)
 	zassert_true(val_is_equal(qi.k, qb.k, 1E-6), NULL);
 }
 
+void test_quat_from_ang_vel(void)
+{
+	int rc;
+	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
+	struct zsl_quat qcomp = {
+		.r = 0.9976899045387927,
+		.i = 0.0074826742840409,
+		.j = 0.0219491778998534,
+		.k = -0.0638521538904827
+	};
+	struct zsl_quat qout;
+	ZSL_VECTOR_DEF(w, 3);
+	ZSL_VECTOR_DEF(w2, 7);
+	ZSL_VECTOR_DEF(w3, 1);
+	zsl_real_t a[3] = { 1.5, 4.4, -12.8 };
+	zsl_real_t t = 0.01, t2 = -0.15;
+
+	zsl_vec_from_arr(&w, a);
+
+	/* Calcuate the orientation from the previous orientation, the time and the
+	 * angular velocity. */
+	rc = zsl_quat_from_ang_vel(&w, &qin, &t, &qout);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6), NULL);
+
+	/* In this case, an error is expected due to the invalid dimension of the
+	 * angular veolcity vector. */
+	rc = zsl_quat_from_ang_vel(&w2, &qin, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to the invalid dimension of the
+	 * angular veolcity vector. */
+	rc = zsl_quat_from_ang_vel(&w3, &qin, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to a negative time. */
+	rc = zsl_quat_from_ang_vel(&w, &qin, &t2, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_quat_from_ang_mom(void)
+{
+	int rc;
+	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
+	struct zsl_quat qcomp = {
+		.r = 0.9976899045387927,
+		.i = 0.0074826742840409,
+		.j = 0.0219491778998534,
+		.k = -0.0638521538904827
+	};
+	struct zsl_quat qout;
+	ZSL_VECTOR_DEF(l, 3);
+	ZSL_VECTOR_DEF(l2, 7);
+	ZSL_VECTOR_DEF(l3, 1);
+	zsl_real_t a[3] = { 4.5, 13.2, -38.4 };
+	zsl_real_t t = 0.01, t2 = -0.15;
+	zsl_real_t i = 3.0, i2 = 0.0, i3 = -3.0;
+
+	zsl_vec_from_arr(&l, a);
+
+	/* Calcuate the orientation from the previous orientation, the time and the
+	 * angular momentum and inertia. */
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i, &t, &qout);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6), NULL);
+	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6), NULL);
+
+	/* In this case, an error is expected due to the invalid dimension of the
+	 * angular momentum vector. */
+	rc = zsl_quat_from_ang_mom(&l2, &qin, &i, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to the invalid dimension of the
+	 * angular momentum vector. */
+	rc = zsl_quat_from_ang_mom(&l3, &qin, &i, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to a negative time. */
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i, &t2, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to zero inertia. */
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i2, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, an error is expected due to a negative inertia. */
+	rc = zsl_quat_from_ang_mom(&l, &qin, &i3, &t, &qout);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
 void test_quat_to_euler(void)
 {
-	/* TODO */
+	int rc;
+	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat q2 = {
+		.r = -0.294260,
+		.i = 0.642970,
+		.j = -0.294260,
+		.k = 0.642970
+	};
+	struct zsl_euler e = { .x = 0.0, .y = 0.0, .z = 0.0 };
+
+	rc = zsl_quat_to_euler(&q, &e);
+	zassert_true(rc == 0, NULL);
+
+	zassert_true(val_is_equal(e.x, 0.035148, 1E-6), NULL);
+	zassert_true(val_is_equal(e.y, 0.024579, 1E-6), NULL);
+	zassert_true(val_is_equal(e.z, 3.059905, 1E-6), NULL);
+
+	/* Case in which gimbal lock ocurrs. */
+	rc = zsl_quat_to_euler(&q2, &e);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(e.x, -2.283185, 1E-6), NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(e.y, 1.570796, 1E-3), NULL);
+#else
+	zassert_true(val_is_equal(e.y, 1.570796, 1E-6), NULL);
+#endif
+	zassert_true(val_is_equal(e.z, 0.0, 1E-6), NULL);
 }
 
 void test_quat_from_euler(void)
 {
-	// int rc = 0;
-	// struct zsl_quat q;
-	// struct zsl_quat qcmp = {
-	// 	.r = 0.5443311,
-	// 	.i = 0.4082483,
-	// 	.j = 0.6804138,
-	// 	.k = 0.2721655
-	// };
-	// struct zsl_euler e = {
-	// 	.x = 2.8632926,	/* Degrees = 164.0545819. */
-	// 	.y = 1.2977838,	/* Degrees = 74.3575337 */
-	// 	.z = -1.8490956	/* Degrees = -105.9453765 */
-	// };
+	int rc;
+	struct zsl_quat q;
+	struct zsl_euler e = { .x = 3.0, .y = 12.1, .z = -7.2 };
+	struct zsl_euler e2 = { .x = 0.0, .y = 0.0, .z = 0.0 };
+	struct zsl_euler e3 = { .x = 2.1, .y = ZSL_PI / 2.0, .z = 1.6 };
 
-	// rc = zsl_quat_from_euler(&e, &q);
-	// zassert_true(rc == 0, NULL);
-	// printk("r: %d\n", (int)(q.r * 1000000));
-	// printk("i: %d\n", (int)(q.i * 1000000));
-	// printk("j: %d\n", (int)(q.j * 1000000));
-	// printk("k: %d\n", (int)(q.k * 1000000));
-	// zassert_true(val_is_equal(q.r, qcmp.r, 1E-6), NULL);
-	// zassert_true(val_is_equal(q.i, qcmp.i, 1E-6), NULL);
-	// zassert_true(val_is_equal(q.j, qcmp.j, 1E-6), NULL);
-	// zassert_true(val_is_equal(q.k, qcmp.k, 1E-6), NULL);
+	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
+
+	rc = zsl_quat_from_euler(&e, &q);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(q.r, 0.040283, 1E-6), NULL);
+	zassert_true(val_is_equal(q.i, -0.877536, 1E-6), NULL);
+	zassert_true(val_is_equal(q.j, -0.414807, 1E-6), NULL);
+	zassert_true(val_is_equal(q.k, 0.237157, 1E-6), NULL);
+
+	rc = zsl_quat_from_euler(&e2, &q);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(q.r, 1.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.i, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.j, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.k, 0.0, 1E-6), NULL);
+
+	/* Case in which gimbal lock ocurrs. */
+	rc = zsl_quat_from_euler(&e3, &q);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(q.r, -0.1948717, 1E-6), NULL);
+	zassert_true(val_is_equal(q.i, 0.6797242, 1E-6), NULL);
+	zassert_true(val_is_equal(q.j, -0.1948717, 1E-6), NULL);
+	zassert_true(val_is_equal(q.k, 0.6797242, 1E-6), NULL);
 }
 
 void test_quat_to_rot_mtx(void)
@@ -473,3 +754,93 @@ void test_quat_from_rot_mtx(void)
 	zassert_true(val_is_equal(q.j, qcmp.j, 1E-6), NULL);
 	zassert_true(val_is_equal(q.k, qcmp.k, 1E-6), NULL);
 }
+
+void test_quat_to_axis_angle(void)
+{
+	int rc;
+	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
+	struct zsl_quat q2 = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
+	zsl_real_t b;
+	ZSL_VECTOR_DEF(a, 3);
+	ZSL_VECTOR_DEF(a2, 4);
+
+	rc = zsl_vec_init(&a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_init(&a2);
+	zassert_true(rc == 0, NULL);
+
+	rc = zsl_quat_to_axis_angle(&q, &a, &b);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(a.data[0], 0.013005, 1E-6), NULL);
+	zassert_true(val_is_equal(a.data[1], -0.017069, 1E-6), NULL);
+	zassert_true(val_is_equal(a.data[2], 0.999770, 1E-6), NULL);
+	zassert_true(val_is_equal(b, 3.060355, 1E-6), NULL);
+
+	rc = zsl_quat_to_axis_angle(&q2, &a, &b);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(a.data[0], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(a.data[1], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(a.data[2], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(b, 0.0, 1E-6), NULL);
+
+	/* Invalid axis vector size. */
+	rc = zsl_quat_to_axis_angle(&q, &a2, &b);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_quat_from_axis_angle(void)
+{
+	int rc;
+	struct zsl_quat q;
+	zsl_real_t b = 7.0;
+	ZSL_VECTOR_DEF(a, 3);
+	ZSL_VECTOR_DEF(a2, 3);
+	ZSL_VECTOR_DEF(a3, 4);
+	zsl_real_t v[3] = { 1.0, 3.0, 2.0 };
+
+	rc = zsl_vec_from_arr(&a, v);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_init(&a2);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_init(&a3);
+	zassert_true(rc == 0, NULL);
+
+	rc = zsl_quat_from_axis_angle(&a, &b, &q);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(q.r, -0.936457, 1E-6), NULL);
+	zassert_true(val_is_equal(q.i, -0.093751, 1E-6), NULL);
+	zassert_true(val_is_equal(q.j, -0.281252, 1E-6), NULL);
+	zassert_true(val_is_equal(q.k, -0.187502, 1E-6), NULL);
+
+	rc = zsl_quat_from_axis_angle(&a2, &b, &q);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(q.r, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.i, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.j, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(q.k, 0.0, 1E-6), NULL);
+
+	/* Invalid axis vector size. */
+	rc = zsl_quat_from_axis_angle(&a3, &b, &q);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
+void test_quat_madgwick(void)
+{
+
+}
+
+void test_quat_madgwick_IMU(void)
+{
+
+}
+
+void test_quat_mahony(void)
+{
+
+}
+
+void test_quat_mahony_IMU(void)
+{
+
+}
+

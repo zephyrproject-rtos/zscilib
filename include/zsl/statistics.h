@@ -51,9 +51,45 @@ struct zsl_sta_linreg {
  * @param v  The vector to use.
  * @param m  The arithmetic mean of the components of v.
  *
- * @return int
+ * @return 0 if everything executed correctly, otherwise an appropriate
+ *          error code.
  */
 int zsl_sta_mean(struct zsl_vec *v, zsl_real_t *m);
+
+/**
+ * @brief Computes the trimmed arithmetic mean (average) of a vector.
+ * 
+ * The trimmed arithmetic mean of a dataset is described by a number (in this
+ * case 'p') from 0 to 50 that describes the percent of the data that will not
+ * be taked into account when computing the mean. Thus, a 3% trimmed
+ * mean will only use 94% of the data to calculate the arithmetic mean, and
+ * will ignore the lowest 3% of data and the highest 3% of data in the sorted
+ * data vector.
+ *
+ * @param v  The vector to use.
+ * @param p  The percent of data that will be ignored in the computation of
+ * 			 the mean (0.0 .. 50.0).
+ * @param m  The trimmed arithmetic mean of the components of v.
+ *
+ * @return 0 if everything executed correctly, -EINVAL if the number 'p' is not
+ * 		   between 0.0 and 50.0.
+ */
+int zsl_sta_trim_mean(struct zsl_vec *v, zsl_real_t p, zsl_real_t *m);
+
+/**
+ * @brief Computes the weighted arithmetic mean (average) of a data vector (v)
+ * 		  and a weight vector (w).
+ *
+ * @param v  The data vector to use.
+ * @param w  The vector containing the weights to use.
+ * @param m  The weighted arithmetic mean of the components of v taking the
+ * 			 weights in the vector w into account.
+ *
+ * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
+ * 		   and w don't match, or if any weights are negative or all of them
+ * 		   are zero.
+ */
+int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
 
 /**
  * @brief Subtracts the mean of vector v from every component of the vector.
@@ -77,7 +113,7 @@ int zsl_sta_demean(struct zsl_vec *v, struct zsl_vec *w);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_sta_percentile(struct zsl_vec *v, size_t p, zsl_real_t *val);
+int zsl_sta_percentile(struct zsl_vec *v, zsl_real_t p, zsl_real_t *val);
 
 /**
  * @brief Computes the median of a vector (the value separating the higher half
@@ -90,6 +126,21 @@ int zsl_sta_percentile(struct zsl_vec *v, size_t p, zsl_real_t *val);
  *          error code.
  */
 int zsl_sta_median(struct zsl_vec *v, zsl_real_t *m);
+
+/**
+ * @brief Computes the weighted median of a data vector (v) and a weight
+ * 		  vector (w).
+ *
+ * @param v  The data vector to use.
+ * @param w  The vector containing the weights to use.
+ * @param m  The weighted median of the components of v taking the weights in
+ * 			 the vector w into account.
+ *
+ * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
+ * 		   and w don't match, or if any weights are negative or the sum of all
+ * 		   the weights is not 1.
+ */
+int zsl_sta_weighted_median(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
 
 /**
  * @brief Calculates the first, second and third quartiles of a vector v.
@@ -142,6 +193,37 @@ int zsl_sta_mode(struct zsl_vec *v, struct zsl_vec *w);
 int zsl_sta_data_range(struct zsl_vec *v, zsl_real_t *r);
 
 /**
+ * @brief Computes the mean absolute deviation of a data vector v.
+ *
+ * The mean absolute deviation is calculated by computing the mean of the
+ * de-meaned data vector, i. e., the arithmetic mean of the absolute value of
+ * each value in v minus the mean of the data in 'v'. This number describes the
+ * average deviation from the arithmetic mean of the dataset in the vector 'v'.
+ * 
+ * @param v The vector to use.
+ * @param m The mean absolute deviation.
+ *
+ * @return  0 if everything executed correctly. If the dimension of the data
+ * 		    vector v is zero, a negative error is returned.
+ */
+int zsl_sta_mean_abs_dev(struct zsl_vec *v, zsl_real_t *m);
+
+/**
+ * @brief Computes the median absolute deviation of a data vector v.
+ *
+ * The mean absolute deviation is calculated by computing the median of the
+ * absolute value of each value in 'v' minus the median of the data in 'v'.
+ * This provides a robust estimate of variability.
+ *
+ * @param v The vector to use.
+ * @param m The median absolute deviation.
+ *
+ * @return  0 if everything executed correctly. otherwise an appropriate
+ *          error code.
+ */
+int zsl_sta_median_abs_dev(struct zsl_vec *v, zsl_real_t *m);
+
+/**
  * @brief Computes the variance of a vector v (the average of the squared
  *        differences from the mean).
  *
@@ -167,7 +249,7 @@ int zsl_sta_var(struct zsl_vec *v, zsl_real_t *var);
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
  */
-int zsl_sta_sta_dev(struct zsl_vec *v, zsl_real_t *s);
+int zsl_sta_std_dev(struct zsl_vec *v, zsl_real_t *s);
 
 /**
  * @brief Computes the variance of two sets of data: v and w.
@@ -195,11 +277,11 @@ int zsl_sta_covar_mtx(struct zsl_mtx *m, struct zsl_mtx *mc);
 /**
  * @brief Calculates the slope, intercept and correlation coefficient of the
  *        linear regression of two vectors, allowing us to make a prediction
- *        of w on the basis of v.
+ *        of y on the basis of x.
  *
  * Simple linear regression is useful for predicting a quantitative response.
  * It assumes that there is an approximately linear relationship between vector
- * v and vector w, and calculates a series of coefficients to project this
+ * x and vector y, and calculates a series of coefficients to project this
  * relationship in either direction.
  *
  * The output of this function is a slope and intercept value, such
@@ -209,17 +291,61 @@ int zsl_sta_covar_mtx(struct zsl_mtx *m, struct zsl_mtx *mc);
  *
  * Given the equation 'y = slope * x + intercept', where we provide x, we can
  * estimate the y value for a arbitrary value of x, where x is related to the
- * range of values provided in vector 'v' (the x axis), and y is related to the
- * values provided in vector 'w' (the y axis).
+ * range of values provided in vector 'x' (the x axis), and y is related to the
+ * values provided in vector 'y' (the y axis).
+ * 
+ * Simple linear regression is a special case of the multiple linear regression
+ * (see below). The correlation coefficient is the square root of the
+ * coefficient of determination, a measure useful in multiple linear regression.
  *
- * @param v   The first input vector, corresponding to the x-axis.
- * @param w   The second input vector, corresponding to the y-axis.
+ * @param x   The first input vector, corresponding to the x-axis.
+ * @param y   The second input vector, corresponding to the y-axis.
  * @param c   Pointer to the calculated linear regression coefficients.
  *
  * @return 0 on success, and -EINVAL if the vectors aren't identically sized.
  */
-int zsl_sta_linear_reg(struct zsl_vec *v, struct zsl_vec *w,
+int zsl_sta_linear_reg(struct zsl_vec *x, struct zsl_vec *y,
 		       struct zsl_sta_linreg *c);
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+/**
+ * @brief Calculates the coefficients (vector 'b') of the multiple linear
+ *        regression of the x_i values (columns of the matrix 'x') and the y
+ * 		  values.
+ *
+ * @param x   Matrix, whose columns are the different x_i datasets.
+ * @param y   The second input dataset, corresponding to the y-axis.
+ * @param b   Pointer to the calculated multiple linear regression coefficients.
+ * @param r   Pointer to the calculated coefficient of determination (also 
+ * 			  reffered to as R squared).
+ *
+ * @return 0 on success, and -EINVAL if dimensions of the input vectors and
+ * 		   matrix don't match.
+ */
+int zsl_sta_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
+		       struct zsl_vec *b, zsl_real_t *r);
+#endif
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+/**
+ * @brief Calculates the coefficients (vector 'b') of the weighted multiple
+ *        linear regression of the x_i values (columns of the matrix 'x'), the y
+ * 		  values and the weights in the vector 'w'.
+ *
+ * @param x   Matrix, whose columns are the different x_i datasets.
+ * @param y   The second input dataset, corresponding to the y-axis.
+ * @param w   The weights to use in the weighted least squares.
+ * @param b   Pointer to the calculated weighted multiple linear regression
+ * 			  coefficients.
+ * @param r   Pointer to the calculated coefficient of determination (also 
+ * 			  reffered to as R squared).
+ *
+ * @return 0 on success, and -EINVAL if dimensions of the input vectors and
+ * 		   matrix don't match.
+ */
+int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
+		       struct zsl_vec *w, struct zsl_vec *b, zsl_real_t *r);
+#endif
 
 /**
  * @brief Calculates the absolute error given a value and its expected value.
@@ -244,6 +370,20 @@ int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err);
  *          error code.
  */
 int zsl_sta_rel_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err);
+
+/**
+ * @brief Calculates the standard error of the mean of a sample (vector v).
+ * 
+ * The standard error of the mean measures how far the arithmetic mean of the
+ * sample in vector 'v' ¡ is likely to be from the true total population mean.
+ *
+ * @param v       Sample data vector.
+ * @param err	  Output standard error of the mean.
+ *
+ * @return  0 if everything executed correctly. If the dimension of the vector
+ * 		    'v' is zero, a negative error is returned.
+ */
+int zsl_sta_sta_err(struct zsl_vec *v, zsl_real_t *err);
 
 #ifdef __cplusplus
 }

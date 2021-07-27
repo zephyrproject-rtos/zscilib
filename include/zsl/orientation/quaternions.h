@@ -11,7 +11,7 @@
  *        orientation in 3D space.
  *
  * These functions deal largely with <b>unit quaternions</b>. Further work is
- * required to support arbitrary queternion math.
+ * required to support arbitrary quaternion math.
  *
  * Quaternions can be thought of in one of three ways:
  *
@@ -327,6 +327,19 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
 		  struct zsl_quat *qd);
 
 /**
+ * @brief Calculates the rotation (qd) from qa to qb using the multiplicative
+ *        inverse, such that qb = qa * qd.
+ *
+ * @param qa	The initial unit quaternion value.
+ * @param qb	The final unit quaternion value.
+ * @param qd	The difference as a quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code.
+ */
+int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb,
+		  struct zsl_quat *qr);
+
+/**
  * @brief Spherical linear interpolation.
  *
  * Calculates an intermediate rotation between qa and qb, based on the
@@ -341,6 +354,51 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
  */
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi);
+
+/**
+ * @brief Updates an orientation quaternion with new information in form of
+ * 		  angular velocity and time elapsed.
+ *
+ * Given a quaterion that describes the current orientation (qin) of a body, a
+ * time value (t) and a tridimensional angular velocity vector (w), this
+ * function returns an estimation of the orientation after a time 't', in the
+ * form of a unit quaternion (qout).
+ *
+ * @param w		Tridimensional angular velocity vector, in radians per second.
+ * @param qin	The starting orientation quaternion of the body.
+ * @param t     Time between qin and qout orientations, in seconds.
+ * @param qout	The estimated orientation after a time t elapses.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   time is negative or the angular velocity vector dimension is not 3.
+ */
+int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
+			zsl_real_t *t, struct zsl_quat *qout);
+
+/**
+ * @brief Updates an orientation quaternion with new information in form of
+ * 		  angular momentum, moment of inertia and time elapsed.
+ *
+ * Given a quaterion that describes the current orientation (qin) of a body, a
+ * time value (t), a tridimensional angular momentum vector (l), and the moment
+ * of inertia of the body (i), this function returns an estimation of the
+ * orientation of the body after a time 't', in the form of a unit
+ * quaternion (qout).
+ *
+ * @param l		Tridimensional angular momentum vector, in kilogram and metres
+ * 				squared per second.
+ * @param qin	The starting orientation quaternion of the body.
+ * @param i		The moment of inertia of the body, in in kilogram and metres
+ * 				squared.
+ * @param t     Time between qin and qout orientations, in seconds.
+ * @param qout	The estimated orientation after a time t elapses.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   time or the moment of inertia are negative or if the angular
+ * 		   momentum vector dimension is not 3.
+ */
+int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
+			zsl_real_t *i, zsl_real_t *t, struct zsl_quat *qout);
 
 /**
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
@@ -368,7 +426,7 @@ int zsl_quat_from_euler(struct zsl_euler *e, struct zsl_quat *q);
  * @brief Converts a unit quaternion to it's equivalent rotation matrix.
  *
  * @param q 	Pointer to the unit quaternion to convert.
- * @param r 	Pointer to the 4x4 rotation matrix.
+ * @param m 	Pointer to the 4x4 rotation matrix.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -377,12 +435,103 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m);
 /**
  * @brief Converts a rotation matrix to it's equivalent unit quaternion.
  *
- * @param e 	Pointer to the 4x4 rotation matrix.
+ * @param m 	Pointer to the 4x4 rotation matrix.
  * @param q 	Pointer to the unit quaternion to convert.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
 int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q);
+
+/**
+ * @brief Converts a unit quaternion to it's axis-angle rotation equivalent.
+ *
+ * @param q 	Pointer to the unit quaternion to convert.
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
+						   zsl_real_t *b);
+
+/**
+ * @brief Converts axis-angle rotation to its unit quaternion equivalent.
+ *
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ * @param q 	Pointer to the converted unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
+							 struct zsl_quat *q);
+
+/**
+ * @brief Converts axis-angle rotation to its unit quaternion equivalent.
+ *
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ * @param q 	Pointer to the converted unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_madgwick(struct zsl_vec *g, struct zsl_vec *a, struct zsl_vec *m,
+		      zsl_real_t *sampleFreq, zsl_real_t *beta, struct zsl_quat *q);
+
+/**
+ * @brief Converts axis-angle rotation to its unit quaternion equivalent.
+ *
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ * @param q 	Pointer to the converted unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_madgwick_IMU(struct zsl_vec *g, struct zsl_vec *a,
+		      zsl_real_t *sampleFreq, zsl_real_t *beta, struct zsl_quat *q);
+
+/**
+ * @brief Converts axis-angle rotation to its unit quaternion equivalent.
+ *
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ * @param q 	Pointer to the converted unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_mahony(struct zsl_vec *g, struct zsl_vec *a, struct zsl_vec *m,
+		    zsl_real_t *sampleFreq, zsl_real_t *twoKp, zsl_real_t *twoKi,
+			struct zsl_vec *integralFB, struct zsl_quat *q);
+
+/**
+ * @brief Converts axis-angle rotation to its unit quaternion equivalent.
+ *
+ * @param a 	Pointer to the tridimensional axis of rotation.
+ * @param b		Pointer to the angle of the rotation in radians.
+ * @param q 	Pointer to the converted unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ * 		   dimension of the vector defining the axis is not three.
+ */
+int zsl_quat_mahony_IMU(struct zsl_vec *g, struct zsl_vec *a,
+		    zsl_real_t *sampleFreq, zsl_real_t *twoKp, zsl_real_t *twoKi,
+			struct zsl_vec *integralFB, struct zsl_quat *q);
+
+/**
+ * @brief Print the supplied quaternion using printf in a human-readable manner.
+ *
+ * @param q     Pointer to the quaternion to print.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_quat_print(struct zsl_quat *q);
+
 
 /** @} */ /* End of QUAT_FUNCTIONS group */
 

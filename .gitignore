@@ -1,5 +1,6 @@
 build/
 twister-out/
+.DS_Store
 
 # Prerequisites
 *.d

@@ -288,13 +288,18 @@ extern void test_phy_work_y(void);
 extern void test_phy_work_kin(void);
 
 extern void test_sta_mean(void);
+extern void test_sta_trim_mean(void);
+extern void test_sta_weighted_mean(void);
 extern void test_sta_demean(void);
 extern void test_sta_percentile(void);
 extern void test_sta_median(void);
+extern void test_sta_weighted_median(void);
 extern void test_sta_quartiles(void);
 extern void test_sta_quart_range(void);
 extern void test_sta_mode(void);
 extern void test_sta_data_range(void);
+extern void test_sta_mean_abs_dev(void);
+extern void test_sta_median_abs_dev(void);
 extern void test_sta_variance(void);
 extern void test_sta_standard_deviation(void);
 extern void test_sta_covariance(void);
@@ -302,6 +307,13 @@ extern void test_sta_covariance_matrix(void);
 extern void test_sta_linear_regression(void);
 extern void test_sta_absolute_error(void);
 extern void test_sta_relative_error(void);
+extern void test_sta_standard_error(void);
+
+/* Test for functions that only work with double-precision floats. */
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+extern void test_sta_mult_linear_regression(void);
+extern void test_sta_weighted_mult_linear_regression(void);
+#endif
 
 extern void test_prob_uniform_pdf(void);
 extern void test_prob_uniform_mean(void);
@@ -311,7 +323,16 @@ extern void test_prob_normal_pdf(void);
 extern void test_prob_normal_cdf(void);
 extern void test_prob_erf_inverse(void);
 extern void test_prob_normal_cdf_inv(void);
+extern void test_prob_factorial(void);
+extern void test_prob_binomial_coef(void);
+extern void test_prob_binomial_pdf(void);
+extern void test_prob_binomial_mean(void);
+extern void test_prob_binomial_variance(void);
+extern void test_prob_binomial_cdf(void);
+extern void test_prob_poisson_pdf(void);
+extern void test_prob_poisson_cdf(void);
 extern void test_prob_entropy(void);
+extern void test_prob_bayes(void);
 
 extern void test_att_to_vec(void);
 extern void test_att_to_euler(void);
@@ -333,11 +354,20 @@ extern void test_quat_pow(void);
 extern void test_quat_conj(void);
 extern void test_quat_inv(void);
 extern void test_quat_diff(void);
+extern void test_quat_rot(void);
 extern void test_quat_slerp(void);
+extern void test_quat_from_ang_vel(void);
+extern void test_quat_from_ang_mom(void);
 extern void test_quat_to_euler(void);
 extern void test_quat_from_euler(void);
 extern void test_quat_to_rot_mtx(void);
 extern void test_quat_from_rot_mtx(void);
+extern void test_quat_to_axis_angle(void);
+extern void test_quat_from_axis_angle(void);
+extern void test_quat_madgwick(void);
+extern void test_quat_madgwick_IMU(void);
+extern void test_quat_mahony(void);
+extern void test_quat_mahony_IMU(void);
 
 void test_main(void)
 {
@@ -616,13 +646,18 @@ void test_main(void)
 			 ztest_unit_test(test_phy_work_kin),
 
 			 ztest_unit_test(test_sta_mean),
+			 ztest_unit_test(test_sta_trim_mean),
+			 ztest_unit_test(test_sta_weighted_mean),
 			 ztest_unit_test(test_sta_demean),
 			 ztest_unit_test(test_sta_percentile),
 			 ztest_unit_test(test_sta_median),
+			 ztest_unit_test(test_sta_weighted_median),
 			 ztest_unit_test(test_sta_quartiles),
 			 ztest_unit_test(test_sta_quart_range),
 			 ztest_unit_test(test_sta_mode),
 			 ztest_unit_test(test_sta_data_range),
+			 ztest_unit_test(test_sta_mean_abs_dev),
+			 ztest_unit_test(test_sta_median_abs_dev),
 			 ztest_unit_test(test_sta_variance),
 			 ztest_unit_test(test_sta_standard_deviation),
 			 ztest_unit_test(test_sta_covariance),
@@ -630,6 +665,7 @@ void test_main(void)
 			 ztest_unit_test(test_sta_linear_regression),
 			 ztest_unit_test(test_sta_absolute_error),
 			 ztest_unit_test(test_sta_relative_error),
+			 ztest_unit_test(test_sta_standard_error),
 
 			 ztest_unit_test(test_prob_uniform_pdf),
 			 ztest_unit_test(test_prob_uniform_mean),
@@ -639,7 +675,14 @@ void test_main(void)
 			 ztest_unit_test(test_prob_normal_cdf),
 			 ztest_unit_test(test_prob_erf_inverse),
 			 ztest_unit_test(test_prob_normal_cdf_inv),
+			 ztest_unit_test(test_prob_factorial),
+			 ztest_unit_test(test_prob_binomial_coef),
+			 ztest_unit_test(test_prob_binomial_pdf),
+			 ztest_unit_test(test_prob_binomial_mean),
+			 ztest_unit_test(test_prob_binomial_variance),
+			 ztest_unit_test(test_prob_binomial_cdf),
 			 ztest_unit_test(test_prob_entropy),
+			 ztest_unit_test(test_prob_bayes),
 
 			 ztest_unit_test(test_att_to_vec),
 			 ztest_unit_test(test_att_to_euler),
@@ -661,11 +704,21 @@ void test_main(void)
 			 ztest_unit_test(test_quat_conj),
 			 ztest_unit_test(test_quat_inv),
 			 ztest_unit_test(test_quat_diff),
+			 ztest_unit_test(test_quat_rot),
 			 ztest_unit_test(test_quat_slerp),
+			 ztest_unit_test(test_quat_from_ang_vel),
+			 ztest_unit_test(test_quat_from_ang_mom),
 			 ztest_unit_test(test_quat_to_euler),
 			 ztest_unit_test(test_quat_from_euler),
 			 ztest_unit_test(test_quat_to_rot_mtx),
-			 ztest_unit_test(test_quat_from_rot_mtx));
+			 ztest_unit_test(test_quat_from_rot_mtx),
+			 ztest_unit_test(test_quat_to_axis_angle),
+			 ztest_unit_test(test_quat_from_axis_angle),
+			 ztest_unit_test(test_quat_madgwick),
+			 ztest_unit_test(test_quat_madgwick_IMU),
+			 ztest_unit_test(test_quat_mahony),
+			 ztest_unit_test(test_quat_mahony_IMU)
+			 );
 
 	ztest_run_test_suite(zsl_tests);
 
@@ -676,9 +729,13 @@ void test_main(void)
 			 ztest_unit_test(test_matrix_eigenvalues),
 			 ztest_unit_test(test_matrix_eigenvectors),
 			 ztest_unit_test(test_matrix_svd),
-			 ztest_unit_test(test_matrix_pinv)
+			 ztest_unit_test(test_matrix_pinv),
+
+			 ztest_unit_test(test_sta_mult_linear_regression),
+			 ztest_unit_test(test_sta_weighted_mult_linear_regression)
 			 );
 
 	ztest_run_test_suite(zsl_tests_double);
 	#endif
 }
+
