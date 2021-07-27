@@ -19,87 +19,82 @@ static int zsl_fus_madgwick_imu(struct zsl_vec *g, struct zsl_vec *a,
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the input vectors are tridimensional. */
-	if (g->sz != 3 || a->sz != 3) {
+	if ((a != NULL && (a->sz != 3)) || g->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+	/* Make sure that the input quaternion is not zero. */
+	if (ZSL_ABS(zsl_quat_magn(q)) < 1E-6) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
 
-	zsl_real_t Norm;
-	zsl_real_t s0, s1, s2, s3;
-	zsl_real_t qDot1, qDot2, qDot3, qDot4;
-	zsl_real_t _2q0, _2q1, _2q2, _2q3, _4q0, _4q1, _4q2, _8q1, _8q2;
-	zsl_real_t q0q0, q1q1, q2q2, q3q3;
+	/* Convert the input quaternion to a unit quaternion. */
+	zsl_quat_to_unit_d(q);
 
-    /* ToDo: Remove! */
-    printf("Running accel + gyro madgwick\n");
-
-	// Rate of change of quaternion from gyroscope
-	qDot1 = 0.5f * (-q->i * g->data[0] - q->j * g->data[1] - q->k * g->data[2]);
-	qDot2 = 0.5f * (q->r * g->data[0] + q->j * g->data[2] - q->k * g->data[1]);
-	qDot3 = 0.5f * (q->r * g->data[1] - q->i * g->data[2] + q->k * g->data[0]);
-	qDot4 = 0.5f * (q->r * g->data[2] + q->i * g->data[1] - q->j * g->data[0]);
+	/* Declare the gradient vector and set it to zero. It will only be
+	 * modified if the acceleration vector is valid. */
+	ZSL_VECTOR_DEF(grad, 4);
+	zsl_vec_init(&grad);
 
 	/* Continue with the calculations only if the data from the accelerometer
 	 * is valid (non zero). */
-	if (ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
-
-		/* Normalise the accelerometer vector. */
+	if ((a != NULL) && ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
+	
+		/* Normalize the acceleration vector. */
 		zsl_vec_to_unit(a);
 
-		/* Auxiliary variables to avoid repeated arithmetic. */
-		_2q0 = 2.0 * q->r;
-		_2q1 = 2.0 * q->i;
-		_2q2 = 2.0 * q->j;
-		_2q3 = 2.0 * q->k;
-		_4q0 = 4.0 * q->r;
-		_4q1 = 4.0 * q->i;
-		_4q2 = 4.0 * q->j;
-		_8q1 = 8.0 * q->i;
-		_8q2 = 8.0 * q->j;
-		q0q0 = q->r * q->r;
-		q1q1 = q->i * q->i;
-		q2q2 = q->j * q->j;
-		q3q3 = q->k * q->k;
+		/* Define the normalized quaternion of acceleration on the earth's
+		 * reference frame, which only has a vertical component. */
+		struct zsl_quat qa = {
+			.r = 0.0,
+			.i = 0.0,
+			.j = 0.0,
+			.k = 1.0
+		};
 
-		/* Gradient decent algorithm corrective step. */
-		s0 = _4q0 * q2q2 + _2q2 * a->data[0] +
-		     _4q0 * q1q1 - _2q1 * a->data[1];
-		s1 = _4q1 * q3q3 - _2q3 * a->data[0] +
-		     4.0 * q0q0 * q->i - _2q0 * a->data[1] -
-		     _4q1 + _8q1 * q1q1 + _8q1 * q2q2 + _4q1 * a->data[2];
-		s2 = 4.0 * q0q0 * q->j + _2q0 * a->data[0] +
-		     _4q2 * q3q3 - _2q3 * a->data[1] - _4q2 +
-		     _8q2 * q1q1 + _8q2 * q2q2 + _4q2 * a->data[2];
-		s3 = 4.0 * q1q1 * q->k - _2q1 * a->data[0] +
-		     4.0 * q2q2 * q->k - _2q2 * a->data[1];
+		/* Calculate the function f by using the input quaternion to rotate the
+		 * normalised acceleration vector in the earth's reference frame, and
+		 * then substracting the acceleration vector. */
+		ZSL_MATRIX_DEF(f, 3, 1);
+		struct zsl_quat qaq;
+		zsl_quat_rot(q, &qa, &qaq);
+		f.data[0] = qaq.i - a->data[0];
+		f.data[1] = qaq.j - a->data[1];
+		f.data[2] = qaq.k - a->data[2];
 
-		/* Normalise step magnitude. */
-		Norm = ZSL_SQRT(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3);
-		s0 /= Norm;
-		s1 /= Norm;
-		s2 /= Norm;
-		s3 /= Norm;
+		/* Define and compute the transpose of the Jacobian matrix of the
+		 * function f. */
+		ZSL_MATRIX_DEF(jt, 4, 3);
+		zsl_real_t jt_data[12] = {
+			-2.0 * q->j,	2.0 * q->i,		 0.0,
+			 2.0 * q->k,	2.0 * q->r,		-4.0 * q->i,
+			-2.0 * q->r,	2.0 * q->k,		-4.0 * q->j,
+			 2.0 * q->i,	2.0 * q->j,		 0.0
+		};
 
-		/* Apply feedback step. */
-		qDot1 -= *beta * s0;
-		qDot2 -= *beta * s1;
-		qDot3 -= *beta * s2;
-		qDot4 -= *beta * s3;
+		zsl_mtx_from_arr(&jt, jt_data);
+		
+		/* Calculate the gradient of f by multiplying the transposed Jacobian
+		 * matrix by the function itself. */
+		ZSL_MATRIX_DEF(jtf, 4, 1);
+		zsl_mtx_mult(&jt, &f, &jtf);
+
+		/* Normalize the gradient vector. */
+		zsl_vec_from_arr(&grad, jtf.data);
+		zsl_vec_to_unit(&grad);
 	}
 
-	/* Integrate rate of change of quaternion to yield quaternion. */
-	q->r += qDot1 * (1.0 / zsl_fus_madg_freq);
-	q->i += qDot2 * (1.0 / zsl_fus_madg_freq);
-	q->j += qDot3 * (1.0 / zsl_fus_madg_freq);
-	q->k += qDot4 * (1.0 / zsl_fus_madg_freq);
+	/* Update the input quaternion with a modified quaternion integration. */
+	zsl_quat_from_ang_vel(g, q, 1.0 / zsl_fus_madg_freq, q);
+	q->r -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[0]);
+	q->i -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[1]);
+	q->j -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[2]);
+	q->k -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[3]);
 
-	/* Normalise quaternion. */
-	Norm = ZSL_SQRT(q->r * q->r + q->i * q->i + q->j * q->j + q->k * q->k);
-	q->r /= Norm;
-	q->i /= Norm;
-	q->j /= Norm;
-	q->k /= Norm;
+	/* Normalize the output quaternion. */
+	zsl_quat_to_unit_d(q);
 
 err:
 	return rc;
@@ -123,150 +118,165 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the input vectors are tridimensional. */
-	if (a->sz != 3 || m->sz != 3 || g->sz != 3) {
+	if ((a != NULL && (a->sz != 3)) || (m != NULL && (m->sz != 3)) ||
+		g->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+	/* Make sure that the input quaternion is not zero. */
+	if (ZSL_ABS(zsl_quat_magn(q)) < 1E-6) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
-
-	zsl_real_t Norm;
-	zsl_real_t s0, s1, s2, s3;
-	zsl_real_t qDot1, qDot2, qDot3, qDot4;
-	zsl_real_t hx, hy;
-	zsl_real_t _2q0mx, _2q0my, _2q0mz, _2q1mx, _2bx, _2bz, _4bx, _4bz;
-	zsl_real_t _2q0, _2q1, _2q2, _2q3, _2q0q2, _2q2q3;
-	zsl_real_t q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
 
 	/* Use IMU algorithm if the magnetometer measurement is invalid. */
 	if ((m == NULL) || (ZSL_ABS(zsl_vec_norm(m)) < 1E-6)) {
 		return zsl_fus_madgwick_imu(g, a, beta, q);
 	}
 
-    /* ToDo: Remove! */
-    printf("Running full madgwick\n");
+	/* Convert the input quaternion to a unit quaternion. */
+	zsl_quat_to_unit_d(q);
 
-	/* Rate of change of quaternion from gyroscope. */
-	qDot1 = 0.5f * (-q->i * g->data[0] - q->j * g->data[1] - q->k * g->data[2]);
-	qDot2 = 0.5f * (q->r * g->data[0] + q->j * g->data[2] - q->k * g->data[1]);
-	qDot3 = 0.5f * (q->r * g->data[1] - q->i * g->data[2] + q->k * g->data[0]);
-	qDot4 = 0.5f * (q->r * g->data[2] + q->i * g->data[1] - q->j * g->data[0]);
+	/* Declare the gradient vector and set it to zero. It will only be
+	 * modified if the acceleration vector is valid. */
+	ZSL_VECTOR_DEF(grad, 4);
+	zsl_vec_init(&grad);
 
 	/* Continue with the calculations only if the data from the accelerometer
 	 * is valid (non zero). */
-	if (ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
-
-		/* Normalise the accelerometer vector. */
+	if ((a != NULL) && ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
+	
+		/* Normalize the acceleration vector. */
 		zsl_vec_to_unit(a);
 
-		/* Normalise the magnetometer vector. */
+		/* Normalize the magnetic field vector. */
 		zsl_vec_to_unit(m);
 
-		/* Auxiliary variables to avoid repeated arithmetic. */
-		_2q0mx = 2.0 * q->r * m->data[0];
-		_2q0my = 2.0 * q->r * m->data[1];
-		_2q0mz = 2.0 * q->r * m->data[2];
-		_2q1mx = 2.0 * q->i * m->data[0];
-		_2q0 = 2.0 * q->r;
-		_2q1 = 2.0 * q->i;
-		_2q2 = 2.0 * q->j;
-		_2q3 = 2.0 * q->k;
-		_2q0q2 = 2.0 * q->r * q->j;
-		_2q2q3 = 2.0 * q->j * q->k;
-		q0q0 = q->r * q->r;
-		q0q1 = q->r * q->i;
-		q0q2 = q->r * q->j;
-		q0q3 = q->r * q->k;
-		q1q1 = q->i * q->i;
-		q1q2 = q->i * q->j;
-		q1q3 = q->i * q->k;
-		q2q2 = q->j * q->j;
-		q2q3 = q->j * q->k;
-		q3q3 = q->k * q->k;
+		/* Define the normalized vector of acceleration on the earth's
+		 * reference frame, which only has a vertical component. */
+		struct zsl_quat qa = {
+			.r = 0.0,
+			.i = 0.0,
+			.j = 0.0,
+			.k = 1.0
+		};
 
-		/* Reference direction of Earth's magnetic field. */
-		hx = m->data[0] * q0q0 - _2q0my * q->k +
-		     _2q0mz * q->j + m->data[0] * q1q1 + _2q1 * m->data[1] * q->j +
-		     _2q1 * m->data[2] * q->k - m->data[0] * q2q2 - m->data[0] * q3q3;
-		hy = _2q0mx * q->k + m->data[1] * q0q0 -
-		     _2q0mz * q->i + _2q1mx * q->j - m->data[1] * q1q1 +
-		     m->data[1] * q2q2 + _2q2 * m->data[2] * q->k - m->data[1] * q3q3;
-		_2bx = ZSL_SQRT(hx * hx + hy * hy);
-		_2bz = -_2q0mx * q->j + _2q0my * q->i +
-		       m->data[2] * q0q0 + _2q1mx * q->k - m->data[2] * q1q1 +
-		       _2q2 * m->data[1] * q->k - m->data[2] * q2q2 + m->data[2] * q3q3;
-		_4bx = 2.0 * _2bx;
-		_4bz = 2.0 * _2bz;
+		/* Calculate the function f_g by using the input quaternion to rotate
+		 * the normalised acceleration quaternion in the earth's reference
+		 * frame 'qa', and then substracting the acceleration vector. */
+		ZSL_MATRIX_DEF(f_g, 3, 1);
+		struct zsl_quat qaq;
+		zsl_quat_rot(q, &qa, &qaq);
+		f_g.data[0] = qaq.i - a->data[0];
+		f_g.data[1] = qaq.j - a->data[1];
+		f_g.data[2] = qaq.k - a->data[2];
 
-		/* Gradient decent algorithm corrective step. */
-		s0 = -_2q2 * (2.0 * q1q3 - _2q0q2 - a->data[0]) +
-		     _2q1 * (2.0 * q0q1 + _2q2q3 - a->data[1]) -
-		     _2bz * q->j *
-		     (_2bx * (0.5 - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - m->data[0]) +
-		     (-_2bx * q->k + _2bz * q->i) *
-		     (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - m->data[1]) +
-		     _2bx * q->j *
-		     (_2bx * (q0q2 + q1q3) + _2bz * (0.5 - q1q1 - q2q2) - m->data[2]);
-		s1 = _2q3 * (2.0 * q1q3 - _2q0q2 - a->data[0]) +
-		     _2q0 * (2.0 * q0q1 + _2q2q3 - a->data[1]) -
-		     4.0 * q->i * (1.0 - 2.0 * q1q1 - 2.0 * q2q2 - a->data[2]) +
-		     _2bz * q->k *
-		     (_2bx * (0.5 - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - m->data[0]) +
-		     (_2bx * q->j + _2bz * q->r) *
-		     (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - m->data[1]) +
-		     (_2bx * q->k - _4bz * q->i) *
-		     (_2bx * (q0q2 + q1q3) + _2bz * (0.5 - q1q1 - q2q2) - m->data[2]);
-		s2 = -_2q0 * (2.0 * q1q3 - _2q0q2 - a->data[0]) +
-		     _2q3 * (2.0 * q0q1 + _2q2q3 - a->data[1]) -
-		     4.0 * q->j * (1.0 - 2.0 * q1q1 - 2.0 * q2q2 - a->data[2]) +
-		     (-_4bx * q->j - _2bz * q->r) *
-		     (_2bx * (0.5 - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - m->data[0]) +
-		     (_2bx * q->i + _2bz * q->k) *
-		     (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - m->data[1]) +
-		     (_2bx * q->r - _4bz * q->j) *
-		     (_2bx * (q0q2 + q1q3) + _2bz * (0.5 - q1q1 - q2q2) - m->data[2]);
-		s3 = _2q1 * (2.0 * q1q3 - _2q0q2 - a->data[0]) +
-		     _2q2 * (2.0 * q0q1 + _2q2q3 - a->data[1]) +
-		     (-_4bx * q->k + _2bz * q->i) *
-		     (_2bx * (0.5 - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - m->data[0]) +
-		     (-_2bx * q->r + _2bz * q->j) *
-		     (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - m->data[1]) +
-		     _2bx * q->i *
-		     (_2bx * (q0q2 + q1q3) + _2bz * (0.5 - q1q1 - q2q2) - m->data[2]);
+		/* Define and compute the transpose of the Jacobian matrix of the
+		 * function f_g. */
+		ZSL_MATRIX_DEF(jt_g, 4, 3);
+		zsl_real_t jt_g_data[12] = {
+			-2.0 * q->j,	2.0 * q->i,		 0.0,
+			 2.0 * q->k,	2.0 * q->r,		-4.0 * q->i,
+			-2.0 * q->r,	2.0 * q->k,		-4.0 * q->j,
+			 2.0 * q->i,	2.0 * q->j,		 0.0
+		};
 
-		/* Normalise step magnitude. */
-		Norm = ZSL_SQRT(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3);
-		s0 /= Norm;
-		s1 /= Norm;
-		s2 /= Norm;
-		s3 /= Norm;
+		zsl_mtx_from_arr(&jt_g, jt_g_data);
+		
+		/* Calculate the gradient of f_g by multiplying the transposed Jacobian
+		 * matrix by the function itself. */
+		ZSL_MATRIX_DEF(jtf_g, 4, 1);
+		zsl_mtx_mult(&jt_g, &f_g, &jtf_g);
 
-		/* Apply feedback step. */
-		qDot1 -= *beta * s0;
-		qDot2 -= *beta * s1;
-		qDot3 -= *beta * s2;
-		qDot4 -= *beta * s3;
+		/* Turn the data of the magnetometer into a pure quaterion. */
+		struct zsl_quat qm = {
+			.r = 0.0,
+			.i = m->data[0],
+			.j = m->data[1],
+			.k = m->data[2]
+		};
+
+		/* Define the normalized quaternion 'b' of magnetic field on the
+		 * earth's reference frame, which only has a x (north) and z (vertical)
+		 * components. */
+		struct zsl_quat h;
+		zsl_quat_rot(q, &qm, &h);
+		zsl_real_t bx = ZSL_SQRT(h.i * h.i + h.j * h.j);
+		zsl_real_t bz = h.k;
+
+		struct zsl_quat b = { .r = 0.0, .i = bx, .j = 0.0, .k = bz };
+
+		/* Calculate the function f_b by using the input quaternion to rotate
+		 * the normalised magnetic field quaternion in the earth's reference
+		 * frame 'b', and then substracting the magnetometer data vector. */
+		ZSL_MATRIX_DEF(f_b, 3, 1);
+		struct zsl_quat qbq;
+		zsl_quat_rot(q, &b, &qbq);
+		f_b.data[0] = qbq.i - m->data[0];
+		f_b.data[1] = qbq.j - m->data[1];
+		f_b.data[2] = qbq.k - m->data[2];
+
+		/* Define and compute the transpose of the Jacobian matrix of the
+		 * function f_b. */
+		ZSL_MATRIX_DEF(jt_b, 4, 3);
+		zsl_real_t jt_b_data[12] = {
+			/* 1x1..1x3 */
+			-2.0 * bz * q->j,
+			-2.0 * bx * q->k + 2.0 * bz * q->i,
+			 2.0 * bx * q->j,
+			/* 2x1..2x3 */
+			 2.0 * bz * q->k,
+			 2.0 * bz * q->j + 2.0 * bz * q->r,
+			 2.0 * bx * q->k - 4.0 * bz * q->i,
+			/* 3x1..3x3 */
+			-4.0 * bx * q->j - 2.0 * bz * q->r,
+			 2.0 * bx * q->i - 2.0 * bz * q->k,
+			 2.0 * bx * q->r - 2.0 * bz * q->j,
+			/* 4x1..4x3 */
+			-4.0 * bx * q->k + 2.0 * bz * q->i,
+			-2.0 * bx * q->r + 2.0 * bz * q->j,
+			 2.0 * bx * q->i
+		};
+
+		zsl_mtx_from_arr(&jt_b, jt_b_data);
+		
+		/* Calculate the gradient of f_b by multiplying the transposed Jacobian
+		 * matrix by the function itself. */
+		ZSL_MATRIX_DEF(jtf_b, 4, 1);
+		zsl_mtx_mult(&jt_b, &f_b, &jtf_b);
+		
+		/* Compute the total gradient vector by adding the gradient of f_g and
+		 * total gradient of f_b. Then normalize the total gradient vector. */
+		grad.data[0] = jtf_g.data[0] + jtf_b.data[0];
+		grad.data[1] = jtf_g.data[1] + jtf_b.data[1];
+		grad.data[2] = jtf_g.data[2] + jtf_b.data[2];
+		grad.data[3] = jtf_g.data[3] + jtf_b.data[3];
+
+		zsl_vec_to_unit(&grad);
 	}
 
-	/* Integrate rate of change of quaternion to yield quaternion. */
-	q->r += qDot1 * (1.0 / zsl_fus_madg_freq);
-	q->i += qDot2 * (1.0 / zsl_fus_madg_freq);
-	q->j += qDot3 * (1.0 / zsl_fus_madg_freq);
-	q->k += qDot4 * (1.0 / zsl_fus_madg_freq);
+	/* Update the input quaternion with a modified quaternion integration. */
+	zsl_quat_from_ang_vel(g, q, 1.0 / zsl_fus_madg_freq, q);
+	q->r -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[0]);
+	q->i -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[1]);
+	q->j -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[2]);
+	q->k -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[3]);
 
-	/* Normalise quaternion. */
-	Norm = ZSL_SQRT(q->r * q->r + q->i * q->i + q->j * q->j + q->k * q->k);
-	q->r /= Norm;
-	q->i /= Norm;
-	q->j /= Norm;
-	q->k /= Norm;
+	/* Normalize the output quaternion. */
+	zsl_quat_to_unit_d(q);
 
 err:
 	return rc;
 }
 
-int zsl_fus_madg_init(uint32_t freq)
+int zsl_fus_madg_init(uint32_t freq, void *cfg)
 {
 	int rc = 0;
+
+	struct zsl_fus_madg_cfg *mcfg = cfg;
+
+	(void)mcfg;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the sample frequency is positive. */
@@ -276,9 +286,6 @@ int zsl_fus_madg_init(uint32_t freq)
 	}
 #endif
 
-    /* ToDo: Remove once working! */
-    printf("Setting madgwick freq to %d\n", freq);
-
 	zsl_fus_madg_freq = freq;
 
 err:
@@ -286,11 +293,11 @@ err:
 }
 
 int zsl_fus_madg_feed(struct zsl_vec *a, struct zsl_vec *m, struct zsl_vec *g,
-		      struct zsl_quat *q)
+		      struct zsl_quat *q, void *cfg)
 {
-	zsl_real_t beta = 0.8;
+	struct zsl_fus_madg_cfg *mcfg = cfg;
 
-	return zsl_fus_madgwick(g, a, m, &beta, q);
+	return zsl_fus_madgwick(g, a, m, &(mcfg->beta), q);
 }
 
 void zsl_fus_madg_error(int error)

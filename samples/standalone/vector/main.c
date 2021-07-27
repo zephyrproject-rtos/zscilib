@@ -13,20 +13,26 @@
 #include "zsl/probability.h"
 #include "zsl/orientation/orientation.h"
 
-int
-main(void)
-{
-	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
-	struct zsl_quat qout;
-	ZSL_VECTOR_DEF(w, 3);
-	zsl_real_t a[3] = { 1.5 * 3.0, 4.4 * 3.0, -12.8 * 3.0 };
-	zsl_real_t t = 0.01, i = 3.0;
+int main(void)
+{	
+	FILE * fh;
+	size_t count = 0;
+    fh = fopen("data2.txt","r");
+	zsl_real_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10;
 
-	zsl_vec_from_arr(&w, a);
-
-	zsl_quat_from_ang_mom(&w, &qin, &i, &t, &qout);
-
-	zsl_quat_print(&qout);
+	while ((d1 = fgetc(fh)) != EOF) {
+    	fscanf (fh, "%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf",
+	    &d1, &d2, &d3, &d4, &d5, &d6, &d7, &d8, &d9, &d10);
+    	
+		// printf ("\t%lf, %lf, %lf,\n", d2, d3, d4);
+		printf ("\t%lf, %lf, %lf,\n", d5, d6, d7);
+		// printf ("\t%lf, %lf, %lf,\n", d8, d9, d10);
+		count++;
+		// printf ("%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf\n",
+		// d1, d2, d3, d4, d5, d6, d7, d8, d9, d10);
+  	}
+	
+	printf("\n%zu\n", count);
 
 	return 0;
 }

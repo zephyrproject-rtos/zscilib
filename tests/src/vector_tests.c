@@ -405,6 +405,12 @@ void test_vector_norm(void)
 
 	/* Check output. */
 	zassert_true(val_is_equal(norm, 4.5486261662, 1E-6), NULL);
+
+	/* Calculate the norm of a NULL vector. */
+	norm = zsl_vec_norm(NULL);
+
+	/* Check output. It should be zero. */
+	zassert_true(val_is_equal(norm, 0.0, 1E-6), NULL);
 }
 
 void test_vector_project(void)

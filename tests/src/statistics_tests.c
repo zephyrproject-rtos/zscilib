@@ -113,6 +113,51 @@ void test_sta_weighted_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
+void test_sta_time_weighted_mean(void)
+{
+	int rc;
+	zsl_real_t m;
+
+	ZSL_VECTOR_DEF(v, 5);
+	ZSL_VECTOR_DEF(v2, 5);
+	ZSL_VECTOR_DEF(t, 5);
+	ZSL_VECTOR_DEF(t2, 5);
+	ZSL_VECTOR_DEF(t3, 7);
+
+	zsl_real_t a[5] = { 1.0, 7.0, 4.0, 8.0, 4.0 };
+	zsl_real_t a2[5] = { 1.0, -7.0, 4.0, 8.0, -4.0 };
+	zsl_real_t b[5] = { 3.0, 10.0, -5.0, 1.0, 5.0 };
+	zsl_real_t b2[5] = { 3.0, 3.0, -5.0, 1.0, 5.0 };
+
+	/* Assign arrays to the vectors. */
+	rc = zsl_vec_from_arr(&v, a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&t, b);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&v2, a2);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&t2, b2);
+	zassert_true(rc == 0, NULL);
+
+	/* Compute the time-weighted mean value with times from the vector 't'. */
+	rc = zsl_sta_time_weighted_mean(&v, &t, &m);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(m, 5.166667, 1E-6), NULL);
+
+	/* An error is expected due to negative coeficients in 'v'. */
+	rc = zsl_sta_time_weighted_mean(&v2, &t, &m);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* An error is expected due to repeated coeficients in 't'. */
+	rc = zsl_sta_time_weighted_mean(&v, &t2, &m);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* An error is expected due to difference in sizes of 'v' and 't'
+	 * vectors. */
+	rc = zsl_sta_time_weighted_mean(&v, &t3, &m);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
 void test_sta_demean(void)
 {
 	int rc;
@@ -123,8 +168,10 @@ void test_sta_demean(void)
 	ZSL_VECTOR_DEF(u, 10);
 	ZSL_VECTOR_DEF(t, 5);
 
-	zsl_real_t a[10] = { -3.0, 1.0, 2.0, 8.5, -3.5, 4.0, 7.0, -2.0, 0.0, 6.0 };
-	zsl_real_t b[10] = { -5.0, -1.0, 0.0, 6.5, -5.5, 2.0, 5.0, -4.0, -2.0, 4.0 };
+	zsl_real_t a[10] = { -3.0,  1.0,  2.0,  8.5, -3.5, 
+						  4.0,  7.0, -2.0,  0.0,  6.0 };
+	zsl_real_t b[10] = { -5.0, -1.0,  0.0,  6.5, -5.5,
+						  2.0,  5.0, -4.0, -2.0,  4.0 };
 
 	/* Assign arrays to the vectors. */
 	rc = zsl_vec_from_arr(&v, a);

@@ -3,3 +3,4 @@ include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake NO_POLICY_SCOPE)
 project(orientation_api)
 
 target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/data.c)

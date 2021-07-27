@@ -26,6 +26,12 @@
 #include <zsl/vectors.h>
 #include <zsl/matrices.h>
 #include <zsl/orientation/quaternions.h>
+#include <zsl/orientation/fusion/madgwick.h>
+#include <zsl/orientation/fusion/mahony.h>
+#include <zsl/orientation/fusion/saam.h>
+#include <zsl/orientation/fusion/aqua.h>
+#include <zsl/orientation/fusion/complementary.h>
+#include <zsl/orientation/fusion/kalman.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,10 +42,11 @@ extern "C" {
  * @brief Init callback prototype for sensor fusion implementations.
  *
  * @param freq      Sample frequency in Hz (samples per second).
+ * @param cfg       Pointer to the config struct for this algorithm.
  *
  * @return 0 on success, negative error code on failure
  */
-typedef int (*zsl_fus_init_cb_t)(uint32_t freq);
+typedef int (*zsl_fus_init_cb_t)(uint32_t freq, void* cfg);
 
 /**
  * @typedef zsl_fus_feed_cb_t
@@ -49,12 +56,13 @@ typedef int (*zsl_fus_init_cb_t)(uint32_t freq);
  * @param mag       Pointer to the magnetometer XYZ data. NULL for none.
  * @param gyro      Pointer to the gyroscope XYZ data. NULL for none.
  * @param q         Pointer to the quaternion output placeholder.
+ * @param cfg       Pointer to the config struct for this algorithm.
  *
  * @return 0 on success, negative error code on failure
  */
 typedef int (*zsl_fus_feed_cb_t)(struct zsl_vec *accel,
 				 struct zsl_vec *mag, struct zsl_vec *gyro,
-				 struct zsl_quat *q);
+				 struct zsl_quat *q, void* cfg);
 
 /**
  * @typedef zsl_fus_error_cb_t

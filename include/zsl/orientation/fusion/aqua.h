@@ -13,13 +13,13 @@
 
 /**
  * @file
- * @brief SAAM sensor fusion algorithm.
+ * @brief AQUA sensor fusion algorithm.
  *
- * This file implements the SAAM sensor fusion algorithm.
+ * This file implements the AQUA sensor fusion algorithm.
  */
 
-#ifndef ZEPHYR_INCLUDE_ZSL_FUSION_SAAM_H_
-#define ZEPHYR_INCLUDE_ZSL_FUSION_SAAM_H_
+#ifndef ZEPHYR_INCLUDE_ZSL_FUSION_AQUA_H_
+#define ZEPHYR_INCLUDE_ZSL_FUSION_AQUA_H_
 
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
@@ -31,6 +31,35 @@ extern "C" {
 #endif
 
 /**
+ * @brief Config settings for the AQUA sensor fusion algorithm.
+ */
+struct zsl_fus_aqua_cfg {
+	/**
+	 * @brief
+	 *
+	 */
+	zsl_real_t alpha;
+
+	/**
+	 * @brief
+	 *
+	 */
+	zsl_real_t beta;
+
+	/**
+	 * @brief
+	 *
+	 */
+	zsl_real_t e_a;
+
+	/**
+	 * @brief
+	 *
+	 */
+	zsl_real_t e_m;
+};
+
+/**
  * @brief Sets the sample frequency (in Hz) for the algorithm.
  *
  * @param freq  Sampling frequency in Hz.
@@ -38,11 +67,11 @@ extern "C" {
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
-int zsl_fus_saam_init(uint32_t freq, void *cfg);
+int zsl_fus_aqua_init(uint32_t freq, void* cfg);
 
 /**
- * @brief Super-fast Attitude from Accelerometer and Magnetometer (SAAM) sensor
- *        fusion algorithm implementation.
+ * @brief Algebraic Quaterion Algorithm (AQUA) sensor fusion algorithm
+ *        implementation.
  *
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
@@ -52,22 +81,22 @@ int zsl_fus_saam_init(uint32_t freq, void *cfg);
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
-int zsl_fus_saam_feed(struct zsl_vec *a, struct zsl_vec *m,
+int zsl_fus_aqua_feed(struct zsl_vec *a, struct zsl_vec *m,
 		      struct zsl_vec *g, struct zsl_quat *q, void *cfg);
 
 /**
- * @brief Default error handler for the SAAM sensor fusion driver.
+ * @brief Default error handler for the AQUA sensor fusion driver.
  *
  * @note Normally you will want to implement your own version of this function.
  *
  * @param error     The error code genereated.
  */
-void zsl_fus_saam_error(int error);
+void zsl_fus_aqua_error(int error);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* ZEPHYR_INCLUDE_ZSL_FUSION_SAAM_H_ */
+#endif /* ZEPHYR_INCLUDE_ZSL_FUSION_AQUA_H_ */
 
 /** @} */ /* End of algorithms group */

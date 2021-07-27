@@ -90,6 +90,53 @@ int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m)
 	return 0;
 }
 
+int zsl_sta_time_weighted_mean(struct zsl_vec *v, struct zsl_vec *t,
+					zsl_real_t *m)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the vectors dimensions match. */
+	if (v->sz != t->sz) {
+		return -EINVAL;
+	}
+	/* Make sure that the values in 'v' are positive. */
+	for (size_t i = 0; i < v->sz; i++) {
+		if (v->data[i] < 0.0) {
+			return -EINVAL;
+		}
+	}
+	/* The vector 'x' can't have any repeated values. */
+	for (size_t i = 0; i < t->sz; i++) {
+		if (zsl_vec_contains(t, t->data[i], 1E-6) > 1) {
+			return -EINVAL;
+		}
+	}
+#endif
+
+	ZSL_VECTOR_DEF(ts, t->sz);
+	ZSL_VECTOR_DEF(vs, v->sz);
+
+	zsl_real_t sum = 0.0;
+
+	zsl_vec_sort(t, &ts);
+
+	for (size_t i = 0; i < t->sz; i++) {
+		for (size_t g = 0; g < t->sz; g++) {
+			if (ZSL_ABS(ts.data[i] - t->data[g]) < 1E-6) {
+				vs.data[i] = v->data[g];
+			}
+		}
+	}
+
+	for (size_t j = 1; j < t->sz; j++) {
+		sum += (ts.data[j] - ts.data[j - 1]) *
+		       (vs.data[j] + vs.data[j - 1]) / 2.0;
+	}
+
+	*m = sum / (ts.data[(t->sz - 1)] - ts.data[0]);
+
+	return 0;
+}
+
 int zsl_sta_demean(struct zsl_vec *v, struct zsl_vec *w)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
@@ -278,7 +325,6 @@ int zsl_sta_mean_abs_dev(struct zsl_vec *v, zsl_real_t *m)
 		return -EINVAL;
 	}
 #endif
-
 	ZSL_VECTOR_DEF(vdm, v->sz);
 	zsl_sta_demean(v, &vdm);
 
@@ -593,7 +639,6 @@ int zsl_sta_sta_err(struct zsl_vec *v, zsl_real_t *err)
 
 	zsl_real_t var;
 	zsl_sta_var(v, &var);
-
 	*err = ZSL_SQRT(var / v->sz);
 
 	return 0;

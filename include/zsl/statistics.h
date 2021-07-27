@@ -61,7 +61,7 @@ int zsl_sta_mean(struct zsl_vec *v, zsl_real_t *m);
  * 
  * The trimmed arithmetic mean of a dataset is described by a number (in this
  * case 'p') from 0 to 50 that describes the percent of the data that will not
- * be taked into account when computing the mean. Thus, a 3% trimmed
+ * be taken into account when computing the mean. Thus, a 3% trimmed
  * mean will only use 94% of the data to calculate the arithmetic mean, and
  * will ignore the lowest 3% of data and the highest 3% of data in the sorted
  * data vector.
@@ -90,6 +90,25 @@ int zsl_sta_trim_mean(struct zsl_vec *v, zsl_real_t p, zsl_real_t *m);
  * 		   are zero.
  */
 int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
+
+/**
+ * @brief Computes the time-weighted arithmetic mean (average) of a positive 
+ * 		  data vector (v) and its time vector (w).
+ * 
+ * The time-weighted mean takes into consideration not only the numerical
+ * levels of a particular variable, but also the amount of time spent on it.
+ *
+ * @param v  The data vector to use, with positive coefficients.
+ * @param t  The vector containing the time associated to the data vector.
+ * @param m  The time-weighted arithmetic mean of the components of v taking
+ * 			 the times in the vector t into account.
+ *
+ * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
+ * 		   and w don't match, or if any elements in 'v' are negative or if
+ * 		   any time value in the vector 't' is repeated.
+ */
+int zsl_sta_time_weighted_mean(struct zsl_vec *v, struct zsl_vec *t,
+					zsl_real_t *m);
 
 /**
  * @brief Subtracts the mean of vector v from every component of the vector.

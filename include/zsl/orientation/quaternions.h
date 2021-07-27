@@ -327,12 +327,14 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
 		  struct zsl_quat *qd);
 
 /**
- * @brief Calculates the rotation (qd) from qa to qb using the multiplicative
- *        inverse, such that qb = qa * qd.
+ * @brief Rotates the pure quaternion qb using the quaternion qa.
+ * 
+ * Quaternion rotarion follows as: qr = qa* * qb * qa, where qa* is the inverse
+ * of the quaternion qa. 
  *
- * @param qa	The initial unit quaternion value.
- * @param qb	The final unit quaternion value.
- * @param qd	The difference as a quaternion.
+ * @param qa	The input unit quaternion value, i.e., the rotation quaternion.
+ * @param qb	The pure quaternion to rotate (zero real part).
+ * @param qr	The pure rotated quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -340,17 +342,37 @@ int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb,
 		  struct zsl_quat *qr);
 
 /**
- * @brief Spherical linear interpolation.
+ * @brief Linear interpolation (LERP).
+ *
+ * Calculates an intermediate quaternion qa and qb, based on the
+ * provided interpolation factor, t (0.0..1.0). Output assigned to qi.
+ *
+ * @param qa	The starting quaternion value.
+ * @param qb	The target quaternion value.
+ * @param t     The interpolation factor (0.0..1.0)
+ * @param qi	The interpolated unit quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ *         interpolation factor is not between 0 and 1.
+ */
+int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
+		   zsl_real_t t, struct zsl_quat *qi);
+
+/**
+ * @brief Spherical linear interpolation (SLERP).
  *
  * Calculates an intermediate rotation between qa and qb, based on the
  * provided interpolation factor, t (0.0..1.0). Output assigned to qi.
  *
- * @param qa	The starting unit quaternion value.
- * @param qb	The target unit quaternion value.
+ * @param qa	The starting quaternion value.
+ * @param qb	The target quaternion value.
  * @param t     The interpolation factor (0.0..1.0)
  * @param qi	The interpolated quaternion.
  *
- * @return 0 if everything executed normally, or a negative error code.
+ * @return 0 if everything executed normally, or a negative error code if the
+ *         interpolation factor is not between 0 and 1. If qa = -qb, the
+ * 	       spherical interpolation is impossible and a negative error is
+ * 		   returned.
  */
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi);
@@ -373,7 +395,7 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
  * 		   time is negative or the angular velocity vector dimension is not 3.
  */
 int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
-			zsl_real_t *t, struct zsl_quat *qout);
+			zsl_real_t t, struct zsl_quat *qout);
 
 /**
  * @brief Updates an orientation quaternion with new information in form of
@@ -398,7 +420,7 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
  * 		   momentum vector dimension is not 3.
  */
 int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
-			zsl_real_t *i, zsl_real_t *t, struct zsl_quat *qout);
+			zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
 
 /**
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
@@ -469,60 +491,6 @@ int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
 							 struct zsl_quat *q);
 
 /**
- * @brief Converts axis-angle rotation to its unit quaternion equivalent.
- *
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
- * @param q 	Pointer to the converted unit quaternion.
- *
- * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
- */
-int zsl_quat_madgwick(struct zsl_vec *g, struct zsl_vec *a, struct zsl_vec *m,
-		      zsl_real_t *sampleFreq, zsl_real_t *beta, struct zsl_quat *q);
-
-/**
- * @brief Converts axis-angle rotation to its unit quaternion equivalent.
- *
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
- * @param q 	Pointer to the converted unit quaternion.
- *
- * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
- */
-int zsl_quat_madgwick_IMU(struct zsl_vec *g, struct zsl_vec *a,
-		      zsl_real_t *sampleFreq, zsl_real_t *beta, struct zsl_quat *q);
-
-/**
- * @brief Converts axis-angle rotation to its unit quaternion equivalent.
- *
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
- * @param q 	Pointer to the converted unit quaternion.
- *
- * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
- */
-int zsl_quat_mahony(struct zsl_vec *g, struct zsl_vec *a, struct zsl_vec *m,
-		    zsl_real_t *sampleFreq, zsl_real_t *twoKp, zsl_real_t *twoKi,
-			struct zsl_vec *integralFB, struct zsl_quat *q);
-
-/**
- * @brief Converts axis-angle rotation to its unit quaternion equivalent.
- *
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
- * @param q 	Pointer to the converted unit quaternion.
- *
- * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
- */
-int zsl_quat_mahony_IMU(struct zsl_vec *g, struct zsl_vec *a,
-		    zsl_real_t *sampleFreq, zsl_real_t *twoKp, zsl_real_t *twoKi,
-			struct zsl_vec *integralFB, struct zsl_quat *q);
-
-/**
  * @brief Print the supplied quaternion using printf in a human-readable manner.
  *
  * @param q     Pointer to the quaternion to print.
@@ -531,7 +499,6 @@ int zsl_quat_mahony_IMU(struct zsl_vec *g, struct zsl_vec *a,
  *          error code.
  */
 int zsl_quat_print(struct zsl_quat *q);
-
 
 /** @} */ /* End of QUAT_FUNCTIONS group */
 
