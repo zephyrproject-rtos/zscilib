@@ -1,5 +1,5 @@
 common:
-  min_ram: 16
+  min_ram: 32
 tests:
   # C functions in single and double precision
   zsl.core.c.double:
@@ -9,7 +9,7 @@ tests:
     extra_configs:
       - CONFIG_ZSL_PLATFORM_OPT=0
       - CONFIG_ZSL_SINGLE_PRECISION=y
-  # # CARM THUMB functions in single and double precision
+  # CARM THUMB functions in single and double precision
   # zsl.core.thumb2.double:
   #   extra_configs:
   #     - CONFIG_ZSL_PLATFORM_OPT=2

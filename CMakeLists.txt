@@ -15,6 +15,10 @@ zephyr_library_sources(
     src/orientation/ahrs.c
     src/orientation/euler.c
     src/orientation/quaternions.c
+    src/orientation/fusion/fusion.c
+    src/orientation/fusion/madgwick.c
+    src/orientation/fusion/mahony.c
+    src/orientation/fusion/saam.c
     src/physics/atomic.c
     src/physics/dynamics.c
     src/physics/eleccomp.c

@@ -9,29 +9,24 @@
 #include <errno.h>
 #include "zsl/matrices.h"
 #include "zsl/vectors.h"
+#include "zsl/statistics.h"
+#include "zsl/probability.h"
+#include "zsl/orientation/orientation.h"
 
 int
 main(void)
 {
-	ZSL_VECTOR_DEF(va, 3);
-	ZSL_VECTOR_DEF(vb, 3);
-	ZSL_VECTOR_DEF(vc, 3);
+	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
+	struct zsl_quat qout;
+	ZSL_VECTOR_DEF(w, 3);
+	zsl_real_t a[3] = { 1.5 * 3.0, 4.4 * 3.0, -12.8 * 3.0 };
+	zsl_real_t t = 0.01, i = 3.0;
 
-	printf("Hello, zscilib!\n");
+	zsl_vec_from_arr(&w, a);
 
-	zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
-	zsl_real_t b[3] = { -1.0, 0.5, 0.1 };
+	zsl_quat_from_ang_mom(&w, &qin, &i, &t, &qout);
 
-	/* Assign arrays to vectors. */
-	zsl_vec_from_arr(&va, a);
-	zsl_vec_from_arr(&vb, b);
-
-	/* Init vc with zero values. */
-	zsl_vec_init(&vc);
-
-	/* Add va and vb, results in vc. */
-	zsl_vec_add(&va, &vb, &vc);
-	zsl_vec_print(&vc);
+	zsl_quat_print(&qout);
 
 	return 0;
 }

@@ -23,9 +23,8 @@
 #define ZEPHYR_INCLUDE_ZSL_FUSION_H_
 
 #include <zsl/zsl.h>
+#include <zsl/vectors.h>
 #include <zsl/matrices.h>
-#include <zsl/orientation/ahrs.h>
-#include <zsl/orientation/euler.h>
 #include <zsl/orientation/quaternions.h>
 
 #ifdef __cplusplus
@@ -49,30 +48,21 @@ typedef int (*zsl_fus_init_cb_t)(uint32_t freq);
  * @param accel     Pointer to the accelerometer XYZ data. NULL for none.
  * @param mag       Pointer to the magnetometer XYZ data. NULL for none.
  * @param gyro      Pointer to the gyroscope XYZ data. NULL for none.
+ * @param q         Pointer to the quaternion output placeholder.
  *
  * @return 0 on success, negative error code on failure
  */
 typedef int (*zsl_fus_feed_cb_t)(struct zsl_vec *accel,
-				 struct zsl_vec *mag, struct zsl_vec *gyro);
-
-/**
- * @typedef zsl_fus_get_quat_cb_t
- * @brief Get quaternion callback prototype for sensor fusion implementations.
- *
- * @param q         Pointer to the @ref zsl_quat to populate.
- *
- * @return 0 on success, negative error code on failure
- */
-typedef int (*zsl_fus_get_quat_cb_t)(struct zsl_quat *q);
+				 struct zsl_vec *mag, struct zsl_vec *gyro,
+				 struct zsl_quat *q);
 
 /**
  * @typedef zsl_fus_error_cb_t
  * @brief Callback prototype when a fusion algorithm fails to properly feed.
  *
- * @param cfg       Pointer to the config struct/value being used.
  * @param error     Negative error code produced during node execution.
  */
-typedef void (*zsl_fus_error_cb_t)(void *cfg, int error);
+typedef void (*zsl_fus_error_cb_t)(int error);
 
 /**
  * @brief Sensor fusion algorithm implementation.
@@ -87,11 +77,6 @@ struct zsl_fus_drv {
 	 * @brief Callback to fire when feeding/updating the driver.
 	 */
 	zsl_fus_feed_cb_t feed_handler;
-
-	/**
-	 * @brief Callback to fire when a @brief zsl_quat reading is requested.
-	 */
-	zsl_fus_get_quat_cb_t get_quat_handler;
 
 	/**
 	 * @brief Callback to fire when the 'feed' command fails.

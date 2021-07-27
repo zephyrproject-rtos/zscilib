@@ -118,7 +118,7 @@ To run one of the sample applications using qemu, run the following commands:
   assumes `qemu-system-arm` is available on your local system.
 
 ```
-$ west build -p -b qemu_cortex_m3 \
+$ west build -p -b mps2_an521 \
   modules/lib/zscilib/samples/matrix/mult -t run
 ...
 *** Booting Zephyr OS build zephyr-v2.6.0-536-g89212a7fbf5f  ***
@@ -139,11 +139,10 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```bash
-$ twister -p auto --inline-logs qemu_cortex_m3 -T modules/lib/zscilib/tests
+$ twister --inline-logs -p mps2_an521 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
-
 
 ### Debugging with QEMU
 
@@ -158,7 +157,7 @@ you can run the following commands to start a new GDB debug session.
 In one terminal window, run:
 
 ```bash
-$ west build -p auto -b qemu_cortex_m3 modules/lib/zscilib/samples/matrix/pinv
+$ west build -p auto -b mps2_an521 modules/lib/zscilib/samples/matrix/pinv
 ```
 
 Once the ELF file has been built, we can start a GDB server on the default
@@ -221,7 +220,7 @@ operations.
   functions in zscilib are **only available when double-precision is enabled**
   (PINV, SVD, etc.).
 
-### Comparison 
+### Comparison
 
 #### Single-Precision (32-bit) Floats
 
@@ -410,6 +409,8 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 #### Statistics
 
 - [x] Mean
+- [x] Trimmed Mean
+- [x] Weighted Mean
 - [x] De-mean
 - [x] Percentile (AKA quantile)
 - [x] Median
@@ -417,26 +418,38 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] Interquartile range
 - [x] Mode
 - [x] Data range
+- [x] Mean Absolute Deviation
+- [x] Median Absolute Deviation from Median
 - [x] Variance
 - [x] Standard deviation
 - [x] Covariance
-- [x] Covariance matrix
-- [x] Simple linear regression (slope, intercept, correlation coefficient)
-- [ ] Multiple linear regression
+- [x] Covariance Matrix
+- [x] Linear Regression
+- [x] Multiple Linear Regression \[1\]
+- [x] Weighted Linear Regression \[1\]
 - [x] Absolute error
 - [x] Relative error
+- [x] Standard error
+
+\[1\] Only available in double-precision
 
 #### Probability Operations
 
 - [X] Uniform probability density function (PDF)
-- [X] Uniform cumulative distribution function (CDF)
 - [X] Uniform distribution mean
 - [X] Uniform distribution variance
-- [X] Normal probability density function
-- [X] Normal cumulative distribution function
-- [X] Inverse erf(x) function
+- [X] Uniform cumulative distribution function (CDF)
+- [X] Normal probability density function (PDF)
+- [X] Normal cumulative distribution function (CDF)
+- [X] Inverse Error function
 - [X] Inverse normal cumulative distribution function
+- [X] Binomial coefficients
+- [X] Binomial probability density function (PDF)
+- [X] Binomial distribution mean
+- [X] Binomial distribution variance
+- [X] Binomial cumulative distribution function (CDF)
 - [X] Information entropy
+- [x] Bayes' Theorem
 
 ### Interpolation
 

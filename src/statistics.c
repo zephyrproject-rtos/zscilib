@@ -18,8 +18,87 @@ int zsl_sta_mean(struct zsl_vec *v, zsl_real_t *m)
 	return 0;
 }
 
+int zsl_sta_trim_mean(struct zsl_vec *v, zsl_real_t p, zsl_real_t *m)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 50. */
+	if (p > 50.0 || p < 0.0) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_VECTOR_DEF(w, v->sz);
+	zsl_real_t per_l, per_h;
+	size_t first_val = 0, count = 0;
+
+	*m = 0.0;
+	zsl_sta_percentile(v, p, &per_l);
+	zsl_sta_percentile(v, 100 - p, &per_h);
+
+	zsl_vec_init(&w);
+	zsl_vec_sort(v, &w);
+
+	for (size_t i = 0; i < v->sz; i++) {
+		if (w.data[i] >= per_l && w.data[i] <= per_h) {
+			count++;
+		}
+		if (count == 1) {
+			first_val = i;
+		}
+	}
+
+	ZSL_VECTOR_DEF(sub, count);
+	zsl_vec_get_subset(&w, first_val, count, &sub);
+	zsl_sta_mean(&sub, m);
+
+	return 0;
+}
+
+int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m)
+{
+	zsl_real_t sumw = 0.0, sumwx = 0.0;
+
+	for (size_t i = 0; i < v->sz; i++) {
+		sumw += w->data[i];
+	}
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the vectors dimensions match. */
+	if (v->sz != w->sz) {
+		return -EINVAL;
+	}
+
+	/* Make sure the weights are positive or zero. */
+	for (size_t i = 0; i < v->sz; i++) {
+		if (w->data[i] < 0.0) {
+			return -EINVAL;
+		}
+	}
+
+	/* Make sure that not all of the weights are zero. */
+	if (ZSL_ABS(sumw) < 1E-6) {
+		return -EINVAL;
+	}
+#endif
+
+	for (size_t i = 0; i < v->sz; i++) {
+		sumwx += w->data[i] * v->data[i];
+	}
+
+	*m = sumwx / sumw;
+
+	return 0;
+}
+
 int zsl_sta_demean(struct zsl_vec *v, struct zsl_vec *w)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the vectors dimensions match. */
+	if (v->sz != w->sz) {
+		return -EINVAL;
+	}
+#endif
+
 	zsl_real_t m;
 
 	zsl_vec_copy(w, v);
@@ -29,8 +108,15 @@ int zsl_sta_demean(struct zsl_vec *v, struct zsl_vec *w)
 	return 0;
 }
 
-int zsl_sta_percentile(struct zsl_vec *v, size_t p, zsl_real_t *val)
+int zsl_sta_percentile(struct zsl_vec *v, zsl_real_t p, zsl_real_t *val)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure p is between 0 and 100. */
+	if (p > 100.0 || p < 0.0) {
+		return -EINVAL;
+	}
+#endif
+
 	ZSL_VECTOR_DEF(w, v->sz);
 
 	zsl_vec_init(&w);
@@ -51,6 +137,50 @@ int zsl_sta_percentile(struct zsl_vec *v, size_t p, zsl_real_t *val)
 int zsl_sta_median(struct zsl_vec *v, zsl_real_t *m)
 {
 	zsl_sta_percentile(v, 50, m);
+
+	return 0;
+}
+
+int zsl_sta_weighted_median(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the vectors dimensions match. */
+	if (v->sz != w->sz) {
+		return -EINVAL;
+	}
+
+	/* Make sure the weights are positive or zero. */
+	zsl_real_t sum = 0.0;
+	for (size_t i = 0; i < v->sz; i++) {
+		sum += w->data[i];
+		if (w->data[i] < 0.0) {
+			return -EINVAL;
+		}
+	}
+
+	/* Make sure that that the sum of the weights is 1. */
+	if (ZSL_ABS(sum - 1.0) > 1E-6) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_VECTOR_DEF(vsort, v->sz);
+	zsl_real_t lsum = 0.0;
+	size_t i = 0;
+	while (lsum <= 0.5) {
+		lsum += w->data[i];
+		i++;
+	}
+
+	lsum -= w->data[i - 1];
+	zsl_vec_init(&vsort);
+	zsl_vec_sort(v, &vsort);
+
+	if (ZSL_ABS(lsum - 0.5) < 1E-6) {
+		*m = (vsort.data[i - 1] + vsort.data[i - 2]) / 2.0;
+	} else {
+		*m = vsort.data[i - 1];
+	}
 
 	return 0;
 }
@@ -79,12 +209,18 @@ int zsl_sta_quart_range(struct zsl_vec *v, zsl_real_t *r)
 
 int zsl_sta_mode(struct zsl_vec *v, struct zsl_vec *w)
 {
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure w and v are the same length. */
+	if (v->sz != w->sz) {
+		return -EINVAL;
+	}
+#endif
+
 	size_t i, j = 0, count, maxcount = 0;
 
 	ZSL_VECTOR_DEF(u, v->sz);
 	ZSL_VECTOR_DEF(w_temp, v->sz);
 
-	w->sz = v->sz;
 	zsl_vec_init(w);
 
 	for (i = 0; i < v->sz; i++) {
@@ -134,6 +270,43 @@ int zsl_sta_data_range(struct zsl_vec *v, zsl_real_t *r)
 	return 0;
 }
 
+int zsl_sta_mean_abs_dev(struct zsl_vec *v, zsl_real_t *m)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure v has at least dimension 1. */
+	if (v->sz == 0) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_VECTOR_DEF(vdm, v->sz);
+	zsl_sta_demean(v, &vdm);
+
+	zsl_real_t sum = 0.0;
+	for (size_t i = 0; i < v->sz; i++) {
+		sum += ZSL_ABS(vdm.data[i]);
+	}
+
+	*m = sum / v->sz;
+
+	return 0;
+}
+
+int zsl_sta_median_abs_dev(struct zsl_vec *v, zsl_real_t *m)
+{
+	ZSL_VECTOR_DEF(med, v->sz);
+	zsl_real_t median;
+
+	zsl_sta_median(v, &median);
+	for (size_t i = 0; i < v->sz; i++) {
+		med.data[i] = ZSL_ABS(v->data[i] - median);
+	}
+
+	zsl_sta_median(&med, m);
+
+	return 0;
+}
+
 int zsl_sta_var(struct zsl_vec *v, zsl_real_t *var)
 {
 	ZSL_VECTOR_DEF(w, v->sz);
@@ -150,7 +323,7 @@ int zsl_sta_var(struct zsl_vec *v, zsl_real_t *var)
 	return 0;
 }
 
-int zsl_sta_sta_dev(struct zsl_vec *v, zsl_real_t *s)
+int zsl_sta_std_dev(struct zsl_vec *v, zsl_real_t *s)
 {
 	zsl_real_t var;
 
@@ -212,12 +385,12 @@ int zsl_sta_covar_mtx(struct zsl_mtx *m, struct zsl_mtx *mc)
 	return 0;
 }
 
-int zsl_sta_linear_reg(struct zsl_vec *v, struct zsl_vec *w,
+int zsl_sta_linear_reg(struct zsl_vec *x, struct zsl_vec *y,
 		       struct zsl_sta_linreg *c)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
-	/* Make sure v and w are equal length. */
-	if (v->sz != w->sz) {
+	/* Make sure x and y are equal length. */
+	if (x->sz != y->sz) {
 		return -EINVAL;
 	}
 #endif
@@ -226,22 +399,174 @@ int zsl_sta_linear_reg(struct zsl_vec *v, struct zsl_vec *w,
 
 	sumx = sumy = sumxy = sumxx = sumyy = 0.0;
 
-	for (size_t i = 0; i < v->sz; i++) {
-		sumx += v->data[i];
-		sumy += w->data[i];
-		sumxy += v->data[i] * w->data[i];
-		sumxx += v->data[i] * v->data[i];
-		sumyy += w->data[i] * w->data[i];
+	for (size_t i = 0; i < x->sz; i++) {
+		sumx += x->data[i];
+		sumy += y->data[i];
+		sumxy += x->data[i] * y->data[i];
+		sumxx += x->data[i] * x->data[i];
+		sumyy += y->data[i] * y->data[i];
 	}
 
-	c->slope = (v->sz * sumxy - sumx * sumy) / (v->sz * sumxx - sumx * sumx);
-	c->intercept = (sumy - c->slope * sumx) / v->sz;
-	c->correlation = (v->sz * sumxy - sumx * sumy) /
-			 ZSL_SQRT((v->sz * sumxx - sumx * sumx) *
-				  (v->sz * sumyy - sumy * sumy));
+	c->slope = (x->sz * sumxy - sumx * sumy) / (x->sz * sumxx - sumx * sumx);
+	c->intercept = (sumy - c->slope * sumx) / x->sz;
+	c->correlation = (x->sz * sumxy - sumx * sumy) /
+			 ZSL_SQRT((x->sz * sumxx - sumx * sumx) *
+				  (x->sz * sumyy - sumy * sumy));
 
 	return 0;
 }
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int zsl_sta_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
+			    struct zsl_vec *b, zsl_real_t *r)
+{
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure matrices and vectors' sizes match. */
+	if (x->sz_rows != y->sz || x->sz_cols + 1 != b->sz) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_MATRIX_DEF(x_exp, x->sz_rows, (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(x_trans, (x->sz_cols + 1), x->sz_rows);
+	ZSL_MATRIX_DEF(xx, (x->sz_cols + 1), (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(xinv, (x->sz_cols + 1), (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(ymtx, y->sz, 1);
+	ZSL_MATRIX_DEF(xtemp, (x->sz_cols + 1), x->sz_rows);
+	ZSL_MATRIX_DEF(bmtx, (x->sz_cols + 1), 1);
+	ZSL_MATRIX_DEF(xtemp2, x->sz_rows, 1);
+	ZSL_MATRIX_DEF(emtx, x->sz_rows, 1);
+
+	zsl_real_t v[x->sz_rows];
+	zsl_mtx_init(&x_exp, NULL);
+	for (size_t i = 0; i < x->sz_rows; i++) {
+		v[i] = 1.;
+	}
+
+	zsl_mtx_set_col(&x_exp, 0, v);
+	for (size_t j = 0; j < x->sz_cols; j++) {
+		zsl_mtx_get_col(x, j, v);
+		zsl_mtx_set_col(&x_exp, j + 1, v);
+	}
+
+	zsl_mtx_trans(&x_exp, &x_trans);
+	zsl_mtx_mult(&x_trans, &x_exp, &xx);
+
+	zsl_real_t det;
+	zsl_mtx_deter(&xx, &det);
+	if (ZSL_ABS(det) < 1E-6) {
+		/*
+		 * Currently limited to square matrices. pinv could be used,
+		 * but is too resource-intensive to add at the momemt.
+		 */
+		return -EINVAL;
+	} else {
+		zsl_mtx_inv(&xx, &xinv);
+	}
+
+	zsl_mtx_from_arr(&ymtx, y->data);
+	zsl_mtx_mult(&xinv, &x_trans, &xtemp);
+	zsl_mtx_mult(&xtemp, &ymtx, &bmtx);
+	zsl_vec_from_arr(b, bmtx.data);
+
+	zsl_mtx_mult(&x_exp, &bmtx, &xtemp2);
+	zsl_mtx_sub(&ymtx, &xtemp2, &emtx);
+	zsl_real_t e_norm = 0.0, ymean, ysum = 0.0;
+	zsl_sta_mean(y, &ymean);
+	for (size_t g = 0; g < x->sz_rows; g++) {
+		e_norm += emtx.data[g] * emtx.data[g];
+		ysum += (y->data[g] - ymean) * (y->data[g] - ymean);
+	}
+
+	*r = 1. - e_norm / ysum;
+
+	return 0;
+}
+#endif
+
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
+				     struct zsl_vec *w, struct zsl_vec *b, zsl_real_t *r)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure matrices and vectors' sizes match. */
+	if (x->sz_rows != y->sz || x->sz_cols + 1 != b->sz || x->sz_rows != w->sz) {
+		return -EINVAL;
+	}
+	/* Make sure no weight is zero. */
+	for (size_t k = 0; k < w->sz; k++) {
+		if (ZSL_ABS(w->data[k]) < 1E-6) {
+			return -EINVAL;
+		}
+	}
+#endif
+
+	ZSL_MATRIX_DEF(x_exp, x->sz_rows, (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(x_trans, (x->sz_cols + 1), x->sz_rows);
+	ZSL_MATRIX_DEF(xw, (x->sz_cols + 1), x->sz_rows);
+	ZSL_MATRIX_DEF(xx, (x->sz_cols + 1), (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(xinv, (x->sz_cols + 1), (x->sz_cols + 1));
+	ZSL_MATRIX_DEF(ymtx, y->sz, 1);
+	ZSL_MATRIX_DEF(xtemp, (x->sz_cols + 1), x->sz_rows);
+	ZSL_MATRIX_DEF(bmtx, (x->sz_cols + 1), 1);
+	ZSL_MATRIX_DEF(xtemp2, x->sz_rows, 1);
+	ZSL_MATRIX_DEF(emtx, x->sz_rows, 1);
+	ZSL_MATRIX_DEF(idx, w->sz, w->sz);
+
+	zsl_mtx_init(&idx, zsl_mtx_entry_fn_identity);
+	for (size_t k = 0; k < w->sz; k++) {
+		w->data[k] = 1. / w->data[k];
+		zsl_mtx_scalar_mult_row_d(&idx, k, w->data[k]);
+	}
+
+	zsl_real_t v[x->sz_rows];
+	zsl_mtx_init(&x_exp, NULL);
+	for (size_t i = 0; i < x->sz_rows; i++) {
+		v[i] = 1.;
+	}
+
+	zsl_mtx_set_col(&x_exp, 0, v);
+	for (size_t j = 0; j < x->sz_cols; j++) {
+		zsl_mtx_get_col(x, j, v);
+		zsl_mtx_set_col(&x_exp, j + 1, v);
+	}
+
+	zsl_mtx_trans(&x_exp, &x_trans);
+	zsl_mtx_mult(&x_trans, &idx, &xw);
+	zsl_mtx_mult(&xw, &x_exp, &xx);
+
+	zsl_real_t det;
+	zsl_mtx_deter(&xx, &det);
+	if (ZSL_ABS(det) < 1E-6) {
+		/*
+		 * Currently limited to square matrices. pinv could be used,
+		 * but is too resource-intensive to add at the momemt.
+		 */
+		return -EINVAL;
+	} else {
+		zsl_mtx_inv(&xx, &xinv);
+	}
+
+	zsl_mtx_from_arr(&ymtx, y->data);
+	zsl_mtx_mult(&xinv, &xw, &xtemp);
+	zsl_mtx_mult(&xtemp, &ymtx, &bmtx);
+	zsl_vec_from_arr(b, bmtx.data);
+
+	zsl_mtx_mult(&x_exp, &bmtx, &xtemp2);
+	zsl_mtx_sub(&ymtx, &xtemp2, &emtx);
+	zsl_real_t e_norm = 0.0, ymean, ysum = 0.0;
+	zsl_sta_mean(y, &ymean);
+	for (size_t g = 0; g < x->sz_rows; g++) {
+		e_norm += emtx.data[g] * emtx.data[g];
+		ysum += (y->data[g] - ymean) * (y->data[g] - ymean);
+	}
+
+	*r = 1. - e_norm / ysum;
+
+	return 0;
+}
+#endif
 
 int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 {
@@ -253,6 +578,23 @@ int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 int zsl_sta_rel_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 {
 	*err = ZSL_ABS(100. * *val - 100 * *exp_val) / *exp_val;
+
+	return 0;
+}
+
+int zsl_sta_sta_err(struct zsl_vec *v, zsl_real_t *err)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure v has at least dimension 1. */
+	if (v->sz == 0) {
+		return -EINVAL;
+	}
+#endif
+
+	zsl_real_t var;
+	zsl_sta_var(v, &var);
+
+	*err = ZSL_SQRT(var / v->sz);
 
 	return 0;
 }

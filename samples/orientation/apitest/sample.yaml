@@ -1,0 +1,5 @@
+sample:
+  name: zscilib orientation API test sample
+tests:
+  test:
+    tags: zscilib

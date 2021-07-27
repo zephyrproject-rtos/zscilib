@@ -6,6 +6,7 @@
 
 #include <math.h>
 #include <errno.h>
+#include <stdio.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
 #include <zsl/orientation/euler.h>
@@ -18,4 +19,10 @@ int zsl_eul_to_vec(struct zsl_euler *e, struct zsl_vec *v)
 	v->data = e->idx;
 
 	return rc;
+}
+
+int zsl_eul_print(struct zsl_euler *e)
+{
+	printf("(%f, %f, %f)\n\n", e->x, e->y, e->z);
+	return 0;
 }

@@ -8,7 +8,7 @@
  * @defgroup CONSTANTS Constants
  *
  * @brief Constant values used by or with zscilib.
- * 
+ *
  * @ingroup CONSTANTS
  *  @{ */
 
@@ -98,6 +98,16 @@ extern "C" {
  * The ideal gas constant, in joules per kelvin and mol.
  */
 #define ZSL_IDEAL_GAS_CONST                             (8.314462618)
+
+/**
+ * Degrees to radians conversion.
+ */
+#define ZSL_DEG_TO_RAD                                  (0.01745329252)
+
+/**
+ * Radians to degrees conversion.
+ */
+#define ZSL_RAD_TO_DEG                                  (57.295779513)
 
 #ifdef __cplusplus
 }
