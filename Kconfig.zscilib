@@ -75,27 +75,6 @@ config ZSL_BOUNDS_CHECKS
 	  should only be disabled as a final option, and only on known-good
 	  and thoroughly tested code.
 
-config ZSL_MATRIX_QRD_USE_SCRATCH
-	bool "Use scratch memory for zsl_mtx_qrd_iter"
-	default n if ZSL_SINGLE_PRECISION
-	help
-	  If set to true, the library will use statically declared scratch
-	  memory to allocate the matrices in zsl_mtx_qrd_iter, rather than
-	  using stack memory for each iterative call to the function. The
-	  scratch memory size is defined by ZSL_MATRIX_QRD_SCRATCH_SIZE.
-
-config ZSL_MATRIX_QRD_SCRATCH_SIZE
-	int "Number of record for scratch memory in zsl_mtx_qrd_iter"
-	depends on ZSL_MATRIX_QRD_USE_SCRATCH
-	default 100
-	help
-	  In order to avoid a huge amount of stack memory allocation when
-	  calling zsl_mtx_qrd_iter, two zsl_real_t arrays can be defined and
-	  reused during iterative calls to the function. This value defines
-	  the number of entries in each of the two arrays, with the result
-	  that total memory use will be ZSL_MATRIX_QRD_SCRATCH_SIZE * 2 *
-	  sizeof(zsl_real_t).
-
 config ZSL_SHELL
 	bool "Enable the 'zsl' and 'color' shell commands"
 	depends on SHELL

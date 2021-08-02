@@ -53,7 +53,7 @@ Compiling obj/thermo.o
 Compiling obj/waves.o
 Compiling obj/work.o
 gcc  obj/main.o obj/matrices.o obj/vectors.o obj/zsl.o obj/atomic.o obj/dynamics.o obj/eleccomp.o obj/electric.o obj/energy.o obj/fluids.o obj/gases.o obj/gravitation.o obj/kinematics.o obj/magnetics.o obj/mass.o obj/misc.o obj/momentum.o obj/optics.o obj/photons.o
-obj/projectiles.o obj/relativity.o obj/rotation.o obj/sound.o obj/thermo.o obj/waves.o obj/work.o  -o bin/zscilib -Wall -Wconversion -Wno-sign-conversion -I. -I../../include -DCONFIG_ZSL_MATRIX_QRD_USE_SCRATCH -DCONFIG_ZSL_MATRIX_QRD_SCRATCH_SIZE=100 -lm
+obj/projectiles.o obj/relativity.o obj/rotation.o obj/sound.o obj/thermo.o obj/waves.o obj/work.o  -o bin/zscilib -Wall -Wconversion -Wno-sign-conversion -I. -I../../include -lm
 ```
 
 You can then run the resulting binary as follows:
