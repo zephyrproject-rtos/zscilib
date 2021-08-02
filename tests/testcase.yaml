@@ -9,11 +9,11 @@ tests:
     extra_configs:
       - CONFIG_ZSL_PLATFORM_OPT=0
       - CONFIG_ZSL_SINGLE_PRECISION=y
-  # CARM THUMB functions in single and double precision
-  zsl.core.thumb2.double:
-    extra_configs:
-      - CONFIG_ZSL_PLATFORM_OPT=2
-  zsl.core.thumb2.single:
-    extra_configs:
-      - CONFIG_ZSL_PLATFORM_OPT=2
-      - CONFIG_ZSL_SINGLE_PRECISION=y
+  # # CARM THUMB functions in single and double precision
+  # zsl.core.thumb2.double:
+  #   extra_configs:
+  #     - CONFIG_ZSL_PLATFORM_OPT=2
+  # zsl.core.thumb2.single:
+  #   extra_configs:
+  #     - CONFIG_ZSL_PLATFORM_OPT=2
+  #     - CONFIG_ZSL_SINGLE_PRECISION=y
