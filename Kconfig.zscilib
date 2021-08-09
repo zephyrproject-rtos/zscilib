@@ -76,11 +76,26 @@ config ZSL_BOUNDS_CHECKS
 	  and thoroughly tested code.
 
 config ZSL_SHELL
-	bool "Enable the 'zsl' and 'color' shell commands"
+	bool "Enable the 'zsl' shell command and core shell support"
+	default n
 	depends on SHELL
 	help
-	  Enabling this option will make the 'zsls' and 'color' shell commands
-	  available.
+	  Enabling this option will make the 'zsl' shell command available, and
+	  enable general zscilib shell support.
+
+config ZSL_SHELL_CLR
+	bool "Enable the 'color' shell command"
+	default n
+	depends on ZSL_SHELL
+	help
+	  Enabling this option will make the 'color' shell command available.
+
+config ZSL_SHELL_ORIENT
+	bool "Enable the 'orient' shell command"
+	default n
+	depends on ZSL_SHELL
+	help
+	  Enabling this option will make the 'orient' shell command available.
 
 config ZSL_CLR_RGBF_BOUND_CAP
 	bool "Limit RGB float values to the 0.0..1.0 range"

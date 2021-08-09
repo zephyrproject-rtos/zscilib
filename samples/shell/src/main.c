@@ -10,9 +10,8 @@
 
 void main(void)
 {
-	printk("\nColorimetry shell\n\n");
 	printk("zscilib     : %s\n", zsl_version);
-	printk("\nType 'color help' for command options.\n");
+	printk("\nType 'help' for command options.\n");
 
 	while (1) {
 		k_sleep(K_FOREVER);
