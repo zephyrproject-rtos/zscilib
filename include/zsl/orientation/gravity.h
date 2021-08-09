@@ -5,32 +5,25 @@
  */
 
 /**
- * @defgroup AHRS Attitude and Heading Reference System
+ * @defgroup GRAVITY Gravity
  *
- * @brief Functions and structs for dealing with 'Attitude' and AHRS.
- *
- * Structs like @ref zsl_attitude are inteded to be used as 'last-mile'
- * represetnations, to convert Euler angles (in radians) to something more
- * human-friendly like degrees. Most calculations should make use of Euler
- * angles, and the richer API around them, with conversion to degrees as the
- * final step.
+ * @brief Functions and structs for dealing with gravity.
  *
  * @ingroup ORIENTATION
  *  @{ */
 
 /**
  * @file
- * @brief API header file for attitude and AHRS in zscilib.
+ * @brief API header file for gravity in zscilib.
  *
- * This file contains the zscilib AHRS APIs.
+ * This file contains the zscilib gravity orientation APIs
  */
 
-#ifndef ZEPHYR_INCLUDE_ZSL_AHRS_H_
-#define ZEPHYR_INCLUDE_ZSL_AHRS_H_
+#ifndef ZEPHYR_INCLUDE_ZSL_GRAVITY_H_
+#define ZEPHYR_INCLUDE_ZSL_GRAVITY_H_
 
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
-#include <zsl/orientation/euler.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,6 +44,6 @@ int zsl_grav_lat_alt(zsl_real_t *lat, zsl_real_t *alt, zsl_real_t *g);
 }
 #endif
 
-#endif /* ZEPHYR_INCLUDE_ZSL_AHRS_H_ */
+#endif /* ZEPHYR_INCLUDE_ZSL_GRAVITY_H_ */
 
-/** @} */ /* End of ahrs group */
+/** @} */ /* End of gravity group */
