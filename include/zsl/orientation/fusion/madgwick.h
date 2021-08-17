@@ -30,12 +30,15 @@
 extern "C" {
 #endif
 
+/* Source: https://www.x-io.co.uk/res/doc/madgwick_internal_report.pdf */
+
 /**
  * @brief Config settings for the Madwick filter.
  */
 struct zsl_fus_madg_cfg {
 	/**
-	 * @brief ToDo: Document!
+	 * @brief The filter gain beta is a positive number that represents the
+	 * 		  divergence rate of the gyroscope.
 	 */
 	zsl_real_t beta;
 };
@@ -57,6 +60,7 @@ int zsl_fus_madg_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
+ * @param dip	Input magnetic dip angle, in radians. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -64,7 +68,7 @@ int zsl_fus_madg_init(uint32_t freq, void *cfg);
  *              negative error code.
  */
 int zsl_fus_madg_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void *cfg);
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
 
 /**
  * @brief Default error handler for the Madgwick sensor fusion driver.

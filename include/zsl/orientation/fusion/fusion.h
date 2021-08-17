@@ -32,6 +32,7 @@
 #include <zsl/orientation/fusion/aqua.h>
 #include <zsl/orientation/fusion/complementary.h>
 #include <zsl/orientation/fusion/kalman.h>
+#include <zsl/orientation/fusion/calibration.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,13 +56,14 @@ typedef int (*zsl_fus_init_cb_t)(uint32_t freq, void* cfg);
  * @param accel     Pointer to the accelerometer XYZ data. NULL for none.
  * @param mag       Pointer to the magnetometer XYZ data. NULL for none.
  * @param gyro      Pointer to the gyroscope XYZ data. NULL for none.
+ * @param dip       Pointer to the dip angle, in radians. NULL for none.
  * @param q         Pointer to the quaternion output placeholder.
  * @param cfg       Pointer to the config struct for this algorithm.
  *
  * @return 0 on success, negative error code on failure
  */
 typedef int (*zsl_fus_feed_cb_t)(struct zsl_vec *accel,
-				 struct zsl_vec *mag, struct zsl_vec *gyro,
+				 struct zsl_vec *mag, struct zsl_vec *gyro, zsl_real_t *dip,
 				 struct zsl_quat *q, void* cfg);
 
 /**

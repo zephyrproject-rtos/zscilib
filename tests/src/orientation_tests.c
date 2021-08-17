@@ -150,6 +150,40 @@ void test_att_from_accel(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
+void test_att_accel_angle(void)
+{
+	int rc;
+	ZSL_VECTOR_DEF(a1, 3);
+	ZSL_VECTOR_DEF(a2, 3);
+	ZSL_VECTOR_DEF(a3, 7);
+	ZSL_VECTOR_DEF(a4, 1);
+	zsl_real_t d;
+
+	zsl_real_t a[3] = {  1.0, -13.0, 0.7};
+	zsl_real_t b[3] = { -5.1, 2.1, 147.8};
+
+	/* Assign array to the accelerometer vectors. */
+	rc = zsl_vec_from_arr(&a1, a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_vec_from_arr(&a2, b);
+	zassert_true(rc == 0, NULL);
+
+	/* Calculate the angle between accelerometers. */
+	rc = zsl_att_accel_angle(&a1, &a2, &d);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(d, 1.533992, 1E-6), NULL);
+
+	/* In this case, the dimension of one of the accelerometer data vectors
+	 * is 7, which should return an error. */
+	rc = zsl_att_accel_angle(&a3, &a2, &d);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* In this case, the dimension of one of the accelerometer data vectors
+	 * is 1, which should return an error. */
+	rc = zsl_att_accel_angle(&a1, &a4, &d);
+	zassert_true(rc == -EINVAL, NULL);
+}
+
 void test_eul_to_vec(void)
 {
 	int rc;
@@ -173,6 +207,29 @@ void test_eul_to_vec(void)
 	/* And vice versa. */
 	v.data[2] = -5.5;
 	zassert_true(e.z == -5.5, NULL);
+}
+
+void test_grav_lat_alt(void)
+{
+	int rc;
+	zsl_real_t g;
+
+	/* Compute the gravity from latitude and altitude. */
+	rc = zsl_grav_lat_alt(31.7, 350.0, &g);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(g, 9.793512, 1E-6), NULL);
+
+	/* Invalid altitude. */
+	rc = zsl_grav_lat_alt(31.7, -350.0, &g);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* Invalid latitude. */
+	rc = zsl_grav_lat_alt(102.0, 350.0, &g);
+	zassert_true(rc == -EINVAL, NULL);
+
+	/* Invalid latitude. */
+	rc = zsl_grav_lat_alt(-97.3, 350.0, &g);
+	zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_quat_init(void)
@@ -848,15 +905,14 @@ void test_quat_to_rot_mtx(void)
 	};
 
 	/* Rotation matrix contents */
-	zsl_real_t data_cmp[16] = {
-		-0.07407397629608892, 0.2592592572432197, 0.9629629710271213, 0.0,
-		0.8518518296753963, 0.5185185417029887, -0.07407416681195528, 0.0,
-		-0.5185185689195382, 0.8148148007025278, -0.2592592028101106, 0.0,
-		0.0, 0.0, 0.0, 1.0
+	zsl_real_t data_cmp[9] = {
+		-0.07407397629608892, 0.2592592572432197, 0.9629629710271213,
+		0.8518518296753963, 0.5185185417029887, -0.07407416681195528,
+		-0.5185185689195382, 0.8148148007025278, -0.2592592028101106
 	};
 
-	ZSL_MATRIX_DEF(merr, 3, 3);
-	ZSL_MATRIX_DEF(rot, 4, 4);
+	ZSL_MATRIX_DEF(merr, 2, 2);
+	ZSL_MATRIX_DEF(rot, 3, 3);
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure inappropriately size matrices fail. */
@@ -885,26 +941,20 @@ void test_quat_from_rot_mtx(void)
 	};
 
 	/* Rotation matrix contents */
-	zsl_real_t data[16] = {
-		-0.07407397629608892, 0.2592592572432197, 0.9629629710271213, 0.0,
-		0.8518518296753963, 0.5185185417029887, -0.07407416681195528, 0.0,
-		-0.5185185689195382, 0.8148148007025278, -0.2592592028101106, 0.0,
-		0.0, 0.0, 0.0, 1.0
+	zsl_real_t data[9] = {
+		-0.07407397629608892, 0.2592592572432197, 0.9629629710271213,
+		0.8518518296753963, 0.5185185417029887, -0.07407416681195528,
+		-0.5185185689195382, 0.8148148007025278, -0.2592592028101106
 	};
 
-	ZSL_MATRIX_DEF(merr, 3, 3);
-	ZSL_MATRIX_DEF(rot, 4, 4);
+	ZSL_MATRIX_DEF(merr, 2, 2);
+	ZSL_MATRIX_DEF(rot, 3, 3);
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure inappropriately size matrices fail. */
 	rc = zsl_quat_from_rot_mtx(&merr, &q);
 	zassert_true(rc == -EINVAL, NULL);
 #endif
-
-	/* Make sure invalid 4x4 matrix expansions fail (missing 1.0 at 3,3). */
-	zsl_mtx_init(&rot, NULL);
-	rc = zsl_quat_from_rot_mtx(&rot, &q);
-	zassert_true(rc == -EINVAL, NULL);
 
 	/* Populate rotation matrix with valid data. */
 	rc = zsl_mtx_from_arr(&rot, data);

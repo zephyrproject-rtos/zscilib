@@ -777,6 +777,60 @@ void test_sta_weighted_mult_linear_regression(void)
 }
 #endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+void test_sta_quadric_fitting(void)
+{
+	int rc;
+	
+	ZSL_MATRIX_DEF(m, 12, 3);
+	ZSL_MATRIX_DEF(m2, 9, 4);
+	ZSL_VECTOR_DEF(b, 9);
+	ZSL_VECTOR_DEF(b2, 5);
+
+	/* Data points. */
+	zsl_real_t a[36] = {
+		7.0,  22.0, 31.0,
+		7.0,  19.0, 28.0,
+		9.0,  23.0, 31.0,
+		9.0,  19.0, 27.0,
+		11.0, 24.0, 29.0,
+		11.0, 20.0, 26.0,
+		8.0,  21.0, 32.0,
+		8.0,  17.0, 29.0,
+		10.0, 22.0, 32.0,
+		10.0, 18.0, 28.0,
+		12.0, 23.0, 31.0,
+		12.0, 19.0, 28.0
+	};
+	
+	/* Assign arrays to the matrices. */
+	rc = zsl_mtx_from_arr(&m, a);
+	zassert_true(rc == 0, NULL);
+	rc = zsl_mtx_from_arr(&m2, a);
+	zassert_true(rc == 0, NULL);
+
+	/* Calculate the coefficiens of the least square fitting. */
+	rc = zsl_sta_quad_fit(&m, &b);
+	zassert_true(rc == 0, NULL);
+	zassert_true(val_is_equal(b.data[0], -0.000555, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[1], -0.000834, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[2], -0.000977, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[3], 0.000483, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[4], -0.000468, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[5], 0.000258, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[6], 0.009216, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[7], 0.004983, 1E-6), NULL);
+	zassert_true(val_is_equal(b.data[8], 0.027798, 1E-6), NULL);
+
+	/* Calculate the coefficiens of the least square fitting. An error is
+	 * expected due to invalid matrix/vector dimensions. */
+	rc = zsl_sta_quad_fit(&m2, &b);
+	zassert_true(rc == -EINVAL, NULL);
+	rc = zsl_sta_quad_fit(&m, &b2);
+	zassert_true(rc == -EINVAL, NULL);
+}
+#endif
+
 void test_sta_absolute_error(void)
 {
 	int rc;

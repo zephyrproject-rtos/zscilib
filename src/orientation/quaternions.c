@@ -560,27 +560,11 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the rotation matrix has an appropriate shape and size. */
-	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+	if ((m->sz_cols != 3) || (m->sz_rows != 3)) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
-
-	/*
-	 * To enable multiplication of a quaternion (treated as a 4x1 matrix) with
-	 * a 3x3 rotation matrix, we can extend the 3x3 rotation matrix to a 4x4
-	 * identify matrix, placing the rotation matrix in the first three rows and
-	 * columns, as follows:
-	 *
-	 *  --            --
-	 *  |  x  x  x  0  |
-	 *  |  x  x  x  0  |
-	 *  |  x  x  x  0  |
-	 *  |  0  0  0  1  |
-	 *  --            --
-	 */
-
-	zsl_mtx_init(m, NULL);
 
 	/* Note: This can be optimised by pre-calculating shared values. */
 
@@ -599,8 +583,6 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
 	zsl_mtx_set(m, 2, 1, 2.0 * (q->j * q->k + q->i * q->r));
 	zsl_mtx_set(m, 2, 2, 1.0 - 2.0 * (q->i * q->i + q->j * q->j));
 
-	zsl_mtx_set(m, 3, 3, 1.0);
-
 err:
 	return rc;
 }
@@ -608,30 +590,35 @@ err:
 int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q)
 {
 	int rc = 0;
-	zsl_real_t ichk = 0.0;
-	zsl_real_t r4;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the rotation matrix has an appropriate shape and size. */
-	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+	if ((m->sz_cols != 3) || (m->sz_rows != 3)) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
 
-	/* Make sure this is an appropriately-configured identity matrix. */
-	zsl_mtx_get(m, 3, 3, &ichk);
-	if (zsl_quat_val_is_equal(ichk, 1.0, 1E-6) == false) {
-		rc = -EINVAL;
-		goto err;
+	/* Convert rotation matrix to unit quaternion. */
+	q->r = 0.5 * ZSL_SQRT( m->data[0] + m->data[4] + m->data[8] + 1.0);
+	q->i = 0.5 * ZSL_SQRT( m->data[0] - m->data[4] - m->data[8] + 1.0);
+	q->j = 0.5 * ZSL_SQRT(-m->data[0] + m->data[4] - m->data[8] + 1.0);
+	q->k = 0.5 * ZSL_SQRT(-m->data[0] - m->data[4] + m->data[8] + 1.0);
+
+	if (ZSL_ABS(m->data[7] - m->data[5]) > 1E-6) {
+		/* Multiply by the sign of m21 - m12. */
+		q->i *= (m->data[7] - m->data[5]) / ZSL_ABS(m->data[7] - m->data[5]);
 	}
 
-	/* Convert rotation matrix to unit quaternion. */
-	q->r = ZSL_SQRT(m->data[0] + m->data[5] + m->data[10] + m->data[15]) / 2.0;
-	r4 = q->r * 4.0;
-	q->i = (m->data[9] - m->data[6]) / r4;
-	q->j = (m->data[2] - m->data[8]) / r4;
-	q->k = (m->data[4] - m->data[1]) / r4;
+	if (ZSL_ABS(m->data[2] - m->data[6]) > 1E-6) {
+		/* Multiply by the sign of m02 - m20. */
+		q->j *= (m->data[2] - m->data[6]) / ZSL_ABS(m->data[2] - m->data[6]);
+	}
+
+	if (ZSL_ABS(m->data[3] - m->data[1]) > 1E-6) {
+		/* Multiply by the sign of m10 - m01. */
+		q->k *= (m->data[3] - m->data[1]) / ZSL_ABS(m->data[3] - m->data[1]);
+	}
 
 err:
 	return rc;

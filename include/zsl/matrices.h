@@ -508,6 +508,21 @@ int zsl_mtx_sub_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
 int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
 
 /**
+ * @brief Multiplies matrix 'ma' by 'mb', assigning the output to 'ma'.
+ *        Matrices 'ma' and 'mb' must be compatibly shaped, meaning that
+ *        'ma' must have the same numbers of columns as there are rows
+ *        in 'mb'. To use this function, 'mb' must be a square matrix.
+ * 	      This function is destructive.
+ *
+ * @param ma    Pointer to the first input zsl_mtx.
+ * @param mb    Pointer to the second input zsl_mtx.
+ *
+ * @return  0 if everything executed correctly, or -EINVAL if the input
+ *          matrices are not compatibly shaped.
+ */
+int zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb);
+
+/**
  * @brief Multiplies all elements in matrix 'm' by scalar value 's'.
  *
  * @param m     Pointer to the zsl_mtz to adjust.

@@ -30,14 +30,33 @@
 extern "C" {
 #endif
 
+/* Source: https://ahrs.readthedocs.io/en/latest/filters/ekf.html */
+
 /**
  * @brief Config settings for the extended Kalman filter.
  */
 struct zsl_fus_kalm_cfg {
 	/**
-	 * @brief ToDo: Document!
+	 * @brief Noise spectral density of the gyroscope, in rad/s.
 	 */
 	zsl_real_t var_g;
+
+	/**
+	 * @brief Noise spectral density of the accelerometer, in m/s.
+	 */
+	zsl_real_t var_a;
+
+	/**
+	 * @brief Noise spectral density of the magnetometer, in micro Tesla.
+	 */
+	zsl_real_t var_m;
+
+	/**
+	 * @brief The predicted error state covariance, which is updated every
+	 * 		  iteration. Its first value (P0) is a 4x4 identity matrix.
+	 */
+	struct zsl_mtx P;
+	
 };
 
 /**
@@ -56,13 +75,15 @@ int zsl_fus_kalm_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
+ * @param dip	Input magnetic dip angle, in radians. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
+ * @param cfg   Pointer to the config struct for this algorithm.
  *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
 int zsl_fus_kalm_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void *cfg);
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
 
 /**
  * @brief Default error handler for the extended Kalman filter driver.

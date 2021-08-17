@@ -46,6 +46,7 @@ extern void test_matrix_sub(void);
 extern void test_matrix_sub_d(void);
 extern void test_matrix_mult_sq(void);
 extern void test_matrix_mult_rect(void);
+extern void test_matrix_mult_d(void);
 extern void test_matrix_scalar_mult_d(void);
 extern void test_matrix_scalar_mult_row_d(void);
 extern void test_matrix_trans(void);
@@ -314,6 +315,7 @@ extern void test_sta_standard_error(void);
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 extern void test_sta_mult_linear_regression(void);
 extern void test_sta_weighted_mult_linear_regression(void);
+extern void test_sta_quadric_fitting(void);
 #endif
 
 extern void test_prob_uniform_pdf(void);
@@ -340,8 +342,11 @@ extern void test_att_to_euler(void);
 extern void test_att_from_euler(void);
 extern void test_att_from_accelmag(void);
 extern void test_att_from_accel(void);
+extern void test_att_accel_angle(void);
 
 extern void test_eul_to_vec(void);
+
+extern void test_grav_lat_alt(void);
 
 extern void test_quat_init(void);
 extern void test_quat_magn(void);
@@ -371,8 +376,17 @@ extern void test_fus_madgwick(void);
 extern void test_fus_mahony(void);
 extern void test_fus_saam(void);
 extern void test_fus_complementary(void);
-extern void test_fus_aqua(void);
+// extern void test_fus_aqua(void);
 extern void test_fus_kalman(void);
+
+extern void test_fus_cal_rot_mtx(void);
+extern void test_fus_cal_rot_axis_angle(void);
+extern void test_fus_cal_magn_corr(void);
+
+/* Test for functions that only work with double-precision floats. */
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+extern void test_fus_cal_magn(void);
+#endif
 
 void test_main(void)
 {
@@ -418,6 +432,7 @@ void test_main(void)
 			 ztest_unit_test(test_matrix_sub_d),
 			 ztest_unit_test(test_matrix_mult_sq),
 			 ztest_unit_test(test_matrix_mult_rect),
+			 ztest_unit_test(test_matrix_mult_d),
 			 ztest_unit_test(test_matrix_scalar_mult_d),
 			 ztest_unit_test(test_matrix_scalar_mult_row_d),
 			 ztest_unit_test(test_matrix_trans),
@@ -695,8 +710,11 @@ void test_main(void)
 			 ztest_unit_test(test_att_from_euler),
 			 ztest_unit_test(test_att_from_accelmag),
 			 ztest_unit_test(test_att_from_accel),
+			 ztest_unit_test(test_att_accel_angle),
 
 			 ztest_unit_test(test_eul_to_vec),
+
+			 ztest_unit_test(test_grav_lat_alt),
 
 			 ztest_unit_test(test_quat_init),
 			 ztest_unit_test(test_quat_magn),
@@ -726,8 +744,12 @@ void test_main(void)
 			 ztest_unit_test(test_fus_mahony),
 			 ztest_unit_test(test_fus_saam),
 			 ztest_unit_test(test_fus_complementary),
-			 ztest_unit_test(test_fus_aqua),
-			 ztest_unit_test(test_fus_kalman)
+			//  ztest_unit_test(test_fus_aqua),
+			//  ztest_unit_test(test_fus_kalman),
+
+			 ztest_unit_test(test_fus_cal_rot_mtx),
+			 ztest_unit_test(test_fus_cal_rot_axis_angle),
+			 ztest_unit_test(test_fus_cal_magn_corr)
 			 );
 
 	ztest_run_test_suite(zsl_tests);
@@ -742,7 +764,10 @@ void test_main(void)
 			 ztest_unit_test(test_matrix_pinv),
 
 			 ztest_unit_test(test_sta_mult_linear_regression),
-			 ztest_unit_test(test_sta_weighted_mult_linear_regression)
+			 ztest_unit_test(test_sta_weighted_mult_linear_regression),
+			 ztest_unit_test(test_sta_quadric_fitting),
+
+			 ztest_unit_test(test_fus_cal_magn)
 			 );
 
 	ztest_run_test_suite(zsl_tests_double);

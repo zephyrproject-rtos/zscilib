@@ -445,16 +445,41 @@ zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc)
 	}
 #endif
 
-	for (size_t i = 0; i < ma->sz_rows; i++) {
-		for (size_t j = 0; j < mb->sz_cols; j++) {
-			mc->data[j + i * mb->sz_cols] = 0;
-			for (size_t k = 0; k < ma->sz_cols; k++) {
-				mc->data[j + i * mb->sz_cols] +=
-					ma->data[k + i * ma->sz_cols] *
-					mb->data[j + k * mb->sz_cols];
+	ZSL_MATRIX_DEF(ma_copy, ma->sz_rows, ma->sz_cols);
+	ZSL_MATRIX_DEF(mb_copy, mb->sz_rows, mb->sz_cols);
+	zsl_mtx_copy(&ma_copy, ma);
+	zsl_mtx_copy(&mb_copy, mb);
+
+	for (size_t i = 0; i < ma_copy.sz_rows; i++) {
+		for (size_t j = 0; j < mb_copy.sz_cols; j++) {
+			mc->data[j + i * mb_copy.sz_cols] = 0;
+			for (size_t k = 0; k < ma_copy.sz_cols; k++) {
+				mc->data[j + i * mb_copy.sz_cols] +=
+					ma_copy.data[k + i * ma_copy.sz_cols] *
+					mb_copy.data[j + k * mb_copy.sz_cols];
 			}
 		}
 	}
+
+	return 0;
+}
+
+int
+zsl_mtx_mult_d(struct zsl_mtx *ma, struct zsl_mtx *mb)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Ensure that ma has the same number as columns as mb has rows. */
+	if (ma->sz_cols != mb->sz_rows) {
+		return -EINVAL;
+	}
+
+	/* Ensure that mb is a square matrix. */
+	if (mb->sz_rows != mb->sz_cols) {
+		return -EINVAL;
+	}
+#endif
+
+	zsl_mtx_mult(ma, mb, ma);
 
 	return 0;
 }

@@ -107,3 +107,27 @@ int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a)
 err:
 	return rc;
 }
+
+int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b)
+{
+		int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the accelerometer vectors are size 3. */
+	if (a1->sz != 3 || a2->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	zsl_real_t a1_norm, a2_norm, dot;
+
+	a1_norm = zsl_vec_norm(a1);
+	a2_norm = zsl_vec_norm(a2);
+	zsl_vec_dot(a1, a2, &dot);
+
+	*b = ZSL_ACOS(dot / (a1_norm * a2_norm));
+
+err:
+	return rc;
+}

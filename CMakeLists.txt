@@ -25,6 +25,7 @@ zephyr_library_sources(
     src/orientation/fusion/aqua.c
     src/orientation/fusion/complementary.c
     src/orientation/fusion/kalman.c
+    src/orientation/fusion/calibration.c
     src/physics/atomic.c
     src/physics/dynamics.c
     src/physics/eleccomp.c

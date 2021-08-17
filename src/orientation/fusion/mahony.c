@@ -14,7 +14,8 @@ static uint32_t zsl_fus_mahn_freq = 0;
 
 static int zsl_fus_mahony_imu(struct zsl_vec *g, struct zsl_vec *a,
 			      zsl_real_t *Kp, zsl_real_t *Ki,
-			      struct zsl_vec *integralFB, struct zsl_quat *q)
+			      struct zsl_vec *integralFB, zsl_real_t *dip,
+				  struct zsl_quat *q)
 {
 	int rc = 0;
 
@@ -90,9 +91,8 @@ err:
 }
 
 static int zsl_fus_mahony(struct zsl_vec *g, struct zsl_vec *a,
-			  struct zsl_vec *m,
-			  zsl_real_t *Kp, zsl_real_t *Ki,
-			  struct zsl_vec *integralFB, struct zsl_quat *q)
+			  struct zsl_vec *m, zsl_real_t *Kp, zsl_real_t *Ki,
+			  struct zsl_vec *integralFB, zsl_real_t *dip, struct zsl_quat *q)
 {
 	int rc = 0;
 
@@ -112,7 +112,7 @@ static int zsl_fus_mahony(struct zsl_vec *g, struct zsl_vec *a,
 
 	/* Use IMU algorithm if the magnetometer measurement is invalid. */
 	if ((m == NULL) || (ZSL_ABS(zsl_vec_norm(m)) < 1E-6)) {
-		return zsl_fus_mahony_imu(g, a, Kp, Ki, integralFB, q);
+		return zsl_fus_mahony_imu(g, a, Kp, Ki, integralFB, dip, q);
 	}
 
 	/* Continue with the calculations only if the data from the accelerometer
@@ -159,11 +159,20 @@ static int zsl_fus_mahony(struct zsl_vec *g, struct zsl_vec *a,
 
 		/* Define the normalized quaternion 'b' of magnetic field on the
 		 * earth's reference frame, which only has a x (north) and z (vertical)
-		 * components. */
-		struct zsl_quat h;
-		zsl_quat_rot(q, &qm, &h);
-		zsl_real_t bx = ZSL_SQRT(h.i * h.i + h.j * h.j);
-		zsl_real_t bz = h.k;
+		 * components. If the dip angle is known, use it to calculate this
+		 * vector. */
+		zsl_real_t bx;
+		zsl_real_t bz;
+
+		if (dip == NULL) {	
+			struct zsl_quat h;
+			zsl_quat_rot(q, &qm, &h);
+			bx = ZSL_SQRT(h.i * h.i + h.j * h.j);
+			bz = h.k;
+		} else {
+			bx = ZSL_COS(*dip);
+			bz = ZSL_SIN(*dip);
+		}
 
 		struct zsl_quat b = { .r = 0.0, .i = bx, .j = 0.0, .k = bz };
 
@@ -237,11 +246,16 @@ err:
 }
 
 int zsl_fus_mahn_feed(struct zsl_vec *a, struct zsl_vec *m, struct zsl_vec *g,
-		      struct zsl_quat *q, void *cfg)
+		      zsl_real_t *dip, struct zsl_quat *q, void *cfg)
 {
     struct zsl_fus_mahn_cfg *mcfg = cfg;
 
-	return zsl_fus_mahony(g, a, m, &(mcfg->kp), &(mcfg->ki), &(mcfg->intfb), q);
+	if (mcfg->kp < 0.0 || mcfg->ki < 0.0) {
+		return -EINVAL;
+	}
+
+	return zsl_fus_mahony(g, a, m, &(mcfg->kp), &(mcfg->ki), &(mcfg->intfb),
+						  dip, q);
 }
 
 void zsl_fus_mahn_error(int error)

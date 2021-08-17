@@ -366,6 +366,27 @@ int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 		       struct zsl_vec *w, struct zsl_vec *b, zsl_real_t *r);
 #endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+/**
+ * @brief This function uses the least squares fitting method to compute the
+ * 		  coefficients of a quadric surface given a set of tridimensional
+ * 		  points.
+ * 
+ * A quadric is a 3D surface that is defined by the equation:
+ * Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz + 2Fyz + 2Gx + 2Hy + 2Iz = 1.
+ * Spheres and ellipsoids are special cases of quadrics. This function takes a
+ * set of points (x,y,z) and returns the coeffitiens (A, B, C, D, E, F, G, H, I)
+ * of the quadric surface that best fit the given points.
+ *
+ * @param m   Matrix, whose rows are the (x, y, z) points.
+ * @param b   Pointer to the calculated coefficients of the quadric.
+ *
+ * @return 0 on success, and -EINVAL if dimension of the input vectors isn't 9
+ * 		   and the input matrix isn't a Nx3 matrix.
+ */
+int zsl_sta_quad_fit(struct zsl_mtx *m, struct zsl_vec *b);
+#endif
+
 /**
  * @brief Calculates the absolute error given a value and its expected value.
  *

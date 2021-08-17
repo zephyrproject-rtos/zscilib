@@ -15,6 +15,8 @@ extern const struct zsl_mtx zsl_fus_data_mag;
 extern const struct zsl_mtx zsl_fus_data_gyr;
 extern const struct zsl_mtx zsl_fus_data_acc;
 
+extern const struct zsl_mtx zsl_fus_data_magn_cal;
+
 #ifdef __cplusplus
 }
 #endif

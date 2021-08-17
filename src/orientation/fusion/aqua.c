@@ -26,11 +26,6 @@ static int zsl_fus_aqua(struct zsl_vec *a, struct zsl_vec *m,
 		rc = -EINVAL;
 		goto err;
 	}
-	/* Make sure that the input quaternion is not zero. */
-	if (ZSL_ABS(zsl_quat_magn(q)) < 1E-6) {
-		rc = -EINVAL;
-		goto err;
-	}
 #endif
 
 	/* Convert the input quaternion to a unit quaternion. */
@@ -114,17 +109,17 @@ static int zsl_fus_aqua(struct zsl_vec *a, struct zsl_vec *m,
 			/* Compute the delta q_mag quaternion. */
 			zsl_real_t y = ZSL_SQRT(ql.i * ql.i + ql.j * ql.j);
 			struct zsl_quat Dq_mag = {
-				.r = ZSL_SQRT((y + ql.i * ZSL_SQRT(y)) / (2.0 * y)),
+				.r = ZSL_SQRT((y * y + ql.i * y) / (2.0 * y * y)),
 				.i = 0.0,
 				.j = 0.0,
-				.k = ql.j / ZSL_SQRT(2.0 * (y + ql.i * ZSL_SQRT(y)))
+				.k = ql.j / ZSL_SQRT(2.0 * (y * y + ql.i * y))
 			};
 
 			/* Scale down the delta q_mag quaternion by using spherical linear
 			 * interpolation or simply linear interpolation to minimize the
 			 * effects of high frequency noise in the magnetometer. */
 			struct zsl_quat q_mag;
-			if (Dq_acc.r > *e_m) {
+			if (Dq_mag.r > *e_m) {
 				zsl_quat_lerp(&qi, &Dq_mag, *beta, &q_mag);
 			} else {
 				zsl_quat_slerp(&qi, &Dq_mag, *beta, &q_mag);
@@ -202,15 +197,15 @@ static int zsl_fus_aqua_quat_init(struct zsl_vec *a, struct zsl_vec *m,
 			/* Calculate q_mag in two different ways to avoid singularities. */
 			zsl_real_t y = ZSL_SQRT(ql.i * ql.i + ql.j * ql.j);
 			if (ql.i >= 0.0) {
-				q_mag.r = ZSL_SQRT((y + ql.i * ZSL_SQRT(y)) / (2.0 * y));
+				q_mag.r = ZSL_SQRT((y * y + ql.i * y) / (2.0 * y * y));
 				q_mag.i = 0.0;
 				q_mag.j = 0.0;
-				q_mag.k = ql.j / ZSL_SQRT(2.0 * (y + ql.i * ZSL_SQRT(y)));
+				q_mag.k = ql.j / ZSL_SQRT(2.0 * (y * y + ql.i * y));
 			} else {
-				q_mag.r = ql.j / ZSL_SQRT(2.0 * (y - ql.i * ZSL_SQRT(y)));
+				q_mag.r = ql.j / ZSL_SQRT(2.0 * (y * y - ql.i * y));
 				q_mag.i = 0.0;
 				q_mag.j = 0.0;
-				q_mag.k = ZSL_SQRT((y - ql.i * ZSL_SQRT(y)) / (2.0 * y));
+				q_mag.k = ZSL_SQRT((y * y - ql.i * y) / (2.0 * y * y));
 			}
 		}
 	}
@@ -220,7 +215,7 @@ static int zsl_fus_aqua_quat_init(struct zsl_vec *a, struct zsl_vec *m,
 	zsl_quat_mult(&q_acc, &q_mag, q);
 
 	/* Inidicate that we have already called this function. */
-	zsl_fus_aqua_initialised = 1;
+	zsl_fus_aqua_initialised++;
 
 err:
 	return rc;
@@ -228,6 +223,16 @@ err:
 
 static int zsl_fus_aqua_alpha_init(struct zsl_vec *a, zsl_real_t *alpha)
 {
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the input vector is tridimensional. */
+	if (a->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
 	/* Calculate the value of alpha, which depends on the magnitude error
 	 * (m_e) and the value of alpha in static conditions. */
 	zsl_real_t n = zsl_vec_norm(a);
@@ -239,7 +244,11 @@ static int zsl_fus_aqua_alpha_init(struct zsl_vec *a, zsl_real_t *alpha)
 		*alpha *= (0.2 - m_e) / 0.1;
 	}
 
-	return 0;
+	/* Inidicate that we have already called this function. */
+	zsl_fus_aqua_initialised++;
+
+err:
+	return rc;
 }
 
 int zsl_fus_aqua_init(uint32_t freq, void* cfg)
@@ -264,12 +273,16 @@ err:
 }
 
 int zsl_fus_aqua_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void* cfg)
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void* cfg)
 {	
-	
 	struct zsl_fus_aqua_cfg *mcfg = cfg;
 
-	/* This function should only be called once. */
+	if (mcfg->alpha < 0.0 || mcfg->alpha > 1.0 || mcfg->beta < 0.0 ||
+	    mcfg->beta > 1.0) {
+		return -EINVAL;
+	}
+
+	/* This functions should only be called once. */
     if (!zsl_fus_aqua_initialised) {
 		zsl_fus_aqua_quat_init(a, m, q);
 		zsl_fus_aqua_alpha_init(a, &(mcfg->alpha));

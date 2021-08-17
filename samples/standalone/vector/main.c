@@ -17,7 +17,7 @@ int main(void)
 {	
 	FILE * fh;
 	size_t count = 0;
-    fh = fopen("data2.txt","r");
+    fh = fopen("data.txt","r");
 	zsl_real_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10;
 
 	while ((d1 = fgetc(fh)) != EOF) {
@@ -27,6 +27,8 @@ int main(void)
 		// printf ("\t%lf, %lf, %lf,\n", d2, d3, d4);
 		printf ("\t%lf, %lf, %lf,\n", d5, d6, d7);
 		// printf ("\t%lf, %lf, %lf,\n", d8, d9, d10);
+
+		printf ("(%lf, %lf, %lf), ", d5, d6, d7);
 		count++;
 		// printf ("%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf\n",
 		// d1, d2, d3, d4, d5, d6, d7, d8, d9, d10);

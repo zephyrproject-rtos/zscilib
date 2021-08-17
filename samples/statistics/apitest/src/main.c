@@ -331,7 +331,6 @@ void statistics_demo(void)
 	zsl_real_t sd_data [10] = { 17.0, 9.0, 9.0, 7.0, 7.0,
 								 6.0, 6.0, 6.0, 5.0, 5.0 };
 
-
 	zsl_mtx_from_arr(&invenergyvec, invenergy_data);
 	zsl_vec_from_arr(&crossxvec, crossx_data);
 	zsl_vec_from_arr(&sdvec, sd_data);
@@ -352,6 +351,42 @@ void statistics_demo(void)
 
 	printf("\n");
 
+	ZSL_MATRIX_DEF(el, 12, 3);
+	ZSL_VECTOR_DEF(el_coef, 9);
+
+	/* Ellipsoid points. */
+	zsl_real_t el_data[36] = {
+		13.0, 12.0, 41.0,
+		2.0,  19.0, 21.0,
+		9.0,  23.0, 31.0,
+		6.0,  19.0, 27.0,
+		11.0, 11.0, 29.0,
+		18.0, 20.0, 20.0,
+		8.0,  21.0, 32.0,
+		8.0,  17.0, 29.0,
+		10.0, 22.0, 32.0,
+		13.0, 29.0, 38.0,
+		12.0, 23.0, 39.0,
+		12.0, 12.0, 28.0
+	};
+	
+	zsl_mtx_from_arr(&el, el_data);
+
+	printf("\n");
+	printf("Ellipsoid fitting:\n");
+
+	zsl_sta_quad_fit(&el, &el_coef);
+
+	printf("  least squares method:\n");
+	printf("    A:      %f\n", el_coef.data[0]);
+	printf("    B:      %f\n", el_coef.data[1]);
+	printf("    C:      %f\n", el_coef.data[2]);
+	printf("    D:      %f\n", el_coef.data[3]);
+	printf("    E:      %f\n", el_coef.data[4]);
+	printf("    F:      %f\n", el_coef.data[5]);
+	printf("    G:      %f\n", el_coef.data[6]);
+	printf("    H:      %f\n", el_coef.data[7]);
+	printf("    I:      %f\n", el_coef.data[8]);
 }
 
 

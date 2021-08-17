@@ -30,25 +30,25 @@
 extern "C" {
 #endif
 
+/* Source: https://ahrs.readthedocs.io/en/latest/filters/mahony.html */
+
 /**
  * @brief Config settings for the Mahony sensor fusion algorithm.
  */
 struct zsl_fus_mahn_cfg {
 	/**
-	 * @brief
-	 *
+	 * @brief Proportional filter gain constant. Must be greater than 0.
 	 */
 	zsl_real_t kp;
 
 	/**
-	 * @brief
-	 *
+	 * @brief Integral filter gain constant. Must be greater than 0.
 	 */
 	zsl_real_t ki;
 
 	/**
-	 * @brief 
-	 * 
+	 * @brief Integral feedback vector, which is updated every iteration. 
+	 * 		  Its initial value must be (0, 0, 0).
 	 */
 	struct zsl_vec intfb;
 };
@@ -70,6 +70,7 @@ int zsl_fus_mahn_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
+ * @param dip	Input magnetic dip angle, in radians. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -77,7 +78,7 @@ int zsl_fus_mahn_init(uint32_t freq, void *cfg);
  *              negative error code.
  */
 int zsl_fus_mahn_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void *cfg);
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
 
 /**
  * @brief Default error handler for the Mahony sensor fusion driver.

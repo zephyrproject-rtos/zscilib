@@ -134,6 +134,18 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
  */
 int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a);
 
+/**
+ * @brief Calculates the angle between two accelerometers.
+ *
+ * @param a1 	First acceleration triplet in m/s^2.
+ * @param a2 	First acceleration triplet in m/s^2.
+ * @param b		Angle between the accelerometers, in radians.
+ *
+ * @return 0 if everything executed correctly, otherwise a negative error code
+ *         if the accelerometer data is not tridimensional.
+ */
+int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b);
+
 #ifdef __cplusplus
 }
 #endif

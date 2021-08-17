@@ -30,15 +30,21 @@ extern "C" {
 #endif
 
 /**
- * @brief Converts a three-axis accelerometer sample (in m/s^2) to roll and
- *        pitch.
+ * @brief Calculates the geographical gravitational field based on latitude and
+ *        altitude over the sea level.
+ * 
+ * Information taken from the following webpage:
+ * https://www.welmec.org/welmec/documents/guides/2/2021/WELMEC_Guide_2_v2021.pdf
  *
- * @param accel 	Acceleration triplet in m/s^2.
- * @param a 		Pointer the the output @ref zsl_attitude struct.
+ * @param lat  	Latitude of the point where the gravity is to be calculated,
+ *              in degrees.
+ * @param alt 	Altitude of the point of interest, in meters.
+ * @param g 	Pointer the the output gravity, in meters per second squared.
  *
- * @return 0 if everything executed correctly, otherwise a negative error code.
+ * @return 0 if everything executed correctly, -EINVAL if the altitude is
+ *         negative or if the latitude is not between -90 and 90 degrees.
  */
-int zsl_grav_lat_alt(zsl_real_t *lat, zsl_real_t *alt, zsl_real_t *g);
+int zsl_grav_lat_alt(zsl_real_t lat, zsl_real_t alt, zsl_real_t *g);
 
 #ifdef __cplusplus
 }

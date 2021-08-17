@@ -100,9 +100,13 @@ err:
 }
 
 int zsl_fus_comp_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void* cfg)
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void* cfg)
 {
 	struct zsl_fus_comp_cfg *mcfg = cfg;
+
+	if (mcfg->alpha < 0.0 || mcfg->alpha > 1.0) {
+		return -EINVAL;
+	}
 
 	return zsl_fus_comp(a, m, g, &(mcfg->alpha), q);
 }

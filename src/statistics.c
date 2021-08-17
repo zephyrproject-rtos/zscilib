@@ -614,6 +614,54 @@ int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 }
 #endif
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int zsl_sta_quad_fit(struct zsl_mtx *m, struct zsl_vec *b)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure matrices and vectors' sizes are adequate. */
+	if (m->sz_cols != 3 || b->sz != 9) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_MATRIX_DEF(x, m->sz_rows, 9);
+	ZSL_VECTOR_DEF(xv, 9);
+	ZSL_VECTOR_DEF(mv, 3);
+	ZSL_MATRIX_DEF(y, m->sz_rows, 1);
+
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		zsl_mtx_get_row(m, i, mv.data);
+		xv.data[0] = mv.data[0] * mv.data[0];
+		xv.data[1] = mv.data[1] * mv.data[1];
+		xv.data[2] = mv.data[2] * mv.data[2];
+		xv.data[3] = 2.0 * mv.data[0] * mv.data[1];
+		xv.data[4] = 2.0 * mv.data[0] * mv.data[2];
+		xv.data[5] = 2.0 * mv.data[1] * mv.data[2];
+		xv.data[6] = 2.0 * mv.data[0];
+		xv.data[7] = 2.0 * mv.data[1];
+		xv.data[8] = 2.0 * mv.data[2];
+		zsl_mtx_set_row(&x, i, xv.data);
+		y.data[i] = 1.0;
+	}
+
+	ZSL_MATRIX_DEF(xt, 9, m->sz_rows);
+	ZSL_MATRIX_DEF(xtx, 9, 9);
+	ZSL_MATRIX_DEF(inv, 9, 9);
+	ZSL_MATRIX_DEF(xtmp, 9, m->sz_rows);
+	ZSL_MATRIX_DEF(btmp, 9, 1);
+
+	zsl_mtx_trans(&x, &xt);
+	zsl_mtx_mult(&xt, &x, &xtx);
+	zsl_mtx_inv(&xtx, &inv);
+	zsl_mtx_mult(&inv, &xt, &xtmp);
+	zsl_mtx_mult(&xtmp, &y, &btmp);
+
+	zsl_vec_from_arr(b, btmp.data);
+
+	return 0;
+}
+#endif
+
 int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 {
 	*err = ZSL_ABS(*val - *exp_val);

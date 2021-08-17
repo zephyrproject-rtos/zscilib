@@ -859,6 +859,63 @@ void test_matrix_mult_rect(void)
 	zassert_equal(mref.data[11], mc.data[11], NULL);
 }
 
+void test_matrix_mult_d(void)
+{
+	int rc = 0;
+
+	/* Input matrix a. */
+	zsl_real_t data_a[9] = { 1.0, 2.0, 3.0,
+				 4.0, 5.0, 6.0,
+				 7.0, 8.0, 9.0 };
+	struct zsl_mtx ma = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data_a
+	};
+
+	/* Input matrix b. */
+	zsl_real_t data_b[9] = { 10.0, 20.0, 30.0,
+				 40.0, 50.0, 60.0,
+				 70.0, 80.0, 90.0 };
+	struct zsl_mtx mb = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data_b
+	};
+
+	/* Output reference matrix (for comparison). */
+	zsl_real_t data_ref[9] = { 300.0,  360.0,  420.0,
+				   660.0,  810.0,  960.0,
+				   1020.0, 1260.0, 1500.0 };
+	struct zsl_mtx mref = {
+		.sz_rows = 3,
+		.sz_cols = 3,
+		.data = data_ref
+	};
+
+	/* Perform a valid matrix multiplication. */
+	rc = zsl_mtx_mult_d(&ma, &mb);
+	zassert_equal(rc, 0, NULL);
+	zassert_equal(mref.data[0], ma.data[0], NULL);
+	zassert_equal(mref.data[1], ma.data[1], NULL);
+	zassert_equal(mref.data[2], ma.data[2], NULL);
+	zassert_equal(mref.data[3], ma.data[3], NULL);
+	zassert_equal(mref.data[4], ma.data[4], NULL);
+	zassert_equal(mref.data[5], ma.data[5], NULL);
+	zassert_equal(mref.data[6], ma.data[6], NULL);
+	zassert_equal(mref.data[7], ma.data[7], NULL);
+	zassert_equal(mref.data[8], ma.data[8], NULL);
+
+	/* Perform a invalid matrix multiplications. */
+	ZSL_MATRIX_DEF(mb2, 3, 4);
+	rc = zsl_mtx_mult_d(&ma, &mb2);
+	zassert_equal(rc, -EINVAL, NULL);
+
+	ZSL_MATRIX_DEF(ma2, 1, 5);
+	rc = zsl_mtx_mult_d(&ma2, &mb);
+	zassert_equal(rc, -EINVAL, NULL);
+}
+
 /**
  * @brief zsl_mtx_scalar_mult_d unit tests.
  *

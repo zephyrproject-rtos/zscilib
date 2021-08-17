@@ -80,7 +80,7 @@ err:
 }
 
 int zsl_fus_saam_feed(struct zsl_vec *a, struct zsl_vec *m,
-		      struct zsl_vec *g, struct zsl_quat *q, void *cfg)
+		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg)
 {
 	return zsl_fus_saam(a, m, q);
 }
