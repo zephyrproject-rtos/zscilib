@@ -36,7 +36,7 @@ extern "C" {
  *        rigid body in three-dimensional (Euclidean) space, with respect to a
  *        fixed coordinate system. Each element represents the rotation about
  *        the specified axis, expressed in radians.
- * 
+ *
  * @note Technically a Cardanian (AKA Tait–Bryan) angle, being limited to a
  *       single instance each of X, Y and Z.
  */

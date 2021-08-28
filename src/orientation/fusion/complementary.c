@@ -13,7 +13,7 @@
 static uint32_t zsl_fus_comp_freq = 0;
 
 static int zsl_fus_comp(struct zsl_vec *a, struct zsl_vec *m,
-                struct zsl_vec *g, zsl_real_t *alpha, struct zsl_quat *q)
+			struct zsl_vec *g, zsl_real_t *alpha, struct zsl_quat *q)
 {
 	int rc = 0;
 
@@ -21,7 +21,7 @@ static int zsl_fus_comp(struct zsl_vec *a, struct zsl_vec *m,
 	/* Make sure that the input vectors are tridimensional. Alpha must be
 	 * between zero and one (included). */
 	if ((a != NULL && (a->sz != 3)) || (m != NULL && (m->sz != 3)) ||
-	     g->sz != 3 || *alpha < 0.0 || *alpha > 1.0) {
+	    g->sz != 3 || *alpha < 0.0 || *alpha > 1.0) {
 		rc = -EINVAL;
 		goto err;
 	}
@@ -34,7 +34,7 @@ static int zsl_fus_comp(struct zsl_vec *a, struct zsl_vec *m,
 
 	/* Normalize the input quaternion. */
 	zsl_quat_to_unit_d(q);
-	
+
 	/* Estimate the orientation (q_w) using the angular velocity data from the
 	 * gyroscope. */
 	struct zsl_quat q_w;
@@ -68,7 +68,7 @@ static int zsl_fus_comp(struct zsl_vec *a, struct zsl_vec *m,
 		q->j = q_w.j;
 		q->k = q_w.k;
 	}
-	
+
 	/* Normalize the output quaternion. */
 	zsl_quat_to_unit_d(q);
 
@@ -76,13 +76,12 @@ err:
 	return rc;
 }
 
-
-
-int zsl_fus_comp_init(uint32_t freq, void* cfg)
+int zsl_fus_comp_init(uint32_t freq, void *cfg)
 {
 	int rc = 0;
 
 	struct zsl_fus_comp_cfg *mcfg = cfg;
+
 	(void)mcfg;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
@@ -100,7 +99,7 @@ err:
 }
 
 int zsl_fus_comp_feed(struct zsl_vec *a, struct zsl_vec *m,
-		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void* cfg)
+		      struct zsl_vec *g, zsl_real_t *incl, struct zsl_quat *q, void *cfg)
 {
 	struct zsl_fus_comp_cfg *mcfg = cfg;
 

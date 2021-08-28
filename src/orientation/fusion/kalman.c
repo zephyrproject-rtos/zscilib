@@ -15,13 +15,13 @@ static uint32_t zsl_fus_kalm_initialised = 0;
 
 static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 			  struct zsl_vec *m, zsl_real_t *var_g, zsl_real_t *var_a,
-			  zsl_real_t *var_m, zsl_real_t *dip, struct zsl_mtx *P,
+			  zsl_real_t *var_m, zsl_real_t *incl, struct zsl_mtx *P,
 			  struct zsl_quat *q)
 {
 	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
-	if (a == NULL || a->sz != 3 || m == NULL || m->sz != 3 || g == NULL || 
+	if (a == NULL || a->sz != 3 || m == NULL || m->sz != 3 || g == NULL ||
 	    g->sz != 3) {
 		rc = -EINVAL;
 		goto err;
@@ -32,16 +32,16 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 
 	/* Useful constant to reduce the code. */
 	zsl_real_t if2 = 1.0 / (2.0 * zsl_fus_kalm_freq);
-	
+
 	/* Calculate the matrix F and its transpose. */
 	ZSL_MATRIX_DEF(F, 4, 4);
 	ZSL_MATRIX_DEF(Ft, 4, 4);
 
-	zsl_real_t F_data [16] = {
-		1.0,    -if2 * g->data[0],    -if2 * g->data[1],    -if2 * g->data[2],
-		if2 * g->data[0],    1.0,      if2 * g->data[2],    -if2 * g->data[1],
-		if2 * g->data[1],    -if2 * g->data[2],    1.0,      if2 * g->data[0],
-		if2 * g->data[2],     if2 * g->data[1],    -if2 * g->data[0],     1.0,
+	zsl_real_t F_data[16] = {
+		1.0, -if2 * g->data[0], -if2 * g->data[1], -if2 * g->data[2],
+		if2 *g->data[0], 1.0, if2 *g->data[2], -if2 * g->data[1],
+		if2 *g->data[1], -if2 * g->data[2], 1.0, if2 *g->data[0],
+		if2 *g->data[2], if2 *g->data[1], -if2 * g->data[0], 1.0,
 	};
 
 	zsl_mtx_from_arr(&F, F_data);
@@ -51,10 +51,10 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 	ZSL_MATRIX_DEF(W, 4, 3);
 	ZSL_MATRIX_DEF(Wt, 3, 4);
 
-	zsl_real_t W_data [12] = {
+	zsl_real_t W_data[12] = {
 		-q->i, -q->j, -q->k,
-		 q->r, -q->k,  q->j,
-		 q->k,  q->r, -q->i,
+		q->r, -q->k,  q->j,
+		q->k,  q->r, -q->i,
 		-q->j,  q->i,  q->r
 	};
 
@@ -76,7 +76,6 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 	 * gyroscope and quaternion integration. */
 	zsl_quat_from_ang_vel(g, q, 1.0 / zsl_fus_kalm_freq, q);
 
-	
 	/* CORRECTION STEP. */
 
 	/* Normalize the magnetometer and accelerometer data. */
@@ -91,7 +90,7 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 	z.data[3] = m->data[0];
 	z.data[4] = m->data[1];
 	z.data[5] = m->data[2];
-	
+
 	/* Turn the data of the magnetometer into a pure quaterion. */
 	struct zsl_quat qm = {
 		.r = 0.0,
@@ -99,19 +98,19 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 		.j = m->data[1],
 		.k = m->data[2]
 	};
-	
+
 	/* Define the normalized gravity and magnetic field in the global NED
 	 * frame. */
 	struct zsl_quat gv = { .r = 0.0, .i = 0.0, .j = 0.0, .k = -1.0 };
 	struct zsl_quat mg = { .r = 0.0, .i = 0.0, .j = 0.0, .k = 0.0 };
-	if (dip == NULL) {
+	if (incl == NULL) {
 		struct zsl_quat h;
 		zsl_quat_rot(q, &qm, &h);
 		mg.i = ZSL_SQRT(h.i * h.i + h.j * h.j);
 		mg.k = h.k;
 	} else {
-		mg.i = ZSL_COS(*dip);
-		mg.k = ZSL_SIN(*dip);
+		mg.i = ZSL_COS(*incl * ZSL_PI / 180.0);
+		mg.k = ZSL_SIN(*incl * ZSL_PI / 180.0);
 	}
 
 	zsl_quat_to_unit_d(&mg);
@@ -136,12 +135,12 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 	 * transpose too. */
 	ZSL_MATRIX_DEF(H, 6, 4);
 	ZSL_MATRIX_DEF(Ht, 4, 6);
-	
-	zsl_real_t H_data [24] = {
+
+	zsl_real_t H_data[24] = {
 		/* Fisrt 3 rows of the H matrix. */
-		 q->j,          -q->k,           q->r,     -q->i,
-		-q->i,          -q->r,          -q->k,     -q->j,
-		  0.0,     2.0 * q->i,     2.0 * q->j,       0.0,
+		q->j, -q->k, q->r, -q->i,
+		-q->i, -q->r, -q->k, -q->j,
+		0.0, 2.0 * q->i, 2.0 * q->j, 0.0,
 
 		/* Fourth row of the H matrix. */
 		-mg.k * q->j, mg.k * q->k, -2.0 * mg.i * q->j - mg.k * q->r,
@@ -149,11 +148,11 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 
 		/* Fifth row of the H matrix. */
 		-mg.i * q->k + mg.k * q->i,  mg.i * q->j + mg.k * q->r,
-		 mg.i * q->i + mg.k * q->k, -mg.i * q->r + mg.k * q->j,
-		
+		mg.i * q->i + mg.k * q->k, -mg.i * q->r + mg.k * q->j,
+
 		/* Sixth row of the H matrix. */
-		 mg.i * q->j, mg.i * q->k -2.0 * mg.k * q->i,
-		 mg.i * q->r -2.0 * mg.k * q->j, mg.i * q->i
+		mg.i * q->j, mg.i * q->k - 2.0 * mg.k * q->i,
+		mg.i * q->r - 2.0 * mg.k * q->j, mg.i * q->i
 	};
 
 	zsl_mtx_from_arr(&H, H_data);
@@ -218,7 +217,7 @@ err:
 }
 
 static int zsl_fus_kalm_quat_init(struct zsl_vec *a, struct zsl_vec *m,
-                struct zsl_quat *q)
+				  struct zsl_quat *q)
 {
 	int rc = 0;
 
@@ -262,7 +261,7 @@ err:
 	return rc;
 }
 
-static int zsl_fus_kalm_P_init(struct zsl_mtx * P)
+static int zsl_fus_kalm_P_init(struct zsl_mtx *P)
 {
 	int rc = 0;
 
@@ -283,8 +282,7 @@ err:
 	return rc;
 }
 
-
-int zsl_fus_kalm_init(uint32_t freq, void* cfg)
+int zsl_fus_kalm_init(uint32_t freq, void *cfg)
 {
 	int rc = 0;
 
@@ -307,8 +305,8 @@ err:
 }
 
 int zsl_fus_kalm_feed(struct zsl_vec *a, struct zsl_vec *m, struct zsl_vec *g,
-		      zsl_real_t *dip, struct zsl_quat *q, void* cfg)
-{	
+		      zsl_real_t *incl, struct zsl_quat *q, void *cfg)
+{
 	struct zsl_fus_kalm_cfg *mcfg = cfg;
 
 	if (mcfg->var_g < 0.0 || mcfg->var_a < 0.0 || mcfg->var_m < 0.0) {
@@ -316,13 +314,13 @@ int zsl_fus_kalm_feed(struct zsl_vec *a, struct zsl_vec *m, struct zsl_vec *g,
 	}
 
 	/* This functions should only be called once. */
-    if (!zsl_fus_kalm_initialised) {
+	if (!zsl_fus_kalm_initialised) {
 		zsl_fus_kalm_quat_init(a, m, q);
 		zsl_fus_kalm_P_init(&(mcfg->P));
 	}
 
 	return zsl_fus_kalman(g, a, m, &(mcfg->var_g), &(mcfg->var_a),
-				&(mcfg->var_m), dip, &(mcfg->P), q);
+			      &(mcfg->var_m), incl, &(mcfg->P), q);
 }
 
 void zsl_fus_kalm_error(int error)

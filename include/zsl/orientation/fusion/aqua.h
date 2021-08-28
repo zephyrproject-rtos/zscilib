@@ -5,11 +5,12 @@
  */
 
 /**
- * @addtogroup ALGORITHMS
+ * @defgroup FUSION_ALG_AQUA AQUA
  *
- * @ingroup FUSION
- *  @{
- */
+ * @brief AQUA sensor fuion algorithm.
+ *
+ * @ingroup FUSION_ALGORITHMS
+ *  @{ */
 
 /**
  * @file
@@ -39,31 +40,32 @@ extern "C" {
  */
 struct zsl_fus_aqua_cfg {
 	/**
-	 * @brief This variable between 0 and 1 is the gain that characterizes the
-	 *        cut-off frequency of the filter. Is used to control the LERP or
-	 * 		  SLERP used to to reduce the amount of high frequency noise in the
-	 * 		  accelerometer. Alpha must be calculated in static conditions.
+	 * @brief A value between 0.0 and 1.0 which sets the gain for the cut-off
+	 *        frequency of the filter. Adjust this value to control LERP or
+	 *        SLERP, which reduces the amount of high frequency noise in the
+	 *        accelerometer. Alpha must be calculated in static conditions.
 	 */
 	zsl_real_t alpha;
 
 	/**
-	 * @brief Similar to alpha, this variable between 0 and 1 is used to
-	 * 		  control the LERP or SLERP used to to reduce the amount of high
-	 * 		  frequency noise in the magnetometer.
+	 * @brief Similar to alpha, this variable is set between 0.0 and 1.0 and is
+	 *        used to control the LERP or SLERP, which reduces the amount of
+	 *        high frequency noise in the magnetometer. Beta must be calculated
+	 *        in static conditions.
 	 */
 	zsl_real_t beta;
 
 	/**
 	 * @brief Threshold value to determine whether to compute LERP or SLERP
-	 * 		  to reduce the amount of high frequency noise of the accelerometer
-	 * 		  in the Dq_acc vector. Usually set to 0.9.
+	 *        to reduce the amount of high frequency noise of the accelerometer
+	 *        in the Dq_acc vector. Typically set to 0.9.
 	 */
 	zsl_real_t e_a;
 
 	/**
 	 * @brief Threshold value to determine whether to compute LERP or SLERP
-	 * 		  to reduce the amount of high frequency noise of the accelerometer
-	 * 		  in the Dq_mag vector. Usually set to 0.9.
+	 *        to reduce the amount of high frequency noise of the magnetometer
+	 *        in the Dq_mag vector. Typically set to 0.9.
 	 */
 	zsl_real_t e_m;
 };
@@ -72,23 +74,24 @@ struct zsl_fus_aqua_cfg {
  * @brief Sets the sample frequency (in Hz) for the algorithm.
  *
  * @param freq  Sampling frequency in Hz.
- * 
+ * @param cfg   Config struct for this filter.
+ *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
-int zsl_fus_aqua_init(uint32_t freq, void* cfg);
+int zsl_fus_aqua_init(uint32_t freq, void *cfg);
 
 /**
  * @brief Algebraic Quaterion Algorithm (AQUA) sensor fusion algorithm
  *        implementation.
- * 
+ *
  * Source:
  * https://res.mdpi.com/sensors/sensors-15-19302/article_deploy/sensors-15-19302.pdf
  *
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
- * @param dip	Input magnetic dip angle, in radians. NULL for none.
+ * @param incl  Input magnetic inclination, in degrees. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -96,7 +99,8 @@ int zsl_fus_aqua_init(uint32_t freq, void* cfg);
  *              negative error code.
  */
 int zsl_fus_aqua_feed(struct zsl_vec *a, struct zsl_vec *m,
-		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
+		      struct zsl_vec *g, zsl_real_t *incl, struct zsl_quat *q,
+		      void *cfg);
 
 /**
  * @brief Default error handler for the AQUA sensor fusion driver.

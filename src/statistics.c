@@ -91,7 +91,7 @@ int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m)
 }
 
 int zsl_sta_time_weighted_mean(struct zsl_vec *v, struct zsl_vec *t,
-					zsl_real_t *m)
+			       zsl_real_t *m)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure the vectors dimensions match. */
@@ -647,7 +647,7 @@ int zsl_sta_quad_fit(struct zsl_mtx *m, struct zsl_vec *b)
 	ZSL_MATRIX_DEF(xt, 9, m->sz_rows);
 	ZSL_MATRIX_DEF(xtx, 9, 9);
 	ZSL_MATRIX_DEF(inv, 9, 9);
-	ZSL_MATRIX_DEF(xtmp, 9, m->sz_rows);
+	ZSL_MATRIX_DEF(xtmp, 9, (m->sz_rows));
 	ZSL_MATRIX_DEF(btmp, 9, 1);
 
 	zsl_mtx_trans(&x, &xt);
@@ -671,7 +671,7 @@ int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 
 int zsl_sta_rel_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err)
 {
-	*err = ZSL_ABS(100. * *val - 100 * *exp_val) / *exp_val;
+	*err = ZSL_ABS(100. * *val - 100. * *exp_val) / *exp_val;
 
 	return 0;
 }

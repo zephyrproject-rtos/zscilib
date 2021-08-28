@@ -5,11 +5,12 @@
  */
 
 /**
- * @addtogroup ALGORITHMS
+ * @defgroup FUSION_ALG_EK Extended Kalman
  *
- * @ingroup FUSION
- *  @{
- */
+ * @brief Extended Kalman sensor fuion algorithm.
+ *
+ * @ingroup FUSION_ALGORITHMS
+ *  @{ */
 
 /**
  * @file
@@ -56,14 +57,15 @@ struct zsl_fus_kalm_cfg {
 	 * 		  iteration. Its first value (P0) is a 4x4 identity matrix.
 	 */
 	struct zsl_mtx P;
-	
+
 };
 
 /**
  * @brief Sets the sample frequency (in Hz) for the algorithm.
  *
  * @param freq  Sampling frequency in Hz.
- * 
+ * @param cfg   Config struct for this filter.
+ *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
@@ -75,7 +77,7 @@ int zsl_fus_kalm_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
- * @param dip	Input magnetic dip angle, in radians. NULL for none.
+ * @param incl  Input magnetic inclination, in degrees. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -83,7 +85,8 @@ int zsl_fus_kalm_init(uint32_t freq, void *cfg);
  *              negative error code.
  */
 int zsl_fus_kalm_feed(struct zsl_vec *a, struct zsl_vec *m,
-		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
+		      struct zsl_vec *g, zsl_real_t *incl, struct zsl_quat *q,
+		      void *cfg);
 
 /**
  * @brief Default error handler for the extended Kalman filter driver.

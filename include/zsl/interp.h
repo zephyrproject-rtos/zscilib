@@ -38,15 +38,15 @@ extern "C" {
 
 /** @brief XY struct for nearest neighbour and linear interpolation. */
 struct zsl_interp_xy {
-        zsl_real_t x;
-        zsl_real_t y;
+	zsl_real_t x;
+	zsl_real_t y;
 };
 
 /** @brief XY struct for cubic spline interpolation. */
 struct zsl_interp_xyc {
-        zsl_real_t x;
-        zsl_real_t y;
-        zsl_real_t y2; /**< @brief Second derivative from the spline. */
+	zsl_real_t x;
+	zsl_real_t y;
+	zsl_real_t y2; /**< @brief Second derivative from the spline. */
 };
 
 /** @} */ /* End of INTERP_STRUCTS group */
@@ -105,7 +105,7 @@ int zsl_interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v);
  * @return 0 on success, error code on error.
  */
 int zsl_interp_find_x(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
-                      int *idx);
+		      int *idx);
 
 /**
  * @brief Nearest neighbour (AKA 'piecewise constant') interpolation based on
@@ -119,7 +119,7 @@ int zsl_interp_find_x(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_nn(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
-                  zsl_real_t x2, zsl_real_t *y2);
+		  zsl_real_t x2, zsl_real_t *y2);
 
 /**
  * @brief Nearest neighbour (AKA 'piecewise constant') interpolation based on
@@ -133,7 +133,7 @@ int zsl_interp_nn(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_nn_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
-                      zsl_real_t *y);
+		      zsl_real_t *y);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for Y between two
@@ -147,7 +147,7 @@ int zsl_interp_nn_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_lin_y(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
-                     zsl_real_t x2, zsl_real_t *y2);
+		     zsl_real_t x2, zsl_real_t *y2);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for Y between two
@@ -161,7 +161,7 @@ int zsl_interp_lin_y(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_lin_y_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
-                         zsl_real_t *y);
+			 zsl_real_t *y);
 
 /**
  * @brief Linear (AKA 'piecewise linear') interpolation for X between two
@@ -175,7 +175,7 @@ int zsl_interp_lin_y_arr(struct zsl_interp_xy xy[], size_t n, zsl_real_t x,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_lin_x(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
-                     zsl_real_t y2, zsl_real_t *x2);
+		     zsl_real_t y2, zsl_real_t *x2);
 
 /**
  * @brief Calculates xyc[n].y2 for natural cubic spline interpolation, based
@@ -188,8 +188,8 @@ int zsl_interp_lin_x(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
  *
  * NOTE: This function must be called BEFORE using zsl_interp_cubic_arr.
  */
-int zsl_interp_cubic_calc (struct zsl_interp_xyc xyc[], size_t n,
-                           zsl_real_t yp1, zsl_real_t ypn);
+int zsl_interp_cubic_calc(struct zsl_interp_xyc xyc[], size_t n,
+			  zsl_real_t yp1, zsl_real_t ypn);
 
 /**
  * @brief Natural cubic spline interpolation between two points, based on
@@ -203,7 +203,7 @@ int zsl_interp_cubic_calc (struct zsl_interp_xyc xyc[], size_t n,
  * @return 0 on success, error code on error.
  */
 int zsl_interp_cubic_arr(struct zsl_interp_xyc xyc[], size_t n,
-                         zsl_real_t x, zsl_real_t *y);
+			 zsl_real_t x, zsl_real_t *y);
 
 /** @} */ /* End of INTERP_FUNCS group */
 

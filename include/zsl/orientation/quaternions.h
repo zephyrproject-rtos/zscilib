@@ -261,7 +261,7 @@ int zsl_quat_exp(struct zsl_quat *q, struct zsl_quat *qe);
  * @brief Calculates the natural logarithm of a unit quaternion.
  *
  * @param q 	The input unit quaternion.
- * @param qe 	The output unit quaternion.
+ * @param ql 	The output unit quaternion.
  *
  * @return zsl_real_t The logarithm of q.
  */
@@ -272,7 +272,7 @@ int zsl_quat_log(struct zsl_quat *q, struct zsl_quat *ql);
  *        and stores the results in qout (where qout = qa^pow).
  *
  * @param q 	The input unit quaternion.
- * @param exp 	The exponent to use, where qa^exp.
+ * @param pow 	The exponent to use, where qa^exp.
  * @param qout 	The output placeholder.
  *
  * @return 0 if everything executed normally, or a negative error code.
@@ -328,9 +328,9 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
 
 /**
  * @brief Rotates the pure quaternion qb using the quaternion qa.
- * 
+ *
  * Quaternion rotarion follows as: qr = qa* * qb * qa, where qa* is the inverse
- * of the quaternion qa. 
+ * of the quaternion qa.
  *
  * @param qa	The input unit quaternion value, i.e., the rotation quaternion.
  * @param qb	The pure quaternion to rotate (zero real part).
@@ -339,7 +339,7 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
  * @return 0 if everything executed normally, or a negative error code.
  */
 int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb,
-		  struct zsl_quat *qr);
+		 struct zsl_quat *qr);
 
 /**
  * @brief Linear interpolation (LERP).
@@ -349,14 +349,14 @@ int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb,
  *
  * @param qa	The starting quaternion value.
  * @param qb	The target quaternion value.
- * @param t     The interpolation factor (0.0..1.0)
+ * @param t		The interpolation factor (0.0..1.0)
  * @param qi	The interpolated unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  *         interpolation factor is not between 0 and 1.
  */
 int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
-		   zsl_real_t t, struct zsl_quat *qi);
+		  zsl_real_t t, struct zsl_quat *qi);
 
 /**
  * @brief Spherical linear interpolation (SLERP).
@@ -366,7 +366,7 @@ int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
  *
  * @param qa	The starting quaternion value.
  * @param qb	The target quaternion value.
- * @param t     The interpolation factor (0.0..1.0)
+ * @param t		The interpolation factor (0.0..1.0)
  * @param qi	The interpolated quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
@@ -388,14 +388,14 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
  *
  * @param w		Tridimensional angular velocity vector, in radians per second.
  * @param qin	The starting orientation quaternion of the body.
- * @param t     Time between qin and qout orientations, in seconds.
+ * @param t		Time between qin and qout orientations, in seconds.
  * @param qout	The estimated orientation after a time t elapses.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  * 		   time is negative or the angular velocity vector dimension is not 3.
  */
 int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
-			zsl_real_t t, struct zsl_quat *qout);
+			  zsl_real_t t, struct zsl_quat *qout);
 
 /**
  * @brief Updates an orientation quaternion with new information in form of
@@ -412,7 +412,7 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
  * @param qin	The starting orientation quaternion of the body.
  * @param i		The moment of inertia of the body, in in kilogram and metres
  * 				squared.
- * @param t     Time between qin and qout orientations, in seconds.
+ * @param t		Time between qin and qout orientations, in seconds.
  * @param qout	The estimated orientation after a time t elapses.
  *
  * @return 0 if everything executed normally, or a negative error code if the
@@ -420,7 +420,7 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
  * 		   momentum vector dimension is not 3.
  */
 int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
-			zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
+			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
 
 /**
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
@@ -475,25 +475,25 @@ int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q);
  * 		   dimension of the vector defining the axis is not three.
  */
 int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
-						   zsl_real_t *b);
+			   zsl_real_t *b);
 
 /**
  * @brief Converts axis-angle rotation to its unit quaternion equivalent.
  *
  * @param a 	Pointer to the tridimensional axis of rotation.
  * @param b		Pointer to the angle of the rotation in radians.
- * @param q 	Pointer to the converted unit quaternion.
+ * @param q		Pointer to the converted unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  * 		   dimension of the vector defining the axis is not three.
  */
 int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
-							 struct zsl_quat *q);
+			     struct zsl_quat *q);
 
 /**
  * @brief Print the supplied quaternion using printf in a human-readable manner.
  *
- * @param q     Pointer to the quaternion to print.
+ * @param q		Pointer to the quaternion to print.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.

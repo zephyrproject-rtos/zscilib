@@ -5,11 +5,12 @@
  */
 
 /**
- * @addtogroup ALGORITHMS
+ * @defgroup FUSION_ALG_MAHN Mahoney
  *
- * @ingroup FUSION
- *  @{
- */
+ * @brief Mahoney sensor fuion algorithm.
+ *
+ * @ingroup FUSION_ALGORITHMS
+ *  @{ */
 
 /**
  * @file
@@ -47,7 +48,7 @@ struct zsl_fus_mahn_cfg {
 	zsl_real_t ki;
 
 	/**
-	 * @brief Integral feedback vector, which is updated every iteration. 
+	 * @brief Integral feedback vector, which is updated every iteration.
 	 * 		  Its initial value must be (0, 0, 0).
 	 */
 	struct zsl_vec intfb;
@@ -58,7 +59,7 @@ struct zsl_fus_mahn_cfg {
  *
  * @param freq  Sampling frequency in Hz.
  * @param cfg   Pointer to the config struct for this algorithm.
- * 
+ *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
@@ -70,7 +71,7 @@ int zsl_fus_mahn_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
- * @param dip	Input magnetic dip angle, in radians. NULL for none.
+ * @param incl  Input magnetic inclination, in degrees. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -78,7 +79,8 @@ int zsl_fus_mahn_init(uint32_t freq, void *cfg);
  *              negative error code.
  */
 int zsl_fus_mahn_feed(struct zsl_vec *a, struct zsl_vec *m,
-		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
+		      struct zsl_vec *g, zsl_real_t *incl, struct zsl_quat *q,
+		      void *cfg);
 
 /**
  * @brief Default error handler for the Mahony sensor fusion driver.

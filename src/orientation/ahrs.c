@@ -110,7 +110,7 @@ err:
 
 int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b)
 {
-		int rc = 0;
+	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the accelerometer vectors are size 3. */

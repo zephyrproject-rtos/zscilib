@@ -14,6 +14,7 @@ void statistics_demo(void)
 	zsl_real_t ngp_mean, ngp_trim_mean, ngp_median, ngp_q1, ngp_q2, ngp_q3;
 	zsl_real_t ngp_qrng, ngp_drng, ngp_var, ngp_stdev, ngp_sterr;
 	zsl_real_t ngp_mean_absdev, ngp_median_absdev;
+
 	ZSL_VECTOR_DEF(ngp_mode, 284);
 	zsl_real_t cpi_covar;
 	struct zsl_sta_linreg coef;
@@ -254,30 +255,31 @@ void statistics_demo(void)
 	printf("  covariance matrix:\n\n");
 	zsl_mtx_print(&ngp_covar_mtx);
 
-	ZSL_MATRIX_DEF(bodyvec, 22, 4);			/* Body measurements. */
-	ZSL_VECTOR_DEF(massvec, 22);			/* Weight. */
-	ZSL_VECTOR_DEF(mult_reg_coef, 5);			
+	ZSL_MATRIX_DEF(bodyvec, 22, 4);                 /* Body measurements. */
+	ZSL_VECTOR_DEF(massvec, 22);                    /* Weight. */
+	ZSL_VECTOR_DEF(mult_reg_coef, 5);
 
-	zsl_real_t coef_det;					/* Coefficient of determination. */
+	/* Coefficient of determination. */
+	zsl_real_t coef_det;
 
 	/* Source: Larner, M. (1996). 'Mass and its Relationship to Physical
 	 * Measurements'. MS305 Data Project, Department of Mathematics,
 	 * University of Queensland. */
 
-	zsl_real_t body_data [220] = { 
-	/*  Forearm   		Waist		 	 Height    		  Thigh
-	 *  (cm)			(cm)			 (cm)			  (cm)		*/
+	zsl_real_t body_data[220] = {
+		/*  Forearm   		Waist		 	 Height    		  Thigh
+		 *  (cm)			(cm)			 (cm)			  (cm)		*/
 		28.5,           85.0,            178.0,           53.0,
 		29.5,           90.5,            187.0,           52.0,
-		25.0,           80.5,            175.0,           49.0, 
-		28.5,           91.5,            183.0,           50.0, 
+		25.0,           80.5,            175.0,           49.0,
+		28.5,           91.5,            183.0,           50.0,
 		28.5,           92.0,            174.0,           53.0,
 		30.5,           101.0,           180.0,           57.5,
-		26.5,           76.0,            177.5,           50.0, 
-		27.0,           84.0,            182.5,           49.0, 
-		26.5,           74.0,            178.5,           47.0, 
-		26.5,           76.0,            168.5,           46.0, 
-		28.5,           80.0,            170.0,           50.0, 
+		26.5,           76.0,            177.5,           50.0,
+		27.0,           84.0,            182.5,           49.0,
+		26.5,           74.0,            178.5,           47.0,
+		26.5,           76.0,            168.5,           46.0,
+		28.5,           80.0,            170.0,           50.0,
 		27.5,           86.0,            180.0,           49.0,
 		29.5,           82.0,            186.5,           49.0,
 		25.0,           82.0,            188.0,           49.5,
@@ -288,13 +290,14 @@ void statistics_demo(void)
 		30.0,           88.0,            188.0,           50.5,
 		28.0,           82.0,            173.0,           49.0,
 		29.0,           96.0,            179.0,           51.0,
-		31.0,           99.5,            184.0,           55.0 };
-	
+		31.0,           99.5,            184.0,           55.0
+	};
+
 	/* Weight in kilograms. */
-	zsl_real_t mass_data [22] = { 77.0, 85.5, 63.0, 80.5, 79.5, 94.0, 66.0,
-								  69.0, 65.0, 58.0, 69.5, 73.0, 74.0, 68.0,
-								  80.0, 66.0, 54.5, 64.0, 84.0, 73.0, 89.0,
-								  94.0 };
+	zsl_real_t mass_data[22] = { 77.0, 85.5, 63.0, 80.5, 79.5, 94.0, 66.0,
+				     69.0, 65.0, 58.0, 69.5, 73.0, 74.0, 68.0,
+				     80.0, 66.0, 54.5, 64.0, 84.0, 73.0, 89.0,
+				     94.0 };
 
 	zsl_mtx_from_arr(&bodyvec, body_data);
 	zsl_vec_from_arr(&massvec, mass_data);
@@ -320,16 +323,16 @@ void statistics_demo(void)
 	/* Source: Faraway, J. (2002). 'Practical Regression and Anova using R'. */
 
 	/* Inverse of the energy. */
-	zsl_real_t invenergy_data [10] = { 0.345, 0.287, 0.251, 0.225, 0.207,
-									   0.186, 0.161, 0.132, 0.084, 0.060 };
-	
+	zsl_real_t invenergy_data[10] = { 0.345, 0.287, 0.251, 0.225, 0.207,
+					  0.186, 0.161, 0.132, 0.084, 0.060 };
+
 	/* Cross section. */
-	zsl_real_t crossx_data [10] = { 367.0, 311.0, 295.0, 268.0, 253.0,
-									239.0, 220.0, 213.0, 193.0, 192.0 };
-	
+	zsl_real_t crossx_data[10] = { 367.0, 311.0, 295.0, 268.0, 253.0,
+				       239.0, 220.0, 213.0, 193.0, 192.0 };
+
 	/* Standard deviation of the data. */
-	zsl_real_t sd_data [10] = { 17.0, 9.0, 9.0, 7.0, 7.0,
-								 6.0, 6.0, 6.0, 5.0, 5.0 };
+	zsl_real_t sd_data[10] = { 17.0, 9.0, 9.0, 7.0, 7.0,
+				   6.0, 6.0, 6.0, 5.0, 5.0 };
 
 	zsl_mtx_from_arr(&invenergyvec, invenergy_data);
 	zsl_vec_from_arr(&crossxvec, crossx_data);
@@ -343,7 +346,7 @@ void statistics_demo(void)
 	printf("Cross section relatonship to the inverse of the energy:\n");
 
 	zsl_sta_weighted_mult_linear_reg(&invenergyvec, &crossxvec, &weights,
-									&wls, &coef_det);
+					 &wls, &coef_det);
 	printf("  weighted linear regression:\n");
 	printf("    intercept:                  %f\n", wls.data[0]);
 	printf("    slope:                      %f\n", wls.data[1]);
@@ -369,7 +372,7 @@ void statistics_demo(void)
 		12.0, 23.0, 39.0,
 		12.0, 12.0, 28.0
 	};
-	
+
 	zsl_mtx_from_arr(&el, el_data);
 
 	printf("\n");
@@ -388,8 +391,6 @@ void statistics_demo(void)
 	printf("    H:      %f\n", el_coef.data[7]);
 	printf("    I:      %f\n", el_coef.data[8]);
 }
-
-
 
 void main(void)
 {

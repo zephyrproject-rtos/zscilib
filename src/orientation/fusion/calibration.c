@@ -47,8 +47,8 @@ static zsl_real_t zsl_fus_cal_magn_f_elli(struct zsl_vec *H, struct zsl_mtx *g)
 }
 #endif
 
-int zsl_fus_cal_rot_mtx(struct zsl_vec *v, struct zsl_mtx *m, 
-						struct zsl_vec *v_rot)
+int zsl_fus_cal_rot_mtx(struct zsl_vec *v, struct zsl_mtx *m,
+			struct zsl_vec *v_rot)
 {
 	int rc = 0;
 
@@ -72,7 +72,7 @@ err:
 }
 
 int zsl_fus_cal_rot_axis_angle(struct zsl_vec *v, struct zsl_vec *a,
-						zsl_real_t *b, struct zsl_vec *v_rot)
+			       zsl_real_t *b, struct zsl_vec *v_rot)
 {
 	int rc = 0;
 
@@ -96,13 +96,14 @@ err:
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
-		    		 struct zsl_mtx *K, struct zsl_vec *b)
+		     struct zsl_mtx *K, struct zsl_vec *b)
 {
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the input magnetometer data matrix has dimension N x 3.
-	 * 'K' must be a 3 x 3 matrix and 'b' a tridimensional vector. */
+	 * 'K' must be a 3 x 3 matrix and 'b' a tridimensional vector. The
+	 * 'mu' parameter must be greater than one. */
 	if (m->sz_cols != 3 || K->sz_rows != 3 || K->sz_cols != 3 ||
-		b->sz != 3 || *mu < 1.0) {
+	    b->sz != 3 || *mu < 1.0) {
 		return -EINVAL;
 	}
 #endif
@@ -150,9 +151,9 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 			zsl_mtx_get_row(m, i, H.data);
 			f = zsl_fus_cal_magn_f_shp(&H, b);
 			J.data[0] += 1.0;
-			J.data[1] += - (H.data[0] - b->data[0]) / f;
-			J.data[2] += - (H.data[1] - b->data[1]) / f;
-			J.data[3] += - (H.data[2] - b->data[2]) / f;
+			J.data[1] += -(H.data[0] - b->data[0]) / f;
+			J.data[2] += -(H.data[1] - b->data[1]) / f;
+			J.data[3] += -(H.data[2] - b->data[2]) / f;
 		}
 
 		/* Compute the transpose of J. */
@@ -169,9 +170,9 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 		zsl_mtx_add_d(&JtJ, &idx);
 		zsl_mtx_inv(&JtJ, &idx);
 		zsl_mtx_mult(&idx, &Jt, &t);
-		zsl_mtx_scalar_mult_d(&t, - (R - f));
+		zsl_mtx_scalar_mult_d(&t, -(R - f));
 
-		/* Calculate the new pair (R, b) by adding tau to the old values of R 
+		/* Calculate the new pair (R, b) by adding tau to the old values of R
 		 * and b. */
 		R += t.data[0];
 		b->data[0] += t.data[1];
@@ -183,7 +184,7 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 			/* Calculate the squared residual sum of all samples. */
 			zsl_mtx_get_row(m, j + 1, H.data);
 			f = zsl_fus_cal_magn_f_shp(&H, b);
-			S2 = (S * j + (R - f) * (R - f)) /(zsl_real_t) (j + 1);
+			S2 = (S * j + (R - f) * (R - f)) / (zsl_real_t) (j + 1);
 
 			/* Update the value of lambda (l) with the information from the
 			 * squared residual sum. */
@@ -196,7 +197,6 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 			S = S2;
 		}
 	}
-
 
 	/* ELLIPSOID FITTING. */
 
@@ -233,36 +233,36 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 
 	/* Start the ellipsoid fitting algorithm. */
 	for (size_t j = 0; j < m->sz_rows; j++) {
-			zsl_mtx_init(&N, NULL);
-			
-			for (size_t i = 0; i < m->sz_rows; i++) {
+		zsl_mtx_init(&N, NULL);
+
+		for (size_t i = 0; i < m->sz_rows; i++) {
 			zsl_mtx_get_row(m, i, H.data);
 			f = zsl_fus_cal_magn_f_elli(&H, &g);
-			
+
 			/* Define variables for repeated calculations. */
-			A = g.data[0] * (H.data[0] + b->data[0]) + 
-				g.data[1] * (H.data[1] + b->data[1]) + 
-				g.data[2] * (H.data[2] + b->data[2]);
-			B = g.data[1] * (H.data[0] + b->data[0]) + 
-				g.data[3] * (H.data[1] + b->data[1]) + 
-				g.data[4] * (H.data[2] + b->data[2]);
-			C = g.data[2] * (H.data[0] + b->data[0]) + 
-				g.data[4] * (H.data[1] + b->data[1]) + 
-				g.data[5] * (H.data[2] + b->data[2]);
+			A = g.data[0] * (H.data[0] + b->data[0]) +
+			    g.data[1] * (H.data[1] + b->data[1]) +
+			    g.data[2] * (H.data[2] + b->data[2]);
+			B = g.data[1] * (H.data[0] + b->data[0]) +
+			    g.data[3] * (H.data[1] + b->data[1]) +
+			    g.data[4] * (H.data[2] + b->data[2]);
+			C = g.data[2] * (H.data[0] + b->data[0]) +
+			    g.data[4] * (H.data[1] + b->data[1]) +
+			    g.data[5] * (H.data[2] + b->data[2]);
 
 			/* Calculate the Jacobian matrix N. */
-			N.data[0] += - (H.data[0] + b->data[0]) * A / f;
-			N.data[1] += - (H.data[1] + b->data[1]) * B / f;
-			N.data[2] += - (H.data[2] + b->data[2]) * C / f;
-			N.data[3] += - ((H.data[1] + b->data[1]) * A +
-							(H.data[0] + b->data[0]) * B) / f;
-			N.data[4] += - ((H.data[2] + b->data[2]) * A +
-							(H.data[0] + b->data[0]) * C) / f;
-			N.data[5] += - ((H.data[2] + b->data[2]) * B +
-							(H.data[1] + b->data[1]) * C) / f;
-			N.data[6] += - A / f;
-			N.data[7] += - B / f;
-			N.data[8] += - C /f;
+			N.data[0] += -(H.data[0] + b->data[0]) * A / f;
+			N.data[1] += -(H.data[1] + b->data[1]) * B / f;
+			N.data[2] += -(H.data[2] + b->data[2]) * C / f;
+			N.data[3] += -((H.data[1] + b->data[1]) * A +
+				       (H.data[0] + b->data[0]) * B) / f;
+			N.data[4] += -((H.data[2] + b->data[2]) * A +
+				       (H.data[0] + b->data[0]) * C) / f;
+			N.data[5] += -((H.data[2] + b->data[2]) * B +
+				       (H.data[1] + b->data[1]) * C) / f;
+			N.data[6] += -A / f;
+			N.data[7] += -B / f;
+			N.data[8] += -C / f;
 		}
 
 		/* Calculate the transpose of N. */
@@ -284,7 +284,7 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 		zsl_mtx_add_d(&NtN, &idxN);
 		zsl_mtx_inv(&NtN, &idxN);
 		zsl_mtx_mult(&idxN, &Nt, &tN);
-		zsl_mtx_scalar_mult_d(&tN, - (R - f));
+		zsl_mtx_scalar_mult_d(&tN, -(R - f));
 
 		/* Calculate the new vector gamma. */
 		g.data[0] += tN.data[0];
@@ -296,13 +296,13 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 		g.data[6] += tN.data[6];
 		g.data[7] += tN.data[7];
 		g.data[8] += tN.data[8];
-		
+
 		if (j < (m->sz_rows - 1)) {
 
 			/* Calculate the squared residual sum of all samples. */
 			zsl_mtx_get_row(m, j + 1, H.data);
 			f = zsl_fus_cal_magn_f_elli(&H, &g);
-			S2 = (S * j + (R - f) * (R - f)) /(zsl_real_t) (j + 1);
+			S2 = (S * j + (R - f) * (R - f)) / (zsl_real_t) (j + 1);
 
 			/* Update the value of lambda (l) with the information from the
 			 * squared residual sum. */
@@ -333,45 +333,110 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 }
 #endif
 
-int zsl_fus_cal_magn_corr(struct zsl_vec *h, struct zsl_mtx *K,
-						  struct zsl_vec *b, struct zsl_vec *h_out)
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int zsl_fus_cal_magn_fast(struct zsl_mtx *m, zsl_real_t *me, struct zsl_mtx *K,
+			  struct zsl_vec *b)
 {
-	int rc = 0;
+	/* Use an approximation for me if no value provided. */
+	if (me == NULL) {
+		/* Locations vary fromo 25-65 uT, but most are close to 50 uT. */
+		*me = 50.0;
+	}
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
-	/* Make sure that the input vectors and matrices have dimension 3. */
-	if (h->sz != 3 || K->sz_rows != 3 || K->sz_cols != 3 || b->sz != 3 ||
-	    h_out->sz != 3) {
-		rc = -EINVAL;
-		goto err;
+	/* Make sure that the input magnetometer data matrix has dimension N x 3.
+	 * 'K' must be a 3 x 3 matrix and 'b' a tridimensional vector. Also 'me'
+	 * should be positive. */
+	if (m->sz_cols != 3 || K->sz_rows != 3 || K->sz_cols != 3 ||
+	    b->sz != 3 || *me < 0.0) {
+		return -EINVAL;
 	}
 #endif
 
-	ZSL_VECTOR_DEF(hb, 3);
-	ZSL_MATRIX_DEF(HB, 3, 1);
-	ZSL_MATRIX_DEF(KHB, 3, 1);
+	ZSL_VECTOR_DEF(coef, 9);
+	zsl_sta_quad_fit(m, &coef);
 
-	zsl_vec_add(h, b, &hb);
-	zsl_mtx_from_arr(&HB, hb.data);
-	zsl_mtx_mult(K, &HB, &KHB);
-	zsl_vec_from_arr(h_out, KHB.data);
+	ZSL_MATRIX_DEF(A, 3, 3);
+	ZSL_MATRIX_DEF(v, 3, 1);
+	A.data[0] = coef.data[0];
+	A.data[1] = A.data[3] = coef.data[3];
+	A.data[2] = A.data[6] = coef.data[4];
+	A.data[4] = coef.data[1];
+	A.data[5] = A.data[7] = coef.data[5];
+	A.data[8] = coef.data[2];
 
-err:
+	v.data[0] = coef.data[6];
+	v.data[1] = coef.data[7];
+	v.data[2] = coef.data[8];
+
+	ZSL_MATRIX_DEF(X0, 3, 1);
+	ZSL_MATRIX_DEF(L, 3, 3);
+	ZSL_MATRIX_DEF(G, 3, 3);
+	ZSL_MATRIX_DEF(Ai, 3, 3);
+
+	zsl_mtx_cholesky(&A, &L);
+
+	zsl_mtx_trans(&L, &G);
+	zsl_mtx_scalar_mult_d(&G, *me);
+	zsl_mtx_copy(K, &G);
+
+	zsl_mtx_inv(&A, &Ai);
+	zsl_mtx_mult(&Ai, &v, &X0);
+
+	b->data[0] = X0.data[0];
+	b->data[1] = X0.data[1];
+	b->data[2] = X0.data[2];
+
+	return 0;
+}
+#endif
+
+int zsl_fus_cal_corr_scalar(zsl_real_t *d, zsl_real_t *k, zsl_real_t *b,
+			    zsl_real_t *d_out)
+{
+	int rc = 0;
+
+	*d_out = *k * (*d + *b);
+
 	return rc;
 }
 
+int zsl_fus_cal_corr_vec(struct zsl_vec *v, struct zsl_mtx *K,
+			 struct zsl_vec *b, struct zsl_vec *v_out)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the input vectors and matrices have dimension the
+	 * same dimensions. */
+	if (v->sz != v_out->sz || v->sz != K->sz_rows || v->sz != K->sz_cols ||
+	    v->sz != b->sz) {
+		return -EINVAL;
+	}
+#endif
+
+	ZSL_VECTOR_DEF(vb, v->sz);
+	ZSL_MATRIX_DEF(VB, v->sz, 1);
+	ZSL_MATRIX_DEF(KVB, v->sz, 1);
+
+	zsl_vec_add(v, b, &vb);
+	zsl_mtx_from_arr(&VB, vb.data);
+	zsl_mtx_mult(K, &VB, &KVB);
+	zsl_vec_from_arr(v_out, KVB.data);
+
+	return 0;
+}
+
 int zsl_fus_cal_madg(struct zsl_mtx *g, struct zsl_mtx *a,
-			struct zsl_mtx *m, zsl_real_t sampleFreq, zsl_real_t *dip,
-			zsl_real_t *beta)
+		     struct zsl_mtx *m, zsl_real_t sampleFreq, zsl_real_t *incl,
+		     zsl_real_t *beta)
 {
 	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the input vectors have dimension 3, and that the
 	 * frequency is positive. */
-	if (g->sz_cols != 3 || a->sz_cols != 3 || m->sz_rows != 3 ||
-	    sampleFreq < 0.0 || g->sz_cols != a->sz_cols ||
-		g->sz_cols != m->sz_cols) {
+	if (g->sz_cols != 3 || a->sz_cols != 3 || m->sz_cols != 3 ||
+	    sampleFreq < 0.0 || g->sz_rows != a->sz_rows ||
+	    g->sz_rows != m->sz_rows) {
 		rc = -EINVAL;
 		goto err;
 	}
@@ -408,8 +473,8 @@ int zsl_fus_cal_madg(struct zsl_mtx *g, struct zsl_mtx *a,
 			zsl_mtx_get_row(g, j, gv.data);
 			zsl_mtx_get_row(a, j, av.data);
 			zsl_mtx_get_row(m, j, mv.data);
-			
-			madg_drv.feed_handler(&av, &mv, &gv, dip, &q, madg_drv.config);
+
+			madg_drv.feed_handler(&av, &mv, &gv, incl, &q, madg_drv.config);
 
 			zsl_quat_to_euler(&q, &e);
 			e.x *= 180. / ZSL_PI;
@@ -423,7 +488,7 @@ int zsl_fus_cal_madg(struct zsl_mtx *g, struct zsl_mtx *a,
 		}
 		Sx = ZSL_SQRT(Sx / a->sz_rows);
 		Sy = ZSL_SQRT(Sy / a->sz_rows);
-		
+
 		St = (Sx + Sy) / 2.0;
 
 		if (i == 0) {
@@ -440,23 +505,23 @@ err:
 }
 
 int zsl_fus_cal_mahn(struct zsl_mtx *g, struct zsl_mtx *a,
-		    struct zsl_mtx *m, zsl_real_t sampleFreq, zsl_real_t *dip,
-			zsl_real_t *kp)
+		     struct zsl_mtx *m, zsl_real_t sampleFreq, zsl_real_t *incl,
+		     zsl_real_t *kp)
 {
 	int rc = 0;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the input vectors have dimension 3, and that the
 	 * frequency is positive. */
-	if (g->sz_cols != 3 || a->sz_cols != 3 || m->sz_rows != 3 ||
+	if (g->sz_cols != 3 || a->sz_cols != 3 || m->sz_cols != 3 ||
 	    sampleFreq < 0.0 || g->sz_rows != a->sz_rows ||
-		g->sz_rows != m->sz_rows) {
+	    g->sz_rows != m->sz_rows) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
 
-	zsl_real_t _mahn_intfb[3] = {0.0, 0.0, 0.0};
+	zsl_real_t _mahn_intfb[3] = { 0.0, 0.0, 0.0 };
 	struct zsl_fus_mahn_cfg mahn_cfg = {
 		.ki = 0.02,
 		.intfb = {
@@ -494,8 +559,8 @@ int zsl_fus_cal_mahn(struct zsl_mtx *g, struct zsl_mtx *a,
 			zsl_mtx_get_row(g, j, gv.data);
 			zsl_mtx_get_row(a, j, av.data);
 			zsl_mtx_get_row(m, j, mv.data);
-			
-			mahn_drv.feed_handler(&av, &mv, &gv, dip, &q, mahn_drv.config);
+
+			mahn_drv.feed_handler(&av, &mv, &gv, incl, &q, mahn_drv.config);
 
 			zsl_quat_to_euler(&q, &e);
 			e.x *= 180. / ZSL_PI;
@@ -509,7 +574,7 @@ int zsl_fus_cal_mahn(struct zsl_mtx *g, struct zsl_mtx *a,
 		}
 		Sx = ZSL_SQRT(Sx / a->sz_rows);
 		Sy = ZSL_SQRT(Sy / a->sz_rows);
-		
+
 		St = (Sx + Sy) / 2.0;
 
 		if (i == 0) {
@@ -524,54 +589,3 @@ int zsl_fus_cal_mahn(struct zsl_mtx *g, struct zsl_mtx *a,
 err:
 	return rc;
 }
-
-int zsl_fus_cal_magn_north(struct zsl_vec *m, zsl_real_t *d)
-{
-	int rc = 0;
-
-#if CONFIG_ZSL_BOUNDS_CHECKS
-	/* Make sure that the input vector have dimension 3. */
-	if (m->sz != 3) {
-		rc = -EINVAL;
-		goto err;
-	}
-#endif
-
-	if (ZSL_ABS(m->data[1]) < 1E-6) {
-		if (m->data[0] > 0.0) {
-			*d = 0.0;
-		} else {
-			*d = 180.0;
-		}
-	} else if (m->data[1] > 0.0) {
-		*d = 90.0 - ZSL_ATAN2(m->data[0], m->data[1]) * 180.0 / ZSL_PI;
-	} else if (m->data[1] > 0.0) {
-		*d = 270.0 - ZSL_ATAN2(m->data[0], m->data[1]) * 180.0 / ZSL_PI;
-	}
-
-err:
-	return rc;
-}
-
-int zsl_fus_cal_geo_north(struct zsl_vec *m, zsl_real_t dev, zsl_real_t *d)
-{
-	int rc = 0;
-
-#if CONFIG_ZSL_BOUNDS_CHECKS
-	/* Make sure that the input vector have dimension 3. */
-	if (m->sz != 3) {
-		rc = -EINVAL;
-		goto err;
-	}
-#endif
-
-	zsl_fus_cal_magn_north(m, d);
-	*d += dev;
-
-err:
-	return rc;
-}
-
-
-
-

@@ -517,7 +517,7 @@ int zsl_vec_print(struct zsl_vec *v)
 	for (size_t g = 0; g < v->sz; g++) {
 		printf("%f ", v->data[g]);
 	}
-        printf("\n\n");
+	printf("\n\n");
 
 	return 0;
 }

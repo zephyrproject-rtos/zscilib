@@ -32,14 +32,14 @@ extern "C" {
 /**
  * @brief Calculates the geographical gravitational field based on latitude and
  *        altitude over the sea level.
- * 
+ *
  * Information taken from the following webpage:
  * https://www.welmec.org/welmec/documents/guides/2/2021/WELMEC_Guide_2_v2021.pdf
  *
- * @param lat  	Latitude of the point where the gravity is to be calculated,
+ * @param lat   Latitude of the point where the gravity is to be calculated,
  *              in degrees.
- * @param alt 	Altitude of the point of interest, in meters.
- * @param g 	Pointer the the output gravity, in meters per second squared.
+ * @param alt   Altitude of the point of interest, in meters.
+ * @param g     Pointer the the output gravity, in meters per second squared.
  *
  * @return 0 if everything executed correctly, -EINVAL if the altitude is
  *         negative or if the latitude is not between -90 and 90 degrees.

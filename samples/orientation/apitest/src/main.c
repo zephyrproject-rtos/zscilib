@@ -12,6 +12,7 @@
 #include <zsl/instrumentation.h>
 #include "data.h"
 
+/* Config settings for the Madgwick filter. */
 static struct zsl_fus_madg_cfg madg_cfg = {
 	.beta = 0.174,
 };
@@ -23,7 +24,8 @@ static struct zsl_fus_drv madgwick_drv = {
 	.config = &madg_cfg,
 };
 
-static zsl_real_t _mahn_intfb[3] = {0.0, 0.0, 0.0};
+/* Config settings for the Mahoney filter. */
+static zsl_real_t _mahn_intfb[3] = { 0.0, 0.0, 0.0 };
 static struct zsl_fus_mahn_cfg mahn_cfg = {
 	.kp = 0.235,
 	.ki = 0.02,
@@ -40,12 +42,14 @@ static struct zsl_fus_drv mahony_drv = {
 	.config = &mahn_cfg,
 };
 
+/* Settings for for the SAAM filter. */
 static struct zsl_fus_drv saam_drv = {
 	.init_handler = zsl_fus_saam_init,
 	.feed_handler = zsl_fus_saam_feed,
 	.error_handler = zsl_fus_saam_error,
 };
 
+/* Config settings for the AQUA filter. */
 static struct zsl_fus_aqua_cfg aqua_cfg = {
 	.alpha = 0.7,
 	.beta = 0.7,
@@ -60,6 +64,7 @@ static struct zsl_fus_drv aqua_drv = {
 	.config = &aqua_cfg,
 };
 
+/* Config settings for the complementary filter. */
 static struct zsl_fus_comp_cfg comp_cfg = {
 	.alpha = 0.0001,
 };
@@ -71,7 +76,8 @@ static struct zsl_fus_drv comp_drv = {
 	.config = &comp_cfg,
 };
 
-static zsl_real_t _kalm_P[16] = { 
+/* Config settings for the extended Kalman filter. */
+static zsl_real_t _kalm_P[16] = {
 	1.0, 0.0, 0.0, 0.0,
 	0.0, 1.0, 0.0, 0.0,
 	0.0, 0.0, 1.0, 0.0,
@@ -79,9 +85,9 @@ static zsl_real_t _kalm_P[16] = {
 };
 
 static struct zsl_fus_kalm_cfg kalm_cfg = {
-	.var_g = 0.3 * 0.3,
-	.var_a = 0.5 * 0.5,
-	.var_m = 0.8 * 0.8,
+	.var_g = 0.001,
+	.var_a = 0.307,
+	.var_m = 0.2,
 	.P = {
 		.sz_rows = 4,
 		.sz_cols = 4,
@@ -96,51 +102,40 @@ static struct zsl_fus_drv kalm_drv = {
 	.config = &kalm_cfg,
 };
 
-
 void fusion_demo(struct zsl_fus_drv *drv)
 {
 	struct zsl_quat q = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
 	struct zsl_euler e = { 0 };
 	uint32_t ns = 0;
 
-	// ZSL_VECTOR_DEF(av, 3);
-	// ZSL_VECTOR_DEF(mv, 3);
-	// ZSL_VECTOR_DEF(gv, 3);
-
-	ZSL_VECTOR_DEF(a, 3);
-	ZSL_VECTOR_DEF(m, 3);
-	ZSL_VECTOR_DEF(g, 3);
-
-	a.data[0] = 0.01;
-	a.data[1] = -1.01;
-	a.data[2] = -0.02;
-
-	m.data[0] = -66.0;
-	m.data[1] = -98.0;
-	m.data[2] = -43.0;
-
-	g.data[0] = 0.09;
-	g.data[1] = -0.28;
-	g.data[2] = -0.07;
+	ZSL_VECTOR_DEF(av, 3);
+	ZSL_VECTOR_DEF(mv, 3);
+	ZSL_VECTOR_DEF(gv, 3);
 
 	/* Init filter at 100 Hz. */
 	drv->init_handler(100.0, drv->config);
-	zsl_real_t dip = 4.0 * ZSL_PI / (3.0 * 180.0);
 
-	// for (size_t i = 0; i < 200; i++) {
-	// 	zsl_mtx_get_row(&zsl_fus_data_acc, i, av.data);
-	// 	zsl_mtx_get_row(&zsl_fus_data_mag, i, mv.data);
-	// 	zsl_mtx_get_row(&zsl_fus_data_gyr, i, gv.data);
-	// 	drv->feed_handler(&av, &mv, &gv, NULL, &q, drv->config);
-	// }
+	/* Calculate magnetic inclination for given date and location. */
+	/* Dubai @ 31-Aug-2021 = 39d 55' 24" D declination in dms (D = positive). */
+	// zsl_real_t incl;
+	// zsl_comp_dms_to_dd(39, 55, 24, &incl);
 
-	/* Feed the filter. */
+	/* Feed all the samples into the filter engine. */
+	for (size_t i = 0; i < DATA_SAMPLES; i++) {
+		zsl_mtx_get_row(&zsl_fus_data_acc, i, av.data);
+		zsl_mtx_get_row(&zsl_fus_data_mag, i, mv.data);
+		zsl_mtx_get_row(&zsl_fus_data_gyr, i, gv.data);
+		drv->feed_handler(&av, &mv, &gv, NULL, &q, drv->config);
+	}
+
+	/* Feed the filter the final sample. */
+	zsl_mtx_get_row(&zsl_fus_data_acc, DATA_SAMPLES, av.data);
+	zsl_mtx_get_row(&zsl_fus_data_mag, DATA_SAMPLES, mv.data);
+	zsl_mtx_get_row(&zsl_fus_data_gyr, DATA_SAMPLES, gv.data);
 	ZSL_INSTR_START(ns);
-	drv->feed_handler(NULL, &m, &g, &dip, &q, drv->config);
+	drv->feed_handler(&av, &mv, &gv, NULL, &q, drv->config);
 	ZSL_INSTR_STOP(ns);
 	printf("Took: %d ns\n", ns);
-	// /* Feed the filter with no mag data. */
-	// drv->feed_handler(&a, NULL, &g, &q, drv->config);
 
 	zsl_quat_print(&q);
 	zsl_quat_to_euler(&q, &e);
@@ -150,108 +145,120 @@ void fusion_demo(struct zsl_fus_drv *drv)
 	zsl_eul_print(&e);
 }
 
-void cal_demo(void)
-{	
-	// zsl_real_t l = 1.0;
-	// zsl_real_t mu = 10.0;
-	// ZSL_MATRIX_DEF(K, 3, 3);
-	// ZSL_VECTOR_DEF(b, 3);
-	// zsl_fus_cal_magn(&zsl_fus_data_magn_cal, &l, &mu, &K, &b);
-	// zsl_mtx_print(&K);
-	// zsl_vec_print(&b);
-
-	// zsl_real_t data[9] = { 0.989337, 0.033727, -0.005689,
-	// 					   0.033727, 1.019691, -0.006163,
-	// 					  -0.005689, -0.006163, 0.964197 };
-	// zsl_mtx_from_arr(&K, data);
-	// b.data[0] = 10.782474;
-	// b.data[1] = -5.596682;
-	// b.data[2] = 23.938386;
-
-	// ZSL_MATRIX_DEF(mout, zsl_fus_data_magn_cal.sz_rows, zsl_fus_data_magn_cal.sz_cols);
-	// zsl_fus_cal_magn_corr(&zsl_fus_data_magn_cal, &K, &b, &mout);
-	// ZSL_VECTOR_DEF(H, 3);
-	// for (size_t i = 0; i < zsl_fus_data_magn_cal.sz_rows; i++) {
-	// 	zsl_mtx_get_row(&mout, i, H.data);
-	// 	printf ("(%lf, %lf, %lf), ", H.data[0], H.data[1], H.data[2]);
-	// }
-}
-
 void madg_cal_demo(void)
-{	
-	zsl_real_t beta;
-	zsl_real_t dip = 4.0 * ZSL_PI / (3.0 * 180.0);
+{
+	zsl_real_t beta;        /* Beta parameter in Madgwick algorithm. */
+
 	zsl_fus_cal_madg(&zsl_fus_data_gyr, &zsl_fus_data_acc, &zsl_fus_data_mag,
-				100.0, &dip, &beta);
+			 100.0, NULL, &beta);
 	printf("Beta is %f\n\n", beta);
+
+	/* Change the value of 'beta' in the filter to the calculated one. */
+	madg_cfg.beta = beta;
 }
 
 void mahn_cal_demo(void)
-{	
-	zsl_real_t kp;
-	zsl_real_t dip = 4.0 * ZSL_PI / (3.0 * 180.0);
+{
+	zsl_real_t kp;  /* kp parameter in Mahony algorithm. */
+
 	zsl_fus_cal_mahn(&zsl_fus_data_gyr, &zsl_fus_data_acc, &zsl_fus_data_mag,
-				100.0, &dip, &kp);
+			 100.0, NULL, &kp);
 	printf("Kp is %f\n\n", kp);
+
+	/* Change the value of 'kp' in the filter to the calculated one. */
+	mahn_cfg.kp = kp;
 }
 
+void magn_cal_demo(void)
+{
+	/* Earth's magnetic field module in micro Testa as of August 28th 2021
+	 * in Dubai, UAE. */
+	zsl_real_t me = 44.3867;        /* Earth's magnetic field module. */
+
+	ZSL_MATRIX_DEF(K, 3, 3);        /* Soft-iron correction matrix. */
+	ZSL_VECTOR_DEF(b, 3);           /* Hard-iron offset correction vector. */
+
+	/* Calculate the correction matrix and vector. */
+	zsl_fus_cal_magn_fast(&zsl_fus_data_magn_cal, &me, &K, &b);
+	printf("Soft-iron correction matrix:\n");
+	zsl_mtx_print(&K);
+	printf("Hard-iron offset correction vector:\n");
+	zsl_vec_print(&b);
+
+	ZSL_MATRIX_DEF(m_out, zsl_fus_data_magn_cal.sz_rows, 3);
+	ZSL_VECTOR_DEF(H, 3);
+	ZSL_VECTOR_DEF(H_out, 3);
+	for (size_t i = 0; i < zsl_fus_data_magn_cal.sz_rows; i++) {
+		zsl_mtx_get_row(&zsl_fus_data_magn_cal, i, H.data);
+		zsl_fus_cal_corr_vec(&H, &K, &b, &H_out);
+		zsl_mtx_set_row(&m_out, i, H_out.data);
+	}
+}
+
+void compass_demo(void)
+{
+	zsl_real_t mn = 0.0;
+	zsl_real_t gn = 0.0;
+	zsl_real_t decl = 0.0;
+
+	ZSL_VECTOR_DEF(m, 3);
+
+	m.data[0] = 12.190000;
+	m.data[1] = 27.620000;
+	m.data[2] = -64.060000;
+
+	printf("Input: ");
+	zsl_vec_print(&m);
+
+	/* Calculate magnetic north for reference sake. */
+	zsl_comp_magn_north(&m, &mn);
+	printf("Magnetic North       = %.6f\n", mn);
+
+	/* Calculate magnetic declination for given date and location. */
+	/* Dubai @ 28-Aug-2021 = 2d 13' E declination in dms (E = positive). */
+	zsl_comp_dms_to_dd(2, 13, 0, &decl);
+	printf("Magnetic declination = %.6f\n", decl);
+
+	/* Calculate true north, applying magnetic declination. */
+	zsl_comp_geo_north(&m, decl, &gn);
+	printf("Geographic North     = %.6f\n", gn);
+}
 
 void main(void)
 {
 	printf("Orientation API demo\n");
 	printf("--------------------\n\n");
 
-	// printf("Madgwick:\n");
-	// fusion_demo(&madgwick_drv);
+	printf("Some of the calibration functions take several seconds\n");
+	printf("to complete. Please be patient.\n\n");
 
-	// printf("Mahony:\n");
-	// fusion_demo(&mahony_drv);
+	printf("Madgwick parameter calculation:\n");
+	madg_cal_demo();
 
-	// printf("SAAM:\n");
-	// fusion_demo(&saam_drv);
+	printf("Madgwick:\n");
+	fusion_demo(&madgwick_drv);
 
-	// printf("AQUA:\n");
-	// fusion_demo(&aqua_drv);
+	printf("Mahoney parameter calculation:\n");
+	mahn_cal_demo();
 
-	// printf("Complementary:\n");
-	// fusion_demo(&comp_drv);
+	printf("Mahony:\n");
+	fusion_demo(&mahony_drv);
 
-	// printf("Kalman:\n");
-	// fusion_demo(&kalm_drv);
+	printf("SAAM:\n");
+	fusion_demo(&saam_drv);
 
-	// cal_demo();
+	printf("AQUA:\n");
+	fusion_demo(&aqua_drv);
 
-	// madg_cal_demo();
+	printf("Complementary:\n");
+	fusion_demo(&comp_drv);
 
-	// mahn_cal_demo();
+	printf("Kalman:\n");
+	fusion_demo(&kalm_drv);
 
-	int rc = 0;
+	printf("Magnetometer calibration:\n");
+	magn_cal_demo();
 
-	ZSL_MATRIX_DEF(K, 3, 3);
-	ZSL_VECTOR_DEF(b, 3);
-	ZSL_VECTOR_DEF(h, 3);
-	ZSL_VECTOR_DEF(h_out, 3);
-
-	zsl_real_t a[9] = {
-		0.99, 0.12, 0.01,
-		0.12, 0.87, 0.09,
-		0.01, 0.09, 0.92
-	};
-
-	zsl_real_t c[3] = { 1.2, -4.9, 5.7 };
-	zsl_real_t d[3] = { 0.8, 1.2, 5.4 };
-
-	/* Assign arrays to vectors and matrices. */
-	rc = zsl_mtx_from_arr(&K, a);
-	rc = zsl_vec_from_arr(&b, c);
-	rc = zsl_vec_from_arr(&h, d);
-
-	/* Correct the magnetometer data. */
-	rc = zsl_fus_cal_magn_corr(&h, &K, &b, &h_out);
-
-
-
-	zsl_vec_print(&h_out);
+	printf("Compass Test:\n");
+	compass_demo();
 }
-
-

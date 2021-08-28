@@ -81,6 +81,7 @@ void test_att_from_euler(void)
 void test_att_from_accelmag(void)
 {
 	int rc;
+
 	ZSL_VECTOR_DEF(accel, 3);
 	ZSL_VECTOR_DEF(accel2, 4);
 	ZSL_VECTOR_DEF(mag, 3);
@@ -91,7 +92,7 @@ void test_att_from_accelmag(void)
 		.pitch = -52.790738,
 		.yaw = -58.180353
 	};
-	
+
 	zsl_real_t a[3] = { 7.0, 4.0, -3.5 };
 	zsl_real_t b[3] = { 0.1, -5.0, 123.0 };
 
@@ -122,6 +123,7 @@ void test_att_from_accelmag(void)
 void test_att_from_accel(void)
 {
 	int rc;
+
 	ZSL_VECTOR_DEF(accel, 3);
 	ZSL_VECTOR_DEF(accel2, 4);
 	struct zsl_attitude att;
@@ -130,7 +132,7 @@ void test_att_from_accel(void)
 		.pitch = -52.790738,
 		.yaw = 0.0
 	};
-	
+
 	zsl_real_t a[3] = { 7.0, 4.0, -3.5 };
 
 	/* Assign array to the accelerometer vector. */
@@ -153,14 +155,15 @@ void test_att_from_accel(void)
 void test_att_accel_angle(void)
 {
 	int rc;
+
 	ZSL_VECTOR_DEF(a1, 3);
 	ZSL_VECTOR_DEF(a2, 3);
 	ZSL_VECTOR_DEF(a3, 7);
 	ZSL_VECTOR_DEF(a4, 1);
 	zsl_real_t d;
 
-	zsl_real_t a[3] = {  1.0, -13.0, 0.7};
-	zsl_real_t b[3] = { -5.1, 2.1, 147.8};
+	zsl_real_t a[3] = {  1.0, -13.0, 0.7 };
+	zsl_real_t b[3] = { -5.1, 2.1, 147.8 };
 
 	/* Assign array to the accelerometer vectors. */
 	rc = zsl_vec_from_arr(&a1, a);
@@ -491,11 +494,11 @@ void test_quat_diff(void)
 void test_quat_rot(void)
 {
 	int rc;
-	struct zsl_quat qa = { 
+	struct zsl_quat qa = {
 		.r = -0.936457,
 		.i = -0.093751,
 		.j = -0.281252,
-		.k = -0.187502 
+		.k = -0.187502
 	};
 	struct zsl_quat qb = { .r = 0.0, .i = 1.6, .j = -2.1, .k = 123.0 };
 	struct zsl_quat qr;
@@ -514,11 +517,11 @@ void test_quat_rot(void)
 	zassert_true(val_is_equal(qr.j, -9.893547, 1E-6), NULL);
 	zassert_true(val_is_equal(qr.k, 100.001810, 1E-6), NULL);
 #endif
-	
+
 	/* The quaternion qb must be a pure quaternion (zero real part). */
 	qb.r = 1.0;
 	rc = zsl_quat_rot(&qa, &qb, &qr);
-	zassert_true(rc == -EINVAL, NULL);	
+	zassert_true(rc == -EINVAL, NULL);
 
 
 }
@@ -606,6 +609,7 @@ void test_quat_lerp(void)
 	qb.k = 0.0;
 
 	struct zsl_quat qa_u;
+
 	zsl_quat_to_unit(&qa, &qa_u);
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
@@ -714,6 +718,7 @@ void test_quat_slerp(void)
 	qb.k = 0.0;
 
 	struct zsl_quat qa_u;
+
 	zsl_quat_to_unit(&qa, &qa_u);
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
@@ -746,6 +751,7 @@ void test_quat_from_ang_vel(void)
 		.k = -0.0638521538904827
 	};
 	struct zsl_quat qout;
+
 	ZSL_VECTOR_DEF(w, 3);
 	ZSL_VECTOR_DEF(w2, 7);
 	ZSL_VECTOR_DEF(w3, 1);
@@ -789,6 +795,7 @@ void test_quat_from_ang_mom(void)
 		.k = -0.0638521538904827
 	};
 	struct zsl_quat qout;
+
 	ZSL_VECTOR_DEF(l, 3);
 	ZSL_VECTOR_DEF(l2, 7);
 	ZSL_VECTOR_DEF(l3, 1);
@@ -975,6 +982,7 @@ void test_quat_to_axis_angle(void)
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
 	struct zsl_quat q2 = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
 	zsl_real_t b;
+
 	ZSL_VECTOR_DEF(a, 3);
 	ZSL_VECTOR_DEF(a2, 4);
 
@@ -1007,6 +1015,7 @@ void test_quat_from_axis_angle(void)
 	int rc;
 	struct zsl_quat q;
 	zsl_real_t b = 7.0;
+
 	ZSL_VECTOR_DEF(a, 3);
 	ZSL_VECTOR_DEF(a2, 3);
 	ZSL_VECTOR_DEF(a3, 4);
@@ -1037,5 +1046,3 @@ void test_quat_from_axis_angle(void)
 	rc = zsl_quat_from_axis_angle(&a3, &b, &q);
 	zassert_true(rc == -EINVAL, NULL);
 }
-
-

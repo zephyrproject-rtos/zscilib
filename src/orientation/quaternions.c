@@ -311,7 +311,7 @@ err:
 }
 
 int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
-		   zsl_real_t t, struct zsl_quat *qi)
+		  zsl_real_t t, struct zsl_quat *qi)
 {
 	int rc = 0;
 
@@ -600,8 +600,8 @@ int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q)
 #endif
 
 	/* Convert rotation matrix to unit quaternion. */
-	q->r = 0.5 * ZSL_SQRT( m->data[0] + m->data[4] + m->data[8] + 1.0);
-	q->i = 0.5 * ZSL_SQRT( m->data[0] - m->data[4] - m->data[8] + 1.0);
+	q->r = 0.5 * ZSL_SQRT(m->data[0] + m->data[4] + m->data[8] + 1.0);
+	q->i = 0.5 * ZSL_SQRT(m->data[0] - m->data[4] - m->data[8] + 1.0);
 	q->j = 0.5 * ZSL_SQRT(-m->data[0] + m->data[4] - m->data[8] + 1.0);
 	q->k = 0.5 * ZSL_SQRT(-m->data[0] - m->data[4] + m->data[8] + 1.0);
 
@@ -698,6 +698,7 @@ err:
 
 int zsl_quat_print(struct zsl_quat *q)
 {
-	printf("%.16f + %.16f i + %.16f j + %.16f k\n\n", q->r, q->i, q->j, q->k);
+	printf("%.16f + %.16f i + %.16f j + %.16f k\n", q->r, q->i, q->j, q->k);
+	
 	return 0;
 }

@@ -9,7 +9,8 @@
  * \defgroup PROBABILITY Probability
  *
  * @brief Probability-related functions.
- */
+ *
+ * @{ */
 
 /**
  * @file
@@ -66,7 +67,7 @@ int zsl_prob_uni_mean(zsl_real_t *a, zsl_real_t *b, zsl_real_t *m);
  *           not zero.
  * @param b  The higher bound of the interval in which the probability is
  *           not zero.
- * @param m  The variance of the uniform probability distribution.
+ * @param v  The variance of the uniform probability distribution.
  *
  * @return 0 on success, and -EINVAL if b <= a.
  */
@@ -143,7 +144,7 @@ zsl_real_t zsl_prob_normal_cdf_inv(zsl_real_t *m, zsl_real_t *s, zsl_real_t *x);
  * 		  n * (n - 1) * (n - 2) * (n - 3) * ... * 3 * 2 * 1.
  *
  * @param n  Natural number to compute its factorial.
- * 
+ *
  * @return The factorial of the input number n. If the input number is
  * 		   negative, it returns -EINVAL.
  */
@@ -165,7 +166,7 @@ int zsl_prob_binomial_coef(int *n, int *k, int *c);
 /**
  * @brief Computes the image of a value x of the binomial probability
  *        distribution function (PDF).
- * 
+ *
  * The binomial distribution describes how likely it is to get the same outcome
  * of an experiment exactly 'x' out of the 'n' times the experiment is repeated.
  * In this formula, 'p' is the probability to get such outcome.

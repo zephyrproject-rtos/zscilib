@@ -5,11 +5,13 @@
  */
 
 /**
- * @addtogroup ALGORITHMS
+ * @defgroup FUSION_ALG_COMP Complementary
  *
- * @ingroup FUSION
- *  @{
- */
+ * @brief Complementary sensor fuion algorithm.
+ *
+ * @ingroup FUSION_ALGORITHMS
+ *  @{ */
+
 
 /**
  * @file
@@ -34,14 +36,14 @@ extern "C" {
 /* Source: https://ahrs.readthedocs.io/en/latest/filters/complementary.html */
 
 /**
- * @brief Config settings for the AQUA sensor fusion algorithm.
+ * @brief Config settings for the complementary sensor fusion algorithm.
  */
 struct zsl_fus_comp_cfg {
 	/**
 	 * @brief Value between 0 and 1 used to decide which part of the
 	 * 		  complementary test is more important, the gyrpscope predicted
 	 * 		  orientation or the accel/magpredicted orientation. For more
-	 * 	      accurate gyroscope data, alphashould be closer to zero. For more
+	 * 	      accurate gyroscope data, alpha should be closer to zero. For more
 	 *        accurate accelerometer and magnetometer data, alpha should be
 	 *        closer to 1.
 	 */
@@ -52,7 +54,8 @@ struct zsl_fus_comp_cfg {
  * @brief Sets the sample frequency (in Hz) for the algorithm.
  *
  * @param freq  Sampling frequency in Hz.
- * 
+ * @param cfg   Config struct for this filter.
+ *
  * @return int  0 if everything executed correctly, otherwise an appropriate
  *              negative error code.
  */
@@ -64,7 +67,7 @@ int zsl_fus_comp_init(uint32_t freq, void *cfg);
  * @param a     Input accelerometer vector (3 samples required). NULL if none.
  * @param m     Input magnetometer vector (3 samples required). NULL if none.
  * @param g     Input gyroscope vector (3 samples required). NULL if none.
- * @param dip	Input magnetic dip angle, in radians. NULL for none.
+ * @param incl  Input magnetic inclination, in degrees. NULL for none.
  * @param q     Pointer to the output @ref zsl_quat.
  * @param cfg   Pointer to the config struct for this algorithm.
  *
@@ -72,7 +75,8 @@ int zsl_fus_comp_init(uint32_t freq, void *cfg);
  *              negative error code.
  */
 int zsl_fus_comp_feed(struct zsl_vec *a, struct zsl_vec *m,
-		    struct zsl_vec *g, zsl_real_t *dip, struct zsl_quat *q, void *cfg);
+		      struct zsl_vec *g, zsl_real_t *incl, struct zsl_quat *q,
+		      void *cfg);
 
 /**
  * @brief Default error handler for the complementary sensor fusion driver.

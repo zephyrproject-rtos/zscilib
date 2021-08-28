@@ -603,6 +603,44 @@ zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma)
 	return 0;
 }
 
+#ifndef CONFIG_ZSL_SINGLE_PRECISION
+int zsl_mtx_vec_wedge(struct zsl_mtx *m, struct zsl_vec *v)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the dimensions of 'm' and 'v' match. */
+	if (v->sz != m->sz_cols || v->sz < 4 || m->sz_rows != (m->sz_cols - 1)) {
+		return -EINVAL;
+	}
+#endif
+
+	zsl_real_t d;
+
+	ZSL_MATRIX_DEF(A, m->sz_cols, m->sz_cols);
+	ZSL_MATRIX_DEF(Ai, m->sz_cols, m->sz_cols);
+	ZSL_VECTOR_DEF(Av, m->sz_cols);
+	ZSL_MATRIX_DEF(b, m->sz_cols, 1);
+
+	zsl_mtx_init(&A, NULL);
+	A.data[(m->sz_cols * m->sz_cols - 1)] = 1.0;
+
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		zsl_mtx_get_row(m, i, Av.data);
+		zsl_mtx_set_row(&A, i, Av.data);
+	}
+
+	zsl_mtx_deter(&A, &d);
+	zsl_mtx_inv(&A, &Ai);
+	zsl_mtx_init(&b, NULL);
+	b.data[(m->sz_cols - 1)] = d;
+
+	zsl_mtx_mult(&Ai, &b, &b);
+
+	zsl_vec_from_arr(v, b.data);
+
+	return 0;
+}
+#endif
+
 int
 zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 {
@@ -710,7 +748,7 @@ zsl_mtx_deter(struct zsl_mtx *m, zsl_real_t *d)
 		*d = m->data[0];
 		return 0;
 	}
-	
+
 	/* Shortcut for 2x2 matrices. */
 	if (m->sz_rows == 2) {
 		*d = m->data[0] * m->data[3] - m->data[2] * m->data[1];
@@ -1075,6 +1113,63 @@ zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi)
 }
 
 int
+zsl_mtx_cholesky(struct zsl_mtx *m, struct zsl_mtx *l)
+{
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure 'm' is square. */
+	if (m->sz_rows != m->sz_cols) {
+		return -EINVAL;
+	}
+
+	/* Make sure 'm' is symmetric. */
+	zsl_real_t a, b;
+	for (size_t i = 0; i < m->sz_rows; i++) {
+		for (size_t j = 0; j < m->sz_rows; j++) {
+			zsl_mtx_get(m, i, j, &a);
+			zsl_mtx_get(m, j, i, &b);
+			if (a != b) {
+				return -EINVAL;
+			}
+		}
+	}
+
+	/* Make sure 'm' and 'l' have the same shape. */
+	if (m->sz_rows != l->sz_rows) {
+		return -EINVAL;
+	}
+	if (m->sz_cols != l->sz_cols) {
+		return -EINVAL;
+	}
+#endif
+
+	zsl_real_t sum, x, y;
+	zsl_mtx_init(l, zsl_mtx_entry_fn_empty);
+	for (size_t j = 0; j < m->sz_cols; j++) {
+		sum = 0.0;
+		for (size_t k = 0; k < j; k++) {
+			zsl_mtx_get(l, j, k, &x);
+			sum += x * x;
+		}
+		zsl_mtx_get(m, j, j, &x);
+		zsl_mtx_set(l, j, j, ZSL_SQRT(x - sum));
+
+		for (size_t i = j + 1; i < m->sz_cols; i++) {
+			sum = 0.0;
+			for (size_t k = 0; k < j; k++) {
+				zsl_mtx_get(l, j, k, &x);
+				zsl_mtx_get(l, i, k, &y);
+				sum += y * x;
+			}
+			zsl_mtx_get(l, j, j, &x);
+			zsl_mtx_get(m, i, j, &y);
+			zsl_mtx_set(l, i, j, (y - sum) / x);
+		}
+	}
+
+	return 0;
+}
+
+int
 zsl_mtx_balance(struct zsl_mtx *m, struct zsl_mtx *mout)
 {
 	int rc;
@@ -1189,6 +1284,7 @@ zsl_mtx_householder(struct zsl_mtx *m, struct zsl_mtx *h, bool hessenberg)
 	/* Change the 'sign' value according to the sign of the first
 	 * coefficient of the matrix. */
 	zsl_real_t sign = 1.0;
+
 	if (v.data[0] < 0) {
 		sign = -1.0;
 	}

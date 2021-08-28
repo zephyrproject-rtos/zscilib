@@ -14,11 +14,11 @@ zephyr_library_sources(
     src/colorimetry/rgbccms.c
     src/colorimetry/shell.c
     src/orientation/ahrs.c
+    src/orientation/compass.c
     src/orientation/euler.c
     src/orientation/quaternions.c
     src/orientation/gravity.c
     src/orientation/shell.c
-    src/orientation/fusion/fusion.c
     src/orientation/fusion/madgwick.c
     src/orientation/fusion/mahony.c
     src/orientation/fusion/saam.c
