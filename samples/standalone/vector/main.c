@@ -9,29 +9,32 @@
 #include <errno.h>
 #include "zsl/matrices.h"
 #include "zsl/vectors.h"
+#include "zsl/statistics.h"
+#include "zsl/probability.h"
+#include "zsl/orientation/orientation.h"
 
-int
-main(void)
-{
-	ZSL_VECTOR_DEF(va, 3);
-	ZSL_VECTOR_DEF(vb, 3);
-	ZSL_VECTOR_DEF(vc, 3);
+int main(void)
+{	
+	FILE * fh;
+	size_t count = 0;
+    fh = fopen("data.txt","r");
+	zsl_real_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10;
 
-	printf("Hello, zscilib!\n");
+	while ((d1 = fgetc(fh)) != EOF) {
+    	fscanf (fh, "%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf",
+	    &d1, &d2, &d3, &d4, &d5, &d6, &d7, &d8, &d9, &d10);
+    	
+		// printf ("\t%lf, %lf, %lf,\n", d2, d3, d4);
+		printf ("\t%lf, %lf, %lf,\n", d5, d6, d7);
+		// printf ("\t%lf, %lf, %lf,\n", d8, d9, d10);
 
-	zsl_real_t a[3] = { 0.0, 1.0, 2.0 };
-	zsl_real_t b[3] = { -1.0, 0.5, 0.1 };
-
-	/* Assign arrays to vectors. */
-	zsl_vec_from_arr(&va, a);
-	zsl_vec_from_arr(&vb, b);
-
-	/* Init vc with zero values. */
-	zsl_vec_init(&vc);
-
-	/* Add va and vb, results in vc. */
-	zsl_vec_add(&va, &vb, &vc);
-	zsl_vec_print(&vc);
+		printf ("(%lf, %lf, %lf), ", d5, d6, d7);
+		count++;
+		// printf ("%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf\n",
+		// d1, d2, d3, d4, d5, d6, d7, d8, d9, d10);
+  	}
+	
+	printf("\n%zu\n", count);
 
 	return 0;
 }

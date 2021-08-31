@@ -72,9 +72,9 @@ int zsl_phy_elcty_res_parallel(struct zsl_vec *v, zsl_real_t *r);
  * @brief Calculates the equivalent capacitance of a set of capacitors
  * 		  in series.
  *
- * @param v    Vector whose coefficients are the capacitances in Ohms of the
+ * @param v    Vector whose coefficients are the capacitances in farads of the
  * 			   capacitors in series.
- * @param r    Pointer to the equivalent capacitance in Ohms. Will be set to
+ * @param c    Pointer to the equivalent capacitance in farads. Will be set to
  *             NAN if any of the input capacitances is negative or zero.
  *
  * @return 0 on success, and non-zero error code on failure.
@@ -85,9 +85,9 @@ int zsl_phy_elcty_cap_series(struct zsl_vec *v, zsl_real_t *c);
  * @brief Calculates the equivalent capacitance of a set of capacitors
  * 		  in parallels.
  *
- * @param v    Vector whose coefficients are the capacitances in Ohms of the
+ * @param v    Vector whose coefficients are the capacitances in farads of the
  * 			   capacitors in parallel.
- * @param r    Pointer to the equivalent capacitance in Ohms. Will be set to
+ * @param c    Pointer to the equivalent capacitance in farads. Will be set to
  *             NAN if any of the input capacitances is negative.
  *
  * @return 0 on success, and non-zero error code on failure.

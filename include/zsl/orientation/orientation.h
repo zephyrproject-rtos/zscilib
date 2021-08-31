@@ -15,7 +15,9 @@
 
 #include <zsl/zsl.h>
 #include <zsl/orientation/ahrs.h>
+#include <zsl/orientation/compass.h>
 #include <zsl/orientation/euler.h>
+#include <zsl/orientation/gravity.h>
 #include <zsl/orientation/quaternions.h>
 #include <zsl/orientation/fusion/fusion.h>
 

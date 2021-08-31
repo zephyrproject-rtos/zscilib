@@ -114,11 +114,6 @@ int zsl_att_from_euler(struct zsl_euler *e, struct zsl_attitude *a);
  * @brief Converts a three-axis accelerometer (in m/s^2) and a three-axis
  *        magnetometer sample (in micro-Tesla) to attitude.
  *
- * @note Resulting orientation values here are relative, not absolute, meaning
- *       that the current position is relative to the device's starting
- *       position, not magentic north. Be sure to place the device in a known
- *       orientation when starting it up.
- *
  * @param accel 	Acceleration triplet in m/s^2.
  * @param mag		Magnetometer triplet in micro-Tesla.
  * @param a 		Pointer the the output @ref zsl_attitude struct.
@@ -132,17 +127,24 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
  * @brief Converts a three-axis accelerometer sample (in m/s^2) to roll and
  *        pitch.
  *
- * @note Resulting roll and pitch values here are relative, not absolute,
- *       meaning that the current position is relative to the device's starting
- *       position, not magentic north. Be sure to place the device in a known
- *       orientation when starting it up.
- *
  * @param accel 	Acceleration triplet in m/s^2.
  * @param a 		Pointer the the output @ref zsl_attitude struct.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
 int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a);
+
+/**
+ * @brief Calculates the angle between two accelerometers.
+ *
+ * @param a1 	First acceleration triplet in m/s^2.
+ * @param a2 	First acceleration triplet in m/s^2.
+ * @param b		Angle between the accelerometers, in radians.
+ *
+ * @return 0 if everything executed correctly, otherwise a negative error code
+ *         if the accelerometer data is not tridimensional.
+ */
+int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b);
 
 #ifdef __cplusplus
 }

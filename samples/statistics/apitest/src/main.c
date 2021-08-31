@@ -11,8 +11,11 @@
 
 void statistics_demo(void)
 {
-	zsl_real_t ngp_mean, ngp_median, ngp_q1, ngp_q2, ngp_q3;
-	zsl_real_t ngp_qrng, ngp_drng, ngp_var, ngp_stdev;
+	zsl_real_t ngp_mean, ngp_trim_mean, ngp_median, ngp_q1, ngp_q2, ngp_q3;
+	zsl_real_t ngp_qrng, ngp_drng, ngp_var, ngp_stdev, ngp_sterr;
+	zsl_real_t ngp_mean_absdev, ngp_median_absdev;
+
+	ZSL_VECTOR_DEF(ngp_mode, 284);
 	zsl_real_t cpi_covar;
 	struct zsl_sta_linreg coef;
 
@@ -184,7 +187,7 @@ void statistics_demo(void)
 		2013.0 + (0. / 12.), 2013.0 + (1. / 12.), 2013.0 + (2. / 12.),
 		2013.0 + (3. / 12.), 2013.0 + (4. / 12.), 2013.0 + (5. / 12.),
 		2013.0 + (6. / 12.), 2013.0 + (7. / 12.), 2013.0 + (8. / 12.),
-		2013.0 + (9. / 12.), 2013.0 + (10. / 12.), 2013.0 + (11. / 12.),
+		2013.0 + (9. / 12.), 2013.0 + (10. / 12.), 2013.0 + (11. / 12.)
 	};
 
 	zsl_vec_from_arr(&ngpvec, ngp_data);
@@ -196,8 +199,18 @@ void statistics_demo(void)
 	zsl_sta_mean(&ngpvec, &ngp_mean);
 	printf("  mean:                       %f\n", ngp_mean);
 
+	zsl_sta_sta_err(&ngpvec, &ngp_sterr);
+	printf("  mean standard error:        %f\n", ngp_sterr);
+
+	zsl_sta_trim_mean(&ngpvec, 4, &ngp_trim_mean);
+	printf("  4%% trimmed mean:            %f\n", ngp_trim_mean);
+
 	zsl_sta_median(&ngpvec, &ngp_median);
 	printf("  median:                     %f\n", ngp_median);
+
+	zsl_sta_mode(&ngpvec, &ngp_mode);
+	printf("  mode(s):                    ");
+	zsl_vec_print(&ngp_mode);
 
 	zsl_sta_quart(&ngpvec, &ngp_q1, &ngp_q2, &ngp_q3);
 	printf("  first quartile:             %f\n", ngp_q1);
@@ -209,10 +222,16 @@ void statistics_demo(void)
 	zsl_sta_data_range(&ngpvec, &ngp_drng);
 	printf("  range:                      %f\n", ngp_drng);
 
+	zsl_sta_mean_abs_dev(&ngpvec, &ngp_mean_absdev);
+	printf("  mean absolut deviation:     %f\n", ngp_mean_absdev);
+
+	zsl_sta_median_abs_dev(&ngpvec, &ngp_median_absdev);
+	printf("  median absolut deviation:   %f\n", ngp_median_absdev);
+
 	zsl_sta_var(&ngpvec, &ngp_var);
 	printf("  variance:                   %f\n", ngp_var);
 
-	zsl_sta_sta_dev(&ngpvec, &ngp_stdev);
+	zsl_sta_std_dev(&ngpvec, &ngp_stdev);
 	printf("  standard deviation:         %f\n", ngp_stdev);
 
 	printf("\n");
@@ -224,6 +243,7 @@ void statistics_demo(void)
 	printf("    intercept:                %f\n", coef.intercept);
 	printf("    regression coeff:         %f\n", coef.correlation);
 
+	printf("\n");
 	zsl_vec_get_subset(&ngpvec, 0, 204, &ngpvecsub);
 	zsl_mtx_set_col(&ngpmtx, 0, ngpvecsub.data);
 	zsl_mtx_set_col(&ngpmtx, 1, cpival_data);
@@ -235,9 +255,142 @@ void statistics_demo(void)
 	printf("  covariance matrix:\n\n");
 	zsl_mtx_print(&ngp_covar_mtx);
 
-	printf("\n");
-}
+	ZSL_MATRIX_DEF(bodyvec, 22, 4);                 /* Body measurements. */
+	ZSL_VECTOR_DEF(massvec, 22);                    /* Weight. */
+	ZSL_VECTOR_DEF(mult_reg_coef, 5);
 
+	/* Coefficient of determination. */
+	zsl_real_t coef_det;
+
+	/* Source: Larner, M. (1996). 'Mass and its Relationship to Physical
+	 * Measurements'. MS305 Data Project, Department of Mathematics,
+	 * University of Queensland. */
+
+	zsl_real_t body_data[220] = {
+		/*  Forearm   		Waist		 	 Height    		  Thigh
+		 *  (cm)			(cm)			 (cm)			  (cm)		*/
+		28.5,           85.0,            178.0,           53.0,
+		29.5,           90.5,            187.0,           52.0,
+		25.0,           80.5,            175.0,           49.0,
+		28.5,           91.5,            183.0,           50.0,
+		28.5,           92.0,            174.0,           53.0,
+		30.5,           101.0,           180.0,           57.5,
+		26.5,           76.0,            177.5,           50.0,
+		27.0,           84.0,            182.5,           49.0,
+		26.5,           74.0,            178.5,           47.0,
+		26.5,           76.0,            168.5,           46.0,
+		28.5,           80.0,            170.0,           50.0,
+		27.5,           86.0,            180.0,           49.0,
+		29.5,           82.0,            186.5,           49.0,
+		25.0,           82.0,            188.0,           49.5,
+		29.5,           95.5,            173.0,           52.5,
+		26.5,           81.0,            171.0,           48.0,
+		24.0,           76.0,            169.0,           42.0,
+		25.5,           84.0,            181.0,           42.0,
+		30.0,           88.0,            188.0,           50.5,
+		28.0,           82.0,            173.0,           49.0,
+		29.0,           96.0,            179.0,           51.0,
+		31.0,           99.5,            184.0,           55.0
+	};
+
+	/* Weight in kilograms. */
+	zsl_real_t mass_data[22] = { 77.0, 85.5, 63.0, 80.5, 79.5, 94.0, 66.0,
+				     69.0, 65.0, 58.0, 69.5, 73.0, 74.0, 68.0,
+				     80.0, 66.0, 54.5, 64.0, 84.0, 73.0, 89.0,
+				     94.0 };
+
+	zsl_mtx_from_arr(&bodyvec, body_data);
+	zsl_vec_from_arr(&massvec, mass_data);
+
+	printf("Weight and other physical measurements of men's bodies:\n");
+
+	zsl_sta_mult_linear_reg(&bodyvec, &massvec, &mult_reg_coef, &coef_det);
+	/* weight = b0 + b1 * forearm + b2 * waist + b3 * height + b4 * thigh */
+	printf("  multiple linear regression:\n");
+	printf("    b0:                         %f\n", mult_reg_coef.data[0]);
+	printf("    b1:                         %f\n", mult_reg_coef.data[1]);
+	printf("    b2:                         %f\n", mult_reg_coef.data[2]);
+	printf("    b3:                         %f\n", mult_reg_coef.data[3]);
+	printf("    b4:                         %f\n", mult_reg_coef.data[4]);
+	printf("    coeff of determination:     %f\n", coef_det);
+
+	ZSL_MATRIX_DEF(invenergyvec, 10, 1);
+	ZSL_VECTOR_DEF(crossxvec, 10);
+	ZSL_VECTOR_DEF(wls, 2);
+	ZSL_VECTOR_DEF(sdvec, 10);
+	ZSL_VECTOR_DEF(weights, 10);
+
+	/* Source: Faraway, J. (2002). 'Practical Regression and Anova using R'. */
+
+	/* Inverse of the energy. */
+	zsl_real_t invenergy_data[10] = { 0.345, 0.287, 0.251, 0.225, 0.207,
+					  0.186, 0.161, 0.132, 0.084, 0.060 };
+
+	/* Cross section. */
+	zsl_real_t crossx_data[10] = { 367.0, 311.0, 295.0, 268.0, 253.0,
+				       239.0, 220.0, 213.0, 193.0, 192.0 };
+
+	/* Standard deviation of the data. */
+	zsl_real_t sd_data[10] = { 17.0, 9.0, 9.0, 7.0, 7.0,
+				   6.0, 6.0, 6.0, 5.0, 5.0 };
+
+	zsl_mtx_from_arr(&invenergyvec, invenergy_data);
+	zsl_vec_from_arr(&crossxvec, crossx_data);
+	zsl_vec_from_arr(&sdvec, sd_data);
+
+	for (size_t i = 0; i < sdvec.sz; i++) {
+		weights.data[i] = sdvec.data[i] * sdvec.data[i];
+	}
+
+	printf("\n");
+	printf("Cross section relatonship to the inverse of the energy:\n");
+
+	zsl_sta_weighted_mult_linear_reg(&invenergyvec, &crossxvec, &weights,
+					 &wls, &coef_det);
+	printf("  weighted linear regression:\n");
+	printf("    intercept:                  %f\n", wls.data[0]);
+	printf("    slope:                      %f\n", wls.data[1]);
+	printf("    coeff of determination:     %f\n", coef_det);
+
+	printf("\n");
+
+	ZSL_MATRIX_DEF(el, 12, 3);
+	ZSL_VECTOR_DEF(el_coef, 9);
+
+	/* Ellipsoid points. */
+	zsl_real_t el_data[36] = {
+		13.0, 12.0, 41.0,
+		2.0,  19.0, 21.0,
+		9.0,  23.0, 31.0,
+		6.0,  19.0, 27.0,
+		11.0, 11.0, 29.0,
+		18.0, 20.0, 20.0,
+		8.0,  21.0, 32.0,
+		8.0,  17.0, 29.0,
+		10.0, 22.0, 32.0,
+		13.0, 29.0, 38.0,
+		12.0, 23.0, 39.0,
+		12.0, 12.0, 28.0
+	};
+
+	zsl_mtx_from_arr(&el, el_data);
+
+	printf("\n");
+	printf("Ellipsoid fitting:\n");
+
+	zsl_sta_quad_fit(&el, &el_coef);
+
+	printf("  least squares method:\n");
+	printf("    A:      %f\n", el_coef.data[0]);
+	printf("    B:      %f\n", el_coef.data[1]);
+	printf("    C:      %f\n", el_coef.data[2]);
+	printf("    D:      %f\n", el_coef.data[3]);
+	printf("    E:      %f\n", el_coef.data[4]);
+	printf("    F:      %f\n", el_coef.data[5]);
+	printf("    G:      %f\n", el_coef.data[6]);
+	printf("    H:      %f\n", el_coef.data[7]);
+	printf("    I:      %f\n", el_coef.data[8]);
+}
 
 void main(void)
 {

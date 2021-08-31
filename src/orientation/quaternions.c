@@ -6,6 +6,7 @@
 
 #include <math.h>
 #include <errno.h>
+#include <stdio.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
 #include <zsl/orientation/quaternions.h>
@@ -27,7 +28,7 @@ zsl_quat_val_is_equal(zsl_real_t a, zsl_real_t b, zsl_real_t epsilon)
 
 	c = a - b;
 
-	if (c < epsilon && -c < epsilon) {
+	if (ZSL_ABS(c) < epsilon) {
 		return 1;
 	} else {
 		return 0;
@@ -63,7 +64,7 @@ int zsl_quat_to_unit(struct zsl_quat *q, struct zsl_quat *qn)
 	int rc = 0;
 	zsl_real_t m = zsl_quat_magn(q);
 
-	if ((m == 0.0) || (m == -0.0)) {
+	if (ZSL_ABS(m) < 1E-6) {
 		qn->r = 0.0;
 		qn->i = 0.0;
 		qn->j = 0.0;
@@ -119,10 +120,24 @@ int zsl_quat_mult(struct zsl_quat *qa, struct zsl_quat *qb,
 {
 	int rc = 0;
 
-	qm->i = qa->r * qb->i + qa->i * qb->r + qa->j * qb->k - qa->k * qb->j;
-	qm->j = qa->r * qb->j - qa->i * qb->k + qa->j * qb->r + qa->k * qb->i;
-	qm->k = qa->r * qb->k + qa->i * qb->j - qa->j * qb->i + qa->k * qb->r;
-	qm->r = qa->r * qb->r - qa->i * qb->i - qa->j * qb->j - qa->k * qb->k;
+	/* Make copies so this function can be used as a destructive one. */
+	struct zsl_quat qac;
+	struct zsl_quat qbc;
+
+	qac.r = qa->r;
+	qac.i = qa->i;
+	qac.j = qa->j;
+	qac.k = qa->k;
+
+	qbc.r = qb->r;
+	qbc.i = qb->i;
+	qbc.j = qb->j;
+	qbc.k = qb->k;
+
+	qm->i = qac.r * qbc.i + qac.i * qbc.r + qac.j * qbc.k - qac.k * qbc.j;
+	qm->j = qac.r * qbc.j - qac.i * qbc.k + qac.j * qbc.r + qac.k * qbc.i;
+	qm->k = qac.r * qbc.k + qac.i * qbc.j - qac.j * qbc.i + qac.k * qbc.r;
+	qm->r = qac.r * qbc.r - qac.i * qbc.i - qac.j * qbc.j - qac.k * qbc.k;
 
 	return rc;
 }
@@ -177,7 +192,7 @@ int zsl_quat_log(struct zsl_quat *q, struct zsl_quat *ql)
 	/* Calculate magnitude of input quat. */
 	qmag = zsl_quat_magn(q);
 
-	racos = ZSL_COS(q->r / qmag);
+	racos = ZSL_ACOS(q->r / qmag);
 
 	ql->r = ZSL_LOG(qmag);
 	ql->i = v.data[0] * racos;
@@ -233,7 +248,7 @@ int zsl_quat_inv(struct zsl_quat *q, struct zsl_quat *qi)
 	int rc = 0;
 	zsl_real_t m = zsl_quat_magn(q);
 
-	if ((m == 0.0) || (m == -0.0)) {
+	if (ZSL_ABS(m) < 1E-6) {
 		/* Set to all 0's. */
 		zsl_quat_init(qi, ZSL_QUAT_TYPE_EMPTY);
 	} else {
@@ -271,12 +286,83 @@ err:
 	return rc;
 }
 
+int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb, struct zsl_quat *qr)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	if (ZSL_ABS(qb->r) > 1E-6) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	struct zsl_quat qm;
+	struct zsl_quat qn;
+	struct zsl_quat qi;
+
+	zsl_quat_to_unit(qa, &qn);
+	zsl_quat_mult(&qn, qb, &qm);
+	zsl_quat_inv(&qn, &qi);
+	zsl_quat_mult(&qm, &qi, qr);
+
+err:
+	return rc;
+}
+
+int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
+		  zsl_real_t t, struct zsl_quat *qi)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure t is between 0 and 1 (included). */
+	if (t < 0.0 || t > 1.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	struct zsl_quat q1, q2;
+
+	/* Turn input quaternions into unit quaternions. */
+	struct zsl_quat qa_u;
+	struct zsl_quat qb_u;
+	zsl_quat_to_unit(qa, &qa_u);
+	zsl_quat_to_unit(qb, &qb_u);
+
+	/* Calculate intermediate quats. */
+	zsl_quat_scale(&qa_u, 1.0 - t, &q1);
+	zsl_quat_scale(&qb_u, t, &q2);
+
+	/* Final result = q1 + q2. */
+	qi->r = q1.r + q2.r;
+	qi->i = q1.i + q2.i;
+	qi->j = q1.j + q2.j;
+	qi->k = q1.k + q2.k;
+
+	/* Normalize output quaternion. */
+	zsl_quat_to_unit_d(qi);
+
+err:
+	return rc;
+}
+
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi)
 {
 	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure t is between 0 and 1 (included). */
+	if (t < 0.0 || t > 1.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
 	struct zsl_quat q1, q2; /* Interim quats. */
-	zsl_real_t dot;         /* qa->r * qb->r. */
+	zsl_real_t dot;         /* Dot product bewteen qa and qb. */
 	zsl_real_t phi;         /* arccos(dot). */
 	zsl_real_t phi_s;       /* sin(phi). */
 	zsl_real_t phi_st;      /* sin(phi * (t)). */
@@ -289,13 +375,46 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	 * and popping values on the stack with trivial calls to helper functions.
 	 */
 
-	/* TODO: When t = 0.0 or t = 1.0, just memcpy qa or qb. */
+	/* Turn input quaternions into unit quaternions. */
+	struct zsl_quat qa_u;
+	struct zsl_quat qb_u;
+	zsl_quat_to_unit(qa, &qa_u);
+	zsl_quat_to_unit(qb, &qb_u);
 
-	/* Make sure t is in a valid range. */
-	t = t < 0.0 ? 0.0 : t;
-	t = t > 1.0 ? 1.0 : t;
+	/* When t = 0.0 or t = 1.0, just memcpy qa or qb. */
+	if (t == 0.0) {
+		qi->r = qa_u.r;
+		qi->i = qa_u.i;
+		qi->j = qa_u.j;
+		qi->k = qa_u.k;
+		return rc;
+	} else if (t == 1.0) {
+		qi->r = qb_u.r;
+		qi->i = qb_u.i;
+		qi->j = qb_u.j;
+		qi->k = qb_u.k;
+		return rc;
+	}
 
-	dot = qa->r * qb->r;
+	/* Compute the dot product of the two normalized input quaternions. */
+	dot = qa_u.r * qb_u.r + qa_u.i * qb_u.i + qa_u.j * qb_u.j + qa_u.k * qb_u.k;
+
+	/* The value dot is always between -1 and 1. If dot = 1.0, qa = qb and there
+	 * is no interpolation. */
+	if (ZSL_ABS(dot - 1.0) < 1E-6) {
+		qi->r = qa_u.r;
+		qi->i = qa_u.i;
+		qi->j = qa_u.j;
+		qi->k = qa_u.k;
+		return rc;
+	}
+
+	/* If dot = -1, then qa = - qb and the interpolation is invald. */
+	if (ZSL_ABS(dot + 1.0) < 1E-6) {
+		rc = -EINVAL;
+		return rc;
+	}
+
 
 	/*
 	 * Slerp often has problems with angles close to zero. Consider handling
@@ -309,14 +428,8 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	phi_smt = ZSL_SIN(phi * (1.0 - t));
 
 	/* Calculate intermediate quats. */
-	q1.r = phi_smt / phi_s * qa->r;
-	q1.i = phi_smt / phi_s * qa->i;
-	q1.j = phi_smt / phi_s * qa->j;
-	q1.k = phi_smt / phi_s * qa->k;
-	q2.r = phi_st / phi_s * qb->r;
-	q2.i = phi_st / phi_s * qb->i;
-	q2.j = phi_st / phi_s * qb->j;
-	q2.k = phi_st / phi_s * qb->k;
+	zsl_quat_scale(&qa_u, phi_smt / phi_s, &q1);
+	zsl_quat_scale(&qb_u, phi_st / phi_s, &q2);
 
 	/* Final result = q1 + q2. */
 	qi->r = q1.r + q2.r;
@@ -324,14 +437,100 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	qi->j = q1.j + q2.j;
 	qi->k = q1.k + q2.k;
 
+err:
+	return rc;
+}
+
+int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
+			  zsl_real_t t, struct zsl_quat *qout)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure time is positive or zero and the angular velocity is a
+	 * tridimensional vector. */
+	if (w->sz != 3 || t < 0.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	struct zsl_quat qin2;
+	struct zsl_quat qout2;
+	struct zsl_quat wq;
+	struct zsl_quat wquat = {
+		.r = 0.0,
+		.i = w->data[0],
+		.j = w->data[1],
+		.k = w->data[2]
+	};
+
+	zsl_quat_to_unit(qin, &qin2);
+	zsl_quat_mult(&wquat, &qin2, &wq);
+	zsl_quat_scale_d(&wq, 0.5 * t);
+	qout2.r = qin2.r + wq.r;
+	qout2.i = qin2.i + wq.i;
+	qout2.j = qin2.j + wq.j;
+	qout2.k = qin2.k + wq.k;
+
+	zsl_quat_to_unit(&qout2, qout);
+
+err:
+	return rc;
+}
+
+int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
+			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure time is positive or zero and the angular velocity is a
+	 * tridimensional vector. Inertia can't be negative or zero. */
+	if (l->sz != 3 || t < 0.0 || *i <= 0.0) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	ZSL_VECTOR_DEF(w, 3);
+	zsl_vec_copy(&w, l);
+	zsl_vec_scalar_div(&w, *i);
+	zsl_quat_from_ang_vel(&w, qin, t, qout);
+
+err:
 	return rc;
 }
 
 int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e)
 {
 	int rc = 0;
+	struct zsl_quat qn;
 
-	/* TODO: Convert quaternion to euler. */
+	zsl_quat_to_unit(q, &qn);
+	zsl_real_t gl = qn.i * qn.k + qn.j * qn.r;
+	zsl_real_t v = 2. * gl;
+
+	if (v > 1.0) {
+		v = 1.0;
+	} else if (v < -1.0) {
+		v = -1.0;
+	}
+
+	e->y = ZSL_ASIN(v);
+
+	/* Gimbal lock case. */
+	if (ZSL_ABS(gl - 0.5) < 1E-6 || ZSL_ABS(gl + 0.5) < 1E-6) {
+		e->x = ZSL_ATAN2(2.0 * (qn.j * qn.k + qn.i * qn.r),
+				 1.0 - 2.0 * (qn.i * qn.i + qn.k * qn.k));
+		e->z = 0.0;
+		return rc;
+	}
+
+	e->x = ZSL_ATAN2(2.0 * (qn.i * qn.r - qn.j * qn.k),
+			 1.0 - 2.0 * (qn.i * qn.i + qn.j * qn.j));
+	e->z = ZSL_ATAN2(2.0 * (qn.k * qn.r - qn.i * qn.j),
+			 1.0 - 2.0 * (qn.j * qn.j + qn.k * qn.k));
 
 	return rc;
 }
@@ -340,17 +539,17 @@ int zsl_quat_from_euler(struct zsl_euler *e, struct zsl_quat *q)
 {
 	int rc = 0;
 
-	// zsl_real_t yaw_c = ZSL_COS(e->x * 0.5);
-	// zsl_real_t yaw_s = ZSL_SIN(e->x * 0.5);
-	// zsl_real_t pitch_c = ZSL_COS(e->y * 0.5);
-	// zsl_real_t pitch_s = ZSL_SIN(e->y * 0.5);
-	// zsl_real_t roll_c = ZSL_COS(e->z * 0.5);
-	// zsl_real_t roll_s = ZSL_SIN(e->z * 0.5);
+	zsl_real_t roll_c = ZSL_COS(e->x * 0.5);
+	zsl_real_t roll_s = ZSL_SIN(e->x * 0.5);
+	zsl_real_t pitch_c = ZSL_COS(e->y * 0.5);
+	zsl_real_t pitch_s = ZSL_SIN(e->y * 0.5);
+	zsl_real_t yaw_c = ZSL_COS(e->z * 0.5);
+	zsl_real_t yaw_s = ZSL_SIN(e->z * 0.5);
 
-	// q->r = yaw_c * roll_c * pitch_c + yaw_s * roll_s * pitch_s;
-	// q->i = yaw_s * roll_c * pitch_c - yaw_c * roll_s * pitch_s;
-	// q->j = yaw_c * roll_c * pitch_s + yaw_s * roll_s * pitch_c;
-	// q->k = yaw_c * roll_s * pitch_c - yaw_s * roll_c * pitch_s;
+	q->r = roll_c * pitch_c * yaw_c - roll_s * pitch_s * yaw_s;
+	q->i = roll_s * pitch_c * yaw_c + roll_c * pitch_s * yaw_s;
+	q->j = roll_c * pitch_s * yaw_c - roll_s * pitch_c * yaw_s;
+	q->k = roll_c * pitch_c * yaw_s + roll_s * pitch_s * yaw_c;
 
 	return rc;
 }
@@ -361,27 +560,11 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the rotation matrix has an appropriate shape and size. */
-	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+	if ((m->sz_cols != 3) || (m->sz_rows != 3)) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
-
-	/*
-	 * To enable multiplication of a quaternion (treated as a 4x1 matrix) with
-	 * a 3x3 rotation matrix, we can extend the 3x3 rotation matrix to a 4x4
-	 * identify matrix, placing the rotation matrix in the first three rows and
-	 * columns, as follows:
-	 *
-	 *  --            --
-	 *  |  x  x  x  0  |
-	 *  |  x  x  x  0  |
-	 *  |  x  x  x  0  |
-	 *  |  0  0  0  1  |
-	 *  --            --
-	 */
-
-	zsl_mtx_init(m, NULL);
 
 	/* Note: This can be optimised by pre-calculating shared values. */
 
@@ -400,8 +583,6 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
 	zsl_mtx_set(m, 2, 1, 2.0 * (q->j * q->k + q->i * q->r));
 	zsl_mtx_set(m, 2, 2, 1.0 - 2.0 * (q->i * q->i + q->j * q->j));
 
-	zsl_mtx_set(m, 3, 3, 1.0);
-
 err:
 	return rc;
 }
@@ -409,31 +590,115 @@ err:
 int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q)
 {
 	int rc = 0;
-	zsl_real_t ichk = 0.0;
-	zsl_real_t r4;
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure that the rotation matrix has an appropriate shape and size. */
-	if ((m->sz_cols != 4) || (m->sz_rows != 4)) {
+	if ((m->sz_cols != 3) || (m->sz_rows != 3)) {
 		rc = -EINVAL;
 		goto err;
 	}
 #endif
 
-	/* Make sure this is an appropriately-configured identity matrix. */
-	zsl_mtx_get(m, 3, 3, &ichk);
-	if (zsl_quat_val_is_equal(ichk, 1.0, 1E-6) == false) {
-		rc = -EINVAL;
-		goto err;
+	/* Convert rotation matrix to unit quaternion. */
+	q->r = 0.5 * ZSL_SQRT(m->data[0] + m->data[4] + m->data[8] + 1.0);
+	q->i = 0.5 * ZSL_SQRT(m->data[0] - m->data[4] - m->data[8] + 1.0);
+	q->j = 0.5 * ZSL_SQRT(-m->data[0] + m->data[4] - m->data[8] + 1.0);
+	q->k = 0.5 * ZSL_SQRT(-m->data[0] - m->data[4] + m->data[8] + 1.0);
+
+	if (ZSL_ABS(m->data[7] - m->data[5]) > 1E-6) {
+		/* Multiply by the sign of m21 - m12. */
+		q->i *= (m->data[7] - m->data[5]) / ZSL_ABS(m->data[7] - m->data[5]);
 	}
 
-	/* Convert rotation matrix to unit quaternion. */
-	q->r = ZSL_SQRT(m->data[0] + m->data[5] + m->data[10] + m->data[15]) / 2.0;
-	r4 = q->r * 4.0;
-	q->i = (m->data[9] - m->data[6]) / r4;
-	q->j = (m->data[2] - m->data[8]) / r4;
-	q->k = (m->data[4] - m->data[1]) / r4;
+	if (ZSL_ABS(m->data[2] - m->data[6]) > 1E-6) {
+		/* Multiply by the sign of m02 - m20. */
+		q->j *= (m->data[2] - m->data[6]) / ZSL_ABS(m->data[2] - m->data[6]);
+	}
+
+	if (ZSL_ABS(m->data[3] - m->data[1]) > 1E-6) {
+		/* Multiply by the sign of m10 - m01. */
+		q->k *= (m->data[3] - m->data[1]) / ZSL_ABS(m->data[3] - m->data[1]);
+	}
 
 err:
 	return rc;
+}
+
+int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
+			   zsl_real_t *b)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the axis vector is size 3. */
+	if (a->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	struct zsl_quat qn;
+	zsl_quat_to_unit(q, &qn);
+
+	if (ZSL_ABS(qn.r - 1.0) < 1E-6) {
+		a->data[0] = 0.0;
+		a->data[1] = 0.0;
+		a->data[2] = 0.0;
+		*b = 0.0;
+		return 0;
+	}
+
+	zsl_real_t s = ZSL_SQRT(1.0 - (qn.r * qn.r));
+	*b = 2.0 * ZSL_ACOS(qn.r);
+	a->data[0] = qn.i / s;
+	a->data[1] = qn.j / s;
+	a->data[2] = qn.k / s;
+
+err:
+	return rc;
+}
+
+int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
+			     struct zsl_quat *q)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the axis vector is size 3. */
+	if (a->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	zsl_real_t norm = ZSL_SQRT(a->data[0] * a->data[0] +
+				   a->data[1] * a->data[1] +
+				   a->data[2] * a->data[2]);
+
+	if (norm < 1E-6) {
+		q->r = 0.0;
+		q->i = 0.0;
+		q->j = 0.0;
+		q->k = 0.0;
+		return 0;
+	}
+
+	ZSL_VECTOR_DEF(an, 3);
+	zsl_vec_copy(&an, a);
+	zsl_vec_scalar_div(&an, norm);
+
+	q->r = ZSL_COS(*b / 2.0);
+	q->i = an.data[0] * ZSL_SIN(*b / 2.0);
+	q->j = an.data[1] * ZSL_SIN(*b / 2.0);
+	q->k = an.data[2] * ZSL_SIN(*b / 2.0);
+
+err:
+	return rc;
+}
+
+int zsl_quat_print(struct zsl_quat *q)
+{
+	printf("%.16f + %.16f i + %.16f j + %.16f k\n", q->r, q->i, q->j, q->k);
+	
+	return 0;
 }

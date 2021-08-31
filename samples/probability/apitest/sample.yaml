@@ -1,0 +1,5 @@
+sample:
+  name: zscilib probability API test sample
+tests:
+  test:
+    tags: zscilib

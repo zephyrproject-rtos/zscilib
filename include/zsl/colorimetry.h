@@ -664,7 +664,7 @@ int zsl_clr_conv_ct_xyz(zsl_real_t ct, enum zsl_clr_obs obs,
  *
  * @param ct    The color temperature to use.
  * @param obs   The CIE standard observer model to use for the conversion.
- * @param xyz   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
+ * @param mtx   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
  * @param rgb   Pointer to the output zsl_clr_rgb8 value.
  *
  * @return 0 on success, error code on failure.
@@ -678,7 +678,7 @@ int zsl_clr_conv_ct_rgb8(zsl_real_t ct, enum zsl_clr_obs obs,
  *
  * @param ct    The color temperature to use.
  * @param obs   The CIE standard observer model to use for the conversion.
- * @param xyz   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
+ * @param mtx   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
  * @param rgb   Pointer to the output zsl_clr_rgbf value.
  *
  * @return 0 on success, error code on failure.
@@ -691,7 +691,7 @@ int zsl_clr_conv_ct_rgbf(zsl_real_t ct, enum zsl_clr_obs obs,
  *
  * @param cct   Pointer to CIE 1960 correlated color temperature and Duv.
  * @param obs   The CIE standard observer model to use for the conversion.
- * @param xyY   Pointer to the output CIE 1931 xyY chromaticity.
+ * @param xyy   Pointer to the output CIE 1931 xyY chromaticity.
  *
  * @return 0 on success, error code on failure.
  */
@@ -728,7 +728,7 @@ int zsl_clr_conv_uv60_cct(enum zsl_clr_uv_cct_method method,
  *        using the supplied XYZ to RGB color space correlation matrix.
  *
  * @param xyz   The input CIE 1931 XYZ tristimulus value to convert to RGB.
- * @param xyz   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
+ * @param mtx   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
  * @param rgb   Pointer to the output zsl_clr_rgb8 value.
  *
  * @return 0 on success, error code on failure.
@@ -745,7 +745,7 @@ int zsl_clr_conv_xyz_rgb8(struct zsl_clr_xyz *xyz, struct zsl_mtx *mtx,
  * gamut for the specified RGB color space.
  *
  * @param xyz   The input CIE 1931 XYZ tristimulus value to convert to RGB.
- * @param xyz   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
+ * @param mtx   Pointer to the 3x3 XYZ to RGB color space correlation matrix.
  * @param rgb   Pointer to the output zsl_clr_rgbf value.
  *
  * @return 0 on success, error code on failure.
@@ -866,7 +866,7 @@ void zsl_clr_lef_get(enum zsl_clr_lef lef, const struct zsl_clr_spd **data);
  *
  * @param lef   The luminous efficiency function to use.
  * @param nm    The wavelength to interpolate.
- * @param data  Pointer to the interpolated value's placeholder.
+ * @param val   Pointer to the interpolated value's placeholder.
  *
  * @returns 0 on normal execution, otherwise an appropriate error code.
  */
@@ -877,7 +877,7 @@ int zsl_clr_lef_lerp(enum zsl_clr_lef lef, unsigned int nm, zsl_real_t *val);
  *          correlation matrix.
  *
  * @param ccm   The XYZ to RGB color space correlation matrix to retrieve.
- * @param data  Pointer to the pointer where the const zsl_mtx data should
+ * @param mtx   Pointer to the pointer where the const zsl_mtx data should
  *              be made accessible.
  *
  * @returns 0 on normal execution, otherwise an appropriate error code.

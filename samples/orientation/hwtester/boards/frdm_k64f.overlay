@@ -1,0 +1,25 @@
+/*
+ * Copyright (c) 2021 Kevin Townsend
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&arduino_i2c {
+    /* Disable the on-board accel + mag */
+    fxos8700@1d {
+        status = "disabled";
+    };
+    /* Use the Adafruit 9DOF accel + mag. */
+    fxos8700@1f {
+        compatible = "nxp,fxos8700";
+        reg = <0x1f>;
+        range = <2>;
+        label = "FXOS8700";
+    };
+    /* Use the Adafruit 9DOF gyro. */
+    fxas21002@21 {
+        compatible = "nxp,fxas21002";
+        reg = <0x21>;
+        label = "FXAS21002";
+    };
+};

@@ -1,0 +1,5 @@
+sample:
+  name: zscilib orientation hardware tester
+tests:
+  test:
+    tags: zscilib

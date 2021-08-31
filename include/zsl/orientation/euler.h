@@ -36,7 +36,7 @@ extern "C" {
  *        rigid body in three-dimensional (Euclidean) space, with respect to a
  *        fixed coordinate system. Each element represents the rotation about
  *        the specified axis, expressed in radians.
- * 
+ *
  * @note Technically a Cardanian (AKA Tait–Bryan) angle, being limited to a
  *       single instance each of X, Y and Z.
  */
@@ -63,6 +63,17 @@ struct zsl_euler {
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
 int zsl_eul_to_vec(struct zsl_euler *e, struct zsl_vec *v);
+
+/**
+ * @brief Print the supplied euler angles vector using printf in a
+ * 		  human-readable manner.
+ *
+ * @param e     Pointer to the vector containing the euler angles to print.
+ *
+ * @return  0 if everything executed correctly, otherwise an appropriate
+ *          error code.
+ */
+int zsl_eul_print(struct zsl_euler *e);
 
 #ifdef __cplusplus
 }

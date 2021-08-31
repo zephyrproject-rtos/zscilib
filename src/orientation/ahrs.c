@@ -23,11 +23,9 @@ int zsl_att_to_euler(struct zsl_attitude *a, struct zsl_euler *e)
 {
 	int rc = 0;
 
-	zsl_real_t d_to_r = 0.01745329252;
-
-	e->x = a->roll * d_to_r;
-	e->y = a->pitch * d_to_r;
-	e->z = a->yaw * d_to_r;
+	e->x = a->roll * ZSL_DEG_TO_RAD;
+	e->y = a->pitch * ZSL_DEG_TO_RAD;
+	e->z = a->yaw * ZSL_DEG_TO_RAD;
 
 	return rc;
 }
@@ -36,11 +34,9 @@ int zsl_att_from_euler(struct zsl_euler *e, struct zsl_attitude *a)
 {
 	int rc = 0;
 
-	zsl_real_t r_to_d = 57.295779513;
-
-	a->roll = e->x * r_to_d;
-	a->pitch = e->y * r_to_d;
-	a->yaw = e->z * r_to_d;
+	a->roll = e->x * ZSL_RAD_TO_DEG;
+	a->pitch = e->y * ZSL_RAD_TO_DEG;
+	a->yaw = e->z * ZSL_RAD_TO_DEG;
 	a->status_bits =  0;
 
 	return rc;
@@ -51,25 +47,35 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
 {
 	int rc = 0;
 
-	/* ToDo: Check accel and gyro size, etc. */
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the accelerometer and magnetometer vectors are size 3. */
+	if (accel->sz != 3 || mag->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
 
-	// Accel only
-	//               y
-	// roll = atan2(---)
-	//               z
+	ZSL_VECTOR_DEF(mag_unit, 3);
+	zsl_vec_copy(&mag_unit, mag);
+	zsl_vec_to_unit(&mag_unit);
 
-	// Accel only
-	//                            -x
-	// pitch = atan(-------------------------------)
-	//               y * sin(roll) + z * cos(roll)
+	struct zsl_attitude att;
 
-	// Mag + previous roll/pitch values
-	//                --                                                    --
-	// heading =      |         mz * sin(roll) - my * cos(roll)              |
-	//          atan2 |------------------------------------------------------|
-	//                | mx * cos(pitch) + my * sin(pitch) * sin(roll) + mz * |
-	//                --            sin(pitch) * cos(roll))                 --
+	zsl_att_from_accel(accel, &att);
 
+	zsl_real_t nom = mag_unit.data[2] * ZSL_SIN(att.pitch * ZSL_DEG_TO_RAD) -
+			 mag_unit.data[1] * ZSL_COS(att.pitch * ZSL_DEG_TO_RAD);
+	zsl_real_t den = mag_unit.data[0] * ZSL_COS(att.roll * ZSL_DEG_TO_RAD) +
+			 ZSL_SIN(att.roll * ZSL_DEG_TO_RAD) *
+			 (mag_unit.data[1] * ZSL_SIN(att.pitch * ZSL_DEG_TO_RAD) +
+			  mag_unit.data[2] * ZSL_COS(att.pitch * ZSL_DEG_TO_RAD));
+
+	a->roll = att.roll;
+	a->pitch = att.pitch;
+	a->yaw = ZSL_ATAN2(nom, den) * ZSL_RAD_TO_DEG;
+
+
+err:
 	return rc;
 }
 
@@ -77,15 +83,51 @@ int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a)
 {
 	int rc = 0;
 
-	/* ToDo: Check accel size, etc. */
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the accelerometer vector is size 3. */
+	if (accel->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
 
-	//               y
-	// roll = atan2(---)
-	//               z
+	ZSL_VECTOR_DEF(accel_unit, 3);
+	zsl_vec_copy(&accel_unit, accel);
+	zsl_vec_to_unit(&accel_unit);
 
-	//                            -x
-	// pitch = atan(-------------------------------)
-	//               y * sin(roll) + z * cos(roll)
+	zsl_real_t ss = accel_unit.data[1] * accel_unit.data[1] +
+			accel_unit.data[2] * accel_unit.data[2];
 
+	a->roll = ZSL_ATAN2(accel_unit.data[1], accel_unit.data[2])
+		  * ZSL_RAD_TO_DEG;
+	a->pitch = ZSL_ATAN2(-accel_unit.data[0], ZSL_SQRT(ss))
+		   * ZSL_RAD_TO_DEG;
+	a->yaw = 0.0;
+
+err:
+	return rc;
+}
+
+int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the accelerometer vectors are size 3. */
+	if (a1->sz != 3 || a2->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	zsl_real_t a1_norm, a2_norm, dot;
+
+	a1_norm = zsl_vec_norm(a1);
+	a2_norm = zsl_vec_norm(a2);
+	zsl_vec_dot(a1, a2, &dot);
+
+	*b = ZSL_ACOS(dot / (a1_norm * a2_norm));
+
+err:
 	return rc;
 }

@@ -8,7 +8,9 @@
  * @defgroup CHEMISTRY Chemistry
  *
  * @brief Chemistry functions.
- */
+ * 
+ * @{ */
+
 
 /**
  * @file

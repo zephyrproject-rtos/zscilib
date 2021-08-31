@@ -12,7 +12,7 @@ LIBS    = -lm
 # Optionally force single-precision floats (default is double)
 # CFLAGS += -DCONFIG_ZSL_SINGLE_PRECISION=y
 
-_OBJ = main.o matrices.o vectors.o zsl.o
+_OBJ = main.o matrices.o vectors.o statistics.o probability.o quaternions.o euler.o ahrs.o zsl.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.c
@@ -30,6 +30,31 @@ $(ODIR)/matrices.o: $(BASEDIR)/src/matrices.c
 $(ODIR)/vectors.o: $(BASEDIR)/src/vectors.c
 	@mkdir -p $(ODIR)
 	@echo Compiling $(ODIR)/vectors.o
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/statistics.o: $(BASEDIR)/src/statistics.c
+	@mkdir -p $(ODIR)
+	@echo Compiling $(ODIR)/statistics.o
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/probability.o: $(BASEDIR)/src/probability.c
+	@mkdir -p $(ODIR)
+	@echo Compiling $(ODIR)/probability.o
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/quaternions.o: $(BASEDIR)/src/orientation/quaternions.c
+	@mkdir -p $(ODIR)
+	@echo Compiling $(ODIR)/quaternions.o
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/euler.o: $(BASEDIR)/src/orientation/euler.c
+	@mkdir -p $(ODIR)
+	@echo Compiling $(ODIR)/euler.o
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/ahrs.o: $(BASEDIR)/src/orientation/ahrs.c
+	@mkdir -p $(ODIR)
+	@echo Compiling $(ODIR)/ahrs.o
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/zsl.o: $(BASEDIR)/src/zsl.c

@@ -118,7 +118,7 @@ To run one of the sample applications using qemu, run the following commands:
   assumes `qemu-system-arm` is available on your local system.
 
 ```
-$ west build -p -b qemu_cortex_m3 \
+$ west build -p -b mps2_an521 \
   modules/lib/zscilib/samples/matrix/mult -t run
 ...
 *** Booting Zephyr OS build zephyr-v2.6.0-536-g89212a7fbf5f  ***
@@ -139,11 +139,10 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```bash
-$ twister -p auto --inline-logs qemu_cortex_m3 -T modules/lib/zscilib/tests
+$ twister --inline-logs -p mps2_an521 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
-
 
 ### Debugging with QEMU
 
@@ -158,7 +157,7 @@ you can run the following commands to start a new GDB debug session.
 In one terminal window, run:
 
 ```bash
-$ west build -p auto -b qemu_cortex_m3 modules/lib/zscilib/samples/matrix/pinv
+$ west build -p auto -b mps2_an521 modules/lib/zscilib/samples/matrix/pinv
 ```
 
 Once the ELF file has been built, we can start a GDB server on the default
@@ -221,7 +220,7 @@ operations.
   functions in zscilib are **only available when double-precision is enabled**
   (PINV, SVD, etc.).
 
-### Comparison 
+### Comparison
 
 #### Single-Precision (32-bit) Floats
 
@@ -301,6 +300,7 @@ to ensure that the stack pointer is double-word aligned).
 | Equality check  | `zsl_vec_is_equal`    | x   | x   |     |                 |
 | Non-neg check   | `zsl_vec_is_nonneg`   | x   | x   |     | All values >= 0 |
 | Contains        | `zsl_vec_contains`    | x   | x   |     |                 |
+| Quicksort       | `zsl_vec_sort`        | x   | x   |     |                 |
 | Print           | `zsl_vec_print`       | x   | x   |     |                 |
 
 #### Matrix Operations
@@ -327,20 +327,24 @@ to ensure that the stack pointer is double-word aligned).
 | Subtract (d)    | `zsl_mtx_sub_d`       | x   | x   |     | Destructive     |
 | Multiply        | `zsl_mtx_mult`        | x   | x   |     |                 |
 | Multiply (d)    | `zsl_mtx_mult_d`      | x   | x   |     | Destructive     |
-| Multiply row (d)| `zsl_mtx_mult_row_d`  | x   | x   |     | Destructive     |
+| Multiply sc (d) | `zsl_mtx_scalar_mult_d`|x   | x   |     | Destructive     |
+| Multiple row sc (d)| `zsl_mtx_scalar_mult_row_d`|x|x|     | Destructive     |
 | Transpose       | `zsl_mtx_trans`       | x   | x   |     |                 |
+| Adjoint 3x3     | `zsl_mtx_adjoint_3x3` | x   | x   |     |                 |
 | Adjoint         | `zsl_mtx_adjoint`     | x   | x   |     |                 |
 | Reduce          | `zsl_mtx_reduce`      | x   | x   |     | Row+col removal |
 | Reduce (iter)   | `zsl_mtx_reduce_iter` | x   | x   |     | Iterative ver.  |
 | Augment         | `zsl_mtx_augm_diag`   | x   | x   |     | Adds row+col(s) |
+| Determinant 3x3 | `zsl_mtx_deter_3x3`   | x   | x   |     |                 |
 | Determinant     | `zsl_mtx_deter`       | x   | x   |     |                 |
 | Gaussian El.    | `zsl_mtx_gauss_elim`  | x   | x   |     |                 |
 | Gaussian El. (d)| `zsl_mtx_gauss_elim_d`| x   | x   |     | Destructive     |
 | Gaussian Rd.    | `zsl_mtx_gauss_reduc` | x   | x   |     |                 |
 | Column norm.    | `zsl_mtx_cols_norm`   | x   | x   |     | Unitary col vals|
+| Gram-Schimdt    | `zsl_mtx_gram_schmidt`| x   | x   |     |                 |
 | Elem. norm.     | `zsl_mtx_norm_elem`   | x   | x   |     | Norm vals to i,j|
 | Elem. norm. (d) | `zsl_mtx_norm_elem_d` | x   | x   |     | Destructive     |
-| Gram-Schmidt    | `zsl_mtx_gram_schmidt`| x   | x   |     |                 |
+| Invert 3x3      | `zsl_mtx_inv_3x3`     | x   | x   |     |                 |
 | Invert          | `zsl_mtx_inv`         | x   | x   |     |                 |
 | Balance         | `zsl_mtx_balance`     | x   | x   |     |                 |
 | Householder Ref.| `zsl_mtx_householder` | x   | x   |     |                 |
@@ -410,33 +414,51 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 #### Statistics
 
 - [x] Mean
+- [x] Trimmed mean
+- [x] Weighted mean
+- [x] Time-weighted mean
 - [x] De-mean
 - [x] Percentile (AKA quantile)
 - [x] Median
+- [x] Weighted median
 - [x] Quartile
 - [x] Interquartile range
 - [x] Mode
 - [x] Data range
+- [x] Mean absolute deviation
+- [x] Median absolute deviation from median
 - [x] Variance
 - [x] Standard deviation
 - [x] Covariance
 - [x] Covariance matrix
-- [x] Simple linear regression (slope, intercept, correlation coefficient)
-- [ ] Multiple linear regression
+- [x] Linear regression
+- [x] Multiple linear regression \[1\]
+- [x] Weighted multiple minear regression \[1\]
+- [x] Quadrid fitting (Least-squars fitting of a quadric surface) \[1\]
 - [x] Absolute error
 - [x] Relative error
+- [x] Standard error
+
+\[1\] Only available in double-precision
 
 #### Probability Operations
 
 - [X] Uniform probability density function (PDF)
-- [X] Uniform cumulative distribution function (CDF)
 - [X] Uniform distribution mean
 - [X] Uniform distribution variance
-- [X] Normal probability density function
-- [X] Normal cumulative distribution function
-- [X] Inverse erf(x) function
-- [X] Inverse normal cumulative distribution function
+- [X] Uniform cumulative distribution function (CDF)
+- [X] Normal probability density function (PDF)
+- [X] Normal cumulative distribution function (CDF)
+- [X] Inverse Error function
+- [X] Inverse normal cumulative distribution function (CDF)
+- [x] Factorial
+- [X] Binomial coefficient
+- [X] Binomial probability density function (PDF)
+- [X] Binomial distribution mean
+- [X] Binomial distribution variance
+- [X] Binomial cumulative distribution function (CDF)
 - [X] Information entropy
+- [x] Bayes' Theorem
 
 ### Interpolation
 
@@ -675,9 +697,15 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
   - [x] To vector (access vector API)
   - [x] To Euler (degrees to radian)
   - [x] From Euler (radians to degrees)
-  - [ ] From Accel + Mag (roll, pitch, yaw)
-  - [ ] From Accel (roll, pitch)
-- [ ] Frame of reference conversion (Aerospace, Android, etc.) ???
+  - [x] From Accel + Mag (roll, pitch, yaw)
+  - [x] From Accel (roll, pitch)
+- [x] Angle between two accelerometers
+
+#### Compass
+
+- [x] Degrees, Minutes, Seconds to Decimal Degrees (dms to dd)
+- [x] Magnetic north
+- [x] Geographic (AKA true) north
 
 #### Euler Angles (Radians)
 
@@ -685,41 +713,58 @@ of symmetric matrices using the `zsl_mtx_binary_op` function:
 - [x] Conversion
   - [x] To vector (access vector API)
 
+#### Gravity
+
+- [x] Gravitational field from latitude and altitude
+
 #### Quaternions
 
 - [x] Basic struct definitions
 - [x] Magnitude
+- [x] Unit check
 - [x] Scaling
 - [x] Multiplication
-- [x] Conjugate
-- [x] Inverse
-- [x] Difference
 - [x] Exp
 - [x] Log
 - [x] Exponentiation
-- [ ] Rotate
+- [x] Conjugate
+- [x] Inverse
+- [x] Difference
+- [x] Rotate
 - [x] Interpolation
+  - [x] Lerp
   - [x] Slerp
-- [ ] Integration
-  - [ ] Angular velocity (rad/s + time + current value)
-  - [ ] Angular momentum (Same as above, plus rotational mass)
-- [ ] Conversion
+- [x] Integration
+  - [x] Angular velocity (rad/s + time + current value)
+  - [x] Angular momentum (Same as above, plus rotational mass)
+- [x] Conversion
   - [x] To unit (Normalise)
-  - [ ] To Euler (radians)
-  - [ ] From Euler (radians)
+  - [x] To Euler (radians)
+  - [x] From Euler (radians)
   - [x] To rotation matrix
   - [x] From rotation matrix
-  - [ ] To axis-angle
-  - [ ] From axis-angle
+  - [x] To axis-angle
+  - [x] From axis-angle
 - [x] Special Forms
   - [x] Identity
 
 #### Sensor Fusion
 
 - [x] Define generic fusion interface/struct (accel+mag+gyro -> quaternion)
-- [ ] Implementations
-  - [ ] Madgwick
-  - [ ] Mahoney
+- [x] Matrix rotation (adjust device orientation)
+- [x] Axis-angle rotation (adjust device orientation)
+- [x] Calibration
+  - [x] Magnetometer (hard-iron and soft-iron errors)
+  - [x] Correct magnetometer (apply correction coefficients)
+  - [x] Madgwick calibration
+  - [x] Mahoney calibration
+- [x] Implementations
+  - [x] AQUA
+  - [x] Complementary
+  - [x] Extended Kalman
+  - [x] Madgwick
+  - [x] Mahoney
+  - [x] SAAM
 
 ### Colorimetry
 
