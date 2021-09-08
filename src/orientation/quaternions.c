@@ -306,7 +306,9 @@ int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb, struct zsl_quat *qr)
 	zsl_quat_inv(&qn, &qi);
 	zsl_quat_mult(&qm, &qi, qr);
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -344,7 +346,9 @@ int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
 	/* Normalize output quaternion. */
 	zsl_quat_to_unit_d(qi);
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -387,13 +391,13 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		qi->i = qa_u.i;
 		qi->j = qa_u.j;
 		qi->k = qa_u.k;
-		return rc;
+		goto err;
 	} else if (t == 1.0) {
 		qi->r = qb_u.r;
 		qi->i = qb_u.i;
 		qi->j = qb_u.j;
 		qi->k = qb_u.k;
-		return rc;
+		goto err;
 	}
 
 	/* Compute the dot product of the two normalized input quaternions. */
@@ -406,15 +410,14 @@ int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		qi->i = qa_u.i;
 		qi->j = qa_u.j;
 		qi->k = qa_u.k;
-		return rc;
+		goto err;
 	}
 
 	/* If dot = -1, then qa = - qb and the interpolation is invald. */
 	if (ZSL_ABS(dot + 1.0) < 1E-6) {
 		rc = -EINVAL;
-		return rc;
+		goto err;
 	}
-
 
 	/*
 	 * Slerp often has problems with angles close to zero. Consider handling
@@ -475,7 +478,9 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
 
 	zsl_quat_to_unit(&qout2, qout);
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -498,7 +503,9 @@ int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
 	zsl_vec_scalar_div(&w, *i);
 	zsl_quat_from_ang_vel(&w, qin, t, qout);
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -583,7 +590,9 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m)
 	zsl_mtx_set(m, 2, 1, 2.0 * (q->j * q->k + q->i * q->r));
 	zsl_mtx_set(m, 2, 2, 1.0 - 2.0 * (q->i * q->i + q->j * q->j));
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -620,7 +629,9 @@ int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q)
 		q->k *= (m->data[3] - m->data[1]) / ZSL_ABS(m->data[3] - m->data[1]);
 	}
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -654,7 +665,9 @@ int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
 	a->data[1] = qn.j / s;
 	a->data[2] = qn.k / s;
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -692,7 +705,9 @@ int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
 	q->j = an.data[1] * ZSL_SIN(*b / 2.0);
 	q->k = an.data[2] * ZSL_SIN(*b / 2.0);
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 

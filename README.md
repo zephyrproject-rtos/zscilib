@@ -291,7 +291,6 @@ to ensure that the stack pointer is double-word aligned).
 | Project         | `zsl_vec_project`     | x   | x   |     |                 |
 | To unit vector  | `zsl_vec_to_unit`     | x   | x   |     |                 |
 | Cross product   | `zsl_vec_cross`       | x   | x   |     |                 |
-| Wedge product   | `zsl_vec_wedge`       |     |     |     |                 |
 | Sum of squares  | `zsl_vec_sum_of_sqrs` | x   | x   |     |                 |
 | Comp-wise mean  | `zsl_vec_mean`        | x   | x   |     |                 |
 | Arithmetic mean | `zsl_vec_ar_mean`     | x   | x   |     |                 |
@@ -332,6 +331,7 @@ to ensure that the stack pointer is double-word aligned).
 | Transpose       | `zsl_mtx_trans`       | x   | x   |     |                 |
 | Adjoint 3x3     | `zsl_mtx_adjoint_3x3` | x   | x   |     |                 |
 | Adjoint         | `zsl_mtx_adjoint`     | x   | x   |     |                 |
+| Wedge product   | `zsl_mtx_vec_wedge`   |     | x   |     |                 |
 | Reduce          | `zsl_mtx_reduce`      | x   | x   |     | Row+col removal |
 | Reduce (iter)   | `zsl_mtx_reduce_iter` | x   | x   |     | Iterative ver.  |
 | Augment         | `zsl_mtx_augm_diag`   | x   | x   |     | Adds row+col(s) |
