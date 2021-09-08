@@ -1,19 +1,17 @@
 common:
-  min_ram: 32
+  min_ram: 64
+  min_flash: 512
+
 tests:
-  # C functions in single and double precision
+  # C functions in double precision
   zsl.core.c.double:
+    platform_allow: mps2_an521
     extra_configs:
       - CONFIG_ZSL_SINGLE_PRECISION=n
+      - CONFIG_ZSL_PLATFORM_OPT=0
+  # C functions in single precision
   zsl.core.c.single:
+    platform_allow: mps2_an521
     extra_configs:
       - CONFIG_ZSL_SINGLE_PRECISION=y
-
-  ## CARM THUMB functions in single and double precision
-  # zsl.core.thumb2.double:
-  #   extra_configs:
-  #     - CONFIG_ZSL_PLATFORM_OPT=2
-  # zsl.core.thumb2.single:
-  #   extra_configs:
-  #     - CONFIG_ZSL_PLATFORM_OPT=2
-  #     - CONFIG_ZSL_SINGLE_PRECISION=y
+      - CONFIG_ZSL_PLATFORM_OPT=0

@@ -74,8 +74,9 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
 	a->pitch = att.pitch;
 	a->yaw = ZSL_ATAN2(nom, den) * ZSL_RAD_TO_DEG;
 
-
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -104,7 +105,9 @@ int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a)
 		   * ZSL_RAD_TO_DEG;
 	a->yaw = 0.0;
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
 
@@ -128,6 +131,8 @@ int zsl_att_accel_angle(struct zsl_vec *a1, struct zsl_vec *a2, zsl_real_t *b)
 
 	*b = ZSL_ACOS(dot / (a1_norm * a2_norm));
 
+#if CONFIG_ZSL_BOUNDS_CHECKS
 err:
+#endif
 	return rc;
 }
