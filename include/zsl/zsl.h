@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Kevin Townsend (KTOWN)
+ * Copyright (c) 2019-2021 Kevin Townsend (KTOWN)
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -36,11 +36,11 @@ extern "C" {
  *   o "-release"
  */
 
-#define ZSL_VERSION             "0.2.0-alpha"
+#define ZSL_VERSION             "0.2.0-rc1"
 #define ZSL_VERSION_MAJOR       0
 #define ZSL_VERSION_MINOR       2
 #define ZSL_VERSION_REVISION    0
-#define ZSL_VERSION_STATUS      "-alpha"
+#define ZSL_VERSION_STATUS      "-rc1"
 #define ZSL_VERSION_DATE        __DATE__
 
 extern const char *zsl_version;

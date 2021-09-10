@@ -74,7 +74,7 @@ zsl_orient_shell_cmd_lat2g(const struct shell *shell, size_t argc, char **argv)
 		return zsl_orient_shell_invalid_arg(shell, argv[2]);
 	}
 
-	rc = zsl_grav_lat_alt(&lat, &alt, &g);
+	rc = zsl_grav_lat_alt(lat, alt, &g);
 	if (rc) {
 		return zsl_orient_shell_rc_code(shell, rc);
 	}
