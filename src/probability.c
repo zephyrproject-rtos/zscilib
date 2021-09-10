@@ -95,7 +95,7 @@ zsl_real_t zsl_prob_normal_cdf(zsl_real_t *m, zsl_real_t *s, zsl_real_t *x)
 zsl_real_t zsl_prob_erf_inv(zsl_real_t *x)
 {
 	zsl_real_t p, r, t;
-	
+
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure x is between -1 and 1. */
 	if (*x <= -1.0 || *x >= 1.0) {
@@ -155,10 +155,11 @@ int zsl_prob_factorial(int *n)
 	} else if (*n < 0) {
 		return -EINVAL;
 	}
-	
+
 	int n2 = *n;
+
 	for (int i = 1; i < *n; i++) {
-		n2 *= (*n - i); 
+		n2 *= (*n - i);
 	}
 
 	return n2;
@@ -180,7 +181,7 @@ int zsl_prob_binomial_coef(int *n, int *k, int *c)
 
 	int kn = *n - *k;
 	*c = zsl_prob_factorial(n) /
-	(zsl_prob_factorial(k) * zsl_prob_factorial(&kn));
+	     (zsl_prob_factorial(k) * zsl_prob_factorial(&kn));
 
 	return 0;
 }
@@ -200,7 +201,7 @@ zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x)
 
 	int c;
 	zsl_prob_binomial_coef(n, x, &c);
-	
+
 	return c * ZSL_POW(*p, *x) * ZSL_POW((1. - *p), (*n - *x));
 }
 
@@ -218,7 +219,7 @@ int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m)
 #endif
 
 	*m = *n * *p;
-	
+
 	return 0;
 }
 
@@ -236,7 +237,7 @@ int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v)
 #endif
 
 	*v = *n * *p * (1. - *p);
-	
+
 	return 0;
 }
 
@@ -263,8 +264,8 @@ zsl_real_t zsl_prob_binomial_cdf(int *n, zsl_real_t *p, int *x)
 		zsl_prob_binomial_coef(n, &i, &c);
 		y += c * ZSL_POW(*p, i) * ZSL_POW((1. - *p), (*n - i));
 	}
-	
-	
+
+
 	return y;
 }
 
@@ -298,7 +299,7 @@ int zsl_prob_entropy(struct zsl_vec *v, zsl_real_t *h)
 }
 
 int zsl_prob_bayes(zsl_real_t *pa, zsl_real_t *pb, zsl_real_t *pba,
-			 zsl_real_t *pab)
+		   zsl_real_t *pab)
 {
 
 #if CONFIG_ZSL_BOUNDS_CHECKS

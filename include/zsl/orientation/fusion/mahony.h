@@ -10,7 +10,8 @@
  * @brief Mahoney sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -49,7 +50,7 @@ struct zsl_fus_mahn_cfg {
 
 	/**
 	 * @brief Integral feedback vector, which is updated every iteration.
-	 * 		  Its initial value must be (0, 0, 0).
+	 *        Its initial value must be (0, 0, 0).
 	 */
 	struct zsl_vec intfb;
 };

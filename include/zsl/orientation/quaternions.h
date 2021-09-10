@@ -53,7 +53,8 @@
  * between arbitrary orientations (x, y, z), not just arbitrary points (x, y).
  *
  * @ingroup ORIENTATION
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -133,8 +134,8 @@ enum zsl_quat_type {
  * @brief Convenience function to set the supplied quaternion into a known
  *        state.
  *
- * @param q 	The quaterion to initialise.
- * @param type 	The memory layout to use when initialising the quaternion.
+ * @param q     The quaterion to initialise.
+ * @param type  The memory layout to use when initialising the quaternion.
  */
 void zsl_quat_init(struct zsl_quat *q, enum zsl_quat_type type);
 
@@ -180,8 +181,8 @@ zsl_real_t zsl_quat_magn(struct zsl_quat *q);
  *
  * To check if a quaternion is a unit quaternion, see @ref zsl_quat_is_unit.
  *
- * @param q 	The source quaternion.
- * @param qn 	The normalised output quaternion.
+ * @param q     The source quaternion.
+ * @param qn    The normalised output quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -190,7 +191,7 @@ int zsl_quat_to_unit(struct zsl_quat *q, struct zsl_quat *qn);
 /**
  * @brief Normalises to unit quaternion (destructive).
  *
- * @param q 	The quaternion to normalise.
+ * @param q     The quaternion to normalise.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -200,19 +201,19 @@ int zsl_quat_to_unit_d(struct zsl_quat *q);
  * @brief Verifies that this is a "unit" quaternion, meaning that it has a
  *        magnitude of 1, where sqrt(r^2+i^2+j^2+k^2) = 1.0.
  *
- * @param q 	The quaternion to verify.
+ * @param q     The quaternion to verify.
  *
- * @return true		If this is a unit quaternion.
- * @return false 	If this is not a unit quaternion.
+ * @return true     If this is a unit quaternion.
+ * @return false    If this is not a unit quaternion.
  */
 bool zsl_quat_is_unit(struct zsl_quat *q);
 
 /**
  * @brief Multiples each element in the quaternion by a scalar value.
  *
- * @param q 	The quaternion to scale.
- * @param s		The scalar value to use.
- * @param qs 	The scaled output quaternion.
+ * @param q     The quaternion to scale.
+ * @param s     The scalar value to use.
+ * @param qs    The scaled output quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -222,8 +223,8 @@ int zsl_quat_scale(struct zsl_quat *q, zsl_real_t s, struct zsl_quat *qs);
  * @brief Multiples each element in the quaternion by a scalar value
  *        (destructive).
  *
- * @param q 	The quaternion to scale.
- * @param s		The scalar value to use.
+ * @param q     The quaternion to scale.
+ * @param s     The scalar value to use.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -238,9 +239,9 @@ int zsl_quat_scale_d(struct zsl_quat *q, zsl_real_t s);
  *       multiplying is important. To apply rotation q1, then rotation
  *       q2, we need to execute q3 = q2 * q1, in that order.
  *
- * @param qa 	The first input unit quaternion.
- * @param qb 	The second input unit quaternion.
- * @param qm 	The output placeholder.
+ * @param qa    The first input unit quaternion.
+ * @param qb    The second input unit quaternion.
+ * @param qm    The output placeholder.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -250,8 +251,8 @@ int zsl_quat_mult(struct zsl_quat *qa, struct zsl_quat *qb,
 /**
  * @brief Calculates the exponential of a unit quaternion.
  *
- * @param q 	The input unit quaternion.
- * @param qe 	The output unit quaternion.
+ * @param q     The input unit quaternion.
+ * @param qe    The output unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -260,8 +261,8 @@ int zsl_quat_exp(struct zsl_quat *q, struct zsl_quat *qe);
 /**
  * @brief Calculates the natural logarithm of a unit quaternion.
  *
- * @param q 	The input unit quaternion.
- * @param ql 	The output unit quaternion.
+ * @param q     The input unit quaternion.
+ * @param ql    The output unit quaternion.
  *
  * @return zsl_real_t The logarithm of q.
  */
@@ -271,9 +272,9 @@ int zsl_quat_log(struct zsl_quat *q, struct zsl_quat *ql);
  * @brief Multiples the supplied unit quaternions to the specified exponent,
  *        and stores the results in qout (where qout = qa^pow).
  *
- * @param q 	The input unit quaternion.
- * @param pow 	The exponent to use, where qa^exp.
- * @param qout 	The output placeholder.
+ * @param q     The input unit quaternion.
+ * @param pow   The exponent to use, where qa^exp.
+ * @param qout  The output placeholder.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -283,8 +284,8 @@ int zsl_quat_pow(struct zsl_quat *q, zsl_real_t pow,
 /**
  * @brief Calculates the complex conjugate of 'q'.
  *
- * @param q 	The input quaternion.
- * @param qc 	The conjugate output;
+ * @param q     The input quaternion.
+ * @param qc    The conjugate output;
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -297,8 +298,8 @@ int zsl_quat_conj(struct zsl_quat *q, struct zsl_quat *qc);
  *       property that their inverse is equal to the quaternion's conjugate
  *       (since qq' = 1), so we can simply negate the three imaginary values.
  *
- * @param q 	The input unit quaternion.
- * @param qi 	The inverted output;
+ * @param q     The input unit quaternion.
+ * @param qi    The inverted output;
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -307,7 +308,7 @@ int zsl_quat_inv(struct zsl_quat *q, struct zsl_quat *qi);
 /**
  * @brief Inverts unit quaternion 'q' (destructive).
  *
- * @param q 	The input unit quaternion.
+ * @param q     The input unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -317,9 +318,9 @@ int zsl_quat_inv_d(struct zsl_quat *q);
  * @brief Calculates the rotation (qd) from qa to qb using the multiplicative
  *        inverse, such that qb = qa * qd.
  *
- * @param qa	The initial unit quaternion value.
- * @param qb	The final unit quaternion value.
- * @param qd	The difference as a quaternion.
+ * @param qa    The initial unit quaternion value.
+ * @param qb    The final unit quaternion value.
+ * @param qd    The difference as a quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -332,9 +333,9 @@ int zsl_quat_diff(struct zsl_quat *qa, struct zsl_quat *qb,
  * Quaternion rotarion follows as: qr = qa* * qb * qa, where qa* is the inverse
  * of the quaternion qa.
  *
- * @param qa	The input unit quaternion value, i.e., the rotation quaternion.
- * @param qb	The pure quaternion to rotate (zero real part).
- * @param qr	The pure rotated quaternion.
+ * @param qa    The input unit quaternion value, i.e., the rotation quaternion.
+ * @param qb    The pure quaternion to rotate (zero real part).
+ * @param qr    The pure rotated quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -347,10 +348,10 @@ int zsl_quat_rot(struct zsl_quat *qa, struct zsl_quat *qb,
  * Calculates an intermediate quaternion qa and qb, based on the
  * provided interpolation factor, t (0.0..1.0). Output assigned to qi.
  *
- * @param qa	The starting quaternion value.
- * @param qb	The target quaternion value.
- * @param t		The interpolation factor (0.0..1.0)
- * @param qi	The interpolated unit quaternion.
+ * @param qa    The starting quaternion value.
+ * @param qb    The target quaternion value.
+ * @param t	    The interpolation factor (0.0..1.0)
+ * @param qi    The interpolated unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  *         interpolation factor is not between 0 and 1.
@@ -364,42 +365,42 @@ int zsl_quat_lerp(struct zsl_quat *qa, struct zsl_quat *qb,
  * Calculates an intermediate rotation between qa and qb, based on the
  * provided interpolation factor, t (0.0..1.0). Output assigned to qi.
  *
- * @param qa	The starting quaternion value.
- * @param qb	The target quaternion value.
- * @param t		The interpolation factor (0.0..1.0)
- * @param qi	The interpolated quaternion.
+ * @param qa    The starting quaternion value.
+ * @param qb    The target quaternion value.
+ * @param t     The interpolation factor (0.0..1.0)
+ * @param qi    The interpolated quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  *         interpolation factor is not between 0 and 1. If qa = -qb, the
- * 	       spherical interpolation is impossible and a negative error is
- * 		   returned.
+ *         spherical interpolation is impossible and a negative error is
+ *         returned.
  */
 int zsl_quat_slerp(struct zsl_quat *qa, struct zsl_quat *qb,
 		   zsl_real_t t, struct zsl_quat *qi);
 
 /**
  * @brief Updates an orientation quaternion with new information in form of
- * 		  angular velocity and time elapsed.
+ *        angular velocity and time elapsed.
  *
  * Given a quaterion that describes the current orientation (qin) of a body, a
  * time value (t) and a tridimensional angular velocity vector (w), this
  * function returns an estimation of the orientation after a time 't', in the
  * form of a unit quaternion (qout).
  *
- * @param w		Tridimensional angular velocity vector, in radians per second.
- * @param qin	The starting orientation quaternion of the body.
- * @param t		Time between qin and qout orientations, in seconds.
- * @param qout	The estimated orientation after a time t elapses.
+ * @param w     Tridimensional angular velocity vector, in radians per second.
+ * @param qin   The starting orientation quaternion of the body.
+ * @param t     Time between qin and qout orientations, in seconds.
+ * @param qout  The estimated orientation after a time t elapses.
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   time is negative or the angular velocity vector dimension is not 3.
+ *         time is negative or the angular velocity vector dimension is not 3.
  */
 int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
 			  zsl_real_t t, struct zsl_quat *qout);
 
 /**
  * @brief Updates an orientation quaternion with new information in form of
- * 		  angular momentum, moment of inertia and time elapsed.
+ *        angular momentum, moment of inertia and time elapsed.
  *
  * Given a quaterion that describes the current orientation (qin) of a body, a
  * time value (t), a tridimensional angular momentum vector (l), and the moment
@@ -407,17 +408,17 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
  * orientation of the body after a time 't', in the form of a unit
  * quaternion (qout).
  *
- * @param l		Tridimensional angular momentum vector, in kilogram and metres
- * 				squared per second.
- * @param qin	The starting orientation quaternion of the body.
- * @param i		The moment of inertia of the body, in in kilogram and metres
- * 				squared.
- * @param t		Time between qin and qout orientations, in seconds.
- * @param qout	The estimated orientation after a time t elapses.
+ * @param l     Tridimensional angular momentum vector, in kilogram and metres
+ *              squared per second.
+ * @param qin   The starting orientation quaternion of the body.
+ * @param i     The moment of inertia of the body, in kilogram and metres
+ *              squared.
+ * @param t     Time between qin and qout orientations, in seconds.
+ * @param qout  The estimated orientation after a time t elapses.
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   time or the moment of inertia are negative or if the angular
- * 		   momentum vector dimension is not 3.
+ *         time or the moment of inertia are negative or if the angular
+ *         momentum vector dimension is not 3.
  */
 int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
 			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
@@ -426,8 +427,8 @@ int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
  *        values expressed in radians.
  *
- * @param q 	Pointer to the unit quaternion to convert.
- * @param e 	Pointer to the Euler angle placeholder. Expressed in radians.
+ * @param q     Pointer to the unit quaternion to convert.
+ * @param e     Pointer to the Euler angle placeholder. Expressed in radians.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -437,8 +438,8 @@ int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e);
  * @brief Converts a Euler angle to a unit quaternion. Euler values expressed
  *        in radians.
  *
- * @param e 	Pointer to the Euler angle to convert. Expressed in radians.
- * @param q 	Pointer to the unit quaternion placeholder.
+ * @param e     Pointer to the Euler angle to convert. Expressed in radians.
+ * @param q     Pointer to the unit quaternion placeholder.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -447,8 +448,8 @@ int zsl_quat_from_euler(struct zsl_euler *e, struct zsl_quat *q);
 /**
  * @brief Converts a unit quaternion to it's equivalent rotation matrix.
  *
- * @param q 	Pointer to the unit quaternion to convert.
- * @param m 	Pointer to the 4x4 rotation matrix.
+ * @param q     Pointer to the unit quaternion to convert.
+ * @param m     Pointer to the 4x4 rotation matrix.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -457,8 +458,8 @@ int zsl_quat_to_rot_mtx(struct zsl_quat *q, struct zsl_mtx *m);
 /**
  * @brief Converts a rotation matrix to it's equivalent unit quaternion.
  *
- * @param m 	Pointer to the 4x4 rotation matrix.
- * @param q 	Pointer to the unit quaternion to convert.
+ * @param m     Pointer to the 4x4 rotation matrix.
+ * @param q     Pointer to the unit quaternion to convert.
  *
  * @return 0 if everything executed normally, or a negative error code.
  */
@@ -467,12 +468,12 @@ int zsl_quat_from_rot_mtx(struct zsl_mtx *m, struct zsl_quat *q);
 /**
  * @brief Converts a unit quaternion to it's axis-angle rotation equivalent.
  *
- * @param q 	Pointer to the unit quaternion to convert.
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
+ * @param q     Pointer to the unit quaternion to convert.
+ * @param a     Pointer to the tridimensional axis of rotation.
+ * @param b     Pointer to the angle of the rotation in radians.
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
+ *         dimension of the vector defining the axis is not three.
  */
 int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
 			   zsl_real_t *b);
@@ -480,12 +481,12 @@ int zsl_quat_to_axis_angle(struct zsl_quat *q, struct zsl_vec *a,
 /**
  * @brief Converts axis-angle rotation to its unit quaternion equivalent.
  *
- * @param a 	Pointer to the tridimensional axis of rotation.
- * @param b		Pointer to the angle of the rotation in radians.
- * @param q		Pointer to the converted unit quaternion.
+ * @param a     Pointer to the tridimensional axis of rotation.
+ * @param b     Pointer to the angle of the rotation in radians.
+ * @param q     Pointer to the converted unit quaternion.
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the vector defining the axis is not three.
+ *         dimension of the vector defining the axis is not three.
  */
 int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
 			     struct zsl_quat *q);
@@ -493,7 +494,7 @@ int zsl_quat_from_axis_angle(struct zsl_vec *a, zsl_real_t *b,
 /**
  * @brief Print the supplied quaternion using printf in a human-readable manner.
  *
- * @param q		Pointer to the quaternion to print.
+ * @param q     Pointer to the quaternion to print.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.

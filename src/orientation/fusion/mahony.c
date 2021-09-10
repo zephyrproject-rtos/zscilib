@@ -10,7 +10,7 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include <zsl/orientation/fusion/mahony.h>
 
-static uint32_t zsl_fus_mahn_freq = 0;
+static uint32_t zsl_fus_mahn_freq;
 
 static int zsl_fus_mahony_imu(struct zsl_vec *g, struct zsl_vec *a,
 			      zsl_real_t *Kp, zsl_real_t *Ki,

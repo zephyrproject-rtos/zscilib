@@ -62,6 +62,7 @@ void test_vector_copy(void)
 
 	/* Initialize 'vcopy' and define 'v'. */
 	zsl_real_t a[4] = { 4.0, 5.0, 3.0, 2.0 };
+
 	rc = zsl_vec_from_arr(&v, a);
 	zassert_true(rc == 0, NULL);
 

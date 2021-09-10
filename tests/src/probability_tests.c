@@ -177,7 +177,7 @@ void test_prob_factorial(void)
 {
 	int rc;
 	int n;
-	
+
 	n = 0;
 	rc = zsl_prob_factorial(&n);
 	zassert_true(val_is_equal(rc, 1, 1E-6), NULL);
@@ -195,7 +195,7 @@ void test_prob_binomial_coef(void)
 {
 	int rc;
 	int n = 7, k, c;
-	
+
 	k = 6;
 	rc = zsl_prob_binomial_coef(&n, &k, &c);
 	zassert_true(rc == 0, NULL);
@@ -388,13 +388,13 @@ void test_prob_entropy(void)
 
 	/* Compute the entropy of vb. It should return an error. */
 	rc = zsl_prob_entropy(&vb, &h);
-	zassert_true(rc == -EINVAL, NULL);	
+	zassert_true(rc == -EINVAL, NULL);
 
 	/* Compute the entropy of va, which now has a negative probability. It
 	 * should return an error. */
 	va.data[2] *= -1.0;
 	rc = zsl_prob_entropy(&va, &h);
-	zassert_true(rc == -EINVAL, NULL);	
+	zassert_true(rc == -EINVAL, NULL);
 }
 
 void test_prob_bayes(void)
@@ -426,7 +426,7 @@ void test_prob_bayes(void)
 	pba *= -1.;
 	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);
 	zassert_true(rc == -EINVAL, NULL);
-	
+
 	pb += 2.;
 	pa -= 2.;
 	rc = zsl_prob_bayes(&pa, &pb, &pba, &pab);

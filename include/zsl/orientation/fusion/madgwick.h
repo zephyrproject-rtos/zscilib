@@ -10,7 +10,8 @@
  * @brief Madgwick sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -39,7 +40,7 @@ extern "C" {
 struct zsl_fus_madg_cfg {
 	/**
 	 * @brief The filter gain beta is a positive number that represents the
-	 * 		  divergence rate of the gyroscope.
+	 *        divergence rate of the gyroscope.
 	 */
 	zsl_real_t beta;
 };

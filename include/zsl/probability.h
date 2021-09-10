@@ -10,7 +10,8 @@
  *
  * @brief Probability-related functions.
  *
- * @{ */
+ * @{
+ */
 
 /**
  * @file
@@ -141,22 +142,22 @@ zsl_real_t zsl_prob_normal_cdf_inv(zsl_real_t *m, zsl_real_t *s, zsl_real_t *x);
 
 /**
  * @brief Computes the factorial of a natural number, i. e., the finite product
- * 		  n * (n - 1) * (n - 2) * (n - 3) * ... * 3 * 2 * 1.
+ *        n * (n - 1) * (n - 2) * (n - 3) * ... * 3 * 2 * 1.
  *
  * @param n  Natural number to compute its factorial.
  *
  * @return The factorial of the input number n. If the input number is
- * 		   negative, it returns -EINVAL.
+ *         negative, it returns -EINVAL.
  */
 int zsl_prob_factorial(int *n);
 
 /**
  * @brief Computes binomial coefficient of n and k (commonly writen as 'n over
- * 		  k').
+ *        k').
  *
  * @param n  The first input natural number.
  * @param k  The second input natural number. This number can be negative or
- * 			 bigger than 'n', but then the function will be returning zero.
+ *           bigger than 'n', but then the function will be returning zero.
  * @param c  The combinatory number of 'n' over 'k'.
  *
  * @return 0 on success, -EINVAL if n is negative.
@@ -176,7 +177,7 @@ int zsl_prob_binomial_coef(int *n, int *k, int *c);
  * @param x  The number of times we want the outcome.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x);
 
@@ -188,7 +189,7 @@ zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x);
  * @param m  The mean value of the binomial distribution.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m);
 
@@ -200,7 +201,7 @@ int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m);
  * @param v  The variance value of the binomial distribution.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v);
 
@@ -213,28 +214,28 @@ int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v);
  * @param x  The number of times we want the outcome.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 zsl_real_t zsl_prob_binomial_cdf(int *n, zsl_real_t *p, int *x);
 
 /**
  * @brief Computes the factorial of a natural number, i. e., the finite product
- * 		  n * (n - 1) * (n - 2) * (n - 3) * ... * 3 * 2 * 1.
+ *        n * (n - 1) * (n - 2) * (n - 3) * ... * 3 * 2 * 1.
  *
  * @param n  Natural number to compute its factorial.
  *
  * @return The factorial of the input number n. If the input number is
- * 		   negative, it returns -EINVAL.
+ *         negative, it returns -EINVAL.
  */
 int zsl_prob_factorial(int *n);
 
 /**
  * @brief Computes binomial coefficient of n and k (commonly writen as 'n over
- * 		  k').
+ *        k').
  *
  * @param n  The first input natural number.
  * @param k  The second input natural number. This number can be negative or
- * 			 bigger than 'n', but then the function will be returning zero.
+ *           bigger than 'n', but then the function will be returning zero.
  * @param c  The combinatory number of 'n' over 'k'.
  *
  * @return 0 on success, -EINVAL if n is negative.
@@ -254,7 +255,7 @@ int zsl_prob_binomial_coef(int *n, int *k, int *c);
  * @param x  The number of times we want the outcome.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x);
 
@@ -266,7 +267,7 @@ zsl_real_t zsl_prob_binomial_pdf(int *n, zsl_real_t *p, int *x);
  * @param m  The mean value of the binomial distribution.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m);
 
@@ -278,7 +279,7 @@ int zsl_prob_binomial_mean(int *n, zsl_real_t *p, zsl_real_t *m);
  * @param v  The variance value of the binomial distribution.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v);
 
@@ -291,7 +292,7 @@ int zsl_prob_binomial_var(int *n, zsl_real_t *p, zsl_real_t *v);
  * @param x  The number of times we want the outcome.
  *
  * @return 0 on success, -EINVAL if n is negative or the probability is not
- * 	       between 0 and 1.
+ *         between 0 and 1.
  */
 zsl_real_t zsl_prob_binomial_cdf(int *n, zsl_real_t *p, int *x);
 

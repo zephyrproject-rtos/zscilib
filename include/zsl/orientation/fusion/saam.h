@@ -10,7 +10,8 @@
  * @brief SAAM sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file

@@ -57,8 +57,8 @@ struct zsl_euler {
  *        same memory address to a @ref zsl_vec, allowing for vector functions
  *        to be used on the zsl_euler XYZ values.
  *
- * @param e		Pointer to the zsl_euler struct to use.
- * @param v		Pointer to the zsl_vec struct to use.
+ * @param e     Pointer to the zsl_euler struct to use.
+ * @param v     Pointer to the zsl_vec struct to use.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -66,7 +66,7 @@ int zsl_eul_to_vec(struct zsl_euler *e, struct zsl_vec *v);
 
 /**
  * @brief Print the supplied euler angles vector using printf in a
- * 		  human-readable manner.
+ *        human-readable manner.
  *
  * @param e     Pointer to the vector containing the euler angles to print.
  *

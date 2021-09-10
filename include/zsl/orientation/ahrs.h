@@ -81,8 +81,8 @@ struct zsl_attitude {
  *        same memory address to a @ref zsl_vec, allowing for vector functions
  *        to be used on the zsl_attitude values.
  *
- * @param a		Pointer to the zsl_attitude struct to use.
- * @param v		Pointer to the zsl_vec struct to use.
+ * @param a     Pointer to the zsl_attitude struct to use.
+ * @param v     Pointer to the zsl_vec struct to use.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -92,8 +92,8 @@ int zsl_att_to_vec(struct zsl_attitude *a, struct zsl_vec *v);
  * @brief Converts the input @ref zsl_attitude, expessed in degrees, to it's
  *        equivalent in radians in the output @ref zsl_euler.
  *
- * @param a 	Pointer to the zsl_attitued struct to use.
- * @param e 	Pointer to the zsl_euler struct to use.
+ * @param a     Pointer to the zsl_attitued struct to use.
+ * @param e     Pointer to the zsl_euler struct to use.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -103,8 +103,8 @@ int zsl_att_to_euler(struct zsl_attitude *a, struct zsl_euler *e);
  * @brief Converts the input @ref zsl_euler, expessed in radians, to it's
  *        equivalent in degrees in the output @ref zsl_attitude.
  *
- * @param e 	Pointer to the zsl_euler struct to use.
- * @param a 	Pointer to the zsl_attitued struct to use.
+ * @param e     Pointer to the zsl_euler struct to use.
+ * @param a     Pointer to the zsl_attitued struct to use.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -114,9 +114,9 @@ int zsl_att_from_euler(struct zsl_euler *e, struct zsl_attitude *a);
  * @brief Converts a three-axis accelerometer (in m/s^2) and a three-axis
  *        magnetometer sample (in micro-Tesla) to attitude.
  *
- * @param accel 	Acceleration triplet in m/s^2.
- * @param mag		Magnetometer triplet in micro-Tesla.
- * @param a 		Pointer the the output @ref zsl_attitude struct.
+ * @param accel     Acceleration triplet in m/s^2.
+ * @param mag       Magnetometer triplet in micro-Tesla.
+ * @param a         Pointer the the output @ref zsl_attitude struct.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -127,8 +127,8 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
  * @brief Converts a three-axis accelerometer sample (in m/s^2) to roll and
  *        pitch.
  *
- * @param accel 	Acceleration triplet in m/s^2.
- * @param a 		Pointer the the output @ref zsl_attitude struct.
+ * @param accel     Acceleration triplet in m/s^2.
+ * @param a         Pointer the the output @ref zsl_attitude struct.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code.
  */
@@ -137,9 +137,9 @@ int zsl_att_from_accel(struct zsl_vec *accel, struct zsl_attitude *a);
 /**
  * @brief Calculates the angle between two accelerometers.
  *
- * @param a1 	First acceleration triplet in m/s^2.
- * @param a2 	First acceleration triplet in m/s^2.
- * @param b		Angle between the accelerometers, in radians.
+ * @param a1    First acceleration triplet in m/s^2.
+ * @param a2    First acceleration triplet in m/s^2.
+ * @param b     Angle between the accelerometers, in radians.
  *
  * @return 0 if everything executed correctly, otherwise a negative error code
  *         if the accelerometer data is not tridimensional.

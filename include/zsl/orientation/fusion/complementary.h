@@ -10,8 +10,8 @@
  * @brief Complementary sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
-
+ *  @{
+ */
 
 /**
  * @file
@@ -41,11 +41,11 @@ extern "C" {
 struct zsl_fus_comp_cfg {
 	/**
 	 * @brief Value between 0 and 1 used to decide which part of the
-	 * 		  complementary test is more important, the gyrpscope predicted
-	 * 		  orientation or the accel/magpredicted orientation. For more
-	 * 	      accurate gyroscope data, alpha should be closer to zero. For more
-	 *        accurate accelerometer and magnetometer data, alpha should be
-	 *        closer to 1.
+	 *        complementary test is more important, the gyrpscope
+	 *        predicted orientation or the accel/magpredicted orientation.
+	 *        For more accurate gyroscope data, alpha should be closer to
+	 *        zero. For more accurate accelerometer and magnetometer data,
+	 *        alpha should be closer to 1.
 	 */
 	zsl_real_t alpha;
 };
