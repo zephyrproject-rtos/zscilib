@@ -10,7 +10,8 @@
  * @brief Functions and structs for dealing with gravity.
  *
  * @ingroup ORIENTATION
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -39,7 +40,7 @@ extern "C" {
  * @param lat   Latitude of the point where the gravity is to be calculated,
  *              in degrees.
  * @param alt   Altitude of the point of interest, in meters.
- * @param g     Pointer the the output gravity, in meters per second squared.
+ * @param g     Pointer to the output gravity, in meters per second squared.
  *
  * @return 0 if everything executed correctly, -EINVAL if the altitude is
  *         negative or if the latitude is not between -90 and 90 degrees.

@@ -10,7 +10,7 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include <zsl/orientation/fusion/saam.h>
 
-static uint32_t zsl_fus_saam_freq = 0;
+static uint32_t zsl_fus_saam_freq;
 
 static int zsl_fus_saam(struct zsl_vec *a, struct zsl_vec *m,
 			struct zsl_quat *q)

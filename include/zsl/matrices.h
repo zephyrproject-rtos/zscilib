@@ -512,7 +512,7 @@ int zsl_mtx_mult(struct zsl_mtx *ma, struct zsl_mtx *mb, struct zsl_mtx *mc);
  *        Matrices 'ma' and 'mb' must be compatibly shaped, meaning that
  *        'ma' must have the same numbers of columns as there are rows
  *        in 'mb'. To use this function, 'mb' must be a square matrix.
- * 	      This function is destructive.
+ *        This function is destructive.
  *
  * @param ma    Pointer to the first input zsl_mtx.
  * @param mb    Pointer to the second input zsl_mtx.
@@ -594,19 +594,19 @@ int zsl_mtx_adjoint(struct zsl_mtx *m, struct zsl_mtx *ma);
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief Calculates the wedge product of n-1 vectors of size n, which are the
- * 		  rows of the matrix 'm'. This n-1 vectors must be linearly independent.
+ *        rows of the matrix 'm'. This n-1 vectors must be linearly independent.
  *
  * The wedge product is an extension of the cross product for dimension greater
  * than 3. Given a set of n-1 vectors of size n, the wedge product calculates
  * a n-dimensional vector that is perpendicular to all the others.
  *
  * @param m     The input (n-1) x n matrix, with n > 3, whose rows are the
- * 				linearly independent vectors to use in the wedge product.
+ *              linearly independent vectors to use in the wedge product.
  * @param v     The output vector of dimension n, perpendicular to all the
- * 				input vectors.
+ *              input vectors.
  *
  * @return  0 if everything executed correctly, or -EINVAL if n > 3, or if
- * 			the input matrix isn't of the form (n-1) x n.
+ *          the input matrix isn't of the form (n-1) x n.
  */
 int zsl_mtx_vec_wedge(struct zsl_mtx *m, struct zsl_vec *v);
 #endif
@@ -805,7 +805,7 @@ int zsl_mtx_inv(struct zsl_mtx *m, struct zsl_mtx *mi);
 
 /**
  * @brief Calculates the Cholesky decomposition of a symmetric square matrix
- * 		  using the Cholesky–Crout algorithm.
+ *        using the Cholesky–Crout algorithm.
  *
  * Computing the Cholesky decomposition of a symmetric square matrix M consists
  * in finding a matrix L such that M = L * Lt (L multiplied by its transpose).

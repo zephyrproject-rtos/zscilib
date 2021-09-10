@@ -10,7 +10,7 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include <zsl/orientation/fusion/madgwick.h>
 
-static uint32_t zsl_fus_madg_freq = 0;
+static uint32_t zsl_fus_madg_freq;
 
 static int zsl_fus_madgwick_imu(struct zsl_vec *g, struct zsl_vec *a,
 				zsl_real_t *beta, zsl_real_t *incl, struct zsl_quat *q)

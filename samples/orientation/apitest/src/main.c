@@ -42,7 +42,7 @@ static struct zsl_fus_drv mahony_drv = {
 	.config = &mahn_cfg,
 };
 
-/* Settings for for the SAAM filter. */
+/* Settings for the SAAM filter. */
 static struct zsl_fus_drv saam_drv = {
 	.init_handler = zsl_fus_saam_init,
 	.feed_handler = zsl_fus_saam_feed,
@@ -116,7 +116,7 @@ void fusion_demo(struct zsl_fus_drv *drv)
 	drv->init_handler(100.0, drv->config);
 
 	/* Calculate magnetic inclination for given date and location. */
-	/* Dubai @ 31-Aug-2021 = 39d 55' 24" D declination in dms (D = positive). */
+	/* Dubai @ 31-Aug-2021 = 39d 55' 24" D decl. in dms (D = positive). */
 	// zsl_real_t incl;
 	// zsl_comp_dms_to_dd(39, 55, 24, &incl);
 
@@ -149,8 +149,8 @@ void madg_cal_demo(void)
 {
 	zsl_real_t beta;        /* Beta parameter in Madgwick algorithm. */
 
-	zsl_fus_cal_madg(&zsl_fus_data_gyr, &zsl_fus_data_acc, &zsl_fus_data_mag,
-			 100.0, NULL, &beta);
+	zsl_fus_cal_madg(&zsl_fus_data_gyr, &zsl_fus_data_acc,
+			 &zsl_fus_data_mag, 100.0, NULL, &beta);
 	printf("Beta is %f\n\n", beta);
 
 	/* Change the value of 'beta' in the filter to the calculated one. */
@@ -161,8 +161,8 @@ void mahn_cal_demo(void)
 {
 	zsl_real_t kp;  /* kp parameter in Mahony algorithm. */
 
-	zsl_fus_cal_mahn(&zsl_fus_data_gyr, &zsl_fus_data_acc, &zsl_fus_data_mag,
-			 100.0, NULL, &kp);
+	zsl_fus_cal_mahn(&zsl_fus_data_gyr, &zsl_fus_data_acc,
+			 &zsl_fus_data_mag, 100.0, NULL, &kp);
 	printf("Kp is %f\n\n", kp);
 
 	/* Change the value of 'kp' in the filter to the calculated one. */
@@ -175,8 +175,8 @@ void magn_cal_demo(void)
 	 * in Dubai, UAE. */
 	zsl_real_t me = 44.3867;        /* Earth's magnetic field module. */
 
-	ZSL_MATRIX_DEF(K, 3, 3);        /* Soft-iron correction matrix. */
-	ZSL_VECTOR_DEF(b, 3);           /* Hard-iron offset correction vector. */
+	ZSL_MATRIX_DEF(K, 3, 3);        /* Soft-iron corr. matrix. */
+	ZSL_VECTOR_DEF(b, 3);           /* Hard-iron offset corr. vector. */
 
 	/* Calculate the correction matrix and vector. */
 	zsl_fus_cal_magn_fast(&zsl_fus_data_magn_cal, &me, &K, &b);

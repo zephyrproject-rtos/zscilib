@@ -20,18 +20,18 @@
 
 void test_complex_add(void)
 {
-        /* NOTE: zsl_real_t typedef can't be used with C99 complex numbers. */
+	/* NOTE: zsl_real_t typedef can't be used with C99 complex numbers. */
 #if CONFIG_ZSL_SINGLE_PRECISION
-        double complex a = 1.0 + 0.4 * I;
-        double complex b = 1.0 + 0.5 * I;
-        double complex c = 0.0;
+	double complex a = 1.0 + 0.4 * I;
+	double complex b = 1.0 + 0.5 * I;
+	double complex c = 0.0;
 #else
-        float complex a = 1.0 + 0.4 * I;
-        float complex b = 1.0 + 0.5 * I;
-        float complex c = 0.0;
+	float complex a = 1.0 + 0.4 * I;
+	float complex b = 1.0 + 0.5 * I;
+	float complex c = 0.0;
 #endif
 
-        c = a + b;
-        zassert_true(val_is_equal(creal(c), creal(a) + creal(b), 1E-5), NULL);
-        zassert_true(val_is_equal(cimag(c), cimag(a) + cimag(b), 1E-5), NULL);
+	c = a + b;
+	zassert_true(val_is_equal(creal(c), creal(a) + creal(b), 1E-5), NULL);
+	zassert_true(val_is_equal(cimag(c), cimag(a) + cimag(b), 1E-5), NULL);
 }

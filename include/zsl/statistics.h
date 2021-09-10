@@ -9,8 +9,9 @@
  * \defgroup STATISTICS Statistics
  *
  * @brief Statistics-related functions.
- * 
- * @{ */
+ *
+ * @{
+ */
 
 /**
  * @file
@@ -69,32 +70,32 @@ int zsl_sta_mean(struct zsl_vec *v, zsl_real_t *m);
  *
  * @param v  The vector to use.
  * @param p  The percent of data that will be ignored in the computation of
- * 			 the mean (0.0 .. 50.0).
+ *           the mean (0.0 .. 50.0).
  * @param m  The trimmed arithmetic mean of the components of v.
  *
  * @return 0 if everything executed correctly, -EINVAL if the number 'p' is not
- * 		   between 0.0 and 50.0.
+ *         between 0.0 and 50.0.
  */
 int zsl_sta_trim_mean(struct zsl_vec *v, zsl_real_t p, zsl_real_t *m);
 
 /**
  * @brief Computes the weighted arithmetic mean (average) of a data vector (v)
- * 		  and a weight vector (w).
+ *        and a weight vector (w).
  *
  * @param v  The data vector to use.
  * @param w  The vector containing the weights to use.
  * @param m  The weighted arithmetic mean of the components of v taking the
- * 			 weights in the vector w into account.
+ *           weights in the vector w into account.
  *
  * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
- * 		   and w don't match, or if any weights are negative or all of them
- * 		   are zero.
+ *         and w don't match, or if any weights are negative or all of them
+ *         are zero.
  */
 int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
 
 /**
  * @brief Computes the time-weighted arithmetic mean (average) of a positive
- * 		  data vector (v) and its time vector (w).
+ *        data vector (v) and its time vector (w).
  *
  * The time-weighted mean takes into consideration not only the numerical
  * levels of a particular variable, but also the amount of time spent on it.
@@ -102,11 +103,11 @@ int zsl_sta_weighted_mean(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
  * @param v  The data vector to use, with positive coefficients.
  * @param t  The vector containing the time associated to the data vector.
  * @param m  The time-weighted arithmetic mean of the components of v taking
- * 			 the times in the vector t into account.
+ *           the times in the vector t into account.
  *
  * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
- * 		   and w don't match, or if any elements in 'v' are negative or if
- * 		   any time value in the vector 't' is repeated.
+ *         and w don't match, or if any elements in 'v' are negative or if
+ *         any time value in the vector 't' is repeated.
  */
 int zsl_sta_time_weighted_mean(struct zsl_vec *v, struct zsl_vec *t,
 			       zsl_real_t *m);
@@ -149,16 +150,16 @@ int zsl_sta_median(struct zsl_vec *v, zsl_real_t *m);
 
 /**
  * @brief Computes the weighted median of a data vector (v) and a weight
- * 		  vector (w).
+ *        vector (w).
  *
  * @param v  The data vector to use.
  * @param w  The vector containing the weights to use.
  * @param m  The weighted median of the components of v taking the weights in
- * 			 the vector w into account.
+ *           the vector w into account.
  *
  * @return 0 if everything executed correctly, -EINVAL if the dimensions of v
- * 		   and w don't match, or if any weights are negative or the sum of all
- * 		   the weights is not 1.
+ *         and w don't match, or if any weights are negative or the sum of all
+ *         the weights is not 1.
  */
 int zsl_sta_weighted_median(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *m);
 
@@ -224,7 +225,7 @@ int zsl_sta_data_range(struct zsl_vec *v, zsl_real_t *r);
  * @param m The mean absolute deviation.
  *
  * @return  0 if everything executed correctly. If the dimension of the data
- * 		    vector v is zero, a negative error is returned.
+ *          vector v is zero, a negative error is returned.
  */
 int zsl_sta_mean_abs_dev(struct zsl_vec *v, zsl_real_t *m);
 
@@ -290,7 +291,7 @@ int zsl_sta_covar(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *c);
  * @param mc  Output nxn covariance matrix.
  *
  * @return 0 on success, and -EINVAL if 'mc' is not a square matrix with the
- * 		   same number of columns as 'm'.
+ *         same number of columns as 'm'.
  */
 int zsl_sta_covar_mtx(struct zsl_mtx *m, struct zsl_mtx *mc);
 
@@ -331,16 +332,16 @@ int zsl_sta_linear_reg(struct zsl_vec *x, struct zsl_vec *y,
 /**
  * @brief Calculates the coefficients (vector 'b') of the multiple linear
  *        regression of the x_i values (columns of the matrix 'x') and the y
- * 		  values.
+ *        values.
  *
  * @param x   Matrix, whose columns are the different x_i datasets.
  * @param y   The second input dataset, corresponding to the y-axis.
  * @param b   Pointer to the calculated multiple linear regression coefficients.
  * @param r   Pointer to the calculated coefficient of determination (also
- * 			  reffered to as R squared).
+ *            reffered to as R squared).
  *
  * @return 0 on success, and -EINVAL if dimensions of the input vectors and
- * 		   matrix don't match.
+ *         matrix don't match.
  */
 int zsl_sta_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 			    struct zsl_vec *b, zsl_real_t *r);
@@ -350,18 +351,18 @@ int zsl_sta_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 /**
  * @brief Calculates the coefficients (vector 'b') of the weighted multiple
  *        linear regression of the x_i values (columns of the matrix 'x'), the y
- * 		  values and the weights in the vector 'w'.
+ *        values and the weights in the vector 'w'.
  *
  * @param x   Matrix, whose columns are the different x_i datasets.
  * @param y   The second input dataset, corresponding to the y-axis.
  * @param w   The weights to use in the weighted least squares.
  * @param b   Pointer to the calculated weighted multiple linear regression
- * 			  coefficients.
+ *            coefficients.
  * @param r   Pointer to the calculated coefficient of determination (also
- * 			  reffered to as R squared).
+ *            reffered to as R squared).
  *
  * @return 0 on success, and -EINVAL if dimensions of the input vectors and
- * 		   matrix don't match.
+ *         matrix don't match.
  */
 int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 				     struct zsl_vec *w, struct zsl_vec *b, zsl_real_t *r);
@@ -370,8 +371,8 @@ int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
 /**
  * @brief This function uses the least squares fitting method to compute the
- * 		  coefficients of a quadric surface given a set of tridimensional
- * 		  points.
+ *        coefficients of a quadric surface given a set of tridimensional
+ *        points.
  *
  * A quadric is a 3D surface that is defined by the equation:
  * Ax^2 + By^2 + Cz^2 + 2Dxy + 2Exz + 2Fyz + 2Gx + 2Hy + 2Iz = 1.
@@ -383,7 +384,7 @@ int zsl_sta_weighted_mult_linear_reg(struct zsl_mtx *x, struct zsl_vec *y,
  * @param b   Pointer to the calculated coefficients of the quadric.
  *
  * @return 0 on success, and -EINVAL if dimension of the input vectors isn't 9
- * 		   and the input matrix isn't a Nx3 matrix.
+ *         and the input matrix isn't a Nx3 matrix.
  */
 int zsl_sta_quad_fit(struct zsl_mtx *m, struct zsl_vec *b);
 #endif
@@ -393,7 +394,7 @@ int zsl_sta_quad_fit(struct zsl_mtx *m, struct zsl_vec *b);
  *
  * @param val       Input value.
  * @param exp_val   Input expected value.
- * @param err		Output absolute error.
+ * @param err       Output absolute error.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
@@ -405,7 +406,7 @@ int zsl_sta_abs_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err);
  *
  * @param val       Input value.
  * @param exp_val   Input expected value.
- * @param err		Output relative error.
+ * @param err       Output relative error.
  *
  * @return  0 if everything executed correctly, otherwise an appropriate
  *          error code.
@@ -419,10 +420,10 @@ int zsl_sta_rel_err(zsl_real_t *val, zsl_real_t *exp_val, zsl_real_t *err);
  * sample in vector 'v' ¡ is likely to be from the true total population mean.
  *
  * @param v       Sample data vector.
- * @param err	  Output standard error of the mean.
+ * @param err     Output standard error of the mean.
  *
  * @return  0 if everything executed correctly. If the dimension of the vector
- * 		    'v' is zero, a negative error is returned.
+ *          'v' is zero, a negative error is returned.
  */
 int zsl_sta_sta_err(struct zsl_vec *v, zsl_real_t *err);
 

@@ -10,7 +10,8 @@
  * @brief AQUA sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -40,32 +41,33 @@ extern "C" {
  */
 struct zsl_fus_aqua_cfg {
 	/**
-	 * @brief A value between 0.0 and 1.0 which sets the gain for the cut-off
-	 *        frequency of the filter. Adjust this value to control LERP or
-	 *        SLERP, which reduces the amount of high frequency noise in the
-	 *        accelerometer. Alpha must be calculated in static conditions.
+	 * @brief A value between 0.0 and 1.0 which sets the gain for the
+	 *        cut-off frequency of the filter. Adjust this value to control
+	 *        LERP or SLERP, which reduces the amount of high frequency
+	 *        noise in the accelerometer. Alpha must be calculated in
+	 *        static conditions.
 	 */
 	zsl_real_t alpha;
 
 	/**
-	 * @brief Similar to alpha, this variable is set between 0.0 and 1.0 and is
-	 *        used to control the LERP or SLERP, which reduces the amount of
-	 *        high frequency noise in the magnetometer. Beta must be calculated
-	 *        in static conditions.
+	 * @brief Similar to alpha, this variable is set between 0.0 and 1.0
+	 *        and is used to control the LERP or SLERP, which reduces the
+	 *        amount of high frequency noise in the magnetometer. Beta
+	 *        must be calculated in static conditions.
 	 */
 	zsl_real_t beta;
 
 	/**
-	 * @brief Threshold value to determine whether to compute LERP or SLERP
-	 *        to reduce the amount of high frequency noise of the accelerometer
-	 *        in the Dq_acc vector. Typically set to 0.9.
+	 * @brief Threshold value to determine whether to compute LERP or
+	 *        SLERP to reduce the amount of high frequency noise of the
+	 *        accelerometer in the Dq_acc vector. Typically set to 0.9.
 	 */
 	zsl_real_t e_a;
 
 	/**
-	 * @brief Threshold value to determine whether to compute LERP or SLERP
-	 *        to reduce the amount of high frequency noise of the magnetometer
-	 *        in the Dq_mag vector. Typically set to 0.9.
+	 * @brief Threshold value to determine whether to compute LERP or
+	 *        SLERP to reduce the amount of high frequency noise of the
+	 *        magnetometer in the Dq_mag vector. Typically set to 0.9.
 	 */
 	zsl_real_t e_m;
 };

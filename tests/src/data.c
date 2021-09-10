@@ -43,4 +43,3 @@ const struct zsl_clr_spd zsl_clr_test_spd_5983k = {
 		{ .nm = 780, .value = 0.898 }
 	}
 };
-

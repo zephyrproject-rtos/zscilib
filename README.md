@@ -144,6 +144,16 @@ $ twister --inline-logs -p mps2_an521 -T modules/lib/zscilib/tests
 
 See the `tests` folder for further details.
 
+To run compliance tests to make sure submitted code matches Zephyr PR
+requirements, run this (updating `HEAD~2` for the number of commits to check,
+or setting it to `origin/master..` to check everything):
+
+```bash
+$ ../../../zephyr/scripts/ci/check_compliance.py \
+  -m Gitlint -m Identity -m Nits -m pylint -m checkpatch \
+  -c HEAD~2..
+```
+
 ### Debugging with QEMU
 
 If you wish to debug using QEMU (and with minor variation actual hardware),

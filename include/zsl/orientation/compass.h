@@ -41,7 +41,8 @@
  * 2° 13' 0" East) to decimal degrees (2.216667 in this case).
  *
  * @ingroup ORIENTATION
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -77,7 +78,7 @@ extern "C" {
  * @param dd    Pointer to the output decimal degrees value.
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the magnetometer vector is not three.
+ *         dimension of the magnetometer vector is not three.
  */
 int zsl_comp_dms_to_dd(zsl_real_t d, zsl_real_t m, zsl_real_t s,
 		       zsl_real_t *dd);
@@ -96,10 +97,10 @@ int zsl_comp_dms_to_dd(zsl_real_t d, zsl_real_t m, zsl_real_t s,
  * Source:
  * https://cdn-shop.adafruit.com/datasheets/AN203_Compass_Heading_Using_Magnetometers.pdf
  *
- * @param m		Input corrected magnetometer tridimensional vector, in micro
+ * @param m     Input corrected magnetometer tridimensional vector, in micro
  *              Tesla.
- * @param d		Output angle between the magnetic north and the x axis, in
- * 				degrees.
+ * @param d     Output angle between the magnetic north and the x axis, in
+ *              degrees.
  *
  * @return 0 if everything executed normally, or a negative error code if the
  * 		   dimension of the magnetometer vector is not three.
@@ -130,13 +131,13 @@ int zsl_comp_magn_north(struct zsl_vec *m, zsl_real_t *d);
  * upwards, and that the input magnetometer data has already been corrected
  * for hard and soft iron errors.
  *
- * @param m  	 Input magnetometer tridimensional vector, in micro Tesla.
- * @param dec  	 Input magnetic declination, in degrees.
+ * @param m      Input magnetometer tridimensional vector, in micro Tesla.
+ * @param dec    Input magnetic declination, in degrees.
  * @param b    	 Output angle deviation between true or geographic north and
  *               the x axis, in degrees (AKA true bearing).
  *
  * @return 0 if everything executed normally, or a negative error code if the
- * 		   dimension of the magnetometer vector is not three.
+ *         dimension of the magnetometer vector is not three.
  */
 int zsl_comp_geo_north(struct zsl_vec *m, zsl_real_t dec, zsl_real_t *b);
 

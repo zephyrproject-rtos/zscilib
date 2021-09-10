@@ -10,8 +10,8 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include <zsl/orientation/fusion/aqua.h>
 
-static uint32_t zsl_fus_aqua_freq = 0;
-static uint32_t zsl_fus_aqua_initialised = 0;
+static uint32_t zsl_fus_aqua_freq;
+static uint32_t zsl_fus_aqua_initialised;
 
 static int zsl_fus_aqua(struct zsl_vec *a, struct zsl_vec *m,
 			struct zsl_vec *g, zsl_real_t *e_a, zsl_real_t *e_m,

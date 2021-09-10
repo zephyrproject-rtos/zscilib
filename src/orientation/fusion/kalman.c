@@ -10,8 +10,8 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include <zsl/orientation/fusion/kalman.h>
 
-static uint32_t zsl_fus_kalm_freq = 0;
-static uint32_t zsl_fus_kalm_initialised = 0;
+static uint32_t zsl_fus_kalm_freq;
+static uint32_t zsl_fus_kalm_initialised;
 
 static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 			  struct zsl_vec *m, zsl_real_t *var_g, zsl_real_t *var_a,
@@ -39,9 +39,9 @@ static int zsl_fus_kalman(struct zsl_vec *g, struct zsl_vec *a,
 
 	zsl_real_t F_data[16] = {
 		1.0, -if2 * g->data[0], -if2 * g->data[1], -if2 * g->data[2],
-		if2 *g->data[0], 1.0, if2 *g->data[2], -if2 * g->data[1],
-		if2 *g->data[1], -if2 * g->data[2], 1.0, if2 *g->data[0],
-		if2 *g->data[2], if2 *g->data[1], -if2 * g->data[0], 1.0,
+		if2 * g->data[0], 1.0, if2 * g->data[2], -if2 * g->data[1],
+		if2 * g->data[1], -if2 * g->data[2], 1.0, if2 * g->data[0],
+		if2 * g->data[2], if2 * g->data[1], -if2 * g->data[0], 1.0,
 	};
 
 	zsl_mtx_from_arr(&F, F_data);

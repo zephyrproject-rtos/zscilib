@@ -10,7 +10,8 @@
  * @brief Extended Kalman sensor fuion algorithm.
  *
  * @ingroup FUSION_ALGORITHMS
- *  @{ */
+ *  @{
+ */
 
 /**
  * @file
@@ -53,8 +54,9 @@ struct zsl_fus_kalm_cfg {
 	zsl_real_t var_m;
 
 	/**
-	 * @brief The predicted error state covariance, which is updated every
-	 * 		  iteration. Its first value (P0) is a 4x4 identity matrix.
+	 * @brief The predicted error state covariance, which is updated
+	 *        every iteration. Its first value (P0) is a 4x4 identity
+	 *        matrix.
 	 */
 	struct zsl_mtx P;
 

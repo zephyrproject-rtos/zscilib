@@ -55,10 +55,12 @@ void probability_demo(void)
 	/* Create the probability vector from the data given. */
 	ZSL_VECTOR_DEF(v, 4);
 	zsl_real_t p[4] = { 0.5, 0.1, 0.15, 0.25 };
+
 	zsl_vec_from_arr(&v, p);
 
 	/* Calculate the Shannon entropy. */
 	zsl_real_t h;
+
 	zsl_prob_entropy(&v, &h);
 	printf("The Shannon entropy of the system is %f.\n\n\n", h);
 
@@ -89,9 +91,10 @@ void probability_demo(void)
 	printf("The probability of the particle being between x = 2.75 and\n");
 	printf("x = 4.0 is %f.\n\n", prob);
 
-	/* Calculate the value of x that makes the probability of the particle 
+	/* Calculate the value of x that makes the probability of the particle
 	 * being in (-INFINITY, x) equal 0.3. */
 	zsl_real_t pr = 0.3;
+
 	printf("The chance of the particle being between x = -INFINITY and\n");
 	printf("x = %f is 30%%.\n\n\n", zsl_prob_normal_cdf_inv(&m, &s, &pr));
 

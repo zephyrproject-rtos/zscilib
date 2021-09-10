@@ -10,7 +10,8 @@
  * @brief Sensor fusion
  *
  * @ingroup ORIENTATION
- *  @{ */
+ *  @{
+ */
 
 /**
  * @defgroup FUSION_ALGORITHMS Algorithms
@@ -74,15 +75,15 @@ typedef int (*zsl_fus_init_cb_t)(uint32_t freq, void *cfg);
  * @param mag       Pointer to the magnetometer XYZ data. NULL for none.
  * @param gyro      Pointer to the gyroscope XYZ data. NULL for none.
  * @param incl      Pointer to the Earth's magnetic field inclination angle,
- * 					in degrees. NULL for none.
+ *                  in degrees. NULL for none.
  * @param q         Pointer to the quaternion output placeholder.
  * @param cfg       Pointer to the config struct for this algorithm.
  *
  * @return 0 on success, negative error code on failure
  */
 typedef int (*zsl_fus_feed_cb_t)(struct zsl_vec *accel,
-				 struct zsl_vec *mag, struct zsl_vec *gyro, zsl_real_t *incl,
-				 struct zsl_quat *q, void *cfg);
+				 struct zsl_vec *mag, struct zsl_vec *gyro,
+				 zsl_real_t *incl, struct zsl_quat *q, void *cfg);
 
 /**
  * @typedef zsl_fus_error_cb_t

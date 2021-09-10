@@ -789,4 +789,3 @@ void test_main(void)
 	ztest_run_test_suite(zsl_tests_double);
 	#endif
 }
-
