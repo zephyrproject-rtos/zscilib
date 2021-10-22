@@ -59,12 +59,3 @@ To do the same thing using ``west`, run:
 .. code-block:: console
 
    $ west build -p -b nrf52840_pca10056 samples/shell/
-
-Sample Output
-*************
-
-This application will normally output text resembling the following:
-
-.. code-block:: console
-
-    TODO
