@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 #include <ctype.h>
-#include <shell/shell.h>
+#include <zephyr/shell/shell.h>
 #include <zsl/orientation/orientation.h>
 
 #if CONFIG_ZSL_SHELL_ORIENT

@@ -6,7 +6,7 @@
 
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
+#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/chemistry.h>
 

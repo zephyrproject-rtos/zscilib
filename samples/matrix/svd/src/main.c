@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <zephyr.h>
+#include <zephyr/zephyr.h>
 #include <zsl/zsl.h>
 #include <zsl/matrices.h>
 #include "zsl/vectors.h"

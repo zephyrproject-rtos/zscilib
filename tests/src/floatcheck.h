@@ -14,7 +14,7 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_FLOATCHECK_H_
 #define ZEPHYR_INCLUDE_ZSL_FLOATCHECK_H_
 
-#include <zephyr.h>
+#include <zephyr/zephyr.h>
 #include <stdint.h>
 #include <zsl/zsl.h>
 

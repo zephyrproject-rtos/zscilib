@@ -5,8 +5,8 @@
  */
 
 #include <stdio.h>
-#include <zephyr.h>
-#include <sys/printk.h>
+#include <zephyr/zephyr.h>
+#include <zephyr/sys/printk.h>
 #include <zsl/zsl.h>
 #include <zsl/orientation/orientation.h>
 #include <zsl/instrumentation.h>
