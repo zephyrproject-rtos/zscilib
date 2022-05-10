@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
-#include <zephyr.h>
+#include <zephyr/kernel.h>
+#include <zephyr/zephyr.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/projectiles.h>
 

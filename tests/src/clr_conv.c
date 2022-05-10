@@ -5,7 +5,7 @@
  */
 
 #include <ztest.h>
-#include <sys/printk.h>
+#include <zephyr/sys/printk.h>
 #include <zsl/colorimetry.h>
 #include "floatcheck.h"
 #include "data.h"

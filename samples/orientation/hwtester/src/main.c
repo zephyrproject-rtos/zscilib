@@ -5,10 +5,10 @@
  */
 
 #include <stdio.h>
-#include <zephyr.h>
-#include <device.h>
-#include <devicetree.h>
-#include <drivers/sensor.h>
+#include <zephyr/zephyr.h>
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/sensor.h>
 #include <zsl/zsl.h>
 #include <zsl/orientation/orientation.h>
 #include <zsl/instrumentation.h>
