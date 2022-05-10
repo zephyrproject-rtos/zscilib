@@ -8,7 +8,7 @@
 #include <math.h>
 #include <errno.h>
 #include <zephyr/kernel.h>
-#include <zephyr/zephyr.h>
+#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/kinematics.h>
 
