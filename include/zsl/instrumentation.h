@@ -7,7 +7,7 @@
 #ifndef ZEPHYR_INCLUDE_ZSL_INSTRUMENTATION_H__
 #define ZEPHYR_INCLUDE_ZSL_INSTRUMENTATION_H__
 
-#include <zephyr/zephyr.h>
+#include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
 #include <zsl/zsl.h>
 
