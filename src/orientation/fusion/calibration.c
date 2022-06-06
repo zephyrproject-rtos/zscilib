@@ -337,10 +337,13 @@ int zsl_fus_cal_magn(struct zsl_mtx *m, zsl_real_t *l, zsl_real_t *mu,
 int zsl_fus_cal_magn_fast(struct zsl_mtx *m, zsl_real_t *me, struct zsl_mtx *K,
 			  struct zsl_vec *b)
 {
+
+	zsl_real_t approx_me = 50.0;
+
 	/* Use an approximation for me if no value provided. */
 	if (me == NULL) {
 		/* Locations vary fromo 25-65 uT, but most are close to 50 uT. */
-		*me = 50.0;
+		me = &approx_me;
 	}
 
 #if CONFIG_ZSL_BOUNDS_CHECKS
