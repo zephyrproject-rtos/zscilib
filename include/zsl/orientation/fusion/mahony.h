@@ -49,6 +49,11 @@ struct zsl_fus_mahn_cfg {
 	zsl_real_t ki;
 
 	/**
+	 * @brief Integral limit for the integrator to avoid windup. Must be greater than 0
+	 */
+	zsl_real_t integral_limit;
+	
+	/**
 	 * @brief Integral feedback vector, which is updated every iteration.
 	 *        Its initial value must be (0, 0, 0).
 	 */
