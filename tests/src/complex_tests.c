@@ -5,7 +5,7 @@
  */
 
 #include <complex.h>    /* C99 complex number support. */
-#include <ztest.h>
+#include <zephyr/ztest.h>
 #include <zsl/zsl.h>
 #include "floatcheck.h"
 
