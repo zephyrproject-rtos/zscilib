@@ -15,7 +15,7 @@ library is the [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr),
 it tries to be as portable as possible, and a standalone reference project
 is included to use this library in non-Zephyr-based projects.
 
-This version of zscilib has been developed and tested against **Zephyr 2.7.0**.
+This version of zscilib has been developed and tested against **Zephyr 3.1.0**.
 
 ## Motivation
 
