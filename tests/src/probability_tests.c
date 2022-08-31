@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <ztest.h>
+#include <zephyr/ztest.h>
 #include <zsl/zsl.h>
 #include <zsl/vectors.h>
 #include <zsl/probability.h>
