@@ -389,8 +389,8 @@ extern void test_fus_cal_rot_mtx(void);
 extern void test_fus_cal_rot_axis_angle(void);
 extern void test_fus_cal_corr_scalar(void);
 extern void test_fus_cal_corr_vec(void);
-/* extern void test_fus_cal_madg(void); */
-/* extern void test_fus_cal_mahn(void); */
+extern void test_fus_cal_madg(void);
+extern void test_fus_cal_mahn(void);
 
 /* Test for functions that only work with double-precision floats. */
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
@@ -761,9 +761,9 @@ void test_main(void)
 			 ztest_unit_test(test_fus_cal_rot_mtx),
 			 ztest_unit_test(test_fus_cal_rot_axis_angle),
 			 ztest_unit_test(test_fus_cal_corr_scalar),
-			 ztest_unit_test(test_fus_cal_corr_vec)
-			 /* ztest_unit_test(test_fus_cal_madg), */
-			 /* ztest_unit_test(test_fus_cal_mahn) */
+			 ztest_unit_test(test_fus_cal_corr_vec),
+			 ztest_unit_test(test_fus_cal_madg),
+			 ztest_unit_test(test_fus_cal_mahn)
 			 );
 
 	ztest_run_test_suite(zsl_tests);

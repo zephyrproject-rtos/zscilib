@@ -1,5 +1,3 @@
-tests:
-  - tests
 build:
   cmake: .
   kconfig: Kconfig.zscilib
