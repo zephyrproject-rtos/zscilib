@@ -494,6 +494,7 @@ int zsl_fus_cal_madg(struct zsl_mtx *g, struct zsl_mtx *a,
 
 		St = (Sx + Sy) / 2.0;
 
+		Smin = 0;
 		if (i == 0) {
 			Smin = St;
 			*beta = madg_cfg.beta;
@@ -580,6 +581,7 @@ int zsl_fus_cal_mahn(struct zsl_mtx *g, struct zsl_mtx *a,
 
 		St = (Sx + Sy) / 2.0;
 
+		Smin = 0;
 		if (i == 0) {
 			Smin = St;
 			*kp = mahn_cfg.kp;
