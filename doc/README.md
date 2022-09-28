@@ -14,7 +14,7 @@ doxygen installed and run the following command from the command
 line:
 
 ```
-$ doxygen Doxyfile
+$ doxygen doc/Doxyfile
 ```
 
 This will produce an HTML version of the API documentation, with the
