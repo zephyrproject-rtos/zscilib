@@ -9,8 +9,7 @@ var indexSectionsWithContent =
   6: "z",
   7: "z",
   8: "z",
-  9: "abcdefgiklmnopqrstvw",
-  10: "r"
+  9: "abcdefgiklmnopqrstvw"
 };
 
 var indexSectionNames =
@@ -24,8 +23,7 @@ var indexSectionNames =
   6: "enums",
   7: "enumvalues",
   8: "defines",
-  9: "groups",
-  10: "pages"
+  9: "groups"
 };
 
 var indexSectionLabels =
@@ -39,7 +37,6 @@ var indexSectionLabels =
   6: "Enumerations",
   7: "Enumerator",
   8: "Macros",
-  9: "Modules",
-  10: "Pages"
+  9: "Modules"
 };
 
