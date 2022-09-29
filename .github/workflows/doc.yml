@@ -5,8 +5,9 @@ on:
     types: [closed]
 
 jobs:
-  doc-build:
-    name: Build Docs
+  build_docs:
+    if: github.event.pull_request.merged == true
+    name: Build & Deploy Docs
     runs-on: ubuntu-20.04
     permissions:
       contents: write
