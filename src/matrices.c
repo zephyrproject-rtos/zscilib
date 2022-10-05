@@ -677,19 +677,38 @@ zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j)
 }
 
 int
-zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred)
+zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred, 
+				struct zsl_mtx *place1, struct zsl_mtx *place2)
 {
 	/* TODO: Properly check if matrix is square. */
-	if (m->sz_rows == mred->sz_rows) {
-		zsl_mtx_copy(mred, m);
-		return 0;
+	if (m->sz_rows == place1->sz_rows) {
+		zsl_mtx_copy(place1, m);
 	}
 
-	ZSL_MATRIX_DEF(my, (m->sz_rows - 1), (m->sz_cols - 1));
-	zsl_mtx_reduce(m, &my, 0, 0);
-	zsl_mtx_reduce_iter(&my, mred);
+	if (place1->sz_rows == mred->sz_rows) {
+		zsl_mtx_copy(mred, place1);
 
-	return 0;
+		/* restore the original placeholder size */
+		place1->sz_rows = m->sz_rows;
+		place1->sz_cols = m->sz_cols;
+		place2->sz_rows = m->sz_rows;
+		place2->sz_cols = m->sz_cols;
+		return 0;
+	}
+	
+	/* trick the iterative method by generating the inner
+	 * call intermediate matrix, adjusting its size
+	 */
+	place2->sz_rows = place1->sz_rows - 1;
+	place2->sz_cols = place1->sz_cols - 1;
+	zsl_mtx_reduce(place1, place2, 0, 0);
+
+	/* Do the same with the second placeholder matrix */
+	place1->sz_rows--;
+	place1->sz_cols--;
+	zsl_mtx_copy(place1, place2);
+
+	return -EAGAIN;
 }
 
 int
@@ -1333,7 +1352,12 @@ zsl_mtx_qrd(struct zsl_mtx *m, struct zsl_mtx *q, struct zsl_mtx *r,
 		/* Reduce the matrix by 'g' rows and columns each time. */
 		ZSL_MATRIX_DEF(mred, (m->sz_rows - g), (m->sz_cols - g));
 		ZSL_MATRIX_DEF(hred, (m->sz_rows - g), (m->sz_rows - g));
-		zsl_mtx_reduce_iter(r, &mred);
+
+		/* allocate the placeholder matrices for the reduction loop */
+		ZSL_MATRIX_DEF(place1, r->sz_rows, r->sz_cols);
+		ZSL_MATRIX_DEF(place2, r->sz_rows, r->sz_cols);
+
+		while(zsl_mtx_reduce_iter(r, &mred, &place1, &place2) != 0);
 
 		/* Calculate the reduced Householder matrix 'hred'. */
 		if (hessenberg == true) {

@@ -1254,9 +1254,13 @@ void test_matrix_reduce(void)
 void test_matrix_reduce_iter(void)
 {
 	int rc = 0;
-
 	ZSL_MATRIX_DEF(mred, 3, 3);
 	ZSL_MATRIX_DEF(mred2, 2, 2);
+
+	/* place holder matrices for iteration*/
+	ZSL_MATRIX_DEF(place1, 4, 4);
+	ZSL_MATRIX_DEF(place2, 4, 4);
+
 
 	/* Input matrix. */
 	zsl_real_t data[16] = {  2.0, -3.0,  1.0,  5.0,
@@ -1276,7 +1280,9 @@ void test_matrix_reduce_iter(void)
 	rc = zsl_mtx_init(&mred2, NULL);
 	zassert_equal(rc, 0, NULL);
 
-	rc = zsl_mtx_reduce_iter(&m, &mred);
+	do{
+		rc = zsl_mtx_reduce_iter(&m, &mred, &place1, &place2);
+	} while(rc != 0);
 	zassert_equal(rc, 0, NULL);
 
 	/* Expected output. */
@@ -1296,7 +1302,9 @@ void test_matrix_reduce_iter(void)
 			     NULL);
 	}
 
-	rc = zsl_mtx_reduce_iter(&m, &mred2);
+	do{
+		rc = zsl_mtx_reduce_iter(&m, &mred2, &place1, &place2);
+	} while(rc != 0);
 	zassert_equal(rc, 0, NULL);
 
 	/* Expected output. */

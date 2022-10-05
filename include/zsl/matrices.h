@@ -633,11 +633,16 @@ int zsl_mtx_reduce(struct zsl_mtx *m, struct zsl_mtx *mr, size_t i, size_t j);
  *
  * @param m     Pointer to the input square matrix.
  * @param mred  Pointer the the reduced output square matrix.
+ * @param place1 Pointer to first placeholder matrix, it must have same size of m.
+ * @param place2 Pointer to second placeholder matrix, it must have same size of m.
  *
- * @return  0 if everything executed correctly, otherwise an appropriate
- *          error code.
+ * @return  0 if everything executed correctly, otherwise -EAGAIN to instruct
+ * 			caller to call this method again because operation is not done yet
+ * 
+ * @note this method should be called iteratively until it returns 0
  */
-int zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred);
+int zsl_mtx_reduce_iter(struct zsl_mtx *m, struct zsl_mtx *mred, 
+				struct zsl_mtx *place1, struct zsl_mtx *place2);
 
 /* NOTE: This is used for household method/QR. Should it be in the main lib? */
 /**
