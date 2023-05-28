@@ -9,7 +9,7 @@
 #include <zsl/interp.h>
 #include "floatcheck.h"
 
-void test_interp_lerp(void)
+ZTEST(zsl_tests, test_interp_lerp)
 {
 	int rc;
 	zsl_real_t v0, v1, v;
@@ -48,7 +48,7 @@ void test_interp_lerp(void)
 
 }
 
-void test_interp_find_x_asc(void)
+ZTEST(zsl_tests, test_interp_find_x_asc)
 {
 	int rc;
 	int idx;
@@ -132,7 +132,7 @@ void test_interp_find_x_asc(void)
 	zassert_equal(idx, -1, NULL);
 }
 
-void test_interp_find_x_desc(void)
+ZTEST(zsl_tests, test_interp_find_x_desc)
 {
 	int rc;
 	int idx;
@@ -222,7 +222,7 @@ void test_interp_find_x_desc(void)
 	zassert_equal(idx, -1, NULL);
 }
 
-void test_interp_nn(void)
+ZTEST(zsl_tests, test_interp_nn)
 {
 	int rc;
 	struct zsl_interp_xy xy1;
@@ -275,7 +275,7 @@ void test_interp_nn(void)
 	zassert_true(val_is_equal(y2, xy3.y, 1E-4F), NULL);
 }
 
-void test_interp_nn_arr(void)
+ZTEST(zsl_tests, test_interp_nn_arr)
 {
 	int rc;
 	unsigned int n;
@@ -317,7 +317,7 @@ void test_interp_nn_arr(void)
 	zassert_true(val_is_equal(y, xy[1].y, 1E-4F), NULL);
 }
 
-void test_interp_lin_y(void)
+ZTEST(zsl_tests, test_interp_lin_y)
 {
 	int rc;
 	struct zsl_interp_xy xy1;
@@ -368,7 +368,7 @@ void test_interp_lin_y(void)
 	zassert_true(val_is_equal(y2, xy3.y, 1E-4F), NULL);
 }
 
-void test_interp_lin_y_arr(void)
+ZTEST(zsl_tests, test_interp_lin_y_arr)
 {
 	int rc;
 	unsigned int n;
@@ -410,7 +410,7 @@ void test_interp_lin_y_arr(void)
 	zassert_true(val_is_equal(y, -2.25f, 1E-4F), NULL);
 }
 
-void test_interp_lin_x(void)
+ZTEST(zsl_tests, test_interp_lin_x)
 {
 	int rc;
 	struct zsl_interp_xy xy1;
@@ -461,7 +461,7 @@ void test_interp_lin_x(void)
 	zassert_true(val_is_equal(x2, xy3.x, 1E-4F), NULL);
 }
 
-void test_interp_cubic_arr(void)
+ZTEST(zsl_tests, test_interp_cubic_arr)
 {
 	int rc;
 	unsigned int n;

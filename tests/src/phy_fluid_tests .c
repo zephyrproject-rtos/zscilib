@@ -11,7 +11,7 @@
 #include <zsl/physics/fluids.h>
 #include "floatcheck.h"
 
-void test_phy_fluid_dens(void)
+ZTEST(zsl_tests, test_phy_fluid_dens)
 {
 	int rc;
 	zsl_real_t d;
@@ -39,7 +39,7 @@ void test_phy_fluid_dens(void)
 	zassert_true(d != d, NULL);
 }
 
-void test_phy_fluid_simple_press(void)
+ZTEST(zsl_tests, test_phy_fluid_simple_press)
 {
 	int rc;
 	zsl_real_t p;
@@ -67,7 +67,7 @@ void test_phy_fluid_simple_press(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_fluid_press(void)
+ZTEST(zsl_tests, test_phy_fluid_press)
 {
 	int rc;
 	zsl_real_t p;
@@ -99,7 +99,7 @@ void test_phy_fluid_press(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_fluid_bouyant_force(void)
+ZTEST(zsl_tests, test_phy_fluid_bouyant_force)
 {
 	int rc;
 	zsl_real_t f;
@@ -121,7 +121,7 @@ void test_phy_fluid_bouyant_force(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_fluid_flow_rate(void)
+ZTEST(zsl_tests, test_phy_fluid_flow_rate)
 {
 	int rc;
 	zsl_real_t v2;
@@ -155,7 +155,7 @@ void test_phy_fluid_flow_rate(void)
 	zassert_true(v2 != v2, NULL);
 }
 
-void test_phy_fluid_force_prop(void)
+ZTEST(zsl_tests, test_phy_fluid_force_prop)
 {
 	int rc;
 	zsl_real_t f2;
@@ -189,7 +189,7 @@ void test_phy_fluid_force_prop(void)
 	zassert_true(f2 != f2, NULL);
 }
 
-void test_phy_fluid_bernoulli(void)
+ZTEST(zsl_tests, test_phy_fluid_bernoulli)
 {
 	int rc;
 	zsl_real_t p2;
@@ -223,7 +223,7 @@ void test_phy_fluid_bernoulli(void)
 	zassert_true(p2 != p2, NULL);
 }
 
-void test_phy_fluid_volume_flow_rate(void)
+ZTEST(zsl_tests, test_phy_fluid_volume_flow_rate)
 {
 	int rc;
 	zsl_real_t v;

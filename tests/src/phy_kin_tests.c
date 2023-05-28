@@ -11,7 +11,7 @@
 #include <zsl/physics/kinematics.h>
 #include "floatcheck.h"
 
-void test_phy_kin_dist(void)
+ZTEST(zsl_tests, test_phy_kin_dist)
 {
 	int rc;
 	zsl_real_t dist;
@@ -27,7 +27,7 @@ void test_phy_kin_dist(void)
 	zassert_true(dist != dist, NULL);
 }
 
-void test_phy_kin_init_pos(void)
+ZTEST(zsl_tests, test_phy_kin_init_pos)
 {
 	int rc;
 	zsl_real_t xi;
@@ -43,7 +43,7 @@ void test_phy_kin_init_pos(void)
 	zassert_true(xi != xi, NULL);
 }
 
-void test_phy_kin_init_pos2(void)
+ZTEST(zsl_tests, test_phy_kin_init_pos2)
 {
 	int rc;
 	zsl_real_t xi;
@@ -59,7 +59,7 @@ void test_phy_kin_init_pos2(void)
 	zassert_true(xi != xi, NULL);
 }
 
-void test_phy_kin_time(void)
+ZTEST(zsl_tests, test_phy_kin_time)
 {
 	int rc;
 	zsl_real_t time;
@@ -81,7 +81,7 @@ void test_phy_kin_time(void)
 	zassert_true(time != time, NULL);
 }
 
-void test_phy_kin_vel(void)
+ZTEST(zsl_tests, test_phy_kin_vel)
 {
 	int rc;
 	zsl_real_t vf;
@@ -97,7 +97,7 @@ void test_phy_kin_vel(void)
 	zassert_true(vf != vf, NULL);
 }
 
-void test_phy_kin_vel2(void)
+ZTEST(zsl_tests, test_phy_kin_vel2)
 {
 	int rc;
 	zsl_real_t vf;
@@ -113,7 +113,7 @@ void test_phy_kin_vel2(void)
 	zassert_true(vf != vf, NULL);
 }
 
-void test_phy_kin_init_vel(void)
+ZTEST(zsl_tests, test_phy_kin_init_vel)
 {
 	int rc;
 	zsl_real_t vi;
@@ -129,7 +129,7 @@ void test_phy_kin_init_vel(void)
 	zassert_true(vi != vi, NULL);
 }
 
-void test_phy_kin_init_vel2(void)
+ZTEST(zsl_tests, test_phy_kin_init_vel2)
 {
 	int rc;
 	zsl_real_t vi;
@@ -151,7 +151,7 @@ void test_phy_kin_init_vel2(void)
 	zassert_true(vi != vi, NULL);
 }
 
-void test_phy_kin_init_vel3(void)
+ZTEST(zsl_tests, test_phy_kin_init_vel3)
 {
 	int rc;
 	zsl_real_t vi;
@@ -167,7 +167,7 @@ void test_phy_kin_init_vel3(void)
 	zassert_true(vi != vi, NULL);
 }
 
-void test_phy_kin_av_vel(void)
+ZTEST(zsl_tests, test_phy_kin_av_vel)
 {
 	int rc;
 	zsl_real_t vel;
@@ -189,7 +189,7 @@ void test_phy_kin_av_vel(void)
 	zassert_true(vel != vel, NULL);
 }
 
-void test_phy_kin_accel(void)
+ZTEST(zsl_tests, test_phy_kin_accel)
 {
 	int rc;
 	zsl_real_t accel;
@@ -211,7 +211,7 @@ void test_phy_kin_accel(void)
 	zassert_true(accel != accel, NULL);
 }
 
-void test_phy_kin_ener(void)
+ZTEST(zsl_tests, test_phy_kin_ener)
 {
 	int rc;
 	zsl_real_t ke;

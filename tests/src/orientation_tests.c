@@ -9,7 +9,7 @@
 #include <zsl/orientation/orientation.h>
 #include "floatcheck.h"
 
-void test_att_to_vec(void)
+ZTEST(zsl_tests, test_att_to_vec)
 {
 	int rc;
 	struct zsl_attitude a = { .roll = 15.0, .pitch = 2.5, .yaw = -10.0 };
@@ -34,7 +34,7 @@ void test_att_to_vec(void)
 	zassert_true(a.yaw == -5.5, NULL);
 }
 
-void test_att_to_euler(void)
+ZTEST(zsl_tests, test_att_to_euler)
 {
 	int rc;
 	struct zsl_attitude a = {
@@ -56,7 +56,7 @@ void test_att_to_euler(void)
 	zassert_true(val_is_equal(e.z, ecmp.z, 1E-4), NULL);
 }
 
-void test_att_from_euler(void)
+ZTEST(zsl_tests, test_att_from_euler)
 {
 	int rc;
 	struct zsl_euler e = {
@@ -78,7 +78,7 @@ void test_att_from_euler(void)
 	zassert_true(val_is_equal(a.yaw, acmp.yaw, 1E-4), NULL);
 }
 
-void test_att_from_accelmag(void)
+ZTEST(zsl_tests, test_att_from_accelmag)
 {
 	int rc;
 
@@ -120,7 +120,7 @@ void test_att_from_accelmag(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_att_from_accel(void)
+ZTEST(zsl_tests, test_att_from_accel)
 {
 	int rc;
 
@@ -152,7 +152,7 @@ void test_att_from_accel(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_att_accel_angle(void)
+ZTEST(zsl_tests, test_att_accel_angle)
 {
 	int rc;
 
@@ -187,7 +187,7 @@ void test_att_accel_angle(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_eul_to_vec(void)
+ZTEST(zsl_tests, test_eul_to_vec)
 {
 	int rc;
 	struct zsl_euler e = { .x = 15.0, .y = 2.5, .z = -10.0 };
@@ -212,7 +212,7 @@ void test_eul_to_vec(void)
 	zassert_true(e.z == -5.5, NULL);
 }
 
-void test_grav_lat_alt(void)
+ZTEST(zsl_tests, test_grav_lat_alt)
 {
 	int rc;
 	zsl_real_t g;
@@ -235,7 +235,7 @@ void test_grav_lat_alt(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_init(void)
+ZTEST(zsl_tests, test_quat_init)
 {
 	struct zsl_quat q;
 
@@ -252,7 +252,7 @@ void test_quat_init(void)
 	zassert_true(val_is_equal(q.k, 0.0, 1E-8), NULL);
 }
 
-void test_quat_magn(void)
+ZTEST(zsl_tests, test_quat_magn)
 {
 	zsl_real_t m = 0;
 	struct zsl_quat q;
@@ -274,7 +274,7 @@ void test_quat_magn(void)
 	zassert_true(val_is_equal(m, 1.1547002497042251, 1E-6), NULL);
 }
 
-void test_quat_to_unit(void)
+ZTEST(zsl_tests, test_quat_to_unit)
 {
 	int rc;
 	struct zsl_quat q;
@@ -307,7 +307,7 @@ void test_quat_to_unit(void)
 	zassert_true(zsl_quat_is_unit(&qn), NULL);
 }
 
-void test_quat_is_unit(void)
+ZTEST(zsl_tests, test_quat_is_unit)
 {
 	struct zsl_quat q;
 
@@ -321,7 +321,7 @@ void test_quat_is_unit(void)
 	zassert_true(zsl_quat_is_unit(&q), NULL);
 }
 
-void test_quat_scale(void)
+ZTEST(zsl_tests, test_quat_scale)
 {
 	int rc;
 	struct zsl_quat q = { .r = 1.0, .i = 0.5, .j = 0.25, .k = 2.0 };
@@ -337,7 +337,7 @@ void test_quat_scale(void)
 	zassert_true(val_is_equal(qs.k, q.k / 2.0, 1E-6), NULL);
 }
 
-void test_quat_mult(void)
+ZTEST(zsl_tests, test_quat_mult)
 {
 	int rc;
 	struct zsl_quat qa = { .r = 1.0, .i = 0.25, .j = 0.5, .k = 0.75 };
@@ -354,7 +354,7 @@ void test_quat_mult(void)
 	zassert_true(val_is_equal(qm.k, 1.5, 1E-6), NULL);
 }
 
-void test_quat_exp(void)
+ZTEST(zsl_tests, test_quat_exp)
 {
 	int rc;
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
@@ -378,7 +378,7 @@ void test_quat_exp(void)
 
 }
 
-void test_quat_log(void)
+ZTEST(zsl_tests, test_quat_log)
 {
 	int rc;
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
@@ -395,7 +395,7 @@ void test_quat_log(void)
 	zassert_true(val_is_equal(ql.k, 1.529825, 1E-6), NULL);
 }
 
-void test_quat_pow(void)
+ZTEST(zsl_tests, test_quat_pow)
 {
 	int rc;
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
@@ -427,7 +427,7 @@ void test_quat_pow(void)
 #endif
 }
 
-void test_quat_conj(void)
+ZTEST(zsl_tests, test_quat_conj)
 {
 	int rc;
 	struct zsl_quat q;
@@ -449,7 +449,7 @@ void test_quat_conj(void)
 	zassert_true(val_is_equal(qc.k, -0.333333, 1E-6), NULL);
 }
 
-void test_quat_inv(void)
+ZTEST(zsl_tests, test_quat_inv)
 {
 	int rc;
 	struct zsl_quat q;
@@ -471,7 +471,7 @@ void test_quat_inv(void)
 	zassert_true(val_is_equal(qi.k, -0.2499999, 1E-6), NULL);
 }
 
-void test_quat_diff(void)
+ZTEST(zsl_tests, test_quat_diff)
 {
 	int rc;
 	struct zsl_quat qa = { .r = 1.0, .i = 0.25, .j = 0.5, .k = 0.75 };
@@ -491,7 +491,7 @@ void test_quat_diff(void)
 	zassert_true(val_is_equal(qb.k, qcomp.k, 1E-6), NULL);
 }
 
-void test_quat_rot(void)
+ZTEST(zsl_tests, test_quat_rot)
 {
 	int rc;
 	struct zsl_quat qa = {
@@ -522,11 +522,9 @@ void test_quat_rot(void)
 	qb.r = 1.0;
 	rc = zsl_quat_rot(&qa, &qb, &qr);
 	zassert_true(rc == -EINVAL, NULL);
-
-
 }
 
-void test_quat_lerp(void)
+ZTEST(zsl_tests, test_quat_lerp)
 {
 	int rc;
 	struct zsl_quat qa = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
@@ -635,7 +633,7 @@ void test_quat_lerp(void)
 	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
 }
 
-void test_quat_slerp(void)
+ZTEST(zsl_tests, test_quat_slerp)
 {
 	int rc;
 	struct zsl_quat qa = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
@@ -740,7 +738,7 @@ void test_quat_slerp(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_from_ang_vel(void)
+ZTEST(zsl_tests, test_quat_from_ang_vel)
 {
 	int rc;
 	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
@@ -784,7 +782,7 @@ void test_quat_from_ang_vel(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_from_ang_mom(void)
+ZTEST(zsl_tests, test_quat_from_ang_mom)
 {
 	int rc;
 	struct zsl_quat qin = { .r = 1.0, .i = 0.0, .j = 0.0, .k = 0.0 };
@@ -837,7 +835,7 @@ void test_quat_from_ang_mom(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_to_euler(void)
+ZTEST(zsl_tests, test_quat_to_euler)
 {
 	int rc;
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
@@ -868,7 +866,7 @@ void test_quat_to_euler(void)
 	zassert_true(val_is_equal(e.z, 0.0, 1E-6), NULL);
 }
 
-void test_quat_from_euler(void)
+ZTEST(zsl_tests, test_quat_from_euler)
 {
 	int rc;
 	struct zsl_quat q;
@@ -901,7 +899,7 @@ void test_quat_from_euler(void)
 	zassert_true(val_is_equal(q.k, 0.6797242, 1E-6), NULL);
 }
 
-void test_quat_to_rot_mtx(void)
+ZTEST(zsl_tests, test_quat_to_rot_mtx)
 {
 	int rc = 0;
 	struct zsl_quat q = {
@@ -936,7 +934,7 @@ void test_quat_to_rot_mtx(void)
 	}
 }
 
-void test_quat_from_rot_mtx(void)
+ZTEST(zsl_tests, test_quat_from_rot_mtx)
 {
 	int rc = 0;
 	struct zsl_quat q;
@@ -976,7 +974,7 @@ void test_quat_from_rot_mtx(void)
 	zassert_true(val_is_equal(q.k, qcmp.k, 1E-6), NULL);
 }
 
-void test_quat_to_axis_angle(void)
+ZTEST(zsl_tests, test_quat_to_axis_angle)
 {
 	int rc;
 	struct zsl_quat q = { .r = 5.0, .i = 1.6, .j = -2.1, .k = 123.0 };
@@ -1010,7 +1008,7 @@ void test_quat_to_axis_angle(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_quat_from_axis_angle(void)
+ZTEST(zsl_tests, test_quat_from_axis_angle)
 {
 	int rc;
 	struct zsl_quat q;

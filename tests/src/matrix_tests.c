@@ -15,7 +15,7 @@
  *
  * This test verifies the zsl_mtx_init function.
  */
-void test_matrix_init(void)
+ZTEST(zsl_tests, test_matrix_init)
 {
 	int rc;
 	zsl_real_t x;
@@ -60,7 +60,7 @@ void test_matrix_init(void)
  *
  * This test verifies the zsl_mtx_from_arr function.
  */
-void test_matrix_from_arr(void)
+ZTEST(zsl_tests, test_matrix_from_arr)
 {
 	int rc;
 	zsl_real_t x;
@@ -102,7 +102,7 @@ void test_matrix_from_arr(void)
  *
  * This test verifies the zsl_mtx_copy and zsl_mtx_is_equal functions.
  */
-void test_matrix_copy(void)
+ZTEST(zsl_tests, test_matrix_copy)
 {
 	int rc;
 
@@ -133,7 +133,7 @@ void test_matrix_copy(void)
  *
  * This test verifies the zsl_mtx_get function.
  */
-void test_matrix_get(void)
+ZTEST(zsl_tests, test_matrix_get)
 {
 	int rc;
 	zsl_real_t x;
@@ -169,7 +169,7 @@ void test_matrix_get(void)
  *
  * This test verifies the zsl_mtx_set function.
  */
-void test_matrix_set(void)
+ZTEST(zsl_tests, test_matrix_set)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -206,7 +206,7 @@ void test_matrix_set(void)
 	zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, NULL);
 }
 
-void test_matrix_get_set_row(void)
+ZTEST(zsl_tests, test_matrix_get_set_row)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -262,7 +262,7 @@ void test_matrix_get_set_row(void)
 	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5), NULL);
 }
 
-void test_matrix_get_set_col(void)
+ZTEST(zsl_tests, test_matrix_get_set_col)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -320,7 +320,7 @@ void test_matrix_get_set_col(void)
 	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5), NULL);
 }
 
-void test_matrix_row_from_vec(void)
+ZTEST(zsl_tests, test_matrix_row_from_vec)
 {
 	int rc;
 	zsl_real_t x;
@@ -358,7 +358,7 @@ void test_matrix_row_from_vec(void)
 	zassert_true(val_is_equal(v.data[2], 0.0, 1E-5), NULL);
 }
 
-void test_matrix_unary_op(void)
+ZTEST(zsl_tests, test_matrix_unary_op)
 {
 	int rc;
 
@@ -380,12 +380,12 @@ void test_matrix_unary_op(void)
 	/* TODO: Test other operands! */
 }
 
-void test_matrix_unary_func(void)
+ZTEST(zsl_tests, test_matrix_unary_func)
 {
 
 }
 
-void test_matrix_binary_op(void)
+ZTEST(zsl_tests, test_matrix_binary_op)
 {
 	int rc;
 
@@ -424,12 +424,12 @@ void test_matrix_binary_op(void)
 	/* TODO: Test other operands! */
 }
 
-void test_matrix_binary_func(void)
+ZTEST(zsl_tests, test_matrix_binary_func)
 {
 
 }
 
-void test_matrix_add(void)
+ZTEST(zsl_tests, test_matrix_add)
 {
 	int rc;
 	zsl_real_t x;
@@ -471,7 +471,7 @@ void test_matrix_add(void)
 	}
 }
 
-void test_matrix_add_d(void)
+ZTEST(zsl_tests, test_matrix_add_d)
 {
 	int rc;
 	zsl_real_t x;
@@ -513,7 +513,7 @@ void test_matrix_add_d(void)
 	}
 }
 
-void test_matrix_sum_rows_d(void)
+ZTEST(zsl_tests, test_matrix_sum_rows_d)
 {
 	int rc;
 
@@ -576,7 +576,7 @@ void test_matrix_sum_rows_d(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_matrix_sum_rows_scaled_d(void)
+ZTEST(zsl_tests, test_matrix_sum_rows_scaled_d)
 {
 	int rc;
 
@@ -649,7 +649,7 @@ void test_matrix_sum_rows_scaled_d(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_matrix_sub(void)
+ZTEST(zsl_tests, test_matrix_sub)
 {
 	int rc;
 	zsl_real_t x;
@@ -691,7 +691,7 @@ void test_matrix_sub(void)
 	}
 }
 
-void test_matrix_sub_d(void)
+ZTEST(zsl_tests, test_matrix_sub_d)
 {
 	int rc;
 	zsl_real_t x;
@@ -738,7 +738,7 @@ void test_matrix_sub_d(void)
  *
  * This test verifies the zsl_mtx_mult function with square matrices.
  */
-void test_matrix_mult_sq(void)
+ZTEST(zsl_tests, test_matrix_mult_sq)
 {
 	int rc = 0;
 
@@ -796,7 +796,7 @@ void test_matrix_mult_sq(void)
  *
  * This test verifies the zsl_mtx_mult function with rectangular matrices.
  */
-void test_matrix_mult_rect(void)
+ZTEST(zsl_tests, test_matrix_mult_rect)
 {
 	int rc = 0;
 
@@ -859,7 +859,7 @@ void test_matrix_mult_rect(void)
 	zassert_equal(mref.data[11], mc.data[11], NULL);
 }
 
-void test_matrix_mult_d(void)
+ZTEST(zsl_tests, test_matrix_mult_d)
 {
 	int rc = 0;
 
@@ -921,7 +921,7 @@ void test_matrix_mult_d(void)
  *
  * This test verifies the zsl_mtx_scalar_mult_d function.
  */
-void test_matrix_scalar_mult_d(void)
+ZTEST(zsl_tests, test_matrix_scalar_mult_d)
 {
 	int rc = 0;
 	zsl_real_t s = 10.0;
@@ -949,7 +949,7 @@ void test_matrix_scalar_mult_d(void)
 	zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), NULL);
 }
 
-void test_matrix_scalar_mult_row_d(void)
+ZTEST(zsl_tests, test_matrix_scalar_mult_row_d)
 {
 	int rc;
 
@@ -1017,7 +1017,7 @@ void test_matrix_scalar_mult_row_d(void)
  *
  * This test verifies the zsl_mtx_trans function.
  */
-void test_matrix_trans(void)
+ZTEST(zsl_tests, test_matrix_trans)
 {
 	int rc = 0;
 
@@ -1055,7 +1055,7 @@ void test_matrix_trans(void)
 	zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), NULL);
 }
 
-void test_matrix_adjoint_3x3(void)
+ZTEST(zsl_tests, test_matrix_adjoint_3x3)
 {
 	int rc = 0;
 
@@ -1091,7 +1091,7 @@ void test_matrix_adjoint_3x3(void)
 	zassert_true(val_is_equal(mad.data[8], -4.0, 1E-6), NULL);
 }
 
-void test_matrix_adjoint(void)
+ZTEST(zsl_tests, test_matrix_adjoint)
 {
 	int rc = 0;
 
@@ -1136,7 +1136,7 @@ void test_matrix_adjoint(void)
 }
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_vector_wedge(void)
+ZTEST(zsl_tests_double, test_matrix_vector_wedge)
 {
 	int rc = 0;
 
@@ -1185,7 +1185,7 @@ void test_matrix_vector_wedge(void)
 }
 #endif
 
-void test_matrix_reduce(void)
+ZTEST(zsl_tests, test_matrix_reduce)
 {
 	int rc = 0;
 
@@ -1251,7 +1251,7 @@ void test_matrix_reduce(void)
 	zassert_equal(rc, -EINVAL, NULL);
 }
 
-void test_matrix_reduce_iter(void)
+ZTEST(zsl_tests, test_matrix_reduce_iter)
 {
 	int rc = 0;
 	ZSL_MATRIX_DEF(mred, 3, 3);
@@ -1323,7 +1323,7 @@ void test_matrix_reduce_iter(void)
 	}
 }
 
-void test_matrix_augm_diag(void)
+ZTEST(zsl_tests, test_matrix_augm_diag)
 {
 	int rc = 0;
 
@@ -1388,7 +1388,7 @@ void test_matrix_augm_diag(void)
 	}
 }
 
-void test_matrix_deter_3x3(void)
+ZTEST(zsl_tests, test_matrix_deter_3x3)
 {
 	int rc = 0;
 	zsl_real_t x = 0.0;
@@ -1411,7 +1411,7 @@ void test_matrix_deter_3x3(void)
 	zassert_equal(x, 214.0, NULL);
 }
 
-void test_matrix_deter(void)
+ZTEST(zsl_tests, test_matrix_deter)
 {
 	int rc = 0;
 	zsl_real_t x = 0.0;
@@ -1435,7 +1435,7 @@ void test_matrix_deter(void)
 	zassert_equal(x, -509.0, NULL);
 }
 
-void test_matrix_gauss_elim(void)
+ZTEST(zsl_tests, test_matrix_gauss_elim)
 {
 	int rc = 0;
 
@@ -1487,7 +1487,7 @@ void test_matrix_gauss_elim(void)
 	}
 }
 
-void test_matrix_gauss_elim_d(void)
+ZTEST(zsl_tests, test_matrix_gauss_elim_d)
 {
 	int rc = 0;
 
@@ -1542,7 +1542,7 @@ void test_matrix_gauss_elim_d(void)
 	}
 }
 
-void test_matrix_gauss_reduc(void)
+ZTEST(zsl_tests, test_matrix_gauss_reduc)
 {
 	int rc = 0;
 
@@ -1598,7 +1598,7 @@ void test_matrix_gauss_reduc(void)
 	}
 }
 
-void test_matrix_gram_schmidt_sq(void)
+ZTEST(zsl_tests, test_matrix_gram_schmidt_sq)
 {
 	int rc;
 
@@ -1640,7 +1640,7 @@ void test_matrix_gram_schmidt_sq(void)
 	}
 }
 
-void test_matrix_gram_schmidt_rect(void)
+ZTEST(zsl_tests, test_matrix_gram_schmidt_rect)
 {
 	int rc;
 
@@ -1684,7 +1684,7 @@ void test_matrix_gram_schmidt_rect(void)
 	}
 }
 
-void test_matrix_cols_norm(void)
+ZTEST(zsl_tests, test_matrix_cols_norm)
 {
 	int rc = 0;
 
@@ -1719,7 +1719,7 @@ void test_matrix_cols_norm(void)
 	}
 }
 
-void test_matrix_norm_elem(void)
+ZTEST(zsl_tests, test_matrix_norm_elem)
 {
 	int rc = 0;
 
@@ -1771,7 +1771,7 @@ void test_matrix_norm_elem(void)
 	}
 }
 
-void test_matrix_norm_elem_d(void)
+ZTEST(zsl_tests, test_matrix_norm_elem_d)
 {
 	int rc = 0;
 
@@ -1810,7 +1810,7 @@ void test_matrix_norm_elem_d(void)
 	}
 }
 
-void test_matrix_inv_3x3(void)
+ZTEST(zsl_tests, test_matrix_inv_3x3)
 {
 	int rc = 0;
 
@@ -1845,7 +1845,7 @@ void test_matrix_inv_3x3(void)
 	zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), NULL);
 }
 
-void test_matrix_inv(void)
+ZTEST(zsl_tests, test_matrix_inv)
 {
 	int rc = 0;
 
@@ -1886,7 +1886,7 @@ void test_matrix_inv(void)
 	zassert_true(zsl_mtx_is_equal(&mi, &mtst), NULL);
 }
 
-void test_matrix_cholesky(void)
+ZTEST(zsl_tests, test_matrix_cholesky)
 {
 	int rc;
 
@@ -1951,7 +1951,7 @@ void test_matrix_cholesky(void)
 	zassert_equal(rc, -EINVAL, NULL);
 }
 
-void test_matrix_balance(void)
+ZTEST(zsl_tests, test_matrix_balance)
 {
 	int rc;
 
@@ -2013,7 +2013,7 @@ void test_matrix_balance(void)
 	}
 }
 
-void test_matrix_householder_sq(void)
+ZTEST(zsl_tests, test_matrix_householder_sq)
 {
 	int rc;
 
@@ -2075,7 +2075,7 @@ void test_matrix_householder_sq(void)
 	}
 }
 
-void test_matrix_householder_rect(void)
+ZTEST(zsl_tests, test_matrix_householder_rect)
 {
 	int rc;
 
@@ -2138,7 +2138,7 @@ void test_matrix_householder_rect(void)
 	}
 }
 
-void test_matrix_qrd(void)
+ZTEST(zsl_tests, test_matrix_qrd)
 {
 	int rc;
 
@@ -2195,7 +2195,7 @@ void test_matrix_qrd(void)
 	}
 }
 
-void test_matrix_qrd_hess(void)
+ZTEST(zsl_tests, test_matrix_qrd_hess)
 {
 	int rc;
 
@@ -2250,7 +2250,7 @@ void test_matrix_qrd_hess(void)
 }
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_qrd_iter(void)
+ZTEST(zsl_tests_double, test_matrix_qrd_iter)
 {
 	int rc;
 
@@ -2295,7 +2295,7 @@ void test_matrix_qrd_iter(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_eigenvalues(void)
+ZTEST(zsl_tests_double, test_matrix_eigenvalues)
 {
 	int rc;
 
@@ -2384,7 +2384,7 @@ void test_matrix_eigenvalues(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_eigenvectors(void)
+ZTEST(zsl_tests_double, test_matrix_eigenvectors)
 {
 	int rc;
 
@@ -2572,7 +2572,7 @@ void test_matrix_eigenvectors(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_svd(void)
+ZTEST(zsl_tests_double, test_matrix_svd)
 {
 	int rc;
 
@@ -2644,7 +2644,7 @@ void test_matrix_svd(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_pinv(void)
+ZTEST(zsl_tests_double, test_matrix_pinv)
 {
 	int rc;
 
@@ -2690,7 +2690,7 @@ void test_matrix_pinv(void)
 }
 #endif
 
-void test_matrix_min(void)
+ZTEST(zsl_tests, test_matrix_min)
 {
 	int rc = 0;
 	zsl_real_t min;
@@ -2711,7 +2711,7 @@ void test_matrix_min(void)
 	zassert_equal(min, 1.0, NULL);
 }
 
-void test_matrix_max(void)
+ZTEST(zsl_tests, test_matrix_max)
 {
 	int rc = 0;
 	zsl_real_t max;
@@ -2732,7 +2732,7 @@ void test_matrix_max(void)
 	zassert_equal(max, 4.0, NULL);
 }
 
-void test_matrix_min_idx(void)
+ZTEST(zsl_tests, test_matrix_min_idx)
 {
 	int rc = 0;
 	size_t min_i;
@@ -2755,7 +2755,7 @@ void test_matrix_min_idx(void)
 	zassert_equal(min_j, 0, NULL);
 }
 
-void test_matrix_max_idx(void)
+ZTEST(zsl_tests, test_matrix_max_idx)
 {
 	int rc = 0;
 	size_t max_i;
@@ -2779,7 +2779,7 @@ void test_matrix_max_idx(void)
 	zassert_equal(max_j, 1, NULL);
 }
 
-void test_matrix_is_equal(void)
+ZTEST(zsl_tests, test_matrix_is_equal)
 {
 	bool res;
 
@@ -2813,7 +2813,7 @@ void test_matrix_is_equal(void)
 	zassert_equal(res, false, "");
 }
 
-void test_matrix_is_notneg(void)
+ZTEST(zsl_tests, test_matrix_is_notneg)
 {
 	bool res;
 
@@ -2836,7 +2836,7 @@ void test_matrix_is_notneg(void)
 	zassert_equal(res, false, NULL);
 }
 
-void test_matrix_is_sym(void)
+ZTEST(zsl_tests, test_matrix_is_sym)
 {
 	bool res;
 

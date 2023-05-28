@@ -11,7 +11,7 @@
 #include <zsl/physics/energy.h>
 #include "floatcheck.h"
 
-void test_phy_ener_kin(void)
+ZTEST(zsl_tests, test_phy_ener_kin)
 {
 	int rc;
 	zsl_real_t ke;
@@ -27,7 +27,7 @@ void test_phy_ener_kin(void)
 	zassert_true(ke != ke, NULL);
 }
 
-void test_phy_ener_rot(void)
+ZTEST(zsl_tests, test_phy_ener_rot)
 {
 	int rc;
 	zsl_real_t rke;
@@ -43,7 +43,7 @@ void test_phy_ener_rot(void)
 	zassert_true(rke != rke, NULL);
 }
 
-void test_phy_ener_grav_pot(void)
+ZTEST(zsl_tests, test_phy_ener_grav_pot)
 {
 	int rc;
 	zsl_real_t ug;
@@ -59,7 +59,7 @@ void test_phy_ener_grav_pot(void)
 	zassert_true(ug != ug, NULL);
 }
 
-void test_phy_ener_elas_pot(void)
+ZTEST(zsl_tests, test_phy_ener_elas_pot)
 {
 	int rc;
 	zsl_real_t ue;
@@ -75,7 +75,7 @@ void test_phy_ener_elas_pot(void)
 	zassert_true(ue != ue, NULL);
 }
 
-void test_phy_ener_power(void)
+ZTEST(zsl_tests, test_phy_ener_power)
 {
 	int rc;
 	zsl_real_t power;
@@ -97,7 +97,7 @@ void test_phy_ener_power(void)
 	zassert_true(power != power, NULL);
 }
 
-void test_phy_ener_fric(void)
+ZTEST(zsl_tests, test_phy_ener_fric)
 {
 	int rc;
 	zsl_real_t e;
@@ -119,7 +119,7 @@ void test_phy_ener_fric(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_ener_mec(void)
+ZTEST(zsl_tests, test_phy_ener_mec)
 {
 	int rc;
 	zsl_real_t me;
@@ -129,7 +129,7 @@ void test_phy_ener_mec(void)
 	zassert_true(val_is_equal(me, 9353.0, 1E-6), NULL);
 }
 
-void test_phy_ener_final(void)
+ZTEST(zsl_tests, test_phy_ener_final)
 {
 	int rc;
 	zsl_real_t ef4;
@@ -140,7 +140,7 @@ void test_phy_ener_final(void)
 	zassert_true(val_is_equal(ef4, 2807.0, 1E-6), NULL);
 }
 
-void test_phy_ener_photon(void)
+ZTEST(zsl_tests, test_phy_ener_photon)
 {
 	int rc;
 	zsl_real_t e;
@@ -157,7 +157,7 @@ void test_phy_ener_photon(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_ener_photon2(void)
+ZTEST(zsl_tests, test_phy_ener_photon2)
 {
 	int rc;
 	zsl_real_t e;

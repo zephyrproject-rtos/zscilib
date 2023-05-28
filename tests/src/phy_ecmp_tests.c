@@ -11,7 +11,7 @@
 #include <zsl/physics/eleccomp.h>
 #include "floatcheck.h"
 
-void test_phy_ecmp_capac_cpv(void)
+ZTEST(zsl_tests, test_phy_ecmp_capac_cpv)
 {
 	int rc;
 	zsl_real_t c;
@@ -26,7 +26,7 @@ void test_phy_ecmp_capac_cpv(void)
 	zassert_true(c != c, NULL);
 }
 
-void test_phy_ecmp_capac_ad(void)
+ZTEST(zsl_tests, test_phy_ecmp_capac_ad)
 {
 	int rc;
 	zsl_real_t c;
@@ -42,7 +42,7 @@ void test_phy_ecmp_capac_ad(void)
 	zassert_true(c != c, NULL);
 }
 
-void test_phy_ecmp_ener_capac(void)
+ZTEST(zsl_tests, test_phy_ecmp_ener_capac)
 {
 	int rc;
 	zsl_real_t e;
@@ -52,7 +52,7 @@ void test_phy_ecmp_ener_capac(void)
 	zassert_true(val_is_equal(e, 1.5, 1E-6), NULL);
 }
 
-void test_phy_ecmp_ener_induc(void)
+ZTEST(zsl_tests, test_phy_ecmp_ener_induc)
 {
 	int rc;
 	zsl_real_t e;
@@ -62,7 +62,7 @@ void test_phy_ecmp_ener_induc(void)
 	zassert_true(val_is_equal(e, 1.5, 1E-6), NULL);
 }
 
-void test_phy_ecmp_trans(void)
+ZTEST(zsl_tests, test_phy_ecmp_trans)
 {
 	int rc;
 	zsl_real_t v2;
@@ -78,7 +78,7 @@ void test_phy_ecmp_trans(void)
 	zassert_true(v2 != v2, NULL);
 }
 
-void test_phy_ecmp_rlc_volt(void)
+ZTEST(zsl_tests, test_phy_ecmp_rlc_volt)
 {
 	int rc;
 	zsl_real_t v;
@@ -88,7 +88,7 @@ void test_phy_ecmp_rlc_volt(void)
 	zassert_true(val_is_equal(v, 9.4339811321, 1E-6), NULL);
 }
 
-void test_phy_ecmp_rc_charg_i(void)
+ZTEST(zsl_tests, test_phy_ecmp_rc_charg_i)
 {
 	int rc;
 	zsl_real_t i;
@@ -116,7 +116,7 @@ void test_phy_ecmp_rc_charg_i(void)
 	zassert_true(i != i, NULL);
 }
 
-void test_phy_ecmp_rc_charg_q(void)
+ZTEST(zsl_tests, test_phy_ecmp_rc_charg_q)
 {
 	int rc;
 	zsl_real_t q;
@@ -144,7 +144,7 @@ void test_phy_ecmp_rc_charg_q(void)
 	zassert_true(q != q, NULL);
 }
 
-void test_phy_ecmp_rc_discharg_i(void)
+ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_i)
 {
 	int rc;
 	zsl_real_t i;
@@ -172,7 +172,7 @@ void test_phy_ecmp_rc_discharg_i(void)
 	zassert_true(i != i, NULL);
 }
 
-void test_phy_ecmp_rc_discharg_q(void)
+ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_q)
 {
 	int rc;
 	zsl_real_t q;
@@ -200,8 +200,7 @@ void test_phy_ecmp_rc_discharg_q(void)
 	zassert_true(q != q, NULL);
 }
 
-
-void test_phy_ecmp_rl_current(void)
+ZTEST(zsl_tests, test_phy_ecmp_rl_current)
 {
 	int rc;
 	zsl_real_t i;

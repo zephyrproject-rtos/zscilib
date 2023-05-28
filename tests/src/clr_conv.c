@@ -10,8 +10,7 @@
 #include "floatcheck.h"
 #include "data.h"
 
-void
-test_conv_spd_xyz(void)
+ZTEST(zsl_tests, test_conv_spd_xyz)
 {
 	int rc;
 	struct zsl_clr_xyz xyz;
@@ -27,8 +26,7 @@ test_conv_spd_xyz(void)
 	zassert_false(xyz.z_invalid, NULL);
 }
 
-void
-test_conv_ct_xyz(void)
+ZTEST(zsl_tests, test_conv_ct_xyz)
 {
 	int rc;
 	struct zsl_clr_xyz xyz;
@@ -46,8 +44,7 @@ test_conv_ct_xyz(void)
 	zassert_false(xyz.z_invalid, NULL);
 }
 
-void
-test_conv_ct_rgb8(void)
+ZTEST(zsl_tests, test_conv_ct_rgb8)
 {
 	int rc;
 	struct zsl_clr_rgb8 rgb;
@@ -70,8 +67,7 @@ test_conv_ct_rgb8(void)
 	zassert_false(rgb.a_invalid, NULL);
 }
 
-void
-test_conv_cct_xyy(void)
+ZTEST(zsl_tests, test_conv_cct_xyy)
 {
 	int rc;
 	struct zsl_clr_cct cct;
@@ -124,8 +120,7 @@ test_conv_cct_xyy(void)
 	zassert_false(xyy.Y_invalid, NULL);
 }
 
-void
-test_conv_cct_xyz(void)
+ZTEST(zsl_tests, test_conv_cct_xyz)
 {
 	int rc;
 	struct zsl_clr_cct cct;
@@ -180,8 +175,7 @@ test_conv_cct_xyz(void)
 	zassert_false(xyz.z_invalid, NULL);
 }
 
-void
-test_conv_uv60_cct_ohno2011(void)
+ZTEST(zsl_tests, test_conv_uv60_cct_ohno2011)
 {
 	int rc;
 	struct zsl_clr_uv60 uv;
@@ -222,8 +216,7 @@ test_conv_uv60_cct_ohno2011(void)
 	zassert_true(val_is_equal(cct.cct, 7057.7, eps_cct), NULL);
 }
 
-void
-test_conv_uv60_cct_ohno2014(void)
+ZTEST(zsl_tests, test_conv_uv60_cct_ohno2014)
 {
 	int rc;
 	struct zsl_clr_uv60 uv;

@@ -18,7 +18,7 @@
 #error "C99 Complex number support not available."
 #endif
 
-void test_complex_add(void)
+ZTEST(zsl_tests, test_complex_add)
 {
 	/* NOTE: zsl_real_t typedef can't be used with C99 complex numbers. */
 #if CONFIG_ZSL_SINGLE_PRECISION

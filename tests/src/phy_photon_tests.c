@@ -11,7 +11,7 @@
 #include <zsl/physics/photons.h>
 #include "floatcheck.h"
 
-void test_phy_photon_ener(void)
+ZTEST(zsl_tests, test_phy_photon_ener)
 {
 	int rc;
 	zsl_real_t e;
@@ -34,7 +34,7 @@ void test_phy_photon_ener(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_photon_mom(void)
+ZTEST(zsl_tests, test_phy_photon_mom)
 {
 	int rc;
 	zsl_real_t p;
@@ -56,7 +56,7 @@ void test_phy_photon_mom(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_photon_wavelenght(void)
+ZTEST(zsl_tests, test_phy_photon_wavelenght)
 {
 	int rc;
 	zsl_real_t lambda;
@@ -78,7 +78,7 @@ void test_phy_photon_wavelenght(void)
 	zassert_true(lambda != lambda, NULL);
 }
 
-void test_phy_photon_frequency(void)
+ZTEST(zsl_tests, test_phy_photon_frequency)
 {
 	int rc;
 	zsl_real_t f;
@@ -100,7 +100,7 @@ void test_phy_photon_frequency(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_photon_photoelectric(void)
+ZTEST(zsl_tests, test_phy_photon_photoelectric)
 {
 	int rc;
 	zsl_real_t kmax;

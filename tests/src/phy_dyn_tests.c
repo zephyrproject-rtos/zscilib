@@ -11,7 +11,7 @@
 #include <zsl/physics/dynamics.h>
 #include "floatcheck.h"
 
-void test_phy_dyn_newton(void)
+ZTEST(zsl_tests, test_phy_dyn_newton)
 {
 	int rc;
 	zsl_real_t f;
@@ -35,7 +35,7 @@ void test_phy_dyn_newton(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_dyn_fric(void)
+ZTEST(zsl_tests, test_phy_dyn_fric)
 {
 	int rc;
 	zsl_real_t f;
@@ -57,7 +57,7 @@ void test_phy_dyn_fric(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_dyn_normal(void)
+ZTEST(zsl_tests, test_phy_dyn_normal)
 {
 	int rc;
 	zsl_real_t n;
@@ -73,7 +73,7 @@ void test_phy_dyn_normal(void)
 	zassert_true(n != n, NULL);
 }
 
-void test_phy_dyn_pendul_period(void)
+ZTEST(zsl_tests, test_phy_dyn_pendul_period)
 {
 	int rc;
 	zsl_real_t t;
@@ -89,7 +89,7 @@ void test_phy_dyn_pendul_period(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_dyn_pendul_max_speed(void)
+ZTEST(zsl_tests, test_phy_dyn_pendul_max_speed)
 {
 	int rc;
 	zsl_real_t vmax;
@@ -105,7 +105,7 @@ void test_phy_dyn_pendul_max_speed(void)
 	zassert_true(vmax != vmax, NULL);
 }
 
-void test_phy_dyn_tension(void)
+ZTEST(zsl_tests, test_phy_dyn_tension)
 {
 	int rc;
 	zsl_real_t t;
@@ -121,7 +121,7 @@ void test_phy_dyn_tension(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_dyn_lever(void)
+ZTEST(zsl_tests, test_phy_dyn_lever)
 {
 	int rc;
 	zsl_real_t f2;

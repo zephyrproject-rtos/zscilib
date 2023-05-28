@@ -12,7 +12,7 @@
 #include <zsl/physics/electricity.h>
 #include "floatcheck.h"
 
-void test_phy_elcty_current(void)
+ZTEST(zsl_tests, test_phy_elcty_current)
 {
 	int rc;
 	zsl_real_t i;
@@ -28,7 +28,7 @@ void test_phy_elcty_current(void)
 	zassert_true(i != i, NULL);
 }
 
-void test_phy_elcty_res_series(void)
+ZTEST(zsl_tests, test_phy_elcty_res_series)
 {
 	int rc;
 	zsl_real_t r;
@@ -56,7 +56,7 @@ void test_phy_elcty_res_series(void)
 	zassert_true(r != r, NULL);
 }
 
-void test_phy_elcty_res_parallel(void)
+ZTEST(zsl_tests, test_phy_elcty_res_parallel)
 {
 	int rc;
 	zsl_real_t r;
@@ -84,7 +84,7 @@ void test_phy_elcty_res_parallel(void)
 	zassert_true(r != r, NULL);
 }
 
-void test_phy_elcty_cap_series(void)
+ZTEST(zsl_tests, test_phy_elcty_cap_series)
 {
 	int rc;
 	zsl_real_t c;
@@ -112,7 +112,7 @@ void test_phy_elcty_cap_series(void)
 	zassert_true(c != c, NULL);
 }
 
-void test_phy_elcty_cap_parallel(void)
+ZTEST(zsl_tests, test_phy_elcty_cap_parallel)
 {
 	int rc;
 	zsl_real_t c;
@@ -140,7 +140,7 @@ void test_phy_elcty_cap_parallel(void)
 	zassert_true(c != c, NULL);
 }
 
-void test_phy_elcty_resistivity(void)
+ZTEST(zsl_tests, test_phy_elcty_resistivity)
 {
 	int rc;
 	zsl_real_t rty;
@@ -168,7 +168,7 @@ void test_phy_elcty_resistivity(void)
 	zassert_true(rty != rty, NULL);
 }
 
-void test_phy_elcty_ohm_law(void)
+ZTEST(zsl_tests, test_phy_elcty_ohm_law)
 {
 	int rc;
 	zsl_real_t v;
@@ -184,7 +184,7 @@ void test_phy_elcty_ohm_law(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_elcty_power_vi(void)
+ZTEST(zsl_tests, test_phy_elcty_power_vi)
 {
 	int rc;
 	zsl_real_t p;
@@ -194,7 +194,7 @@ void test_phy_elcty_power_vi(void)
 	zassert_true(val_is_equal(p, 0.0375, 1E-6), NULL);
 }
 
-void test_phy_elcty_power_ir(void)
+ZTEST(zsl_tests, test_phy_elcty_power_ir)
 {
 	int rc;
 	zsl_real_t p;
@@ -210,7 +210,7 @@ void test_phy_elcty_power_ir(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_elcty_power_vr(void)
+ZTEST(zsl_tests, test_phy_elcty_power_vr)
 {
 	int rc;
 	zsl_real_t p;

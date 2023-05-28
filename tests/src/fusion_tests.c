@@ -9,7 +9,7 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include "floatcheck.h"
 
-void test_fus_madgwick(void)
+ZTEST(zsl_tests, test_fus_madgwick)
 {
 	int rc = 0;
 
@@ -154,7 +154,7 @@ void test_fus_madgwick(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_fus_mahony(void)
+ZTEST(zsl_tests, test_fus_mahony)
 {
 	int rc = 0;
 
@@ -382,7 +382,7 @@ void test_fus_mahony(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_fus_saam(void)
+ZTEST(zsl_tests, test_fus_saam)
 {
 	int rc = 0;
 
@@ -504,7 +504,7 @@ void test_fus_saam(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_fus_complementary(void)
+ZTEST(zsl_tests, test_fus_complementary)
 {
 	int rc = 0;
 
@@ -657,7 +657,7 @@ void test_fus_complementary(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_fus_aqua(void)
+ZTEST(zsl_tests, test_fus_aqua)
 {
 	int rc = 0;
 
@@ -846,7 +846,7 @@ void test_fus_aqua(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_fus_kalman(void)
+ZTEST(zsl_tests, test_fus_kalman)
 {
 	int rc = 0;
 
