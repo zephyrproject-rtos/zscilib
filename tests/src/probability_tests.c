@@ -11,7 +11,7 @@
 #include <zsl/probability.h>
 #include "floatcheck.h"
 
-void test_prob_uniform_pdf(void)
+ZTEST(zsl_tests, test_prob_uniform_pdf)
 {
 	zsl_real_t rc;
 	zsl_real_t a = 3.0, b = 5.0, x;
@@ -28,7 +28,7 @@ void test_prob_uniform_pdf(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_uniform_mean(void)
+ZTEST(zsl_tests, test_prob_uniform_mean)
 {
 	int rc;
 	zsl_real_t a = 3.0, b = 5.0, m;
@@ -42,7 +42,7 @@ void test_prob_uniform_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_uniform_variance(void)
+ZTEST(zsl_tests, test_prob_uniform_variance)
 {
 	int rc;
 	zsl_real_t a = 3.0, b = 6.0, v;
@@ -56,7 +56,7 @@ void test_prob_uniform_variance(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_uniform_cdf(void)
+ZTEST(zsl_tests, test_prob_uniform_cdf)
 {
 	zsl_real_t rc;
 	zsl_real_t a = 3.0, b = 5.0, x;
@@ -85,7 +85,7 @@ void test_prob_uniform_cdf(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_normal_pdf(void)
+ZTEST(zsl_tests, test_prob_normal_pdf)
 {
 	zsl_real_t rc;
 	zsl_real_t m = 0.0, s = 1.0, x;
@@ -103,7 +103,7 @@ void test_prob_normal_pdf(void)
 	zassert_true(val_is_equal(rc, 0.05399096651, 1E-6), NULL);
 }
 
-void test_prob_normal_cdf(void)
+ZTEST(zsl_tests, test_prob_normal_cdf)
 {
 	zsl_real_t rc;
 	zsl_real_t m = 0.0, s = 1.0, x;
@@ -121,7 +121,7 @@ void test_prob_normal_cdf(void)
 	zassert_true(val_is_equal(rc, 1. - 0.9772498680518208, 1E-6), NULL);
 }
 
-void test_prob_erf_inverse(void)
+ZTEST(zsl_tests, test_prob_erf_inverse)
 {
 	zsl_real_t rc;
 	zsl_real_t x;
@@ -147,7 +147,7 @@ void test_prob_erf_inverse(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_normal_cdf_inv(void)
+ZTEST(zsl_tests, test_prob_normal_cdf_inv)
 {
 	zsl_real_t rc;
 	zsl_real_t m = 0.0, s = 1.0, x;
@@ -173,7 +173,7 @@ void test_prob_normal_cdf_inv(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_factorial(void)
+ZTEST(zsl_tests, test_prob_factorial)
 {
 	int rc;
 	int n;
@@ -191,7 +191,7 @@ void test_prob_factorial(void)
 	zassert_true(val_is_equal(rc, 40320, 1E-6), NULL);
 }
 
-void test_prob_binomial_coef(void)
+ZTEST(zsl_tests, test_prob_binomial_coef)
 {
 	int rc;
 	int n = 7, k, c;
@@ -238,7 +238,7 @@ void test_prob_binomial_coef(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_binomial_pdf(void)
+ZTEST(zsl_tests, test_prob_binomial_pdf)
 {
 	zsl_real_t rc;
 	zsl_real_t p = 0.3;
@@ -276,7 +276,7 @@ void test_prob_binomial_pdf(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_binomial_mean(void)
+ZTEST(zsl_tests, test_prob_binomial_mean)
 {
 	zsl_real_t rc;
 	zsl_real_t p = 0.3, m;
@@ -301,7 +301,7 @@ void test_prob_binomial_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_binomial_variance(void)
+ZTEST(zsl_tests, test_prob_binomial_variance)
 {
 	zsl_real_t rc;
 	zsl_real_t p = 0.3, v;
@@ -326,7 +326,7 @@ void test_prob_binomial_variance(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_binomial_cdf(void)
+ZTEST(zsl_tests, test_prob_binomial_cdf)
 {
 	zsl_real_t rc;
 	zsl_real_t p = 0.3;
@@ -364,7 +364,7 @@ void test_prob_binomial_cdf(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_entropy(void)
+ZTEST(zsl_tests, test_prob_entropy)
 {
 	zsl_real_t rc;
 	zsl_real_t h;
@@ -397,7 +397,7 @@ void test_prob_entropy(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_prob_bayes(void)
+ZTEST(zsl_tests, test_prob_bayes)
 {
 	zsl_real_t rc;
 	zsl_real_t pa = 0.15, pb = 0.2, pba = 0.4, pab;

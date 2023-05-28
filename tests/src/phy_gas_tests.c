@@ -11,7 +11,7 @@
 #include <zsl/physics/gases.h>
 #include "floatcheck.h"
 
-void test_phy_gas_av_vel(void)
+ZTEST(zsl_tests, test_phy_gas_av_vel)
 {
 	int rc;
 	zsl_real_t v;
@@ -45,7 +45,7 @@ void test_phy_gas_av_vel(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_gas_press(void)
+ZTEST(zsl_tests, test_phy_gas_press)
 {
 	int rc;
 	zsl_real_t p;
@@ -79,7 +79,7 @@ void test_phy_gas_press(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_gas_boyle(void)
+ZTEST(zsl_tests, test_phy_gas_boyle)
 {
 	int rc;
 	zsl_real_t vf;
@@ -113,7 +113,7 @@ void test_phy_gas_boyle(void)
 	zassert_true(vf != vf, NULL);
 }
 
-void test_phy_gas_charles_lussac(void)
+ZTEST(zsl_tests, test_phy_gas_charles_lussac)
 {
 	int rc;
 	zsl_real_t vf;

@@ -11,7 +11,7 @@
 #include <zsl/physics/momentum.h>
 #include "floatcheck.h"
 
-void test_phy_mom_mom(void)
+ZTEST(zsl_tests, test_phy_mom_mom)
 {
 	int rc;
 	zsl_real_t p;
@@ -27,7 +27,7 @@ void test_phy_mom_mom(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_mom_imp(void)
+ZTEST(zsl_tests, test_phy_mom_imp)
 {
 	int rc;
 	zsl_real_t imp;
@@ -43,7 +43,7 @@ void test_phy_mom_imp(void)
 	zassert_true(imp != imp, NULL);
 }
 
-void test_phy_mom_change(void)
+ZTEST(zsl_tests, test_phy_mom_change)
 {
 	int rc;
 	zsl_real_t p;
@@ -59,7 +59,7 @@ void test_phy_mom_change(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_mom_elas(void)
+ZTEST(zsl_tests, test_phy_mom_elas)
 {
 	int rc;
 	zsl_real_t vf2;
@@ -87,7 +87,7 @@ void test_phy_mom_elas(void)
 	zassert_true(vf2 != vf2, NULL);
 }
 
-void test_phy_mom_inelas(void)
+ZTEST(zsl_tests, test_phy_mom_inelas)
 {
 	int rc;
 	zsl_real_t vf;

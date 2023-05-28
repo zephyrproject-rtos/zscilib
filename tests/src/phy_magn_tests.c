@@ -11,7 +11,7 @@
 #include <zsl/physics/magnetics.h>
 #include "floatcheck.h"
 
-void test_phy_magn_force(void)
+ZTEST(zsl_tests, test_phy_magn_force)
 {
 	int rc;
 	zsl_real_t f;
@@ -33,7 +33,7 @@ void test_phy_magn_force(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_magn_force_wire(void)
+ZTEST(zsl_tests, test_phy_magn_force_wire)
 {
 	int rc;
 	zsl_real_t f;
@@ -55,7 +55,7 @@ void test_phy_magn_force_wire(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_magn_torque_loop(void)
+ZTEST(zsl_tests, test_phy_magn_torque_loop)
 {
 	int rc;
 	zsl_real_t tor;
@@ -81,7 +81,7 @@ void test_phy_magn_torque_loop(void)
 	zassert_true(tor != tor, NULL);
 }
 
-void test_phy_magn_pot_dipole(void)
+ZTEST(zsl_tests, test_phy_magn_pot_dipole)
 {
 	int rc;
 	zsl_real_t u;
@@ -103,7 +103,7 @@ void test_phy_magn_pot_dipole(void)
 	zassert_true(u != u, NULL);
 }
 
-void test_phy_magn_orb_radius(void)
+ZTEST(zsl_tests, test_phy_magn_orb_radius)
 {
 	int rc;
 	zsl_real_t r;
@@ -137,7 +137,7 @@ void test_phy_magn_orb_radius(void)
 	zassert_true(r != r, NULL);
 }
 
-void test_phy_magn_flux(void)
+ZTEST(zsl_tests, test_phy_magn_flux)
 {
 	int rc;
 	zsl_real_t fl;
@@ -159,7 +159,7 @@ void test_phy_magn_flux(void)
 	zassert_true(fl != fl, NULL);
 }
 
-void test_phy_magn_mom(void)
+ZTEST(zsl_tests, test_phy_magn_mom)
 {
 	int rc;
 	zsl_real_t mom;

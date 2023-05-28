@@ -11,7 +11,7 @@
 #include <zsl/physics/work.h>
 #include "floatcheck.h"
 
-void test_phy_work_module(void)
+ZTEST(zsl_tests, test_phy_work_module)
 {
 	int rc;
 	zsl_real_t w;
@@ -33,7 +33,7 @@ void test_phy_work_module(void)
 	zassert_true(w != w, NULL);
 }
 
-void test_phy_work_x(void)
+ZTEST(zsl_tests, test_phy_work_x)
 {
 	int rc;
 	zsl_real_t w;
@@ -59,7 +59,7 @@ void test_phy_work_x(void)
 	zassert_true(w != w, NULL);
 }
 
-void test_phy_work_y(void)
+ZTEST(zsl_tests, test_phy_work_y)
 {
 	int rc;
 	zsl_real_t w;
@@ -81,7 +81,7 @@ void test_phy_work_y(void)
 	zassert_true(w != w, NULL);
 }
 
-void test_phy_work_kin(void)
+ZTEST(zsl_tests, test_phy_work_kin)
 {
 	int rc;
 	zsl_real_t w;

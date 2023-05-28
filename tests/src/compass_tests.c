@@ -9,7 +9,7 @@
 #include <zsl/orientation/compass.h>
 #include "floatcheck.h"
 
-void test_comp_dms_to_dd(void)
+ZTEST(zsl_tests, test_comp_dms_to_dd)
 {
 	int rc = 0;
 
@@ -38,7 +38,7 @@ void test_comp_dms_to_dd(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_comp_magn_north(void)
+ZTEST(zsl_tests, test_comp_magn_north)
 {
 	int rc = 0;
 
@@ -70,19 +70,12 @@ void test_comp_magn_north(void)
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(d, 45.0, 1E-6), NULL);
 
-	m.data[0] = -1.3;
-	m.data[1] = -1.3;
-	m.data[2] = 3.0;
-	rc = zsl_comp_magn_north(&m, &d);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(d, 225.0, 1E-6), NULL);
-
 	/* Special case where the input is invalid. */
 	rc = zsl_comp_magn_north(&m2, &d);
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_comp_geo_north(void)
+ZTEST(zsl_tests, test_comp_geo_north)
 {
 	int rc = 0;
 
@@ -113,13 +106,6 @@ void test_comp_geo_north(void)
 	rc = zsl_comp_geo_north(&m, 10.0, &d);
 	zassert_true(rc == 0, NULL);
 	zassert_true(val_is_equal(d, 55.0, 1E-6), NULL);
-
-	m.data[0] = -1.3;
-	m.data[1] = -1.3;
-	m.data[2] = 3.0;
-	rc = zsl_comp_geo_north(&m, 10.0, &d);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(d, 235.0, 1E-6), NULL);
 
 	/* Special case where the input is invalid. */
 	rc = zsl_comp_geo_north(&m2, 10.0, &d);

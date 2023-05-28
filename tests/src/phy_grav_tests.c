@@ -11,7 +11,7 @@
 #include <zsl/physics/gravitation.h>
 #include "floatcheck.h"
 
-void test_phy_grav_orb_period(void)
+ZTEST(zsl_tests, test_phy_grav_orb_period)
 {
 	int rc;
 	zsl_real_t t;
@@ -26,7 +26,7 @@ void test_phy_grav_orb_period(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_grav_esc_vel(void)
+ZTEST(zsl_tests, test_phy_grav_esc_vel)
 {
 	int rc;
 	zsl_real_t v;
@@ -41,7 +41,7 @@ void test_phy_grav_esc_vel(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_grav_acc(void)
+ZTEST(zsl_tests, test_phy_grav_acc)
 {
 	int rc;
 	zsl_real_t a;
@@ -56,7 +56,7 @@ void test_phy_grav_acc(void)
 	zassert_true(a != a, NULL);
 }
 
-void test_phy_grav_orb_vel(void)
+ZTEST(zsl_tests, test_phy_grav_orb_vel)
 {
 	int rc;
 	zsl_real_t v;
@@ -71,7 +71,7 @@ void test_phy_grav_orb_vel(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_grav_force(void)
+ZTEST(zsl_tests, test_phy_grav_force)
 {
 	int rc;
 	zsl_real_t f;
@@ -86,7 +86,7 @@ void test_phy_grav_force(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_grav_pot_ener(void)
+ZTEST(zsl_tests, test_phy_grav_pot_ener)
 {
 	int rc;
 	zsl_real_t u;

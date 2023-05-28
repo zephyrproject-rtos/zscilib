@@ -10,7 +10,7 @@
 #include <zsl/statistics.h>
 #include "floatcheck.h"
 
-void test_sta_mean(void)
+ZTEST(zsl_tests, test_sta_mean)
 {
 	int rc;
 	zsl_real_t m;
@@ -29,7 +29,7 @@ void test_sta_mean(void)
 	zassert_true(val_is_equal(m, 2.0, 1E-6), NULL);
 }
 
-void test_sta_trim_mean(void)
+ZTEST(zsl_tests, test_sta_trim_mean)
 {
 	int rc;
 	zsl_real_t m;
@@ -63,7 +63,7 @@ void test_sta_trim_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_weighted_mean(void)
+ZTEST(zsl_tests, test_sta_weighted_mean)
 {
 	int rc;
 	zsl_real_t m;
@@ -113,7 +113,7 @@ void test_sta_weighted_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_time_weighted_mean(void)
+ZTEST(zsl_tests, test_sta_time_weighted_mean)
 {
 	int rc;
 	zsl_real_t m;
@@ -158,7 +158,7 @@ void test_sta_time_weighted_mean(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_demean(void)
+ZTEST(zsl_tests, test_sta_demean)
 {
 	int rc;
 	zsl_real_t m;
@@ -200,7 +200,7 @@ void test_sta_demean(void)
 
 }
 
-void test_sta_percentile(void)
+ZTEST(zsl_tests, test_sta_percentile)
 {
 	int rc;
 	zsl_real_t val;
@@ -237,7 +237,7 @@ void test_sta_percentile(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_median(void)
+ZTEST(zsl_tests, test_sta_median)
 {
 	int rc;
 	zsl_real_t m;
@@ -256,7 +256,7 @@ void test_sta_median(void)
 	zassert_true(val_is_equal(m, 1.5, 1E-6), NULL);
 }
 
-void test_sta_weighted_median(void)
+ZTEST(zsl_tests, test_sta_weighted_median)
 {
 	int rc;
 	zsl_real_t m;
@@ -316,7 +316,7 @@ void test_sta_weighted_median(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_quartiles(void)
+ZTEST(zsl_tests, test_sta_quartiles)
 {
 	int rc;
 	zsl_real_t q1, q2, q3;
@@ -337,7 +337,7 @@ void test_sta_quartiles(void)
 	zassert_true(val_is_equal(q3, 6.0, 1E-6), NULL);
 }
 
-void test_sta_quart_range(void)
+ZTEST(zsl_tests, test_sta_quart_range)
 {
 	int rc;
 	zsl_real_t r;
@@ -356,7 +356,7 @@ void test_sta_quart_range(void)
 	zassert_true(val_is_equal(r, 8.0, 1E-6), NULL);
 }
 
-void test_sta_mode(void)
+ZTEST(zsl_tests, test_sta_mode)
 {
 	int rc;
 
@@ -397,7 +397,7 @@ void test_sta_mode(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_data_range(void)
+ZTEST(zsl_tests, test_sta_data_range)
 {
 	int rc;
 
@@ -416,7 +416,7 @@ void test_sta_data_range(void)
 	zassert_true(val_is_equal(r, 12.0, 1E-6), NULL);
 }
 
-void test_sta_mean_abs_dev(void)
+ZTEST(zsl_tests, test_sta_mean_abs_dev)
 {
 	int rc;
 
@@ -441,7 +441,7 @@ void test_sta_mean_abs_dev(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_median_abs_dev(void)
+ZTEST(zsl_tests, test_sta_median_abs_dev)
 {
 	int rc;
 
@@ -460,7 +460,7 @@ void test_sta_median_abs_dev(void)
 	zassert_true(val_is_equal(m, 1.0, 1E-6), NULL);
 }
 
-void test_sta_variance(void)
+ZTEST(zsl_tests, test_sta_variance)
 {
 	int rc;
 
@@ -479,7 +479,7 @@ void test_sta_variance(void)
 	zassert_true(val_is_equal(var, 5.9, 1E-6), NULL);
 }
 
-void test_sta_standard_deviation(void)
+ZTEST(zsl_tests, test_sta_standard_deviation)
 {
 	int rc;
 
@@ -498,7 +498,7 @@ void test_sta_standard_deviation(void)
 	zassert_true(val_is_equal(var, ZSL_SQRT(5.9), 1E-6), NULL);
 }
 
-void test_sta_covariance(void)
+ZTEST(zsl_tests, test_sta_covariance)
 {
 	int rc;
 
@@ -530,7 +530,7 @@ void test_sta_covariance(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_covariance_matrix(void)
+ZTEST(zsl_tests, test_sta_covariance_matrix)
 {
 	int rc;
 
@@ -569,7 +569,7 @@ void test_sta_covariance_matrix(void)
 	zassert_true(rc == -EINVAL, NULL);
 }
 
-void test_sta_linear_regression(void)
+ZTEST(zsl_tests, test_sta_linear_regression)
 {
 	int rc;
 
@@ -616,7 +616,7 @@ void test_sta_linear_regression(void)
 }
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_sta_mult_linear_regression(void)
+ZTEST(zsl_tests_double, test_sta_mult_linear_regression)
 {
 	int rc;
 
@@ -692,7 +692,7 @@ void test_sta_mult_linear_regression(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_sta_weighted_mult_linear_regression(void)
+ZTEST(zsl_tests_double, test_sta_weighted_mult_linear_regression)
 {
 	int rc;
 
@@ -778,7 +778,7 @@ void test_sta_weighted_mult_linear_regression(void)
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_sta_quadric_fitting(void)
+ZTEST(zsl_tests_double, test_sta_quadric_fitting)
 {
 	int rc;
 
@@ -831,7 +831,7 @@ void test_sta_quadric_fitting(void)
 }
 #endif
 
-void test_sta_absolute_error(void)
+ZTEST(zsl_tests, test_sta_absolute_error)
 {
 	int rc;
 	zsl_real_t val = 9.9985, exp_val = 10.0, err;
@@ -842,7 +842,7 @@ void test_sta_absolute_error(void)
 	zassert_true(val_is_equal(err, 0.0015, 1E-6), NULL);
 }
 
-void test_sta_relative_error(void)
+ZTEST(zsl_tests, test_sta_relative_error)
 {
 	int rc;
 	zsl_real_t val = 9.9985, exp_val = 10.0, err;
@@ -853,7 +853,7 @@ void test_sta_relative_error(void)
 	zassert_true(val_is_equal(err, 0.015, 1E-5), NULL);
 }
 
-void test_sta_standard_error(void)
+ZTEST(zsl_tests, test_sta_standard_error)
 {
 	int rc;
 

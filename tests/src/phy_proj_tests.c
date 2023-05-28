@@ -11,7 +11,7 @@
 #include <zsl/physics/projectiles.h>
 #include "floatcheck.h"
 
-void test_phy_proj_init_vel(void)
+ZTEST(zsl_tests, test_phy_proj_init_vel)
 {
 	int rc;
 	zsl_real_t vi_hor;
@@ -23,7 +23,7 @@ void test_phy_proj_init_vel(void)
 	zassert_true(val_is_equal(vi_ver, 5.0, 1E-6), NULL);
 }
 
-void test_phy_proj_time(void)
+ZTEST(zsl_tests, test_phy_proj_time)
 {
 	int rc;
 	zsl_real_t t;
@@ -50,7 +50,7 @@ void test_phy_proj_time(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_proj_time_first(void)
+ZTEST(zsl_tests, test_phy_proj_time_first)
 {
 	int rc;
 	zsl_real_t t;
@@ -78,7 +78,7 @@ void test_phy_proj_time_first(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_proj_time2(void)
+ZTEST(zsl_tests, test_phy_proj_time2)
 {
 	int rc;
 	zsl_real_t t;
@@ -93,7 +93,7 @@ void test_phy_proj_time2(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_proj_ver_motion(void)
+ZTEST(zsl_tests, test_phy_proj_ver_motion)
 {
 	int rc;
 	zsl_real_t yf;
@@ -108,7 +108,7 @@ void test_phy_proj_ver_motion(void)
 	zassert_true(yf != yf, NULL);
 }
 
-void test_phy_proj_ver_vel(void)
+ZTEST(zsl_tests, test_phy_proj_ver_vel)
 {
 	int rc;
 	zsl_real_t vfv;
@@ -123,7 +123,7 @@ void test_phy_proj_ver_vel(void)
 	zassert_true(vfv != vfv, NULL);
 }
 
-void test_phy_proj_hor_motion(void)
+ZTEST(zsl_tests, test_phy_proj_hor_motion)
 {
 	int rc;
 	zsl_real_t xf;
@@ -138,7 +138,7 @@ void test_phy_proj_hor_motion(void)
 	zassert_true(xf != xf, NULL);
 }
 
-void test_phy_proj_trajectory(void)
+ZTEST(zsl_tests, test_phy_proj_trajectory)
 {
 	int rc;
 	zsl_real_t yf;
@@ -160,7 +160,7 @@ void test_phy_proj_trajectory(void)
 	zassert_true(yf != yf, NULL);
 }
 
-void test_phy_proj_vel(void)
+ZTEST(zsl_tests, test_phy_proj_vel)
 {
 	int rc;
 	zsl_real_t vf;
@@ -170,7 +170,7 @@ void test_phy_proj_vel(void)
 	zassert_true(val_is_equal(vf, 5.0, 1E-6), NULL);
 }
 
-void test_phy_proj_angle(void)
+ZTEST(zsl_tests, test_phy_proj_angle)
 {
 	int rc;
 	zsl_real_t theta;
@@ -185,7 +185,7 @@ void test_phy_proj_angle(void)
 	zassert_true(val_is_equal(theta, (ZSL_PI / 2), 1E-6), NULL);
 }
 
-void test_phy_proj_range(void)
+ZTEST(zsl_tests, test_phy_proj_range)
 {
 	int rc;
 	zsl_real_t dist;

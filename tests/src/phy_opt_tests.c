@@ -11,7 +11,7 @@
 #include <zsl/physics/optics.h>
 #include "floatcheck.h"
 
-void test_phy_opt_refrac_index(void)
+ZTEST(zsl_tests, test_phy_opt_refrac_index)
 {
 	int rc;
 	zsl_real_t n;
@@ -33,7 +33,7 @@ void test_phy_opt_refrac_index(void)
 	zassert_true(n != n, NULL);
 }
 
-void test_phy_opt_snell(void)
+ZTEST(zsl_tests, test_phy_opt_snell)
 {
 	int rc;
 	zsl_real_t o2;
@@ -67,7 +67,7 @@ void test_phy_opt_snell(void)
 	zassert_true(o2 != o2, NULL);
 }
 
-void test_phy_opt_focus(void)
+ZTEST(zsl_tests, test_phy_opt_focus)
 {
 	int rc;
 	zsl_real_t f;
@@ -83,7 +83,7 @@ void test_phy_opt_focus(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_opt_critic_angle(void)
+ZTEST(zsl_tests, test_phy_opt_critic_angle)
 {
 	int rc;
 	zsl_real_t oc;
@@ -117,7 +117,7 @@ void test_phy_opt_critic_angle(void)
 	zassert_true(oc != oc, NULL);
 }
 
-void test_phy_opt_power(void)
+ZTEST(zsl_tests, test_phy_opt_power)
 {
 	int rc;
 	zsl_real_t p;
@@ -139,7 +139,7 @@ void test_phy_opt_power(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_opt_magn(void)
+ZTEST(zsl_tests, test_phy_opt_magn)
 {
 	int rc;
 	zsl_real_t m;
@@ -167,7 +167,7 @@ void test_phy_opt_magn(void)
 	zassert_true(m != m, NULL);
 }
 
-void test_phy_opt_dif(void)
+ZTEST(zsl_tests, test_phy_opt_dif)
 {
 	int rc;
 	zsl_real_t d;

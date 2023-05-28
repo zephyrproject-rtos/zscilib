@@ -11,7 +11,7 @@
 #include <zsl/physics/thermo.h>
 #include "floatcheck.h"
 
-void test_phy_thermo_fahren_cels(void)
+ZTEST(zsl_tests, test_phy_thermo_fahren_cels)
 {
 	int rc;
 	zsl_real_t t2;
@@ -27,7 +27,7 @@ void test_phy_thermo_fahren_cels(void)
 	zassert_true(val_is_equal(t2, 41.0, 1E-6), NULL);
 }
 
-void test_phy_thermo_cels_kel(void)
+ZTEST(zsl_tests, test_phy_thermo_cels_kel)
 {
 	int rc;
 	zsl_real_t t2;
@@ -47,7 +47,7 @@ void test_phy_thermo_cels_kel(void)
 #endif
 }
 
-void test_phy_thermo_heat_fusion(void)
+ZTEST(zsl_tests, test_phy_thermo_heat_fusion)
 {
 	int rc;
 	zsl_real_t q;
@@ -69,7 +69,7 @@ void test_phy_thermo_heat_fusion(void)
 	zassert_true(q != q, NULL);
 }
 
-void test_phy_thermo_heat(void)
+ZTEST(zsl_tests, test_phy_thermo_heat)
 {
 	int rc;
 	zsl_real_t q;
@@ -95,7 +95,7 @@ void test_phy_thermo_heat(void)
 	zassert_true(q != q, NULL);
 }
 
-void test_phy_thermo_expan(void)
+ZTEST(zsl_tests, test_phy_thermo_expan)
 {
 	int rc;
 	zsl_real_t l;
@@ -117,7 +117,7 @@ void test_phy_thermo_expan(void)
 	zassert_true(l != l, NULL);
 }
 
-void test_phy_thermo_mean_free_path(void)
+ZTEST(zsl_tests, test_phy_thermo_mean_free_path)
 {
 	int rc;
 	zsl_real_t lambda;
@@ -151,7 +151,7 @@ void test_phy_thermo_mean_free_path(void)
 	zassert_true(lambda != lambda, NULL);
 }
 
-void test_phy_thermo_effic_heat_engine(void)
+ZTEST(zsl_tests, test_phy_thermo_effic_heat_engine)
 {
 	int rc;
 	zsl_real_t e;
@@ -173,7 +173,7 @@ void test_phy_thermo_effic_heat_engine(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_thermo_carnot_engine(void)
+ZTEST(zsl_tests, test_phy_thermo_carnot_engine)
 {
 	int rc;
 	zsl_real_t qh;

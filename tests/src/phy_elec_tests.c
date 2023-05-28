@@ -11,7 +11,7 @@
 #include <zsl/physics/electric.h>
 #include "floatcheck.h"
 
-void test_phy_elec_charge_dens(void)
+ZTEST(zsl_tests, test_phy_elec_charge_dens)
 {
 	int rc;
 	zsl_real_t d;
@@ -33,7 +33,7 @@ void test_phy_elec_charge_dens(void)
 	zassert_true(d != d, NULL);
 }
 
-void test_phy_elec_force(void)
+ZTEST(zsl_tests, test_phy_elec_force)
 {
 	int rc;
 	zsl_real_t f;
@@ -55,7 +55,7 @@ void test_phy_elec_force(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_elec_force2(void)
+ZTEST(zsl_tests, test_phy_elec_force2)
 {
 	int rc;
 	zsl_real_t f;
@@ -65,7 +65,7 @@ void test_phy_elec_force2(void)
 	zassert_true(val_is_equal(f, -16.74, 1E-6), NULL);
 }
 
-void test_phy_elec_field(void)
+ZTEST(zsl_tests, test_phy_elec_field)
 {
 	int rc;
 	zsl_real_t e;
@@ -91,7 +91,7 @@ void test_phy_elec_field(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_elec_pot_ener(void)
+ZTEST(zsl_tests, test_phy_elec_pot_ener)
 {
 	int rc;
 	zsl_real_t u;
@@ -113,7 +113,7 @@ void test_phy_elec_pot_ener(void)
 	zassert_true(u != u, NULL);
 }
 
-void test_phy_elec_potential(void)
+ZTEST(zsl_tests, test_phy_elec_potential)
 {
 	int rc;
 	zsl_real_t v;
@@ -139,7 +139,7 @@ void test_phy_elec_potential(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_elec_flux(void)
+ZTEST(zsl_tests, test_phy_elec_flux)
 {
 	int rc;
 	zsl_real_t fl;

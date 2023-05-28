@@ -11,7 +11,7 @@
 #include <zsl/physics/sound.h>
 #include "floatcheck.h"
 
-void test_phy_sound_press_amp(void)
+ZTEST(zsl_tests, test_phy_sound_press_amp)
 {
 	int rc;
 	zsl_real_t p;
@@ -43,7 +43,7 @@ void test_phy_sound_press_amp(void)
 	zassert_true(p != p, NULL);
 }
 
-void test_phy_sound_level(void)
+ZTEST(zsl_tests, test_phy_sound_level)
 {
 	int rc;
 	zsl_real_t b;
@@ -65,7 +65,7 @@ void test_phy_sound_level(void)
 	zassert_true(b != b, NULL);
 }
 
-void test_phy_sound_intensity(void)
+ZTEST(zsl_tests, test_phy_sound_intensity)
 {
 	int rc;
 	zsl_real_t i;
@@ -99,7 +99,7 @@ void test_phy_sound_intensity(void)
 	zassert_true(i != i, NULL);
 }
 
-void test_phy_sound_shock_wave_angle(void)
+ZTEST(zsl_tests, test_phy_sound_shock_wave_angle)
 {
 	int rc;
 	zsl_real_t theta;
@@ -115,7 +115,7 @@ void test_phy_sound_shock_wave_angle(void)
 	zassert_true(val_is_equal(theta, -0.6413745117, 1E-6), NULL);
 }
 
-void test_phy_sound_dop_effect(void)
+ZTEST(zsl_tests, test_phy_sound_dop_effect)
 {
 	int rc;
 	zsl_real_t fl;
@@ -143,7 +143,7 @@ void test_phy_sound_dop_effect(void)
 	zassert_true(fl != fl, NULL);
 }
 
-void test_phy_sound_beat(void)
+ZTEST(zsl_tests, test_phy_sound_beat)
 {
 	int rc;
 	zsl_real_t f;

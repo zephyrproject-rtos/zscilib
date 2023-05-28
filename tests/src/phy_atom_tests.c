@@ -11,7 +11,7 @@
 #include <zsl/physics/atomic.h>
 #include "floatcheck.h"
 
-void test_phy_atom_nucl_radius(void)
+ZTEST(zsl_tests, test_phy_atom_nucl_radius)
 {
 	int rc;
 	zsl_real_t r;
@@ -27,7 +27,7 @@ void test_phy_atom_nucl_radius(void)
 	zassert_true(r != r, NULL);
 }
 
-void test_phy_atom_bohr_orb_radius(void)
+ZTEST(zsl_tests, test_phy_atom_bohr_orb_radius)
 {
 	int rc;
 	zsl_real_t r;
@@ -43,7 +43,7 @@ void test_phy_atom_bohr_orb_radius(void)
 	zassert_true(r != r, NULL);
 }
 
-void test_phy_atom_bohr_orb_vel(void)
+ZTEST(zsl_tests, test_phy_atom_bohr_orb_vel)
 {
 	int rc;
 	zsl_real_t v;
@@ -59,7 +59,7 @@ void test_phy_atom_bohr_orb_vel(void)
 	zassert_true(v != v, NULL);
 }
 
-void test_phy_atom_bohr_orb_ener(void)
+ZTEST(zsl_tests, test_phy_atom_bohr_orb_ener)
 {
 	int rc;
 	zsl_real_t e;
@@ -75,7 +75,7 @@ void test_phy_atom_bohr_orb_ener(void)
 	zassert_true(e != e, NULL);
 }
 
-void test_phy_atom_rad_decay(void)
+ZTEST(zsl_tests, test_phy_atom_rad_decay)
 {
 	int rc;
 	zsl_real_t qf;
@@ -97,7 +97,7 @@ void test_phy_atom_rad_decay(void)
 	zassert_true(qf != qf, NULL);
 }
 
-void test_phy_atom_bragg(void)
+ZTEST(zsl_tests, test_phy_atom_bragg)
 {
 	int rc;
 	zsl_real_t d;

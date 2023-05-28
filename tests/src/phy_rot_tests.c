@@ -11,7 +11,7 @@
 #include <zsl/physics/rotation.h>
 #include "floatcheck.h"
 
-void test_phy_rot_angle(void)
+ZTEST(zsl_tests, test_phy_rot_angle)
 {
 	int rc;
 	zsl_real_t phi;
@@ -27,7 +27,7 @@ void test_phy_rot_angle(void)
 	zassert_true(phi != phi, NULL);
 }
 
-void test_phy_rot_dist(void)
+ZTEST(zsl_tests, test_phy_rot_dist)
 {
 	int rc;
 	zsl_real_t dist;
@@ -43,7 +43,7 @@ void test_phy_rot_dist(void)
 	zassert_true(dist != dist, NULL);
 }
 
-void test_phy_rot_turn(void)
+ZTEST(zsl_tests, test_phy_rot_turn)
 {
 	int rc;
 	zsl_real_t turn;
@@ -53,7 +53,7 @@ void test_phy_rot_turn(void)
 	zassert_true(val_is_equal(turn, 0.1750704374, 1E-6), NULL);
 }
 
-void test_phy_rot_time(void)
+ZTEST(zsl_tests, test_phy_rot_time)
 {
 	int rc;
 	zsl_real_t time;
@@ -80,7 +80,7 @@ void test_phy_rot_time(void)
 	zassert_true(time != time, NULL);
 }
 
-void test_phy_rot_omega(void)
+ZTEST(zsl_tests, test_phy_rot_omega)
 {
 	int rc;
 	zsl_real_t of;
@@ -96,7 +96,7 @@ void test_phy_rot_omega(void)
 	zassert_true(of != of, NULL);
 }
 
-void test_phy_rot_omega2(void)
+ZTEST(zsl_tests, test_phy_rot_omega2)
 {
 	int rc;
 	zsl_real_t of;
@@ -112,7 +112,7 @@ void test_phy_rot_omega2(void)
 	zassert_true(of != of, NULL);
 }
 
-void test_phy_rot_av_omega(void)
+ZTEST(zsl_tests, test_phy_rot_av_omega)
 {
 	int rc;
 	zsl_real_t omega;
@@ -134,7 +134,7 @@ void test_phy_rot_av_omega(void)
 	zassert_true(omega != omega, NULL);
 }
 
-void test_phy_rot_vel(void)
+ZTEST(zsl_tests, test_phy_rot_vel)
 {
 	int rc;
 	zsl_real_t vel;
@@ -150,7 +150,7 @@ void test_phy_rot_vel(void)
 	zassert_true(vel != vel, NULL);
 }
 
-void test_phy_rot_ang_accel(void)
+ZTEST(zsl_tests, test_phy_rot_ang_accel)
 {
 	int rc;
 	zsl_real_t a;
@@ -177,7 +177,7 @@ void test_phy_rot_ang_accel(void)
 	zassert_true(a != a, NULL);
 }
 
-void test_phy_rot_accel(void)
+ZTEST(zsl_tests, test_phy_rot_accel)
 {
 	int rc;
 	zsl_real_t accel;
@@ -193,7 +193,7 @@ void test_phy_rot_accel(void)
 	zassert_true(accel != accel, NULL);
 }
 
-void test_phy_rot_ener(void)
+ZTEST(zsl_tests, test_phy_rot_ener)
 {
 	int rc;
 	zsl_real_t rke;
@@ -218,7 +218,7 @@ void test_phy_rot_ener(void)
 	zassert_true(rke != rke, NULL);
 }
 
-void test_phy_rot_period(void)
+ZTEST(zsl_tests, test_phy_rot_period)
 {
 	int rc;
 	zsl_real_t t;
@@ -240,7 +240,7 @@ void test_phy_rot_period(void)
 	zassert_true(t != t, NULL);
 }
 
-void test_phy_rot_frequency(void)
+ZTEST(zsl_tests, test_phy_rot_frequency)
 {
 	int rc;
 	zsl_real_t f;
@@ -261,7 +261,7 @@ void test_phy_rot_frequency(void)
 	zassert_true(f != f, NULL);
 }
 
-void test_phy_rot_cent_accel(void)
+ZTEST(zsl_tests, test_phy_rot_cent_accel)
 {
 	int rc;
 	zsl_real_t ca;
@@ -288,7 +288,7 @@ void test_phy_rot_cent_accel(void)
 	zassert_true(ca != ca, NULL);
 }
 
-void test_phy_rot_cent_accel2(void)
+ZTEST(zsl_tests, test_phy_rot_cent_accel2)
 {
 	int rc;
 	zsl_real_t ca;
@@ -325,7 +325,7 @@ void test_phy_rot_cent_accel2(void)
 	zassert_true(ca != ca, NULL);
 }
 
-void test_phy_rot_total_accel(void)
+ZTEST(zsl_tests, test_phy_rot_total_accel)
 {
 	int rc;
 	zsl_real_t at;
@@ -350,7 +350,7 @@ void test_phy_rot_total_accel(void)
 	zassert_true(val_is_equal(at, 3.8, 1E-6), NULL);
 }
 
-void test_phy_rot_power(void)
+ZTEST(zsl_tests, test_phy_rot_power)
 {
 	int rc;
 	zsl_real_t power;
