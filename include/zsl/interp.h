@@ -61,11 +61,11 @@ struct zsl_interp_xyc {
 
 /**
  * @brief Calculates a number between two numbers using linear interpolation,
- * where 't' is the interpolation factor between 0.0f and 1.0f.
+ * where 't' is the interpolation factor between 0.0 and 1.0.
  *
  * @param v0  The lower value used when interpolating.
  * @param v1  The upper value used when interpolating.
- * @param t   The interpolation factor between 0.0f and 1.0f.
+ * @param t   The interpolation factor between 0.0 and 1.0.
  * @param v   Pointer to the placeholder for the interpolated value.
  *
  * @return 0 on success, error code on error.
