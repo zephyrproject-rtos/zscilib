@@ -60,6 +60,9 @@ zephyr_library_sources(
 )
 #zephyr_library_sources_ifdef(CONFIG_ZSL_SINGLE_PRECISION src/zsl_todo.c)
 
+zephyr_library_compile_options_ifdef(CONFIG_ZSL_SINGLE_PRECISION $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-fsingle-precision-constant>)
+zephyr_library_compile_options_ifdef(CONFIG_ZSL_SINGLE_PRECISION $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-cl-single-precision-constant>)
+
 zephyr_library_link_libraries(ZSCILIB)
 target_link_libraries(ZSCILIB INTERFACE zephyr_interface)
 endif()
