@@ -9,3 +9,8 @@ zephyr_include_directories(include)
 
 FILE(GLOB app_sources src/*.c)
 target_sources(app PRIVATE ${app_sources})
+
+if (CONFIG_ZSL_SINGLE_PRECISION)
+    target_compile_options(app PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-fsingle-precision-constant>)
+    target_compile_options(app PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-cl-single-precision-constant>)
+endif()
