@@ -515,7 +515,7 @@ int zsl_vec_sort(struct zsl_vec *v, struct zsl_vec *w)
 int zsl_vec_print(struct zsl_vec *v)
 {
 	for (size_t g = 0; g < v->sz; g++) {
-		printf("%f ", v->data[g]);
+		printf("%f ", (double)v->data[g]);
 	}
 	printf("\n\n");
 

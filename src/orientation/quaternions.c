@@ -713,7 +713,8 @@ err:
 
 int zsl_quat_print(struct zsl_quat *q)
 {
-	printf("%.16f + %.16f i + %.16f j + %.16f k\n", q->r, q->i, q->j, q->k);
+	printf("%.16f + %.16f i + %.16f j + %.16f k\n",
+		(double)q->r, (double)q->i, (double)q->j, (double)q->k);
 
 	return 0;
 }
