@@ -78,7 +78,11 @@ ZTEST(zsl_tests, test_phy_grav_force)
 
 	rc = zsl_phy_grav_force(1E15, 200.0, 500.0, &f);
 	zassert_true(rc == 0, NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(f, -53.39264, 1E-5), NULL);
+#else
 	zassert_true(val_is_equal(f, -53.39264, 1E-6), NULL);
+#endif
 
 	rc = zsl_phy_grav_force(1E15, 200.0, 0.0, &f);
 	zassert_true(rc == -EINVAL, NULL);
@@ -93,8 +97,11 @@ ZTEST(zsl_tests, test_phy_grav_pot_ener)
 
 	rc = zsl_phy_grav_pot_ener(1E15, 200.0, 500.0, &u);
 	zassert_true(rc == 0, NULL);
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	zassert_true(val_is_equal(u, -26.69632, 1E-5), NULL);
+#else
 	zassert_true(val_is_equal(u, -26.69632, 1E-6), NULL);
-
+#endif
 	rc = zsl_phy_grav_pot_ener(1E15, 200.0, 0.0, &u);
 	zassert_true(rc == -EINVAL, NULL);
 	/* IEEE standard states that x != x is true only for NAN values. */
