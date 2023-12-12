@@ -30,10 +30,20 @@ zsl_phy_atom_bohr_orb_radius(uint8_t z, uint8_t n, zsl_real_t *r)
 		return -EINVAL;
 	}
 
+#ifdef CONFIG_ZSL_SINGLE_PRECISION
+	/*
+	 * Numbers get too small for single percision so multiply a large
+	 * constant in to the numerator and denomerator to prevent numbers
+	 * from going to 0.0f
+	 */
+	*r = ((zsl_real_t) n * (zsl_real_t) n * ZSL_RED_PLANCK * 1E30 * 
+	     ZSL_RED_PLANCK * 1E9) / ((zsl_real_t) z * ZSL_COULOMB *
+	     ZSL_E_CHARGE * 1E30 * ZSL_E_CHARGE * ZSL_E_MASS);
+#else
 	*r = ((zsl_real_t) n * (zsl_real_t) n * ZSL_RED_PLANCK * 
 	     ZSL_RED_PLANCK * 1E9) / ((zsl_real_t) z * ZSL_COULOMB *
 	     ZSL_E_CHARGE * ZSL_E_CHARGE * ZSL_E_MASS);
-
+#endif
 
 	return 0;
 }
