@@ -1941,7 +1941,7 @@ zsl_mtx_print(struct zsl_mtx *m)
 				return -EINVAL;
 			}
 			/* Print the current floating-point value. */
-			printf("%f ", x);
+			printf("%f ", (double)x);
 		}
 		printf("\n");
 	}

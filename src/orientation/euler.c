@@ -23,6 +23,6 @@ int zsl_eul_to_vec(struct zsl_euler *e, struct zsl_vec *v)
 
 int zsl_eul_print(struct zsl_euler *e)
 {
-	printf("(%f, %f, %f)\n\n", e->x, e->y, e->z);
+	printf("(%f, %f, %f)\n\n", (double)e->x, (double)e->y, (double)e->z);
 	return 0;
 }
