@@ -77,6 +77,7 @@ typedef double zsl_real_t;
 #define ZSL_TANH       tanhf
 #define ZSL_ERF        erff
 #define ZSL_FMA        fmaf
+#define ZSL_EXPM1      expm1f
 #else
 #define ZSL_CEIL       ceil
 #define ZSL_FLOOR      floor
@@ -101,6 +102,7 @@ typedef double zsl_real_t;
 #define ZSL_TANH       tanh
 #define ZSL_ERF        erf
 #define ZSL_FMA        fma
+#define ZSL_EXPM1      expm1
 #endif
 
 
