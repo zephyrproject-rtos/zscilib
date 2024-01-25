@@ -92,7 +92,7 @@ To run one of the sample applications using qemu, run the following commands:
   assumes `qemu-system-arm` is available on your local system.
 
 ```
-$ west build -p -b mps2_an521 \
+$ west build -p -b mps2/an521/cpu0 \
   modules/lib/zscilib/samples/matrix/mult -t run
 ...
 *** Booting Zephyr OS build zephyr-v2.6.0-536-g89212a7fbf5f  ***
@@ -113,7 +113,7 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```bash
-$ twister --inline-logs -p mps2_an521 -T modules/lib/zscilib/tests
+$ twister --inline-logs -p mps2/an521/cpu0 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
@@ -141,7 +141,7 @@ you can run the following commands to start a new GDB debug session.
 In one terminal window, run:
 
 ```bash
-$ west build -p auto -b mps2_an521 modules/lib/zscilib/samples/matrix/pinv
+$ west build -p auto -b mps2/an521/cpu0 modules/lib/zscilib/samples/matrix/pinv
 ```
 
 Once the ELF file has been built, we can start a GDB server on the default
