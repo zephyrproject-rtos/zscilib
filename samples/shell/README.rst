@@ -44,13 +44,13 @@ To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-DBOARD``
 as appropriate.
 
-The **nRF52840 PCA10056** from Nordic Semiconductors is used below:
+The **nRF52840dk** from Nordic Semiconductors is used below:
 
 .. code-block:: console
 
     $ cd samples/shell
     $ mkdir b && cd b
-    $ cmake -GNinja -DBOARD=nrf52840_pca10056 ..
+    $ cmake -GNinja -DBOARD=nrf52840dk/nrf52840 ..
     $ ninja
     $ ninja flash
 
@@ -58,4 +58,4 @@ To do the same thing using ``west`, run:
 
 .. code-block:: console
 
-   $ west build -p -b nrf52840_pca10056 samples/shell/
+   $ west build -p -b nrf52840dk/nrf52840 samples/shell/

@@ -48,11 +48,11 @@ To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b``
 as appropriate.
 
-The **nRF52840 PCA10056** from Nordic Semiconductors is used below:
+The **nRF52840dk** from Nordic Semiconductors is used below:
 
 .. code-block:: console
 
-    $ west build -b nrf52840_pca10056 samples/benchmarking/
+    $ west build -b nrf52840dk/nrf52840 samples/benchmarking/
     $ west flash
 
 Sample Output
@@ -65,7 +65,7 @@ The benchmark application will normally output text resembling the following:
     ***** Booting Zephyr OS zephyr-v1.14.0-39-ge03905354671 *****
     zscilib benchmark
 
-    BOARD:                       nrf52840_pca10056
+    BOARD:                       nrf52840dk
     ZSL VERSION:                 0.1.0-prerelease (Apr 29 2019)
     CONFIG_ZSL_PLATFORM_OPT:     2
     CONFIG_ZSL_SINGLE_PRECISION: False

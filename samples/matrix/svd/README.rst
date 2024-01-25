@@ -28,15 +28,15 @@ the result to the console:
 .. code-block:: console
 
     $ rm -rf build
-    $ west build -b mps2_an521 samples/matrix/svd -t run
+    $ west build -b mps2/an521/cpu0 samples/matrix/svd -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b BOARD``
-as appropriate. The **nRF52840 PCA10056** from Nordic Semiconductors is used
+as appropriate. The **nRF52840dk** from Nordic Semiconductors is used
 below:
 
 .. code-block:: console
 
     $ rm -rf build
-    $ west build -b nrf52840_pca10056 samples/matrix/svd
+    $ west build -b nrf52840dk/nrf52840 samples/matrix/svd
     $ west flash

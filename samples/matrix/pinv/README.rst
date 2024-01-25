@@ -28,16 +28,16 @@ the result to the console:
 
 .. code-block:: console
 
-    $ west build -p -b mps2_an521 samples/matrix/pinv -t run
+    $ west build -p -b mps2/an521/cpu0 samples/matrix/pinv -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b BOARD``
-as appropriate. The **nRF52840 PCA10056** from Nordic Semiconductors is used
+as appropriate. The **nRF52840dk** from Nordic Semiconductors is used
 below:
 
 .. code-block:: console
 
-    $ west build -p -b nrf52840_pca10056 samples/matrix/pinv
+    $ west build -p -b nrf52840/nrf52840dk samples/matrix/pinv
     $ west flash
 
 Debugging
@@ -46,11 +46,11 @@ Debugging
 You can debug the application with GDB on actual hardware if you have a
 supported debugger and development board.
 
-To debug your program on the **nRF52840 PCA10056**, for example, run:
+To debug your program on the **nRF52840dk**, for example, run:
 
 .. code-block:: console
 
-  $ west build -p -b nrf52840_pca10056 samples/matrix/pinv
+  $ west build -p -b nrf52840/nrf52840dk samples/matrix/pinv
   $ west flash
   $ west debug --runner jlink
 
