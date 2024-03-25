@@ -372,7 +372,7 @@ int zsl_vec_zte(struct zsl_vec *v)
 
 	for (size_t g = 0; g < v->sz; g++) {
 		if ((v->data[g - x] >= 0.0 && v->data[g - x] < epsilon) ||
-		    (v->data[g - x] <= 0.0 && v->data[g - x] > epsilon)) {
+			(v->data[g - x] <= 0.0 && v->data[g - x] > -epsilon)) {
 			for (size_t p = g - x; p < (v->sz - 1); p++) {
 				v->data[p] = v->data[p + 1];
 			}
@@ -484,7 +484,7 @@ int zsl_vec_sort(struct zsl_vec *v, struct zsl_vec *w)
 
 	/* Copy the vector 'v' into the vector 'u' with no repeated values. */
 	for (j = 0; j < v->sz; j++) {
-		if (v->data[j] >= 1E-5 || v->data[j] <= 1E-5) {
+		if (v->data[j] >= 1E-5 || v->data[j] <= -1E-5) {
 			if (zsl_vec_contains(&u, v->data[j], 1E-5) == 0) {
 				u.data[count] = v->data[j];
 				count++;
