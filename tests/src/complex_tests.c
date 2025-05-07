@@ -32,6 +32,6 @@ ZTEST(zsl_tests, test_complex_add)
 #endif
 
 	c = a + b;
-	zassert_true(val_is_equal(creal(c), creal(a) + creal(b), 1E-5), NULL);
-	zassert_true(val_is_equal(cimag(c), cimag(a) + cimag(b), 1E-5), NULL);
+	zassert_true(val_is_equal(creal(c), creal(a) + creal(b), 1E-5));
+	zassert_true(val_is_equal(cimag(c), cimag(a) + cimag(b), 1E-5));
 }

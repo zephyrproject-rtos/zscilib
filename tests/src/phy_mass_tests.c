@@ -35,10 +35,10 @@ ZTEST(zsl_tests, test_phy_mass_center)
 	zsl_vec_from_arr(&z1, zd1);
 
 	rc = zsl_phy_mass_center(&m1, &x1, &y1, &z1, &mx, &my, &mz);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(mx, 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(my, 0.05, 1E-6), NULL);
-	zassert_true(val_is_equal(mz, 2.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(mx, 1.0, 1E-6));
+	zassert_true(val_is_equal(my, 0.05, 1E-6));
+	zassert_true(val_is_equal(mz, 2.0, 1E-6));
 
 	/* Example with 6 objects. */
 	ZSL_VECTOR_DEF(m2, 6);
@@ -57,10 +57,10 @@ ZTEST(zsl_tests, test_phy_mass_center)
 	zsl_vec_from_arr(&z2, zd2);
 
 	rc = zsl_phy_mass_center(&m2, &x2, &y2, &z2, &mx, &my, &mz);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(mx, 3.176923077, 1E-6), NULL);
-	zassert_true(val_is_equal(my, 0.7572649573, 1E-6), NULL);
-	zassert_true(val_is_equal(mz, 3.458547009, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(mx, 3.176923077, 1E-6));
+	zassert_true(val_is_equal(my, 0.7572649573, 1E-6));
+	zassert_true(val_is_equal(mz, 3.458547009, 1E-6));
 
 	/* Example in which some of the objects have negative mass. */
 	ZSL_VECTOR_DEF(m3, 3);
@@ -79,11 +79,11 @@ ZTEST(zsl_tests, test_phy_mass_center)
 	zsl_vec_from_arr(&z3, zd3);
 
 	rc = zsl_phy_mass_center(&m3, &x3, &y3, &z3, &mx, &my, &mz);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(mx != mx, NULL);
-	zassert_true(my != my, NULL);
-	zassert_true(mz != mz, NULL);
+	zassert_true(mx != mx);
+	zassert_true(my != my);
+	zassert_true(mz != mz);
 
 	/* Example in which the total mass is zero. */
 	ZSL_VECTOR_DEF(m4, 3);
@@ -102,11 +102,11 @@ ZTEST(zsl_tests, test_phy_mass_center)
 	zsl_vec_from_arr(&z4, zd4);
 
 	rc = zsl_phy_mass_center(&m4, &x4, &y4, &z4, &mx, &my, &mz);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(mx != mx, NULL);
-	zassert_true(my != my, NULL);
-	zassert_true(mz != mz, NULL);
+	zassert_true(mx != mx);
+	zassert_true(my != my);
+	zassert_true(mz != mz);
 
 	/* Example in which the dimension of the vectors is not the same. */
 	ZSL_VECTOR_DEF(m5, 4);
@@ -125,9 +125,9 @@ ZTEST(zsl_tests, test_phy_mass_center)
 	zsl_vec_from_arr(&z5, zd5);
 
 	rc = zsl_phy_mass_center(&m5, &x5, &y5, &z5, &mx, &my, &mz);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(mx != mx, NULL);
-	zassert_true(my != my, NULL);
-	zassert_true(mz != mz, NULL);
+	zassert_true(mx != mx);
+	zassert_true(my != my);
+	zassert_true(mz != mz);
 }

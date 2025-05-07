@@ -17,32 +17,32 @@ ZTEST(zsl_tests, test_phy_gas_av_vel)
 	zsl_real_t v;
 
 	rc = zsl_phy_gas_av_vel(0.1, 0.5, 273.15, &v);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(v, 184.5709401872, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(v, 184.5709401872, 1E-6));
 
 	/* Example for negative mass. */
 	rc = zsl_phy_gas_av_vel(-0.1, 0.5, 273.15, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v != v, NULL);
-	
+	zassert_true(v != v);
+
 	/* Example for zero mass. */
 	rc = zsl_phy_gas_av_vel(0.0, 0.5, 273.15, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v != v, NULL);
-	
+	zassert_true(v != v);
+
 	/* Example for negative 'n'. */
 	rc = zsl_phy_gas_av_vel(0.1, -0.5, 273.15, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v != v, NULL);
-	
+	zassert_true(v != v);
+
 	/* Example for negative temperature. */
 	rc = zsl_phy_gas_av_vel(0.1, 0.5, -273.15, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v != v, NULL);
+	zassert_true(v != v);
 }
 
 ZTEST(zsl_tests, test_phy_gas_press)
@@ -51,32 +51,32 @@ ZTEST(zsl_tests, test_phy_gas_press)
 	zsl_real_t p;
 
 	rc = zsl_phy_gas_press(1.0, 0.5, 273.15, &p);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(p, 1135.5477320534, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(p, 1135.5477320534, 1E-6));
 
 	/* Example for negative volume. */
 	rc = zsl_phy_gas_press(-1.0, 0.5, 273.15, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
-	
+	zassert_true(p != p);
+
 	/* Example for zero volume. */
 	rc = zsl_phy_gas_press(0.0, 0.5, 273.15, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
-	
+	zassert_true(p != p);
+
 	/* Example for negative 'n'. */
 	rc = zsl_phy_gas_press(1.0, -0.5, 273.15, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
-	
+	zassert_true(p != p);
+
 	/* Example for negative temperature. */
 	rc = zsl_phy_gas_press(1.0, 0.5, -273.15, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
+	zassert_true(p != p);
 }
 
 ZTEST(zsl_tests, test_phy_gas_boyle)
@@ -85,32 +85,32 @@ ZTEST(zsl_tests, test_phy_gas_boyle)
 	zsl_real_t vf;
 
 	rc = zsl_phy_gas_boyle(1.0E5, 12.6, 2.0E5, &vf);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(vf, 6.3, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(vf, 6.3, 1E-6));
 
 	/* Example for negative initial pressure. */
 	rc = zsl_phy_gas_boyle(-1.0E5, 12.6, 2.0E5, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for negative initial volume. */
 	rc = zsl_phy_gas_boyle(1.0E5, -12.6, 2.0E5, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for negative final pressure. */
 	rc = zsl_phy_gas_boyle(1.0E5, 12.6, -2.0E5, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for zero final pressure. */
 	rc = zsl_phy_gas_boyle(1.0E5, 12.6, 0.0, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
+	zassert_true(vf != vf);
 }
 
 ZTEST(zsl_tests, test_phy_gas_charles_lussac)
@@ -119,30 +119,30 @@ ZTEST(zsl_tests, test_phy_gas_charles_lussac)
 	zsl_real_t vf;
 
 	rc = zsl_phy_gas_charles_lussac(300, 12.3, 200, &vf);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(vf, 8.2, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(vf, 8.2, 1E-6));
 
 	/* Example for negative initial temperature. */
 	rc = zsl_phy_gas_charles_lussac(-300, 12.3, 200, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for zero initial temperature */
 	rc = zsl_phy_gas_charles_lussac(0.0, 12.3, 200, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for negative initial volume. */
 	rc = zsl_phy_gas_charles_lussac(300, -12.3, 200, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
-	
+	zassert_true(vf != vf);
+
 	/* Example for negative final temperature. */
 	rc = zsl_phy_gas_charles_lussac(300, 12.3, -200, &vf);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(vf != vf, NULL);
+	zassert_true(vf != vf);
 }
