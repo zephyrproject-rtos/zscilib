@@ -17,21 +17,21 @@ ZTEST(zsl_tests, test_att_to_vec)
 
 	/* Map the pointers in both structs to the same address. */
 	rc = zsl_att_to_vec(&a, &v);
-	zassert_true(rc == 0, NULL);
-	zassert_true(v.sz == 3, NULL);
+	zassert_true(rc == 0);
+	zassert_true(v.sz == 3);
 
 	/* Make sure both structs have the same values. */
-	zassert_true(v.data[0] == a.roll, NULL);
-	zassert_true(v.data[1] == a.pitch, NULL);
-	zassert_true(v.data[2] == a.yaw, NULL);
+	zassert_true(v.data[0] == a.roll);
+	zassert_true(v.data[1] == a.pitch);
+	zassert_true(v.data[2] == a.yaw);
 
 	/* Verify that modifying attitude still updates vector. */
 	a.pitch = 45.0;
-	zassert_true(v.data[1] == 45.0, NULL);
+	zassert_true(v.data[1] == 45.0);
 
 	/* And vice versa. */
 	v.data[2] = -5.5;
-	zassert_true(a.yaw == -5.5, NULL);
+	zassert_true(a.yaw == -5.5);
 }
 
 ZTEST(zsl_tests, test_att_to_euler)
@@ -50,10 +50,10 @@ ZTEST(zsl_tests, test_att_to_euler)
 	};
 
 	rc = zsl_att_to_euler(&a, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e.x, ecmp.x, 1E-4), NULL);
-	zassert_true(val_is_equal(e.y, ecmp.y, 1E-4), NULL);
-	zassert_true(val_is_equal(e.z, ecmp.z, 1E-4), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e.x, ecmp.x, 1E-4));
+	zassert_true(val_is_equal(e.y, ecmp.y, 1E-4));
+	zassert_true(val_is_equal(e.z, ecmp.z, 1E-4));
 }
 
 ZTEST(zsl_tests, test_att_from_euler)
@@ -72,10 +72,10 @@ ZTEST(zsl_tests, test_att_from_euler)
 	};
 
 	rc = zsl_att_from_euler(&e, &a);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(a.roll, acmp.roll, 1E-4), NULL);
-	zassert_true(val_is_equal(a.pitch, acmp.pitch, 1E-4), NULL);
-	zassert_true(val_is_equal(a.yaw, acmp.yaw, 1E-4), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(a.roll, acmp.roll, 1E-4));
+	zassert_true(val_is_equal(a.pitch, acmp.pitch, 1E-4));
+	zassert_true(val_is_equal(a.yaw, acmp.yaw, 1E-4));
 }
 
 ZTEST(zsl_tests, test_att_from_accelmag)
@@ -98,26 +98,26 @@ ZTEST(zsl_tests, test_att_from_accelmag)
 
 	/* Assign arrays to the accelerometer and magnetometer vectors. */
 	rc = zsl_vec_from_arr(&accel, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&mag, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Calculate the attitude from the accelerometer vector. */
 	rc = zsl_att_from_accelmag(&accel, &mag, &att);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6), NULL);
-	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6), NULL);
-	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-4), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6));
+	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6));
+	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-4));
 
 	/* In this case, the dimension of the accelerometer data vector is 4, which
 	 * should return an error. */
 	rc = zsl_att_from_accelmag(&accel2, &mag, &att);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, the dimension of the magnetometer data vector is 4, which
 	 * should return an error. */
 	rc = zsl_att_from_accelmag(&accel, &mag2, &att);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_att_from_accel)
@@ -137,19 +137,19 @@ ZTEST(zsl_tests, test_att_from_accel)
 
 	/* Assign array to the accelerometer vector. */
 	rc = zsl_vec_from_arr(&accel, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Calculate the attitude from the accelerometer vector. */
 	rc = zsl_att_from_accel(&accel, &att);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6), NULL);
-	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6), NULL);
-	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6));
+	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6));
+	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-6));
 
 	/* In this case, the dimension of the accelerometer data vector is 4, which
 	 * should return an error. */
 	rc = zsl_att_from_accel(&accel2, &att);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_att_accel_angle)
@@ -167,24 +167,24 @@ ZTEST(zsl_tests, test_att_accel_angle)
 
 	/* Assign array to the accelerometer vectors. */
 	rc = zsl_vec_from_arr(&a1, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&a2, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Calculate the angle between accelerometers. */
 	rc = zsl_att_accel_angle(&a1, &a2, &d);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(d, 1.533992, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(d, 1.533992, 1E-6));
 
 	/* In this case, the dimension of one of the accelerometer data vectors
 	 * is 7, which should return an error. */
 	rc = zsl_att_accel_angle(&a3, &a2, &d);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, the dimension of one of the accelerometer data vectors
 	 * is 1, which should return an error. */
 	rc = zsl_att_accel_angle(&a1, &a4, &d);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_eul_to_vec)
@@ -195,21 +195,21 @@ ZTEST(zsl_tests, test_eul_to_vec)
 
 	/* Map the pointers in both structs to the same address. */
 	rc = zsl_eul_to_vec(&e, &v);
-	zassert_true(rc == 0, NULL);
-	zassert_true(v.sz == 3, NULL);
+	zassert_true(rc == 0);
+	zassert_true(v.sz == 3);
 
 	/* Make sure both structs have the same values. */
-	zassert_true(v.data[0] == e.x, NULL);
-	zassert_true(v.data[1] == e.y, NULL);
-	zassert_true(v.data[2] == e.z, NULL);
+	zassert_true(v.data[0] == e.x);
+	zassert_true(v.data[1] == e.y);
+	zassert_true(v.data[2] == e.z);
 
 	/* Verify that modifying euler still updates vector. */
 	e.y = 45.0;
-	zassert_true(v.data[1] == 45.0, NULL);
+	zassert_true(v.data[1] == 45.0);
 
 	/* And vice versa. */
 	v.data[2] = -5.5;
-	zassert_true(e.z == -5.5, NULL);
+	zassert_true(e.z == -5.5);
 }
 
 ZTEST(zsl_tests, test_grav_lat_alt)
@@ -219,20 +219,20 @@ ZTEST(zsl_tests, test_grav_lat_alt)
 
 	/* Compute the gravity from latitude and altitude. */
 	rc = zsl_grav_lat_alt(31.7, 350.0, &g);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(g, 9.793512, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(g, 9.793512, 1E-6));
 
 	/* Invalid altitude. */
 	rc = zsl_grav_lat_alt(31.7, -350.0, &g);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Invalid latitude. */
 	rc = zsl_grav_lat_alt(102.0, 350.0, &g);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Invalid latitude. */
 	rc = zsl_grav_lat_alt(-97.3, 350.0, &g);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_init)
@@ -240,16 +240,16 @@ ZTEST(zsl_tests, test_quat_init)
 	struct zsl_quat q;
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
-	zassert_true(val_is_equal(q.r, 0.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.i, 0.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.j, 0.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.k, 0.0, 1E-8), NULL);
+	zassert_true(val_is_equal(q.r, 0.0, 1E-8));
+	zassert_true(val_is_equal(q.i, 0.0, 1E-8));
+	zassert_true(val_is_equal(q.j, 0.0, 1E-8));
+	zassert_true(val_is_equal(q.k, 0.0, 1E-8));
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
-	zassert_true(val_is_equal(q.r, 1.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.i, 0.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.j, 0.0, 1E-8), NULL);
-	zassert_true(val_is_equal(q.k, 0.0, 1E-8), NULL);
+	zassert_true(val_is_equal(q.r, 1.0, 1E-8));
+	zassert_true(val_is_equal(q.i, 0.0, 1E-8));
+	zassert_true(val_is_equal(q.j, 0.0, 1E-8));
+	zassert_true(val_is_equal(q.k, 0.0, 1E-8));
 }
 
 ZTEST(zsl_tests, test_quat_magn)
@@ -259,11 +259,11 @@ ZTEST(zsl_tests, test_quat_magn)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	m = zsl_quat_magn(&q);
-	zassert_true(val_is_equal(m, 1.0, 1E-8), NULL);
+	zassert_true(val_is_equal(m, 1.0, 1E-8));
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	m = zsl_quat_magn(&q);
-	zassert_true(val_is_equal(m, 0.0, 1E-8), NULL);
+	zassert_true(val_is_equal(m, 0.0, 1E-8));
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	q.i = 0.33333333;
@@ -271,7 +271,7 @@ ZTEST(zsl_tests, test_quat_magn)
 	q.k = 0.33333333;
 	q.r = 1.0;
 	m = zsl_quat_magn(&q);
-	zassert_true(val_is_equal(m, 1.1547002497042251, 1E-6), NULL);
+	zassert_true(val_is_equal(m, 1.1547002497042251, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_to_unit)
@@ -285,11 +285,11 @@ ZTEST(zsl_tests, test_quat_to_unit)
 
 	/* Normalising an empty quat == 0. */
 	rc = zsl_quat_to_unit(&q, &qn);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qn.r, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.i, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qn.r, 0.0, 1E-6));
+	zassert_true(val_is_equal(qn.i, 0.0, 1E-6));
+	zassert_true(val_is_equal(qn.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qn.k, 0.0, 1E-6));
 
 	/* Normalise to unit quaternion. */
 	q.r = 1.0;
@@ -297,14 +297,14 @@ ZTEST(zsl_tests, test_quat_to_unit)
 	q.j = 1.25;
 	q.k = 0.50;
 	rc = zsl_quat_to_unit(&q, &qn);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qn.r, 0.5443311, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.i, 0.4082483, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.j, 0.6804138, 1E-6), NULL);
-	zassert_true(val_is_equal(qn.k, 0.2721655, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qn.r, 0.5443311, 1E-6));
+	zassert_true(val_is_equal(qn.i, 0.4082483, 1E-6));
+	zassert_true(val_is_equal(qn.j, 0.6804138, 1E-6));
+	zassert_true(val_is_equal(qn.k, 0.2721655, 1E-6));
 
 	/* Verify qn = "unit quaternion", meaning sqrt(r^2+i^2+j^2+k^2) = 1.0. */
-	zassert_true(zsl_quat_is_unit(&qn), NULL);
+	zassert_true(zsl_quat_is_unit(&qn));
 }
 
 ZTEST(zsl_tests, test_quat_is_unit)
@@ -318,7 +318,7 @@ ZTEST(zsl_tests, test_quat_is_unit)
 	q.k = 0.2721655;
 
 	/* Verify qn = "unit quaternion", meaning sqrt(r^2+i^2+j^2+k^2) = 1.0. */
-	zassert_true(zsl_quat_is_unit(&q), NULL);
+	zassert_true(zsl_quat_is_unit(&q));
 }
 
 ZTEST(zsl_tests, test_quat_scale)
@@ -330,11 +330,11 @@ ZTEST(zsl_tests, test_quat_scale)
 	zsl_quat_init(&qs, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_scale(&q, 0.5, &qs);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qs.r, q.r / 2.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qs.i, q.i / 2.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qs.j, q.j / 2.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qs.k, q.k / 2.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qs.r, q.r / 2.0, 1E-6));
+	zassert_true(val_is_equal(qs.i, q.i / 2.0, 1E-6));
+	zassert_true(val_is_equal(qs.j, q.j / 2.0, 1E-6));
+	zassert_true(val_is_equal(qs.k, q.k / 2.0, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_mult)
@@ -347,11 +347,11 @@ ZTEST(zsl_tests, test_quat_mult)
 	zsl_quat_init(&qm, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_mult(&qa, &qb, &qm);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qm.r, 0.125, 1E-6), NULL);
-	zassert_true(val_is_equal(qm.i, 0.5, 1E-6), NULL);
-	zassert_true(val_is_equal(qm.j, 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qm.k, 1.5, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qm.r, 0.125, 1E-6));
+	zassert_true(val_is_equal(qm.i, 0.5, 1E-6));
+	zassert_true(val_is_equal(qm.j, 1.0, 1E-6));
+	zassert_true(val_is_equal(qm.k, 1.5, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_exp)
@@ -363,17 +363,17 @@ ZTEST(zsl_tests, test_quat_exp)
 	zsl_quat_init(&qe, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_exp(&q, &qe);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-	zassert_true(val_is_equal(qe.r, -129.799958, 1E-3), NULL);
-	zassert_true(val_is_equal(qe.i, -0.935867, 1E-4), NULL);
-	zassert_true(val_is_equal(qe.j, 1.228326, 1E-4), NULL);
-	zassert_true(val_is_equal(qe.k, -71.944785, 1E-3), NULL);
+	zassert_true(val_is_equal(qe.r, -129.799958, 1E-3));
+	zassert_true(val_is_equal(qe.i, -0.935867, 1E-4));
+	zassert_true(val_is_equal(qe.j, 1.228326, 1E-4));
+	zassert_true(val_is_equal(qe.k, -71.944785, 1E-3));
 #else
-	zassert_true(val_is_equal(qe.r, -129.799958, 1E-6), NULL);
-	zassert_true(val_is_equal(qe.i, -0.935867, 1E-6), NULL);
-	zassert_true(val_is_equal(qe.j, 1.228326, 1E-6), NULL);
-	zassert_true(val_is_equal(qe.k, -71.944785, 1E-6), NULL);
+	zassert_true(val_is_equal(qe.r, -129.799958, 1E-6));
+	zassert_true(val_is_equal(qe.i, -0.935867, 1E-6));
+	zassert_true(val_is_equal(qe.j, 1.228326, 1E-6));
+	zassert_true(val_is_equal(qe.k, -71.944785, 1E-6));
 #endif
 
 }
@@ -387,12 +387,12 @@ ZTEST(zsl_tests, test_quat_log)
 	zsl_quat_init(&ql, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_log(&q, &ql);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
-	zassert_true(val_is_equal(ql.r, 4.813240, 1E-6), NULL);
-	zassert_true(val_is_equal(ql.i, 0.019900, 1E-6), NULL);
-	zassert_true(val_is_equal(ql.j, -0.026119, 1E-6), NULL);
-	zassert_true(val_is_equal(ql.k, 1.529825, 1E-6), NULL);
+	zassert_true(val_is_equal(ql.r, 4.813240, 1E-6));
+	zassert_true(val_is_equal(ql.i, 0.019900, 1E-6));
+	zassert_true(val_is_equal(ql.j, -0.026119, 1E-6));
+	zassert_true(val_is_equal(ql.k, 1.529825, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_pow)
@@ -404,26 +404,26 @@ ZTEST(zsl_tests, test_quat_pow)
 	zsl_quat_init(&qp, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_pow(&q, 1. / 3., &qp);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
-	zassert_true(val_is_equal(qp.r, 4.341708, 1E-6), NULL);
-	zassert_true(val_is_equal(qp.i, 0.031588, 1E-6), NULL);
-	zassert_true(val_is_equal(qp.j, -0.041460, 1E-6), NULL);
-	zassert_true(val_is_equal(qp.k, 2.428350, 1E-6), NULL);
+	zassert_true(val_is_equal(qp.r, 4.341708, 1E-6));
+	zassert_true(val_is_equal(qp.i, 0.031588, 1E-6));
+	zassert_true(val_is_equal(qp.j, -0.041460, 1E-6));
+	zassert_true(val_is_equal(qp.k, 2.428350, 1E-6));
 
 	rc = zsl_quat_pow(&q, 3., &qp);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-	zassert_true(val_is_equal(qp.r, -226914.550000, 10), NULL);
-	zassert_true(val_is_equal(qp.i, -24097.552000, 10), NULL);
-	zassert_true(val_is_equal(qp.j, 31628.037000, 10), NULL);
-	zassert_true(val_is_equal(qp.k, -1852499.310000, 10), NULL);
+	zassert_true(val_is_equal(qp.r, -226914.550000, 10));
+	zassert_true(val_is_equal(qp.i, -24097.552000, 10));
+	zassert_true(val_is_equal(qp.j, 31628.037000, 10));
+	zassert_true(val_is_equal(qp.k, -1852499.310000, 10));
 #else
-	zassert_true(val_is_equal(qp.r, -226914.550000, 1E-3), NULL);
-	zassert_true(val_is_equal(qp.i, -24097.552000, 1E-3), NULL);
-	zassert_true(val_is_equal(qp.j, 31628.037000, 1E-3), NULL);
-	zassert_true(val_is_equal(qp.k, -1852499.310000, 1E-3), NULL);
+	zassert_true(val_is_equal(qp.r, -226914.550000, 1E-3));
+	zassert_true(val_is_equal(qp.i, -24097.552000, 1E-3));
+	zassert_true(val_is_equal(qp.j, 31628.037000, 1E-3));
+	zassert_true(val_is_equal(qp.k, -1852499.310000, 1E-3));
 #endif
 }
 
@@ -442,11 +442,11 @@ ZTEST(zsl_tests, test_quat_conj)
 	q.k = 0.333333;
 
 	rc = zsl_quat_conj(&q, &qc);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qc.r, 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qc.i, -0.333333, 1E-6), NULL);
-	zassert_true(val_is_equal(qc.j, -0.333333, 1E-6), NULL);
-	zassert_true(val_is_equal(qc.k, -0.333333, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qc.r, 1.0, 1E-6));
+	zassert_true(val_is_equal(qc.i, -0.333333, 1E-6));
+	zassert_true(val_is_equal(qc.j, -0.333333, 1E-6));
+	zassert_true(val_is_equal(qc.k, -0.333333, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_inv)
@@ -464,11 +464,11 @@ ZTEST(zsl_tests, test_quat_inv)
 	q.k = 0.333333;
 
 	rc = zsl_quat_inv(&q, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.7500004, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, -0.2499999, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, -0.2499999, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, -0.2499999, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.7500004, 1E-6));
+	zassert_true(val_is_equal(qi.i, -0.2499999, 1E-6));
+	zassert_true(val_is_equal(qi.j, -0.2499999, 1E-6));
+	zassert_true(val_is_equal(qi.k, -0.2499999, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_diff)
@@ -481,14 +481,14 @@ ZTEST(zsl_tests, test_quat_diff)
 
 	zsl_quat_init(&qd, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_diff(&qa, &qb, &qd);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* qb = qa * qd if this is correct. */
 	rc = zsl_quat_mult(&qa, &qd, &qcomp);
-	zassert_true(val_is_equal(qb.r, qcomp.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qb.i, qcomp.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qb.j, qcomp.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qb.k, qcomp.k, 1E-6), NULL);
+	zassert_true(val_is_equal(qb.r, qcomp.r, 1E-6));
+	zassert_true(val_is_equal(qb.i, qcomp.i, 1E-6));
+	zassert_true(val_is_equal(qb.j, qcomp.j, 1E-6));
+	zassert_true(val_is_equal(qb.k, qcomp.k, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_rot)
@@ -506,22 +506,22 @@ ZTEST(zsl_tests, test_quat_rot)
 	zsl_quat_init(&qr, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_rot(&qa, &qb, &qr);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qr.r, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qr.r, 0.0, 1E-6));
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-	zassert_true(val_is_equal(qr.i, 70.976938, 1E-4), NULL);
-	zassert_true(val_is_equal(qr.j, -9.893547, 1E-4), NULL);
-	zassert_true(val_is_equal(qr.k, 100.001810, 1E-4), NULL);
+	zassert_true(val_is_equal(qr.i, 70.976938, 1E-4));
+	zassert_true(val_is_equal(qr.j, -9.893547, 1E-4));
+	zassert_true(val_is_equal(qr.k, 100.001810, 1E-4));
 #else
-	zassert_true(val_is_equal(qr.i, 70.976938, 1E-6), NULL);
-	zassert_true(val_is_equal(qr.j, -9.893547, 1E-6), NULL);
-	zassert_true(val_is_equal(qr.k, 100.001810, 1E-6), NULL);
+	zassert_true(val_is_equal(qr.i, 70.976938, 1E-6));
+	zassert_true(val_is_equal(qr.j, -9.893547, 1E-6));
+	zassert_true(val_is_equal(qr.k, 100.001810, 1E-6));
 #endif
 
 	/* The quaternion qb must be a pure quaternion (zero real part). */
 	qb.r = 1.0;
 	rc = zsl_quat_rot(&qa, &qb, &qr);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_lerp)
@@ -532,54 +532,54 @@ ZTEST(zsl_tests, test_quat_lerp)
 	struct zsl_quat qi;
 
 	/* Make sure inputs are unit quaternions. */
-	zassert_true(zsl_quat_is_unit(&qa), NULL);
-	zassert_true(zsl_quat_is_unit(&qb), NULL);
+	zassert_true(zsl_quat_is_unit(&qa));
+	zassert_true(zsl_quat_is_unit(&qb));
 
 	/* t = 0.0 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.0, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qa.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qa.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qa.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qa.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qa.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qa.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qa.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qa.k, 1E-6));
 
 	/* t = 0.2 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.2, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.9701425001453318, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.2425356250363329, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.9701425001453318, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.2425356250363329, 1E-6));
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6));
 
 	/* t = 0.8 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.8, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.2425356250363329, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.9701425001453318, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.2425356250363329, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.9701425001453318, 1E-6));
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6));
 
 	/* t = 1.0 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 1.0, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qb.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qb.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qb.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qb.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qb.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qb.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qb.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qb.k, 1E-6));
 
 	/* t = 1.7. An error is expected. */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 1.7, &qi);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* t = -1.1. An error is expected. */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, -1.1, &qi);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Non unit quaternions. */
 	qa.r = 3.0;
@@ -594,11 +594,11 @@ ZTEST(zsl_tests, test_quat_lerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.7, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.0065594554771123, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.9737279382225760, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, -0.0236596309754489, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, -0.2263870529221157, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.0065594554771123, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.9737279382225760, 1E-6));
+	zassert_true(val_is_equal(qi.j, -0.0236596309754489, 1E-6));
+	zassert_true(val_is_equal(qi.k, -0.2263870529221157, 1E-6));
 
 	/* qa = qb. */
 	qb.r = 3.0;
@@ -612,11 +612,11 @@ ZTEST(zsl_tests, test_quat_lerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.3, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6));
 
 	/* qa = -qb. */
 	qb.r *= -1.0;
@@ -626,11 +626,11 @@ ZTEST(zsl_tests, test_quat_lerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_lerp(&qa, &qb, 0.5, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_slerp)
@@ -641,54 +641,54 @@ ZTEST(zsl_tests, test_quat_slerp)
 	struct zsl_quat qi;
 
 	/* Make sure inputs are unit quaternions. */
-	zassert_true(zsl_quat_is_unit(&qa), NULL);
-	zassert_true(zsl_quat_is_unit(&qb), NULL);
+	zassert_true(zsl_quat_is_unit(&qa));
+	zassert_true(zsl_quat_is_unit(&qb));
 
 	/* t = 0.0 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.0, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qa.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qa.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qa.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qa.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qa.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qa.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qa.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qa.k, 1E-6));
 
 	/* t = 0.2 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.2, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.951056516295154, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.309016994374947, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.951056516295154, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.309016994374947, 1E-6));
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6));
 
 	/* t = 0.8 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.8, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.309016994374947, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.951056516295154, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.309016994374947, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.951056516295154, 1E-6));
+	zassert_true(val_is_equal(qi.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(qi.k, 0.0, 1E-6));
 
 	/* t = 1.0 */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 1.0, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qb.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qb.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qb.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qb.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qb.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qb.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qb.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qb.k, 1E-6));
 
 	/* t = 1.7. An error is expected. */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 1.7, &qi);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* t = -1.1. An error is expected. */
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, -1.1, &qi);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Non unit quaternions. */
 	qa.r = 3.0;
@@ -703,11 +703,11 @@ ZTEST(zsl_tests, test_quat_slerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.7, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, 0.0144930459747461, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, 0.9742497802658620, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, -0.0268229081092286, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, -0.2234006465318697, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, 0.0144930459747461, 1E-6));
+	zassert_true(val_is_equal(qi.i, 0.9742497802658620, 1E-6));
+	zassert_true(val_is_equal(qi.j, -0.0268229081092286, 1E-6));
+	zassert_true(val_is_equal(qi.k, -0.2234006465318697, 1E-6));
 
 	/* qa = qb. */
 	qb.r = 3.0;
@@ -721,11 +721,11 @@ ZTEST(zsl_tests, test_quat_slerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.3, &qi);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qi.r, qa_u.r, 1E-6));
+	zassert_true(val_is_equal(qi.i, qa_u.i, 1E-6));
+	zassert_true(val_is_equal(qi.j, qa_u.j, 1E-6));
+	zassert_true(val_is_equal(qi.k, qa_u.k, 1E-6));
 
 	/* qa = -qb. An error is expected, impossible spherical interpolation.  */
 	qb.r *= -1.0;
@@ -735,7 +735,7 @@ ZTEST(zsl_tests, test_quat_slerp)
 
 	zsl_quat_init(&qi, ZSL_QUAT_TYPE_EMPTY);
 	rc = zsl_quat_slerp(&qa, &qb, 0.3, &qi);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_from_ang_vel)
@@ -761,25 +761,25 @@ ZTEST(zsl_tests, test_quat_from_ang_vel)
 	/* Calcuate the orientation from the previous orientation, the time and the
 	 * angular velocity. */
 	rc = zsl_quat_from_ang_vel(&w, &qin, t, &qout);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6));
+	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6));
+	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6));
+	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6));
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular veolcity vector. */
 	rc = zsl_quat_from_ang_vel(&w2, &qin, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular veolcity vector. */
 	rc = zsl_quat_from_ang_vel(&w3, &qin, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to a negative time. */
 	rc = zsl_quat_from_ang_vel(&w, &qin, t2, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_from_ang_mom)
@@ -806,33 +806,33 @@ ZTEST(zsl_tests, test_quat_from_ang_mom)
 	/* Calcuate the orientation from the previous orientation, the time and the
 	 * angular momentum and inertia. */
 	rc = zsl_quat_from_ang_mom(&l, &qin, &i, t, &qout);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6), NULL);
-	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(qout.r, qcomp.r, 1E-6));
+	zassert_true(val_is_equal(qout.i, qcomp.i, 1E-6));
+	zassert_true(val_is_equal(qout.j, qcomp.j, 1E-6));
+	zassert_true(val_is_equal(qout.k, qcomp.k, 1E-6));
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular momentum vector. */
 	rc = zsl_quat_from_ang_mom(&l2, &qin, &i, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to the invalid dimension of the
 	 * angular momentum vector. */
 	rc = zsl_quat_from_ang_mom(&l3, &qin, &i, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to a negative time. */
 	rc = zsl_quat_from_ang_mom(&l, &qin, &i, t2, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to zero inertia. */
 	rc = zsl_quat_from_ang_mom(&l, &qin, &i2, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* In this case, an error is expected due to a negative inertia. */
 	rc = zsl_quat_from_ang_mom(&l, &qin, &i3, t, &qout);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_to_euler)
@@ -848,22 +848,22 @@ ZTEST(zsl_tests, test_quat_to_euler)
 	struct zsl_euler e = { .x = 0.0, .y = 0.0, .z = 0.0 };
 
 	rc = zsl_quat_to_euler(&q, &e);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
-	zassert_true(val_is_equal(e.x, 0.035148, 1E-6), NULL);
-	zassert_true(val_is_equal(e.y, 0.024579, 1E-6), NULL);
-	zassert_true(val_is_equal(e.z, 3.059905, 1E-6), NULL);
+	zassert_true(val_is_equal(e.x, 0.035148, 1E-6));
+	zassert_true(val_is_equal(e.y, 0.024579, 1E-6));
+	zassert_true(val_is_equal(e.z, 3.059905, 1E-6));
 
 	/* Case in which gimbal lock ocurrs. */
 	rc = zsl_quat_to_euler(&q2, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e.x, -2.283185, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e.x, -2.283185, 1E-6));
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-	zassert_true(val_is_equal(e.y, 1.570796, 1E-3), NULL);
+	zassert_true(val_is_equal(e.y, 1.570796, 1E-3));
 #else
-	zassert_true(val_is_equal(e.y, 1.570796, 1E-6), NULL);
+	zassert_true(val_is_equal(e.y, 1.570796, 1E-6));
 #endif
-	zassert_true(val_is_equal(e.z, 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(e.z, 0.0, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_from_euler)
@@ -877,26 +877,26 @@ ZTEST(zsl_tests, test_quat_from_euler)
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 
 	rc = zsl_quat_from_euler(&e, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.040283, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.877536, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.414807, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.237157, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.040283, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.877536, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.414807, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.237157, 1E-6));
 
 	rc = zsl_quat_from_euler(&e2, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 1.0, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0, 1E-6));
 
 	/* Case in which gimbal lock ocurrs. */
 	rc = zsl_quat_from_euler(&e3, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, -0.1948717, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.6797242, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.1948717, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.6797242, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, -0.1948717, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.6797242, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.1948717, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.6797242, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_to_rot_mtx)
@@ -922,15 +922,15 @@ ZTEST(zsl_tests, test_quat_to_rot_mtx)
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure inappropriately size matrices fail. */
 	rc = zsl_quat_to_rot_mtx(&q, &merr);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 #endif
 
 	zsl_mtx_init(&rot, NULL);
 
 	rc = zsl_quat_to_rot_mtx(&q, &rot);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	for (int i = 0; i < rot.sz_cols * rot.sz_rows; i++) {
-		zassert_true(val_is_equal(rot.data[i], data_cmp[i], 1E-6), NULL);
+		zassert_true(val_is_equal(rot.data[i], data_cmp[i], 1E-6));
 	}
 }
 
@@ -958,20 +958,20 @@ ZTEST(zsl_tests, test_quat_from_rot_mtx)
 #if CONFIG_ZSL_BOUNDS_CHECKS
 	/* Make sure inappropriately size matrices fail. */
 	rc = zsl_quat_from_rot_mtx(&merr, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 #endif
 
 	/* Populate rotation matrix with valid data. */
 	rc = zsl_mtx_from_arr(&rot, data);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Matrix to quat conversion. */
 	rc = zsl_quat_from_rot_mtx(&rot, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, qcmp.r, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, qcmp.i, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, qcmp.j, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, qcmp.k, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, qcmp.r, 1E-6));
+	zassert_true(val_is_equal(q.i, qcmp.i, 1E-6));
+	zassert_true(val_is_equal(q.j, qcmp.j, 1E-6));
+	zassert_true(val_is_equal(q.k, qcmp.k, 1E-6));
 }
 
 ZTEST(zsl_tests, test_quat_to_axis_angle)
@@ -985,27 +985,27 @@ ZTEST(zsl_tests, test_quat_to_axis_angle)
 	ZSL_VECTOR_DEF(a2, 4);
 
 	rc = zsl_vec_init(&a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_init(&a2);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_quat_to_axis_angle(&q, &a, &b);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(a.data[0], 0.013005, 1E-6), NULL);
-	zassert_true(val_is_equal(a.data[1], -0.017069, 1E-6), NULL);
-	zassert_true(val_is_equal(a.data[2], 0.999770, 1E-6), NULL);
-	zassert_true(val_is_equal(b, 3.060355, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(a.data[0], 0.013005, 1E-6));
+	zassert_true(val_is_equal(a.data[1], -0.017069, 1E-6));
+	zassert_true(val_is_equal(a.data[2], 0.999770, 1E-6));
+	zassert_true(val_is_equal(b, 3.060355, 1E-6));
 
 	rc = zsl_quat_to_axis_angle(&q2, &a, &b);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(a.data[0], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(a.data[1], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(a.data[2], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(b, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(a.data[0], 0.0, 1E-6));
+	zassert_true(val_is_equal(a.data[1], 0.0, 1E-6));
+	zassert_true(val_is_equal(a.data[2], 0.0, 1E-6));
+	zassert_true(val_is_equal(b, 0.0, 1E-6));
 
 	/* Invalid axis vector size. */
 	rc = zsl_quat_to_axis_angle(&q, &a2, &b);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 ZTEST(zsl_tests, test_quat_from_axis_angle)
@@ -1020,27 +1020,27 @@ ZTEST(zsl_tests, test_quat_from_axis_angle)
 	zsl_real_t v[3] = { 1.0, 3.0, 2.0 };
 
 	rc = zsl_vec_from_arr(&a, v);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_init(&a2);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_init(&a3);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_quat_from_axis_angle(&a, &b, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, -0.936457, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.093751, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.281252, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.187502, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, -0.936457, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.093751, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.281252, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.187502, 1E-6));
 
 	rc = zsl_quat_from_axis_angle(&a2, &b, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0, 1E-6));
 
 	/* Invalid axis vector size. */
 	rc = zsl_quat_from_axis_angle(&a3, &b, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }

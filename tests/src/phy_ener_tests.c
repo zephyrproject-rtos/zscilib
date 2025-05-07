@@ -17,14 +17,14 @@ ZTEST(zsl_tests, test_phy_ener_kin)
 	zsl_real_t ke;
 
 	rc = zsl_phy_ener_kin(5.0, 4.0, &ke);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(ke, 50.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(ke, 50.0, 1E-6));
 
 	/* Example for negative mass. */
 	rc = zsl_phy_ener_kin(5.0, -4.0, &ke);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(ke != ke, NULL);
+	zassert_true(ke != ke);
 }
 
 ZTEST(zsl_tests, test_phy_ener_rot)
@@ -33,14 +33,14 @@ ZTEST(zsl_tests, test_phy_ener_rot)
 	zsl_real_t rke;
 
 	rc = zsl_phy_ener_rot(3.0, 1.5, &rke);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(rke, 6.75, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(rke, 6.75, 1E-6));
 
 	/* Example for negative moment of inertia. */
 	rc = zsl_phy_ener_rot(3.0, -1.5, &rke);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(rke != rke, NULL);
+	zassert_true(rke != rke);
 }
 
 ZTEST(zsl_tests, test_phy_ener_grav_pot)
@@ -49,14 +49,14 @@ ZTEST(zsl_tests, test_phy_ener_grav_pot)
 	zsl_real_t ug;
 
 	rc = zsl_phy_ener_grav_pot(5.0, 30.0, &ug);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(ug, 1471.05, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(ug, 1471.05, 1E-6));
 
 	/* Example for negative mass. */
 	rc = zsl_phy_ener_grav_pot(-5.0, 30.0, &ug);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(ug != ug, NULL);
+	zassert_true(ug != ug);
 }
 
 ZTEST(zsl_tests, test_phy_ener_elas_pot)
@@ -65,14 +65,14 @@ ZTEST(zsl_tests, test_phy_ener_elas_pot)
 	zsl_real_t ue;
 
 	rc = zsl_phy_ener_elas_pot(5.0, 30.0, &ue);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(ue, 2250.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(ue, 2250.0, 1E-6));
 
 	/* Example for negative k. */
 	rc = zsl_phy_ener_elas_pot(-5.0, 30.0, &ue);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(ue != ue, NULL);
+	zassert_true(ue != ue);
 }
 
 ZTEST(zsl_tests, test_phy_ener_power)
@@ -81,20 +81,20 @@ ZTEST(zsl_tests, test_phy_ener_power)
 	zsl_real_t power;
 
 	rc = zsl_phy_ener_power(1500.0, 30.0, &power);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(power, 50.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(power, 50.0, 1E-6));
 
 	/* Example for zero time. */
 	rc = zsl_phy_ener_power(1500.0, 0.0, &power);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(power != power, NULL);
+	zassert_true(power != power);
 
 	/* Example for negative time. */
 	rc = zsl_phy_ener_power(1500.0, -30.0, &power);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(power != power, NULL);
+	zassert_true(power != power);
 }
 
 ZTEST(zsl_tests, test_phy_ener_fric)
@@ -103,20 +103,20 @@ ZTEST(zsl_tests, test_phy_ener_fric)
 	zsl_real_t e;
 
 	rc = zsl_phy_ener_fric(50.0, 3.0, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e, -150.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e, -150.0, 1E-6));
 
 	/* Example for negative friction force. */
 	rc = zsl_phy_ener_fric(-50.0, 3.0, &e);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(e != e, NULL);
+	zassert_true(e != e);
 
 	/* Example for negative distance. */
 	rc = zsl_phy_ener_fric(50.0, -3.0, &e);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(e != e, NULL);
+	zassert_true(e != e);
 }
 
 ZTEST(zsl_tests, test_phy_ener_mec)
@@ -125,8 +125,8 @@ ZTEST(zsl_tests, test_phy_ener_mec)
 	zsl_real_t me;
 
 	rc = zsl_phy_ener_mec(500.0, 1800.0, 6650.0, 403.0, &me);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(me, 9353.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(me, 9353.0, 1E-6));
 }
 
 ZTEST(zsl_tests, test_phy_ener_final)
@@ -136,8 +136,8 @@ ZTEST(zsl_tests, test_phy_ener_final)
 
 	rc = zsl_phy_ener_final(500.0, 1800.0, 6650.0, 403.0, 306.0, 2340.0,
 				3900.0, &ef4);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(ef4, 2807.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(ef4, 2807.0, 1E-6));
 }
 
 ZTEST(zsl_tests, test_phy_ener_photon)
@@ -147,14 +147,14 @@ ZTEST(zsl_tests, test_phy_ener_photon)
 
 	/* Green light: frequency = 560 Teraherzs = 5.6e14 herzs. */
 	rc = zsl_phy_ener_photon(5.6E14, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e, 2.3159739103, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e, 2.3159739103, 1E-6));
 
 	/* Example for negative frequency. */
 	rc = zsl_phy_ener_photon(-5.6E14, &e);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(e != e, NULL);
+	zassert_true(e != e);
 }
 
 ZTEST(zsl_tests, test_phy_ener_photon2)
@@ -164,18 +164,18 @@ ZTEST(zsl_tests, test_phy_ener_photon2)
 
 	/* Green light: wavelength = 550 nanometers. */
 	rc = zsl_phy_ener_photon2(550.0, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e, 2.2542581533, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e, 2.2542581533, 1E-6));
 
 	/* Example for zero wavelenght. */
 	rc = zsl_phy_ener_photon2(0.0, &e);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(e != e, NULL);
+	zassert_true(e != e);
 
 	/* Example for negative wavelenght. */
 	rc = zsl_phy_ener_photon2(-5.5E-7, &e);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(e != e, NULL);
+	zassert_true(e != e);
 }
