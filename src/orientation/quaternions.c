@@ -509,6 +509,65 @@ err:
 	return rc;
 }
 
+
+int zsl_quat_from_accel(struct zsl_vec *a, struct zsl_quat *q)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure that the input accel is valid and q0 is given */
+	if (a == NULL) {
+		/* Failed to initialize quaternion due to NULL accel vector */
+		rc = -EINVAL;
+		goto err;
+	}
+	if (a->sz != 3) {
+		/* Failed to initialize quaternion due to malformed accel vector */
+		rc = -EINVAL;
+		goto err;
+	}
+	if (ZSL_ABS(zsl_vec_norm(a)) < 1E-6) {
+		/* Failed to initialize quaternion due to zero accel vector */
+		rc = -EINVAL;
+		goto err;
+	}
+	if (q == NULL) {
+		/* Failed to initialize quaternion due to NULL q0 */
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	q->r = 1.0;
+	q->i = 0.0;
+	q->j = 0.0;
+	q->k = 0.0;
+
+	float a_norm = zsl_vec_norm(a);
+	float ax = a->data[0] / a_norm;
+	float ay = a->data[1] / a_norm;
+	float az = a->data[2] / a_norm;
+
+	float ex = ZSL_ATAN2(ay, az);
+	float ey = ZSL_ATAN2(-ax, ZSL_SQRT(ay * ay + az * az));
+
+	float cx2 = ZSL_COS(ex / 2.0);
+	float sx2 = ZSL_SIN(ex / 2.0);
+	float cy2 = ZSL_COS(ey / 2.0);
+	float sy2 = ZSL_SIN(ey / 2.0);
+
+	q->r = cx2 * cy2;
+	q->i = sx2 * cy2;
+	q->j = cx2 * sy2;
+	q->k = -sx2 * sy2;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+err:
+#endif
+	return rc;
+}
+
+
 int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e)
 {
 	int rc = 0;
