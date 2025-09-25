@@ -87,27 +87,72 @@ ZTEST(zsl_tests, test_att_from_accelmag)
 	ZSL_VECTOR_DEF(mag, 3);
 	ZSL_VECTOR_DEF(mag2, 4);
 	struct zsl_attitude att;
-	struct zsl_attitude acmp = {
-		.roll = 131.185925,
-		.pitch = -52.790738,
-		.yaw = -58.180353
+
+	/* No roll, no pitch */
+	zsl_real_t a_no_roll_no_pitch[3] = { 0.010534, -0.101035, 8.62894 };
+	zsl_real_t b_no_roll_no_pitch[3] = { -1.98944, -46.3991, 33.2625 };
+	struct zsl_attitude acmp_no_roll_no_pitch = {
+		.roll = -0.67084,
+		.pitch = -0.069943,
+		.yaw = 92.5274
 	};
 
-	zsl_real_t a[3] = { 7.0, 4.0, -3.5 };
-	zsl_real_t b[3] = { 0.1, -5.0, 123.0 };
-
 	/* Assign arrays to the accelerometer and magnetometer vectors. */
-	rc = zsl_vec_from_arr(&accel, a);
+	rc = zsl_vec_from_arr(&accel, a_no_roll_no_pitch);
 	zassert_true(rc == 0);
-	rc = zsl_vec_from_arr(&mag, b);
+	rc = zsl_vec_from_arr(&mag, b_no_roll_no_pitch);
 	zassert_true(rc == 0);
 
 	/* Calculate the attitude from the accelerometer vector. */
 	rc = zsl_att_from_accelmag(&accel, &mag, &att);
 	zassert_true(rc == 0);
-	zassert_true(val_is_equal(att.roll, acmp.roll, 1E-6));
-	zassert_true(val_is_equal(att.pitch, acmp.pitch, 1E-6));
-	zassert_true(val_is_equal(att.yaw, acmp.yaw, 1E-4));
+	zassert_true(val_is_equal(att.roll, acmp_no_roll_no_pitch.roll, 1E-3));
+	zassert_true(val_is_equal(att.pitch, acmp_no_roll_no_pitch.pitch, 1E-3));
+	zassert_true(val_is_equal(att.yaw, acmp_no_roll_no_pitch.yaw, 1E-3));
+
+	/* Roll, no pitch*/
+	zsl_real_t a_roll_no_pitch[3] = { 0.026934, -5.61261, 7.81001 };
+	zsl_real_t b_roll_no_pitch[3] = { -1.98364, -47.4408, 32.2177 };
+	struct zsl_attitude acmp_roll_no_pitch = {
+		.roll = -35.7027,
+		.pitch = -0.160459,
+		.yaw = 96.1766
+	};
+
+	/* Assign arrays to the accelerometer and magnetometer vectors. */
+	rc = zsl_vec_from_arr(&accel, a_roll_no_pitch);
+	zassert_true(rc == 0);
+	rc = zsl_vec_from_arr(&mag, b_roll_no_pitch);
+	zassert_true(rc == 0);
+
+	/* Calculate the attitude from the accelerometer vector. */
+	rc = zsl_att_from_accelmag(&accel, &mag, &att);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(att.roll, acmp_roll_no_pitch.roll, 1E-3));
+	zassert_true(val_is_equal(att.pitch, acmp_roll_no_pitch.pitch, 1E-3));
+	zassert_true(val_is_equal(att.yaw, acmp_roll_no_pitch.yaw, 1E-3));
+
+	/* No roll, pitch*/
+	zsl_real_t a_no_roll_pitch[3] = { 6.82, 0.053151, 6.71526 };
+	zsl_real_t b_no_roll_pitch[3] = { 38.1413, -22.6632, 25.0115 };
+	struct zsl_attitude acmp_no_roll_pitch = {
+		.roll = 0.453488,
+		.pitch = -45.4425,
+		.yaw = 68.3648
+	};
+
+	/* Assign arrays to the accelerometer and magnetometer vectors. */
+	rc = zsl_vec_from_arr(&accel, a_no_roll_pitch);
+	zassert_true(rc == 0);
+	rc = zsl_vec_from_arr(&mag, b_no_roll_pitch);
+	zassert_true(rc == 0);
+
+	/* Calculate the attitude from the accelerometer vector. */
+	rc = zsl_att_from_accelmag(&accel, &mag, &att);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(att.roll, acmp_no_roll_pitch.roll, 1E-3));
+	zassert_true(val_is_equal(att.pitch, acmp_no_roll_pitch.pitch, 1E-3));
+	zassert_true(val_is_equal(att.yaw, acmp_no_roll_pitch.yaw, 1E-3));
 
 	/* In this case, the dimension of the accelerometer data vector is 4, which
 	 * should return an error. */
