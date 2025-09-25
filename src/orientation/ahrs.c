@@ -63,12 +63,12 @@ int zsl_att_from_accelmag(struct zsl_vec *accel, struct zsl_vec *mag,
 
 	zsl_att_from_accel(accel, &att);
 
-	zsl_real_t nom = mag_unit.data[2] * ZSL_SIN(att.pitch * ZSL_DEG_TO_RAD) -
-			 mag_unit.data[1] * ZSL_COS(att.pitch * ZSL_DEG_TO_RAD);
-	zsl_real_t den = mag_unit.data[0] * ZSL_COS(att.roll * ZSL_DEG_TO_RAD) +
-			 ZSL_SIN(att.roll * ZSL_DEG_TO_RAD) *
-			 (mag_unit.data[1] * ZSL_SIN(att.pitch * ZSL_DEG_TO_RAD) +
-			  mag_unit.data[2] * ZSL_COS(att.pitch * ZSL_DEG_TO_RAD));
+	zsl_real_t nom = mag_unit.data[2] * ZSL_SIN(att.roll * ZSL_DEG_TO_RAD) -
+			 mag_unit.data[1] * ZSL_COS(att.roll * ZSL_DEG_TO_RAD);
+	zsl_real_t den = mag_unit.data[0] * ZSL_COS(att.pitch * ZSL_DEG_TO_RAD) +
+			 ZSL_SIN(att.pitch * ZSL_DEG_TO_RAD) *
+			 (mag_unit.data[1] * ZSL_SIN(att.roll * ZSL_DEG_TO_RAD) +
+			  mag_unit.data[2] * ZSL_COS(att.roll * ZSL_DEG_TO_RAD));
 
 	a->roll = att.roll;
 	a->pitch = att.pitch;

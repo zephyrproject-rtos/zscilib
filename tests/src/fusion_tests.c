@@ -550,19 +550,19 @@ ZTEST(zsl_tests, test_fus_complementary)
 	/* Run the complementary algorithm. */
 	rc = comp_drv.feed_handler(&a, &m, &g, NULL, &q, comp_drv.config);
 	zassert_true(rc == 0);
-	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6));
-	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6));
-	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6));
-	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6));
+	zassert_true(val_is_equal(q.r, 0.530968, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.170021, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.591792, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.582192, 1E-6));
 
 	/* Run the complementary algorithm with inclination angle provided. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, &g, &incl, &q, comp_drv.config);
 	zassert_true(rc == 0);
-	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6));
-	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6));
-	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6));
-	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6));
+	zassert_true(val_is_equal(q.r, 0.530968, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.170021, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.591792, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.582192, 1E-6));
 
 	/* Run the complementary algorithm without magnetometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
