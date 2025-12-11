@@ -15,7 +15,7 @@
  *
  * This test verifies the zsl_mtx_init function.
  */
-void test_matrix_init(void)
+ZTEST(zsl_tests, test_matrix_init)
 {
 	int rc;
 	zsl_real_t x;
@@ -24,35 +24,35 @@ void test_matrix_init(void)
 
 	/* Initialise the matrix with the default (empty) entry_fn. */
 	rc = zsl_mtx_init(&m, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(x, 0.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(x, 0.0);
 
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(x, 0.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(x, 0.0);
 
 	/* Reinitialise the matrix as an identity/diagonal matrix. */
 	rc = zsl_mtx_init(&m, zsl_mtx_entry_fn_identity);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 1, 1, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 0, 1, &x);
-	zassert_equal(x, 0.0, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(x, 0.0);
+	zassert_equal(rc, 0);
 }
 
 /**
@@ -60,7 +60,7 @@ void test_matrix_init(void)
  *
  * This test verifies the zsl_mtx_from_arr function.
  */
-void test_matrix_from_arr(void)
+ZTEST(zsl_tests, test_matrix_from_arr)
 {
 	int rc;
 	zsl_real_t x;
@@ -78,23 +78,23 @@ void test_matrix_from_arr(void)
 
 	/* Initialise the matrix with the default (empty) entry_fn. */
 	rc = zsl_mtx_from_arr(&m, data);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 1, 1, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 0.5, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 0.5, 1E-5));
 
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 0.1, 1E-5));
 
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(x, 0.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(x, 0.0);
 }
 
 /**
@@ -102,7 +102,7 @@ void test_matrix_from_arr(void)
  *
  * This test verifies the zsl_mtx_copy and zsl_mtx_is_equal functions.
  */
-void test_matrix_copy(void)
+ZTEST(zsl_tests, test_matrix_copy)
 {
 	int rc;
 
@@ -118,14 +118,14 @@ void test_matrix_copy(void)
 	/* Source matrix. */
 	ZSL_MATRIX_DEF(msrc, 3, 3);
 	rc = zsl_mtx_from_arr(&msrc, data);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Copy msrc to m. */
 	rc = zsl_mtx_copy(&m, &msrc);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Verify copy using zsl_mtx_is_equal. */
-	zassert_true(zsl_mtx_is_equal(&m, &msrc), NULL);
+	zassert_true(zsl_mtx_is_equal(&m, &msrc));
 }
 
 /**
@@ -133,7 +133,7 @@ void test_matrix_copy(void)
  *
  * This test verifies the zsl_mtx_get function.
  */
-void test_matrix_get(void)
+ZTEST(zsl_tests, test_matrix_get)
 {
 	int rc;
 	zsl_real_t x;
@@ -149,19 +149,19 @@ void test_matrix_get(void)
 
 	/* Read values from the matrix above. */
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(x, 0.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(x, 0.0);
 
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 0.1, 1E-5));
 
 	/* Check for out of bounds error. */
-	zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL, NULL);
+	zassert_true(zsl_mtx_get(&m, 3, 3, &x) == -EINVAL);
 }
 
 /**
@@ -169,7 +169,7 @@ void test_matrix_get(void)
  *
  * This test verifies the zsl_mtx_set function.
  */
-void test_matrix_set(void)
+ZTEST(zsl_tests, test_matrix_set)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -181,32 +181,32 @@ void test_matrix_set(void)
 
 	/* Set values in matrix m. */
 	rc = zsl_mtx_set(&m, 0, 0, 1.0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_set(&m, 1, 1, 0.5);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_set(&m, 2, 2, 0.1);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Verify assigned values */
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 1.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 1.0, 1E-5));
 
 	rc = zsl_mtx_get(&m, 1, 1, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 0.5, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 0.5, 1E-5));
 
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(x, 0.1, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(x, 0.1, 1E-5));
 
 	/* Check for out of bounbds error. */
-	zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL, NULL);
+	zassert_true(zsl_mtx_set(&m, 3, 3, 0.0) == -EINVAL);
 }
 
-void test_matrix_get_set_row(void)
+ZTEST(zsl_tests, test_matrix_get_set_row)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -220,49 +220,49 @@ void test_matrix_get_set_row(void)
 
 	/* Set row 0 in m with the values in 3-vector v. */
 	rc = zsl_mtx_set_row(&m, 0, v);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Set row 2 in m with the values in 3-vector v. */
 	rc = zsl_mtx_set_row(&m, 2, v);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Verify row 0. */
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_true(val_is_equal(x, v[0], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[0], 1E-5));
 	rc = zsl_mtx_get(&m, 0, 1, &x);
-	zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[1], 1E-5));
 	rc = zsl_mtx_get(&m, 0, 2, &x);
-	zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[2], 1E-5));
 
 	/* Verify row 1 (should be all zeroes). */
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 
 	/* Verify row 2. */
 	rc = zsl_mtx_get(&m, 2, 0, &x);
-	zassert_true(val_is_equal(x, v[0], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[0], 1E-5));
 	rc = zsl_mtx_get(&m, 2, 1, &x);
-	zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[1], 1E-5));
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[2], 1E-5));
 
 	/* Now test the get method. */
 	rc = zsl_vec_init(&v2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Read row zero, assigning it to v2.data. */
 	rc = zsl_mtx_get_row(&m, 0, v2.data);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(v2.data[0], v[0], 1E-5), NULL);
-	zassert_true(val_is_equal(v2.data[1], v[1], 1E-5), NULL);
-	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(v2.data[0], v[0], 1E-5));
+	zassert_true(val_is_equal(v2.data[1], v[1], 1E-5));
+	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5));
 }
 
-void test_matrix_get_set_col(void)
+ZTEST(zsl_tests, test_matrix_get_set_col)
 {
 	int rc = 0;
 	zsl_real_t x;
@@ -278,49 +278,49 @@ void test_matrix_get_set_col(void)
 
 	/* Set col 0 in m with the values in 3-vector v. */
 	rc = zsl_mtx_set_col(&m, 0, v);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Set col 2 in m with the values in 3-vector v. */
 	rc = zsl_mtx_set_col(&m, 2, v);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Verify col 0. */
 	rc = zsl_mtx_get(&m, 0, 0, &x);
-	zassert_true(val_is_equal(x, v[0], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[0], 1E-5));
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[1], 1E-5));
 	rc = zsl_mtx_get(&m, 2, 0, &x);
-	zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[2], 1E-5));
 
 	/* Verify col 1 (should be all zeroes). */
 	rc = zsl_mtx_get(&m, 0, 1, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 	rc = zsl_mtx_get(&m, 1, 1, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 	rc = zsl_mtx_get(&m, 2, 1, &x);
-	zassert_true(val_is_equal(x, 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(x, 0.0, 1E-5));
 
 	/* Verify col 2. */
 	rc = zsl_mtx_get(&m, 0, 2, &x);
-	zassert_true(val_is_equal(x, v[0], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[0], 1E-5));
 	rc = zsl_mtx_get(&m, 1, 2, &x);
-	zassert_true(val_is_equal(x, v[1], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[1], 1E-5));
 	rc = zsl_mtx_get(&m, 2, 2, &x);
-	zassert_true(val_is_equal(x, v[2], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v[2], 1E-5));
 
 	/* Now test the get method. */
 	rc = zsl_vec_init(&v2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Read row zero, assigning it to v2.data. */
 	rc = zsl_mtx_get_col(&m, 2, v2.data);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(v2.data[0], v[0], 1E-5), NULL);
-	zassert_true(val_is_equal(v2.data[1], v[1], 1E-5), NULL);
-	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(v2.data[0], v[0], 1E-5));
+	zassert_true(val_is_equal(v2.data[1], v[1], 1E-5));
+	zassert_true(val_is_equal(v2.data[2], v[2], 1E-5));
 }
 
-void test_matrix_row_from_vec(void)
+ZTEST(zsl_tests, test_matrix_row_from_vec)
 {
 	int rc;
 	zsl_real_t x;
@@ -338,27 +338,27 @@ void test_matrix_row_from_vec(void)
 
 	/* Now assign the vector to matrix row 1 via the .data field. */
 	rc = zsl_mtx_set_row(&m, 1, v.data);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Make sure the row assignment worked. */
 	rc = zsl_mtx_get(&m, 1, 0, &x);
-	zassert_true(val_is_equal(x, v.data[0], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v.data[0], 1E-5));
 	rc = zsl_mtx_get(&m, 1, 1, &x);
-	zassert_true(val_is_equal(x, v.data[1], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v.data[1], 1E-5));
 	rc = zsl_mtx_get(&m, 1, 2, &x);
-	zassert_true(val_is_equal(x, v.data[2], 1E-5), NULL);
+	zassert_true(val_is_equal(x, v.data[2], 1E-5));
 
 	/* Now read one back. */
 	rc = zsl_mtx_get_row(&m, 0, v.data);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Vector values should have changed to all be 0.0 now. */
-	zassert_true(val_is_equal(v.data[0], 0.0, 1E-5), NULL);
-	zassert_true(val_is_equal(v.data[1], 0.0, 1E-5), NULL);
-	zassert_true(val_is_equal(v.data[2], 0.0, 1E-5), NULL);
+	zassert_true(val_is_equal(v.data[0], 0.0, 1E-5));
+	zassert_true(val_is_equal(v.data[1], 0.0, 1E-5));
+	zassert_true(val_is_equal(v.data[2], 0.0, 1E-5));
 }
 
-void test_matrix_unary_op(void)
+ZTEST(zsl_tests, test_matrix_unary_op)
 {
 	int rc;
 
@@ -373,19 +373,19 @@ void test_matrix_unary_op(void)
 	};
 
 	rc = zsl_mtx_unary_op(&m, ZSL_MTX_UNARY_OP_INCREMENT);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(m.data[0], 2.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[8], 1.1, 1E-5), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(m.data[0], 2.0, 1E-5));
+	zassert_true(val_is_equal(m.data[8], 1.1, 1E-5));
 
 	/* TODO: Test other operands! */
 }
 
-void test_matrix_unary_func(void)
+ZTEST(zsl_tests, test_matrix_unary_func)
 {
 
 }
 
-void test_matrix_binary_op(void)
+ZTEST(zsl_tests, test_matrix_binary_op)
 {
 	int rc;
 
@@ -415,21 +415,19 @@ void test_matrix_binary_op(void)
 	zsl_mtx_init(&mc, NULL);
 
 	rc = zsl_mtx_binary_op(&ma, &mb, &mc, ZSL_MTX_BINARY_OP_ADD);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(mc.data[0], ma.data[0] + mb.data[0], 1E-5),
-		     NULL);
-	zassert_true(val_is_equal(mc.data[8], ma.data[8] + mb.data[8], 1E-5),
-		     NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(mc.data[0], ma.data[0] + mb.data[0], 1E-5));
+	zassert_true(val_is_equal(mc.data[8], ma.data[8] + mb.data[8], 1E-5));
 
 	/* TODO: Test other operands! */
 }
 
-void test_matrix_binary_func(void)
+ZTEST(zsl_tests, test_matrix_binary_func)
 {
 
 }
 
-void test_matrix_add(void)
+ZTEST(zsl_tests, test_matrix_add)
 {
 	int rc;
 	zsl_real_t x;
@@ -458,20 +456,20 @@ void test_matrix_add(void)
 
 	/* Init matrix mc. */
 	rc = zsl_mtx_init(&mc, NULL);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Add 'ma' and 'mb'. */
 	rc = zsl_mtx_add(&ma, &mb, &mc);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
 		x = ma.data[g] + mb.data[g];
-		zassert_true(val_is_equal(mc.data[g], x, 1E-5), NULL);
+		zassert_true(val_is_equal(mc.data[g], x, 1E-5));
 	}
 }
 
-void test_matrix_add_d(void)
+ZTEST(zsl_tests, test_matrix_add_d)
 {
 	int rc;
 	zsl_real_t x;
@@ -500,20 +498,20 @@ void test_matrix_add_d(void)
 
 	/* Copy 'ma' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &ma);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Add 'ma' and 'mb'. */
 	rc = zsl_mtx_add_d(&ma, &mb);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
 		x = mcopy.data[g] + mb.data[g];
-		zassert_true(val_is_equal(ma.data[g], x, 1E-5), NULL);
+		zassert_true(val_is_equal(ma.data[g], x, 1E-5));
 	}
 }
 
-void test_matrix_sum_rows_d(void)
+ZTEST(zsl_tests, test_matrix_sum_rows_d)
 {
 	int rc;
 
@@ -531,52 +529,50 @@ void test_matrix_sum_rows_d(void)
 
 	/* Copy 'ma' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &ma);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Add row 3 to row 2. */
 	rc = zsl_mtx_sum_rows_d(&ma, 1, 2);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 1, 0, 9.0);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 1, 1.3);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 2, 5.5);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 3, 6.6);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6));
 	}
 
 	/* Add row 2 to row 1. */
 	rc = zsl_mtx_sum_rows_d(&ma, 0, 1);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 0, 0, 10.0);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 1, 3.3);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 2, 9.5);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 3, 13.6);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6));
 	}
 
 	/* Add row 2 to row 5. An error is expected. */
 	rc = zsl_mtx_sum_rows_d(&ma, 4, 1);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_matrix_sum_rows_scaled_d(void)
+ZTEST(zsl_tests, test_matrix_sum_rows_scaled_d)
 {
 	int rc;
 
@@ -594,62 +590,58 @@ void test_matrix_sum_rows_scaled_d(void)
 
 	/* Copy 'ma' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &ma);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Add 4.1 times row 3 to row 2. */
 	rc = zsl_mtx_sum_rows_scaled_d(&ma, 1, 2, 4.1);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 1, 0, 36.9);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 1, 3.78);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 2, 5.81);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 1, 3, 7.84);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-5),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-5));
 #else
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-8),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-8));
 #endif
 	}
 
 	/* Add -0.2 time row 2 to row 1. */
 	rc = zsl_mtx_sum_rows_scaled_d(&ma, 0, 1, -0.2);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 0, 0, -6.38);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 1, 1.244);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 2, 2.838);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 3, 5.432);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-5),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-5));
 #else
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-8),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-8));
 #endif
 	}
 
 	/* Add two times row 2 to row 5. An error is expected. */
 	rc = zsl_mtx_sum_rows_scaled_d(&ma, 4, 1, 2.0);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_matrix_sub(void)
+ZTEST(zsl_tests, test_matrix_sub)
 {
 	int rc;
 	zsl_real_t x;
@@ -678,20 +670,20 @@ void test_matrix_sub(void)
 
 	/* Init matrix mc. */
 	rc = zsl_mtx_init(&mc, NULL);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Substract 'mb' from 'ma'. */
 	rc = zsl_mtx_sub(&ma, &mb, &mc);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
 		x = ma.data[g] - mb.data[g];
-		zassert_true(val_is_equal(mc.data[g], x, 1E-5), NULL);
+		zassert_true(val_is_equal(mc.data[g], x, 1E-5));
 	}
 }
 
-void test_matrix_sub_d(void)
+ZTEST(zsl_tests, test_matrix_sub_d)
 {
 	int rc;
 	zsl_real_t x;
@@ -720,16 +712,16 @@ void test_matrix_sub_d(void)
 
 	/* Copy 'ma' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &ma);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Substract 'mb' from 'ma'. */
 	rc = zsl_mtx_sub_d(&ma, &mb);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
 		x = mcopy.data[g] - mb.data[g];
-		zassert_true(val_is_equal(ma.data[g], x, 1E-5), NULL);
+		zassert_true(val_is_equal(ma.data[g], x, 1E-5));
 	}
 }
 
@@ -738,7 +730,7 @@ void test_matrix_sub_d(void)
  *
  * This test verifies the zsl_mtx_mult function with square matrices.
  */
-void test_matrix_mult_sq(void)
+ZTEST(zsl_tests, test_matrix_mult_sq)
 {
 	int rc = 0;
 
@@ -779,16 +771,16 @@ void test_matrix_mult_sq(void)
 
 	/* Perform a valid 3x3 square matrix multiplication. */
 	rc = zsl_mtx_mult(&ma, &mb, &mc);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(mref.data[0], mc.data[0], NULL);
-	zassert_equal(mref.data[1], mc.data[1], NULL);
-	zassert_equal(mref.data[2], mc.data[2], NULL);
-	zassert_equal(mref.data[3], mc.data[3], NULL);
-	zassert_equal(mref.data[4], mc.data[4], NULL);
-	zassert_equal(mref.data[5], mc.data[5], NULL);
-	zassert_equal(mref.data[6], mc.data[6], NULL);
-	zassert_equal(mref.data[7], mc.data[7], NULL);
-	zassert_equal(mref.data[8], mc.data[8], NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(mref.data[0], mc.data[0]);
+	zassert_equal(mref.data[1], mc.data[1]);
+	zassert_equal(mref.data[2], mc.data[2]);
+	zassert_equal(mref.data[3], mc.data[3]);
+	zassert_equal(mref.data[4], mc.data[4]);
+	zassert_equal(mref.data[5], mc.data[5]);
+	zassert_equal(mref.data[6], mc.data[6]);
+	zassert_equal(mref.data[7], mc.data[7]);
+	zassert_equal(mref.data[8], mc.data[8]);
 }
 
 /**
@@ -796,7 +788,7 @@ void test_matrix_mult_sq(void)
  *
  * This test verifies the zsl_mtx_mult function with rectangular matrices.
  */
-void test_matrix_mult_rect(void)
+ZTEST(zsl_tests, test_matrix_mult_rect)
 {
 	int rc = 0;
 
@@ -840,26 +832,26 @@ void test_matrix_mult_rect(void)
 
 	/* Attempt an invalid 4x2 x 5x3 matrix multiplication. */
 	rc = zsl_mtx_mult(&merr, &mb, &mc);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 
 	/* Perform a valid 3x3 square matrix multiplication. */
 	rc = zsl_mtx_mult(&ma, &mb, &mc);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(mref.data[0], mc.data[0], NULL);
-	zassert_equal(mref.data[1], mc.data[1], NULL);
-	zassert_equal(mref.data[2], mc.data[2], NULL);
-	zassert_equal(mref.data[3], mc.data[3], NULL);
-	zassert_equal(mref.data[4], mc.data[4], NULL);
-	zassert_equal(mref.data[5], mc.data[5], NULL);
-	zassert_equal(mref.data[6], mc.data[6], NULL);
-	zassert_equal(mref.data[7], mc.data[7], NULL);
-	zassert_equal(mref.data[8], mc.data[8], NULL);
-	zassert_equal(mref.data[9], mc.data[9], NULL);
-	zassert_equal(mref.data[10], mc.data[10], NULL);
-	zassert_equal(mref.data[11], mc.data[11], NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(mref.data[0], mc.data[0]);
+	zassert_equal(mref.data[1], mc.data[1]);
+	zassert_equal(mref.data[2], mc.data[2]);
+	zassert_equal(mref.data[3], mc.data[3]);
+	zassert_equal(mref.data[4], mc.data[4]);
+	zassert_equal(mref.data[5], mc.data[5]);
+	zassert_equal(mref.data[6], mc.data[6]);
+	zassert_equal(mref.data[7], mc.data[7]);
+	zassert_equal(mref.data[8], mc.data[8]);
+	zassert_equal(mref.data[9], mc.data[9]);
+	zassert_equal(mref.data[10], mc.data[10]);
+	zassert_equal(mref.data[11], mc.data[11]);
 }
 
-void test_matrix_mult_d(void)
+ZTEST(zsl_tests, test_matrix_mult_d)
 {
 	int rc = 0;
 
@@ -895,25 +887,25 @@ void test_matrix_mult_d(void)
 
 	/* Perform a valid matrix multiplication. */
 	rc = zsl_mtx_mult_d(&ma, &mb);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(mref.data[0], ma.data[0], NULL);
-	zassert_equal(mref.data[1], ma.data[1], NULL);
-	zassert_equal(mref.data[2], ma.data[2], NULL);
-	zassert_equal(mref.data[3], ma.data[3], NULL);
-	zassert_equal(mref.data[4], ma.data[4], NULL);
-	zassert_equal(mref.data[5], ma.data[5], NULL);
-	zassert_equal(mref.data[6], ma.data[6], NULL);
-	zassert_equal(mref.data[7], ma.data[7], NULL);
-	zassert_equal(mref.data[8], ma.data[8], NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(mref.data[0], ma.data[0]);
+	zassert_equal(mref.data[1], ma.data[1]);
+	zassert_equal(mref.data[2], ma.data[2]);
+	zassert_equal(mref.data[3], ma.data[3]);
+	zassert_equal(mref.data[4], ma.data[4]);
+	zassert_equal(mref.data[5], ma.data[5]);
+	zassert_equal(mref.data[6], ma.data[6]);
+	zassert_equal(mref.data[7], ma.data[7]);
+	zassert_equal(mref.data[8], ma.data[8]);
 
 	/* Perform a invalid matrix multiplications. */
 	ZSL_MATRIX_DEF(mb2, 3, 4);
 	rc = zsl_mtx_mult_d(&ma, &mb2);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 
 	ZSL_MATRIX_DEF(ma2, 1, 5);
 	rc = zsl_mtx_mult_d(&ma2, &mb);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 }
 
 /**
@@ -921,7 +913,7 @@ void test_matrix_mult_d(void)
  *
  * This test verifies the zsl_mtx_scalar_mult_d function.
  */
-void test_matrix_scalar_mult_d(void)
+ZTEST(zsl_tests, test_matrix_scalar_mult_d)
 {
 	int rc = 0;
 	zsl_real_t s = 10.0;
@@ -938,18 +930,18 @@ void test_matrix_scalar_mult_d(void)
 	};
 
 	rc = zsl_mtx_scalar_mult_d(&m, s);
-	zassert_equal(rc, 0, NULL);
-	zassert_true(val_is_equal(m.data[0], 20.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[1], 30.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[2], 10.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[3], 40.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[4], 40.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[5], 30.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[6], 30.0, 1E-5), NULL);
-	zassert_true(val_is_equal(m.data[7], 40.0, 1E-5), NULL);
+	zassert_equal(rc, 0);
+	zassert_true(val_is_equal(m.data[0], 20.0, 1E-5));
+	zassert_true(val_is_equal(m.data[1], 30.0, 1E-5));
+	zassert_true(val_is_equal(m.data[2], 10.0, 1E-5));
+	zassert_true(val_is_equal(m.data[3], 40.0, 1E-5));
+	zassert_true(val_is_equal(m.data[4], 40.0, 1E-5));
+	zassert_true(val_is_equal(m.data[5], 30.0, 1E-5));
+	zassert_true(val_is_equal(m.data[6], 30.0, 1E-5));
+	zassert_true(val_is_equal(m.data[7], 40.0, 1E-5));
 }
 
-void test_matrix_scalar_mult_row_d(void)
+ZTEST(zsl_tests, test_matrix_scalar_mult_row_d)
 {
 	int rc;
 
@@ -967,49 +959,47 @@ void test_matrix_scalar_mult_row_d(void)
 
 	/* Copy 'ma' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &ma);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Multiply row 3 by 1.3. */
 	rc = zsl_mtx_scalar_mult_row_d(&ma, 2, 1.3);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 2, 0, 11.7);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 2, 1, 1.04);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 2, 2, 0.13);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 2, 3, 0.52);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6));
 	}
 
 	/* Multiply row 1 by -0.5. */
 	rc = zsl_mtx_scalar_mult_row_d(&ma, 0, -0.5);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the output. */
 	rc = zsl_mtx_set(&mcopy, 0, 0, -0.5);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 1, -1.0);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 2, -2.0);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_mtx_set(&mcopy, 0, 3, -3.5);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	for (size_t i = 0; i < (ma.sz_rows * ma.sz_cols); i++) {
-		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mcopy.data[i], ma.data[i], 1E-6));
 	}
 
 	/* Multiply row 5 by 3. An error is expected. */
 	rc = zsl_mtx_scalar_mult_row_d(&ma, 4, 3);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
 /**
@@ -1017,7 +1007,7 @@ void test_matrix_scalar_mult_row_d(void)
  *
  * This test verifies the zsl_mtx_trans function.
  */
-void test_matrix_trans(void)
+ZTEST(zsl_tests, test_matrix_trans)
 {
 	int rc = 0;
 
@@ -1037,25 +1027,25 @@ void test_matrix_trans(void)
 
 	/* Init matrix 'mt'. */
 	rc = zsl_mtx_init(&mt, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_trans(&m, &mt);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_equal(mt.sz_cols, m.sz_rows, NULL);
-	zassert_equal(mt.sz_rows, m.sz_cols, NULL);
-	zassert_true(val_is_equal(mt.data[0], 2.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[1], 1.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[2], 4.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[3], 3.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[4], 3.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[5], 4.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[6], 3.0, 1E-5), NULL);
-	zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5), NULL);
+	zassert_equal(mt.sz_cols, m.sz_rows);
+	zassert_equal(mt.sz_rows, m.sz_cols);
+	zassert_true(val_is_equal(mt.data[0], 2.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[1], 1.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[2], 4.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[3], 3.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[4], 3.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[5], 4.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[6], 3.0, 1E-5));
+	zassert_true(val_is_equal(mt.data[7], 4.0, 1E-5));
 }
 
-void test_matrix_adjoint_3x3(void)
+ZTEST(zsl_tests, test_matrix_adjoint_3x3)
 {
 	int rc = 0;
 
@@ -1074,24 +1064,24 @@ void test_matrix_adjoint_3x3(void)
 
 	/* Init matrix 'mad'. */
 	rc = zsl_mtx_init(&mad, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_adjoint_3x3(&m, &mad);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(val_is_equal(mad.data[0], -32.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[1], -11.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[2], -13.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[3], -11.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[4], -13.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[5], -10.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[6], -28.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[7], -17.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[8], -4.0, 1E-6), NULL);
+	zassert_true(val_is_equal(mad.data[0], -32.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[1], -11.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[2], -13.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[3], -11.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[4], -13.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[5], -10.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[6], -28.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[7], -17.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[8], -4.0, 1E-6));
 }
 
-void test_matrix_adjoint(void)
+ZTEST(zsl_tests, test_matrix_adjoint)
 {
 	int rc = 0;
 
@@ -1111,32 +1101,32 @@ void test_matrix_adjoint(void)
 
 	/* Init matrix 'mad'. */
 	rc = zsl_mtx_init(&mad, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_adjoint(&m, &mad);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(val_is_equal(mad.data[0],   214.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[1],   37.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[2],   206.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[3],  -30.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[4],   98.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[5],   3.0,   1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[6],   178.0, 1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[7],  -73.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[8],  -23.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[9],   64.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[10], -57.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[11],  59.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[12],  97.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[13],  22.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[14],  62.0,  1E-6), NULL);
-	zassert_true(val_is_equal(mad.data[15], -38.0,  1E-6), NULL);
+	zassert_true(val_is_equal(mad.data[0],   214.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[1],   37.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[2],   206.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[3],  -30.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[4],   98.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[5],   3.0,   1E-6));
+	zassert_true(val_is_equal(mad.data[6],   178.0, 1E-6));
+	zassert_true(val_is_equal(mad.data[7],  -73.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[8],  -23.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[9],   64.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[10], -57.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[11],  59.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[12],  97.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[13],  22.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[14],  62.0,  1E-6));
+	zassert_true(val_is_equal(mad.data[15], -38.0,  1E-6));
 }
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_vector_wedge(void)
+ZTEST(zsl_tests_double, test_matrix_vector_wedge)
 {
 	int rc = 0;
 
@@ -1156,11 +1146,11 @@ void test_matrix_vector_wedge(void)
 
 	/* Assign array to matrix. */
 	rc = zsl_mtx_from_arr(&m, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Compute the wedge product. */
 	rc = zsl_mtx_vec_wedge(&m, &v);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Check the results. The vector 'v' should be perpendicular to all the
 	 * input vectors, the columns in the matrix 'm', so the dot product. Should
@@ -1171,21 +1161,21 @@ void test_matrix_vector_wedge(void)
 	for (size_t i = 0; i < 5; i++) {
 		zsl_mtx_get_row(&m, i, w.data);
 		zsl_vec_dot(&v, &w, &d);
-		zassert_true(val_is_equal(d, 0.0, 1E-6), NULL);
+		zassert_true(val_is_equal(d, 0.0, 1E-6));
 	}
 
 	/* In the following cases, the dimensions of 'm' and/or 'v' are invalid,
 	 * so the function should return an error. */
 	rc = zsl_mtx_vec_wedge(&m2, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	rc = zsl_mtx_vec_wedge(&m, &v2);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	rc = zsl_mtx_vec_wedge(&m, &v3);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 #endif
 
-void test_matrix_reduce(void)
+ZTEST(zsl_tests, test_matrix_reduce)
 {
 	int rc = 0;
 
@@ -1205,10 +1195,10 @@ void test_matrix_reduce(void)
 
 	/* Init matrix 'mred'. */
 	rc = zsl_mtx_init(&mred, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_reduce(&m, &mred, 0, 2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data2[9] = { -4.0,  4.0, -3.0,
@@ -1223,12 +1213,11 @@ void test_matrix_reduce(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mred.sz_rows * mred.sz_cols); i++) {
-		zassert_true(val_is_equal(mred.data[i], m2.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mred.data[i], m2.data[i], 1E-6));
 	}
 
 	rc = zsl_mtx_reduce(&m, &mred, 1, 3);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data3[9] = {  2.0, -3.0,  1.0,
@@ -1243,20 +1232,23 @@ void test_matrix_reduce(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mred.sz_rows * mred.sz_cols); i++) {
-		zassert_true(val_is_equal(mred.data[i], m3.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mred.data[i], m3.data[i], 1E-6));
 	}
 
 	rc = zsl_mtx_reduce(&m, &mred, 1, 5);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 }
 
-void test_matrix_reduce_iter(void)
+ZTEST(zsl_tests, test_matrix_reduce_iter)
 {
 	int rc = 0;
-
 	ZSL_MATRIX_DEF(mred, 3, 3);
 	ZSL_MATRIX_DEF(mred2, 2, 2);
+
+	/* place holder matrices for iteration*/
+	ZSL_MATRIX_DEF(place1, 4, 4);
+	ZSL_MATRIX_DEF(place2, 4, 4);
+
 
 	/* Input matrix. */
 	zsl_real_t data[16] = {  2.0, -3.0,  1.0,  5.0,
@@ -1272,12 +1264,14 @@ void test_matrix_reduce_iter(void)
 
 	/* Init output matrices. */
 	rc = zsl_mtx_init(&mred, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&mred2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
-	rc = zsl_mtx_reduce_iter(&m, &mred);
-	zassert_equal(rc, 0, NULL);
+	do{
+		rc = zsl_mtx_reduce_iter(&m, &mred, &place1, &place2);
+	} while(rc != 0);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data2[9] = { 4.0,  3.0, -3.0,
@@ -1292,12 +1286,13 @@ void test_matrix_reduce_iter(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mred.sz_rows * mred.sz_cols); i++) {
-		zassert_true(val_is_equal(mred.data[i], m2.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mred.data[i], m2.data[i], 1E-6));
 	}
 
-	rc = zsl_mtx_reduce_iter(&m, &mred2);
-	zassert_equal(rc, 0, NULL);
+	do{
+		rc = zsl_mtx_reduce_iter(&m, &mred2, &place1, &place2);
+	} while(rc != 0);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data3[4] = {  1.0,  0.0,
@@ -1310,12 +1305,11 @@ void test_matrix_reduce_iter(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mred2.sz_rows * mred2.sz_cols); i++) {
-		zassert_true(val_is_equal(mred2.data[i], m3.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(mred2.data[i], m3.data[i], 1E-6));
 	}
 }
 
-void test_matrix_augm_diag(void)
+ZTEST(zsl_tests, test_matrix_augm_diag)
 {
 	int rc = 0;
 
@@ -1334,12 +1328,12 @@ void test_matrix_augm_diag(void)
 
 	/* Init output matrices. */
 	rc = zsl_mtx_init(&maugm, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&maugm2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_augm_diag(&m, &maugm);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data2[9] = { 1.0,  0.0,  0.0,
@@ -1354,12 +1348,11 @@ void test_matrix_augm_diag(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (maugm.sz_rows * maugm.sz_cols); i++) {
-		zassert_true(val_is_equal(maugm.data[i], m2.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(maugm.data[i], m2.data[i], 1E-6));
 	}
 
 	rc = zsl_mtx_augm_diag(&m, &maugm2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data3[16] = { 1.0, 0.0,  0.0,  0.0,
@@ -1375,12 +1368,11 @@ void test_matrix_augm_diag(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (maugm2.sz_rows * maugm2.sz_cols); i++) {
-		zassert_true(val_is_equal(maugm2.data[i], m3.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(maugm2.data[i], m3.data[i], 1E-6));
 	}
 }
 
-void test_matrix_deter_3x3(void)
+ZTEST(zsl_tests, test_matrix_deter_3x3)
 {
 	int rc = 0;
 	zsl_real_t x = 0.0;
@@ -1397,13 +1389,13 @@ void test_matrix_deter_3x3(void)
 	};
 
 	rc = zsl_mtx_deter_3x3(&m, &x);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_equal(x, 214.0, NULL);
+	zassert_equal(x, 214.0);
 }
 
-void test_matrix_deter(void)
+ZTEST(zsl_tests, test_matrix_deter)
 {
 	int rc = 0;
 	zsl_real_t x = 0.0;
@@ -1421,13 +1413,13 @@ void test_matrix_deter(void)
 	};
 
 	rc = zsl_mtx_deter(&m, &x);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_equal(x, -509.0, NULL);
+	zassert_equal(x, -509.0);
 }
 
-void test_matrix_gauss_elim(void)
+ZTEST(zsl_tests, test_matrix_gauss_elim)
 {
 	int rc = 0;
 
@@ -1447,12 +1439,12 @@ void test_matrix_gauss_elim(void)
 
 	/* Init the output matrices. */
 	rc = zsl_mtx_init(&mg, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&mi, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_gauss_elim(&m, &mg, &mi, 1, 0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data2[9] = { 0.0,  1.0,  6.0,
@@ -1467,19 +1459,19 @@ void test_matrix_gauss_elim(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mg.sz_rows * mg.sz_cols); i++) {
-		zassert_true(val_is_equal(mg.data[i], m2.data[i], 1E-6), NULL);
+		zassert_true(val_is_equal(mg.data[i], m2.data[i], 1E-6));
 	}
 
 	rc = zsl_mtx_gauss_elim(&m, &mg, &mi, 0, 2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t i = 0; i < (mg.sz_rows * mg.sz_cols); i++) {
-		zassert_true(val_is_equal(mg.data[i], m.data[i], 1E-6), NULL);
+		zassert_true(val_is_equal(mg.data[i], m.data[i], 1E-6));
 	}
 }
 
-void test_matrix_gauss_elim_d(void)
+ZTEST(zsl_tests, test_matrix_gauss_elim_d)
 {
 	int rc = 0;
 
@@ -1499,10 +1491,10 @@ void test_matrix_gauss_elim_d(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&mi, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_gauss_elim_d(&m, &mi, 1, 0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t data2[9] = { 0.0,  1.0,  6.0,
@@ -1517,24 +1509,23 @@ void test_matrix_gauss_elim_d(void)
 
 	/* Check the output. */
 	for (size_t i = 0; i < (m.sz_rows * m.sz_cols); i++) {
-		zassert_true(val_is_equal(m.data[i], m2.data[i], 1E-6), NULL);
+		zassert_true(val_is_equal(m.data[i], m2.data[i], 1E-6));
 	}
 
 	/* Copy 'm' into 'mcopy'. */
 	rc = zsl_mtx_copy(&mcopy, &m);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_gauss_elim_d(&m, &mi, 2, 0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t i = 0; i < (m.sz_rows * m.sz_cols); i++) {
-		zassert_true(val_is_equal(m.data[i], mcopy.data[i], 1E-6),
-			     NULL);
+		zassert_true(val_is_equal(m.data[i], mcopy.data[i], 1E-6));
 	}
 }
 
-void test_matrix_gauss_reduc(void)
+ZTEST(zsl_tests, test_matrix_gauss_reduc)
 {
 	int rc = 0;
 
@@ -1565,32 +1556,32 @@ void test_matrix_gauss_reduc(void)
 
 	/* Init the output matrices. */
 	rc = zsl_mtx_init(&va, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&vb, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_gauss_reduc(&ma, &vb, &va);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	zsl_mtx_init(&vb, zsl_mtx_entry_fn_identity);
 	for (size_t i = 0; i < (va.sz_rows * va.sz_cols); i++) {
-		zassert_true(val_is_equal(va.data[i], vb.data[i], 1E-6), NULL);
+		zassert_true(val_is_equal(va.data[i], vb.data[i], 1E-6));
 	}
 
 	rc = zsl_mtx_gauss_reduc(&mb, &va, &vb);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	zsl_mtx_init(&va, zsl_mtx_entry_fn_identity);
 	zsl_mtx_set(&va, 0, 1, 0.5);
 	zsl_mtx_set(&va, 1, 1, 0.0);
 	for (size_t i = 0; i < (vb.sz_rows * vb.sz_cols); i++) {
-		zassert_true(val_is_equal(va.data[i], vb.data[i], 1E-6), NULL);
+		zassert_true(val_is_equal(va.data[i], vb.data[i], 1E-6));
 	}
 }
 
-void test_matrix_gram_schmidt_sq(void)
+ZTEST(zsl_tests, test_matrix_gram_schmidt_sq)
 {
 	int rc;
 
@@ -1620,19 +1611,19 @@ void test_matrix_gram_schmidt_sq(void)
 
 	/* Init matrix mot. */
 	rc = zsl_mtx_init(&mot, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Perform the Gram-Schmidt process. */
 	rc = zsl_mtx_gram_schmidt(&m, &mot);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
-		zassert_true(val_is_equal(mot.data[g], mt.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(mot.data[g], mt.data[g], 1E-6));
 	}
 }
 
-void test_matrix_gram_schmidt_rect(void)
+ZTEST(zsl_tests, test_matrix_gram_schmidt_rect)
 {
 	int rc;
 
@@ -1664,19 +1655,19 @@ void test_matrix_gram_schmidt_rect(void)
 
 	/* Init matrix mot. */
 	rc = zsl_mtx_init(&mot, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Perform the Gram-Schmidt process. */
 	rc = zsl_mtx_gram_schmidt(&m, &mot);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
-		zassert_true(val_is_equal(mot.data[g], mt.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(mot.data[g], mt.data[g], 1E-6));
 	}
 }
 
-void test_matrix_cols_norm(void)
+ZTEST(zsl_tests, test_matrix_cols_norm)
 {
 	int rc = 0;
 
@@ -1697,21 +1688,21 @@ void test_matrix_cols_norm(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&m2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_cols_norm(&m, &m2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 
 	for (size_t i = 0; i < m.sz_rows; i++) {
 		zsl_mtx_get_col(&m2, i, v.data);
 		norm = zsl_vec_norm(&v);
-		zassert_true(val_is_equal(norm, 1.0, 1E-6), NULL);
+		zassert_true(val_is_equal(norm, 1.0, 1E-6));
 	}
 }
 
-void test_matrix_norm_elem(void)
+ZTEST(zsl_tests, test_matrix_norm_elem)
 {
 	int rc = 0;
 
@@ -1730,40 +1721,40 @@ void test_matrix_norm_elem(void)
 
 	/* Init the output matrices. */
 	rc = zsl_mtx_init(&m2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&m3, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_norm_elem(&m, &m2, &m3, 0, 1);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(val_is_equal(m2.data[0], 1.6875, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[1], 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[2], 0.7875, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[3], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[4], 256.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[5], 94.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[6], 226.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[7], 415.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[8], 302.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[0], 1.6875, 1E-6));
+	zassert_true(val_is_equal(m2.data[1], 1.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[2], 0.7875, 1E-6));
+	zassert_true(val_is_equal(m2.data[3], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[4], 256.5, 1E-6));
+	zassert_true(val_is_equal(m2.data[5], 94.5, 1E-6));
+	zassert_true(val_is_equal(m2.data[6], 226.5, 1E-6));
+	zassert_true(val_is_equal(m2.data[7], 415.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[8], 302.0, 1E-6));
 
 	for (size_t i = 0; i < m.sz_rows; i++) {
-		zassert_equal(m3.data[i], 0.0, NULL);
+		zassert_equal(m3.data[i], 0.0);
 	}
 
 	rc = zsl_mtx_norm_elem(&m, &m2, &m3, 1, 0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(zsl_mtx_is_equal(&m, &m2), NULL);
+	zassert_true(zsl_mtx_is_equal(&m, &m2));
 
 	for (size_t i = 0; i < m.sz_rows; i++) {
-		zassert_equal(m3.data[i], 0.0, NULL);
+		zassert_equal(m3.data[i], 0.0);
 	}
 }
 
-void test_matrix_norm_elem_d(void)
+ZTEST(zsl_tests, test_matrix_norm_elem_d)
 {
 	int rc = 0;
 
@@ -1781,28 +1772,28 @@ void test_matrix_norm_elem_d(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&m2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_norm_elem_d(&m, &m2, 1, 0);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(val_is_equal(m.data[0], 67.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[1], 47.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[2], 31.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[3], 1.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[4], 8.015625, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[5], 2.953125, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[6], 226.5, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[7], 415.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m.data[8], 302.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m.data[0], 67.5, 1E-6));
+	zassert_true(val_is_equal(m.data[1], 47.0, 1E-6));
+	zassert_true(val_is_equal(m.data[2], 31.5, 1E-6));
+	zassert_true(val_is_equal(m.data[3], 1.0, 1E-6));
+	zassert_true(val_is_equal(m.data[4], 8.015625, 1E-6));
+	zassert_true(val_is_equal(m.data[5], 2.953125, 1E-6));
+	zassert_true(val_is_equal(m.data[6], 226.5, 1E-6));
+	zassert_true(val_is_equal(m.data[7], 415.0, 1E-6));
+	zassert_true(val_is_equal(m.data[8], 302.0, 1E-6));
 
 	for (size_t i = 0; i < m.sz_rows; i++) {
-		zassert_equal(m2.data[i], 0.0, NULL);
+		zassert_equal(m2.data[i], 0.0);
 	}
 }
 
-void test_matrix_inv_3x3(void)
+ZTEST(zsl_tests, test_matrix_inv_3x3)
 {
 	int rc = 0;
 
@@ -1820,24 +1811,24 @@ void test_matrix_inv_3x3(void)
 
 	/* Init matrix mi. */
 	rc = zsl_mtx_init(&mi, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_inv_3x3(&m, &mi);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[2], -0.00237440, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[3], -0.02778553, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[4],  0.00783351, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[5],  0.00044695, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6), NULL);
-	zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6), NULL);
+	zassert_true(val_is_equal(mi.data[0],  0.02261063, 1E-6));
+	zassert_true(val_is_equal(mi.data[1],  0.00005114, 1E-6));
+	zassert_true(val_is_equal(mi.data[2], -0.00237440, 1E-6));
+	zassert_true(val_is_equal(mi.data[3], -0.02778553, 1E-6));
+	zassert_true(val_is_equal(mi.data[4],  0.00783351, 1E-6));
+	zassert_true(val_is_equal(mi.data[5],  0.00044695, 1E-6));
+	zassert_true(val_is_equal(mi.data[6],  0.02122413, 1E-6));
+	zassert_true(val_is_equal(mi.data[7], -0.01080295, 1E-6));
+	zassert_true(val_is_equal(mi.data[8],  0.00447788, 1E-6));
 }
 
-void test_matrix_inv(void)
+ZTEST(zsl_tests, test_matrix_inv)
 {
 	int rc = 0;
 
@@ -1869,16 +1860,16 @@ void test_matrix_inv(void)
 
 	/* Init matrix mi. */
 	rc = zsl_mtx_init(&mi, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_inv(&m, &mi);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(zsl_mtx_is_equal(&mi, &mtst), NULL);
+	zassert_true(zsl_mtx_is_equal(&mi, &mtst));
 }
 
-void test_matrix_cholesky(void)
+ZTEST(zsl_tests, test_matrix_cholesky)
 {
 	int rc;
 
@@ -1922,28 +1913,28 @@ void test_matrix_cholesky(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&l, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Compute the Cholesky decomposition. */
 	rc = zsl_mtx_cholesky(&ma, &l);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
-		zassert_true(val_is_equal(l.data[g], lo.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(l.data[g], lo.data[g], 1E-6));
 	}
 
 	/* In the following examples, an error is expected due to invalid input
 	 * matrices. */
 	rc = zsl_mtx_cholesky(&mb, &l);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 	rc = zsl_mtx_cholesky(&mc, &l);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 	rc = zsl_mtx_cholesky(&ma, &l2);
-	zassert_equal(rc, -EINVAL, NULL);
+	zassert_equal(rc, -EINVAL);
 }
 
-void test_matrix_balance(void)
+ZTEST(zsl_tests, test_matrix_balance)
 {
 	int rc;
 
@@ -1988,24 +1979,24 @@ void test_matrix_balance(void)
 
 	/* Init output matrices. */
 	rc = zsl_mtx_init(&moa, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&mob, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Balance the input matrices. */
 	rc = zsl_mtx_balance(&ma, &moa);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_balance(&mb, &mob);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (ma.sz_rows * ma.sz_cols); g++) {
-		zassert_true(val_is_equal(moa.data[g], mt.data[g], 1E-6), NULL);
-		zassert_true(val_is_equal(mob.data[g], mb.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(moa.data[g], mt.data[g], 1E-6));
+		zassert_true(val_is_equal(mob.data[g], mb.data[g], 1E-6));
 	}
 }
 
-void test_matrix_householder_sq(void)
+ZTEST(zsl_tests, test_matrix_householder_sq)
 {
 	int rc;
 
@@ -2024,11 +2015,11 @@ void test_matrix_householder_sq(void)
 
 	/* Init matrix h. */
 	rc = zsl_mtx_init(&h, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Compute the Householder matrix. */
 	rc = zsl_mtx_householder(&m, &h, false);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t dtst[9] = { 0.0, 1.0, 0.0,
@@ -2043,12 +2034,12 @@ void test_matrix_householder_sq(void)
 
 	/* Check the output. */
 	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
-		zassert_true(val_is_equal(h.data[g], mt.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(h.data[g], mt.data[g], 1E-6));
 	}
 
 	/* Compute the Hessenberg-Householder matrix. */
 	rc = zsl_mtx_householder(&m, &h, true);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t dtsa[16] = { 1.0, 0.0, 0.0,
@@ -2063,11 +2054,11 @@ void test_matrix_householder_sq(void)
 
 	/* Check the output. */
 	for (size_t g = 0; g < (h.sz_rows * h.sz_cols); g++) {
-		zassert_true(val_is_equal(h.data[g], mt2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(h.data[g], mt2.data[g], 1E-6));
 	}
 }
 
-void test_matrix_householder_rect(void)
+ZTEST(zsl_tests, test_matrix_householder_rect)
 {
 	int rc;
 
@@ -2087,11 +2078,11 @@ void test_matrix_householder_rect(void)
 
 	/* Init matrix h. */
 	rc = zsl_mtx_init(&h, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Compute the Householder matrix. */
 	rc = zsl_mtx_householder(&m, &h, false);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t dtst[16] = { 0.5, 0.5, 0.5, 0.5,
@@ -2106,11 +2097,11 @@ void test_matrix_householder_rect(void)
 	};
 
 	/* Check the output. */
-	zassert_true(zsl_mtx_is_equal(&h, &mt), NULL);
+	zassert_true(zsl_mtx_is_equal(&h, &mt));
 
 	/* Compute the Hessenberg-Householder matrix. */
 	rc = zsl_mtx_householder(&m, &h, true);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t dtsa[16] = { 1.0, 0.000000, 0.000000, 0.000000,
@@ -2126,11 +2117,11 @@ void test_matrix_householder_rect(void)
 
 	/* Check the output. */
 	for (size_t g = 0; g < (h.sz_rows * h.sz_cols); g++) {
-		zassert_true(val_is_equal(h.data[g], mt2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(h.data[g], mt2.data[g], 1E-6));
 	}
 }
 
-void test_matrix_qrd(void)
+ZTEST(zsl_tests, test_matrix_qrd)
 {
 	int rc;
 
@@ -2172,22 +2163,22 @@ void test_matrix_qrd(void)
 
 	/* Init matrices Q and R. */
 	rc = zsl_mtx_init(&q, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&r, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Calculate the QR decomposition. */
 	rc = zsl_mtx_qrd(&m, &q, &r, false);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
-		zassert_true(val_is_equal(q.data[g], q2.data[g], 1E-6), NULL);
-		zassert_true(val_is_equal(r.data[g], r2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(q.data[g], q2.data[g], 1E-6));
+		zassert_true(val_is_equal(r.data[g], r2.data[g], 1E-6));
 	}
 }
 
-void test_matrix_qrd_hess(void)
+ZTEST(zsl_tests, test_matrix_qrd_hess)
 {
 	int rc;
 
@@ -2208,13 +2199,13 @@ void test_matrix_qrd_hess(void)
 
 	/* Init matrices Q and R. */
 	rc = zsl_mtx_init(&q, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&r, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Perform the Hessenberg transformation on the input matrix. */
 	rc = zsl_mtx_qrd(&m, &q, &r, true);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t hdata[16] = {
@@ -2234,15 +2225,15 @@ void test_matrix_qrd_hess(void)
 	/* Check the output. */
 	for (size_t g = 0; g < (m.sz_rows * m.sz_cols); g++) {
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
-		zassert_true(val_is_equal(r.data[g], hess.data[g], 1E-4), NULL);
+		zassert_true(val_is_equal(r.data[g], hess.data[g], 1E-4));
 #else
-		zassert_true(val_is_equal(r.data[g], hess.data[g], 1E-8), NULL);
+		zassert_true(val_is_equal(r.data[g], hess.data[g], 1E-8));
 #endif
 	}
 }
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_qrd_iter(void)
+ZTEST(zsl_tests_double, test_matrix_qrd_iter)
 {
 	int rc;
 
@@ -2264,30 +2255,30 @@ void test_matrix_qrd_iter(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&m2, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Perform the QR method 1500 times matrix. */
 	rc = zsl_mtx_qrd_iter(&m, &m2, 1500);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check if the output matrix is upper triangular and if it is similar
 	 * to the input matrix. */
-	zassert_true(val_is_equal(m2.data[4], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[8], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[9], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[12], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[13], 0.0, 1E-6), NULL);
-	zassert_true(val_is_equal(m2.data[14], 0.0, 1E-6), NULL);
+	zassert_true(val_is_equal(m2.data[4], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[8], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[9], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[12], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[13], 0.0, 1E-6));
+	zassert_true(val_is_equal(m2.data[14], 0.0, 1E-6));
 
 	zsl_mtx_eigenvalues(&m, &v, 500);
 	zsl_mtx_eigenvalues(&m2, &v2, 500);
 
-	zassert_true(zsl_vec_is_equal(&v, &v2, 1E-6), NULL);
+	zassert_true(zsl_vec_is_equal(&v, &v2, 1E-6));
 }
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_eigenvalues(void)
+ZTEST(zsl_tests_double, test_matrix_eigenvalues)
 {
 	int rc;
 
@@ -2352,31 +2343,31 @@ void test_matrix_eigenvalues(void)
 
 	/* Init the output vectors. */
 	rc = zsl_vec_init(&va);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_vec_init(&vb);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_vec_init(&vc);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Calculate the eigenvalues of 'ma', 'mb' and 'mc'. */
 	rc = zsl_mtx_eigenvalues(&ma, &va, 150);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	rc = zsl_mtx_eigenvalues(&mb, &vb, 150);
-	zassert_equal(rc, -ECOMPLEXVAL, NULL);
+	zassert_equal(rc, -ECOMPLEXVAL);
 
 	rc = zsl_mtx_eigenvalues(&mc, &vc, 150);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
-	zassert_true(zsl_vec_is_equal(&va, &va2, 1E-6), NULL);
-	zassert_true(zsl_vec_is_equal(&vb, &vb2, 1E-6), NULL);
-	zassert_true(zsl_vec_is_equal(&vc, &vc2, 1E-6), NULL);
+	zassert_true(zsl_vec_is_equal(&va, &va2, 1E-6));
+	zassert_true(zsl_vec_is_equal(&vb, &vb2, 1E-6));
+	zassert_true(zsl_vec_is_equal(&vc, &vc2, 1E-6));
 }
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_eigenvectors(void)
+ZTEST(zsl_tests_double, test_matrix_eigenvectors)
 {
 	int rc;
 
@@ -2441,24 +2432,24 @@ void test_matrix_eigenvectors(void)
 
 	/* Init the output matrices. */
 	rc = zsl_mtx_init(&va, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&vb, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&vc, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&vd, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Calculate the eigenvectors of 'ma', 'mb' and 'mc'
 	 * non-orthonormalised. */
 	rc = zsl_mtx_eigenvectors(&ma, &va, 1500, false);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_eigenvectors(&mb, &vb, 1500, false);
-	zassert_equal(rc, -EEIGENSIZE, NULL);
+	zassert_equal(rc, -EEIGENSIZE);
 	rc = zsl_mtx_eigenvectors(&mc, &vc, 1500, false);
-	zassert_equal(rc, -EEIGENSIZE, NULL);
+	zassert_equal(rc, -EEIGENSIZE);
 	rc = zsl_mtx_eigenvectors(&md, &vd, 1500, false);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t a[16] = {
@@ -2483,37 +2474,37 @@ void test_matrix_eigenvectors(void)
 			    1.0, 0.0, 1.0 };
 
 	rc = zsl_mtx_from_arr(&va2, a);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vb2, b);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vc2, c);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vd2, d);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (va.sz_rows * va.sz_cols); g++) {
-		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6));
 	}
 
 	for (size_t g = 0; g < (vb.sz_rows * vb.sz_cols); g++) {
-		zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6), NULL);
-		zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6));
+		zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6));
 	}
 
 	for (size_t g = 0; g < (vd.sz_rows * vd.sz_cols); g++) {
-		zassert_true(val_is_equal(vd.data[g], vd2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(vd.data[g], vd2.data[g], 1E-6));
 	}
 
 	/* Calculate the eigenvectors of 'ma', 'mb' and 'mc' orthonormalised. */
 	rc = zsl_mtx_eigenvectors(&ma, &va, 1500, true);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_eigenvectors(&mb, &vb, 1500, true);
-	zassert_equal(rc, -EEIGENSIZE, NULL);
+	zassert_equal(rc, -EEIGENSIZE);
 	rc = zsl_mtx_eigenvectors(&mc, &vc, 1500, true);
-	zassert_equal(rc, -EEIGENSIZE, NULL);
+	zassert_equal(rc, -EEIGENSIZE);
 	rc = zsl_mtx_eigenvectors(&md, &vd, 1500, true);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t a2[16] = {
@@ -2539,32 +2530,32 @@ void test_matrix_eigenvectors(void)
 			     0.3015113494, 0.0000000498, 0.8164966504 };
 
 	rc = zsl_mtx_from_arr(&va2, a2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vb2, b2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vc2, c2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&vd2, d2);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (va.sz_rows * va.sz_cols); g++) {
-		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(va.data[g], va2.data[g], 1E-6));
 	}
 
 	for (size_t g = 0; g < (vb.sz_rows * vb.sz_cols); g++) {
-		zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6), NULL);
-		zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(vb.data[g], vb2.data[g], 1E-6));
+		zassert_true(val_is_equal(vc.data[g], vc2.data[g], 1E-6));
 	}
 
 	for (size_t g = 0; g < (vd.sz_rows * vd.sz_cols); g++) {
-		zassert_true(val_is_equal(vd.data[g], vd2.data[g], 1E-6), NULL);
+		zassert_true(val_is_equal(vd.data[g], vd2.data[g], 1E-6));
 	}
 }
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_svd(void)
+ZTEST(zsl_tests_double, test_matrix_svd)
 {
 	int rc;
 
@@ -2589,15 +2580,15 @@ void test_matrix_svd(void)
 
 	/* Init the output matrices. */
 	rc = zsl_mtx_init(&u, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&e, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_init(&v, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Calculate the svd of 'm'. */
 	rc = zsl_mtx_svd(&m, &u, &e, &v, 1500);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t a[9] = { -0.3481845133, -0.0474852763, 0.9362225661,
@@ -2614,29 +2605,29 @@ void test_matrix_svd(void)
 			     0.3696989923, 0.2279295777, 0.9006863800 };
 
 	rc = zsl_mtx_from_arr(&u2, a);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&e2, b);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 	rc = zsl_mtx_from_arr(&v2, c);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (u.sz_rows * u.sz_cols); g++) {
-		zassert_true(val_is_equal(u.data[g], u2.data[g], 1E-8), NULL);
+		zassert_true(val_is_equal(u.data[g], u2.data[g], 1E-8));
 	}
 
 	for (size_t g = 0; g < (e.sz_rows * e.sz_cols); g++) {
-		zassert_true(val_is_equal(e.data[g], e2.data[g], 1E-8), NULL);
+		zassert_true(val_is_equal(e.data[g], e2.data[g], 1E-8));
 	}
 
 	for (size_t g = 0; g < (v.sz_rows * v.sz_cols); g++) {
-		zassert_true(val_is_equal(v.data[g], v2.data[g], 1E-8), NULL);
+		zassert_true(val_is_equal(v.data[g], v2.data[g], 1E-8));
 	}
 }
 #endif
 
 #ifndef CONFIG_ZSL_SINGLE_PRECISION
-void test_matrix_pinv(void)
+ZTEST(zsl_tests_double, test_matrix_pinv)
 {
 	int rc;
 
@@ -2657,11 +2648,11 @@ void test_matrix_pinv(void)
 
 	/* Init the output matrix. */
 	rc = zsl_mtx_init(&pinv, NULL);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Calculate the pseudo-inverse of 'm'. */
 	rc = zsl_mtx_pinv(&m, &pinv, 1500);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Expected output. */
 	zsl_real_t a[12] = {
@@ -2672,17 +2663,16 @@ void test_matrix_pinv(void)
 	};
 
 	rc = zsl_mtx_from_arr(&pinv2, a);
-	zassert_equal(rc, 0, NULL);
+	zassert_equal(rc, 0);
 
 	/* Check the output. */
 	for (size_t g = 0; g < (pinv.sz_rows * pinv.sz_cols); g++) {
-		zassert_true(val_is_equal(pinv.data[g], pinv2.data[g], 1E-8),
-			     NULL);
+		zassert_true(val_is_equal(pinv.data[g], pinv2.data[g], 1E-8));
 	}
 }
 #endif
 
-void test_matrix_min(void)
+ZTEST(zsl_tests, test_matrix_min)
 {
 	int rc = 0;
 	zsl_real_t min;
@@ -2699,11 +2689,11 @@ void test_matrix_min(void)
 	};
 
 	rc = zsl_mtx_min(&m, &min);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(min, 1.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(min, 1.0);
 }
 
-void test_matrix_max(void)
+ZTEST(zsl_tests, test_matrix_max)
 {
 	int rc = 0;
 	zsl_real_t max;
@@ -2720,11 +2710,11 @@ void test_matrix_max(void)
 	};
 
 	rc = zsl_mtx_max(&m, &max);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(max, 4.0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(max, 4.0);
 }
 
-void test_matrix_min_idx(void)
+ZTEST(zsl_tests, test_matrix_min_idx)
 {
 	int rc = 0;
 	size_t min_i;
@@ -2742,12 +2732,12 @@ void test_matrix_min_idx(void)
 	};
 
 	rc = zsl_mtx_min_idx(&m, &min_i, &min_j);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(min_i, 1, NULL);
-	zassert_equal(min_j, 0, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(min_i, 1);
+	zassert_equal(min_j, 0);
 }
 
-void test_matrix_max_idx(void)
+ZTEST(zsl_tests, test_matrix_max_idx)
 {
 	int rc = 0;
 	size_t max_i;
@@ -2766,12 +2756,12 @@ void test_matrix_max_idx(void)
 	};
 
 	rc = zsl_mtx_max_idx(&m, &max_i, &max_j);
-	zassert_equal(rc, 0, NULL);
-	zassert_equal(max_i, 1, NULL);
-	zassert_equal(max_j, 1, NULL);
+	zassert_equal(rc, 0);
+	zassert_equal(max_i, 1);
+	zassert_equal(max_j, 1);
 }
 
-void test_matrix_is_equal(void)
+ZTEST(zsl_tests, test_matrix_is_equal)
 {
 	bool res;
 
@@ -2797,7 +2787,7 @@ void test_matrix_is_equal(void)
 
 	/* Perform a test of equal elements. */
 	res = zsl_mtx_is_equal(&ma, &mb);
-	zassert_equal(res, true, NULL);
+	zassert_equal(res, true);
 
 	/* Perform a test of unequal elements. */
 	zsl_mtx_set(&mb, 1, 1, 0.5);
@@ -2805,7 +2795,7 @@ void test_matrix_is_equal(void)
 	zassert_equal(res, false, "");
 }
 
-void test_matrix_is_notneg(void)
+ZTEST(zsl_tests, test_matrix_is_notneg)
 {
 	bool res;
 
@@ -2821,14 +2811,14 @@ void test_matrix_is_notneg(void)
 	};
 
 	res = zsl_mtx_is_notneg(&m);
-	zassert_equal(res, true, NULL);
+	zassert_equal(res, true);
 
 	zsl_mtx_set(&m, 1, 1, -0.01);
 	res = zsl_mtx_is_notneg(&m);
-	zassert_equal(res, false, NULL);
+	zassert_equal(res, false);
 }
 
-void test_matrix_is_sym(void)
+ZTEST(zsl_tests, test_matrix_is_sym)
 {
 	bool res;
 
@@ -2853,9 +2843,9 @@ void test_matrix_is_sym(void)
 
 	/* Perform a test with a symmetric matrix. */
 	res = zsl_mtx_is_sym(&ma);
-	zassert_equal(res, true, NULL);
+	zassert_equal(res, true);
 
 	/* Perform a test with a non-symmetric matrix. */
 	res = zsl_mtx_is_sym(&mb);
-	zassert_equal(res, false, NULL);
+	zassert_equal(res, false);
 }

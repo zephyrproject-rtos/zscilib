@@ -5,13 +5,13 @@ common:
 tests:
   # C functions in double precision
   zsl.core.c.double:
-    platform_allow: mps2_an521
+    platform_allow: mps2/an521/cpu0
     extra_configs:
       - CONFIG_ZSL_SINGLE_PRECISION=n
       - CONFIG_ZSL_PLATFORM_OPT=0
   # C functions in single precision
   zsl.core.c.single:
-    platform_allow: mps2_an521
+    platform_allow: mps2/an521/cpu0
     extra_configs:
       - CONFIG_ZSL_SINGLE_PRECISION=y
       - CONFIG_ZSL_PLATFORM_OPT=0

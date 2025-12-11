@@ -1,3 +1,3 @@
 # Zephyr Scientific Library Sample Code
 
-TODO: Create table mapping functions to demo sketches
+Sample applications demonstrating common use cases for zscilib.

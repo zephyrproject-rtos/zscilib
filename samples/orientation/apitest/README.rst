@@ -17,17 +17,17 @@ To run in QEMU:
 
 .. code-block:: console
 
-    $ west build -p auto -b mps2_an521 \
+    $ west build -p auto -b mps2/an521/cpu0 \
       modules/lib/zscilib/samples/orientation/apitest/ -t run
 
 To run the application on real HW, typically outputting the results to the
 serial port, you can try a variant of the following, adjusting ``-b``
 as appropriate.
 
-The **nRF52840 PCA10056** from Nordic Semiconductors is used below:
+The **nRF52840dk** from Nordic Semiconductors is used below:
 
 .. code-block:: console
 
-    $ west build -b nrf52840_pca10056 \
+    $ west build -b nrf52840dk/nrf52840 \
       modules/lib/zscilib/samples/orientation/apitest/
     $ west flash

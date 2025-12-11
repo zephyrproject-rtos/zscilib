@@ -672,7 +672,7 @@ zsl_clr_conv_ct_xyz(zsl_real_t ct, enum zsl_clr_obs obs, struct zsl_clr_xyz *xyz
 		d_wl_m5 = d_wl_m * d_wl_m * d_wl_m * d_wl_m * d_wl_m;
 		/* Calculate black-body value. Source: Bruce Lindbloom */
 		bbody = c1 / (d_wl_m5 * 1.0e-12 *
-			      (expm1(c2 / (ct * d_wl_m * 1.0e-3))));
+			      (ZSL_EXPM1(c2 / (ct * d_wl_m * 1.0e-3))));
 		/* Calculate XYZ tristimulus using the std observer model. */
 		xyz->xyz_x += (bbody * obs_data->data[i].xyz_x);
 		xyz->xyz_y += (bbody * obs_data->data[i].xyz_y);
@@ -794,11 +794,11 @@ zsl_clr_conv_cct_xyy(struct zsl_clr_cct *cct, enum zsl_clr_obs obs, struct zsl_c
 	delta.uv60_v = uv0.uv60_v - uv1.uv60_v;
 	final.uv60_u = uv0.uv60_u -
 		       cct->duv * (delta.uv60_v /
-				   sqrt(delta.uv60_u * delta.uv60_u +
+				   ZSL_SQRT(delta.uv60_u * delta.uv60_u +
 					delta.uv60_v * delta.uv60_v));
 	final.uv60_v = uv0.uv60_v +
 		       cct->duv * (delta.uv60_u /
-				   sqrt(delta.uv60_u * delta.uv60_u +
+				   ZSL_SQRT(delta.uv60_u * delta.uv60_u +
 					delta.uv60_v * delta.uv60_v));
 
 	/*
@@ -882,7 +882,7 @@ zsl_clr_conv_uv60_cct_mccamy(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 	/* Calculate cct using McCamy's approximation. */
 	rc = zsl_clr_conv_uv60_xyy(uv, &xyy);
 	n = (xyy.xyy_x - 0.3320) / (0.1858 - xyy.xyy_y);
-	cct->cct = (449.0 * pow(n, 3) + 3525.0 * pow(n, 2) +
+	cct->cct = (449.0 * ZSL_POW(n, 3) + 3525.0 * ZSL_POW(n, 2) +
 		    6823.3 * n + 5520.33);
 
 	return 0;
@@ -917,7 +917,7 @@ zsl_clr_conv_uv60_cct_ohno2011(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 	memset(cct, 0, sizeof *cct);
 
 	/* Calculate L_fp. */
-	l_fp = sqrt((uv->uv60_u - 0.292) * (uv->uv60_u - 0.292) +
+	l_fp = ZSL_SQRT((uv->uv60_u - 0.292) * (uv->uv60_u - 0.292) +
 		    (uv->uv60_v - 0.24) * (uv->uv60_v - 0.24));
 
 	/* Calculate the black-body spectral radiance using k[0] constants.
@@ -925,11 +925,11 @@ zsl_clr_conv_uv60_cct_ohno2011(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 	 * the CCT. */
 	a_1 = atan((uv->uv60_v - 0.24) / (uv->uv60_u - 0.292));
 	a = a_1 >= 0.0 ?  a_1 : a_1 + M_PI;
-	l_bb = zsl_clr_conv_xyy_cct_ohno_2011_data[0][6] * pow(a, 6) +
-	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][5] * pow(a, 5) +
-	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][4] * pow(a, 4) +
-	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][3] * pow(a, 3) +
-	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][2] * pow(a, 2) +
+	l_bb = zsl_clr_conv_xyy_cct_ohno_2011_data[0][6] * ZSL_POW(a, 6) +
+	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][5] * ZSL_POW(a, 5) +
+	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][4] * ZSL_POW(a, 4) +
+	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][3] * ZSL_POW(a, 3) +
+	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][2] * ZSL_POW(a, 2) +
 	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][1] * a +
 	       zsl_clr_conv_xyy_cct_ohno_2011_data[0][0];
 
@@ -941,34 +941,34 @@ zsl_clr_conv_uv60_cct_ohno2011(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 
 	/* Calculate T1 and DT_c1 delta depending on the value of a. */
 	if (a < 2.54) {
-		t1 = 1 / (zsl_clr_conv_xyy_cct_ohno_2011_data[1][6] * pow(a, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][5] * pow(a, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][4] * pow(a, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][3] * pow(a, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][2] * pow(a, 2) +
+		t1 = 1 / (zsl_clr_conv_xyy_cct_ohno_2011_data[1][6] * ZSL_POW(a, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][5] * ZSL_POW(a, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][4] * ZSL_POW(a, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][3] * ZSL_POW(a, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][2] * ZSL_POW(a, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][1] * a +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[1][0]);
-		dt_c1 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[3][6] * pow(a, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][5] * pow(a, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][4] * pow(a, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][3] * pow(a, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][2] * pow(a, 2) +
+		dt_c1 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[3][6] * ZSL_POW(a, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][5] * ZSL_POW(a, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][4] * ZSL_POW(a, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][3] * ZSL_POW(a, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][2] * ZSL_POW(a, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][1] * a +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[3][0]) *
 			(l_bb + 0.01) / l_p * cct->duv / 0.01;
 	} else {
-		t1 = 1 / (zsl_clr_conv_xyy_cct_ohno_2011_data[2][6] * pow(a, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][5] * pow(a, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][4] * pow(a, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][3] * pow(a, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][2] * pow(a, 2) +
+		t1 = 1 / (zsl_clr_conv_xyy_cct_ohno_2011_data[2][6] * ZSL_POW(a, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][5] * ZSL_POW(a, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][4] * ZSL_POW(a, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][3] * ZSL_POW(a, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][2] * ZSL_POW(a, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][1] * a +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[2][0]);
-		dt_c1 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[4][6] * pow(a, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][5] * pow(a, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][4] * pow(a, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][3] * pow(a, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][2] * pow(a, 2) +
+		dt_c1 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[4][6] * ZSL_POW(a, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][5] * ZSL_POW(a, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][4] * ZSL_POW(a, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][3] * ZSL_POW(a, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][2] * ZSL_POW(a, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][1] * a +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[4][0]) *
 			(l_bb + 0.01) / l_p * cct->duv / 0.01;
@@ -980,22 +980,22 @@ zsl_clr_conv_uv60_cct_ohno2011(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 
 	/* Calculate DT_c2 depending on positive or negative Duv. */
 	if (cct->duv >= 0.0) {
-		dt_c2 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[5][6] * pow(c, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][5] * pow(c, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][4] * pow(c, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][3] * pow(c, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][2] * pow(c, 2) +
+		dt_c2 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[5][6] * ZSL_POW(c, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][5] * ZSL_POW(c, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][4] * ZSL_POW(c, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][3] * ZSL_POW(c, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][2] * ZSL_POW(c, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][1] * c +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[5][0]);
 	} else {
-		dt_c2 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[6][6] * pow(c, 6) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][5] * pow(c, 5) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][4] * pow(c, 4) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][3] * pow(c, 3) +
-			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][2] * pow(c, 2) +
+		dt_c2 =  (zsl_clr_conv_xyy_cct_ohno_2011_data[6][6] * ZSL_POW(c, 6) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][5] * ZSL_POW(c, 5) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][4] * ZSL_POW(c, 4) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][3] * ZSL_POW(c, 3) +
+			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][2] * ZSL_POW(c, 2) +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][1] * c +
 			  zsl_clr_conv_xyy_cct_ohno_2011_data[6][0]) *
-			pow(cct->duv / 0.03, 2);
+			ZSL_POW(cct->duv / 0.03, 2);
 	}
 
 	/* Assign the final correlated color temperature. */
@@ -1124,7 +1124,7 @@ zsl_clr_conv_uv60_cct_ohno2014(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 	      zsl_clr_conv_ct_uv_ohno_2014_data[match_idx - 1][2]) *
 	     (zsl_clr_conv_ct_uv_ohno_2014_data[match_idx + 1][2] -
 	      zsl_clr_conv_ct_uv_ohno_2014_data[match_idx - 1][2]));
-	l = sqrt(l);
+	l = ZSL_SQRT(l);
 
 	x = ((d_prev * d_prev) - (d_next * d_next) + (l * l)) / (2.0 * l);
 
@@ -1134,14 +1134,14 @@ zsl_clr_conv_uv60_cct_ohno2014(struct zsl_clr_uv60 *uv, struct zsl_clr_cct *cct)
 		   (x / l);
 
 	/* Calculate Duv. */
-	l_fp = sqrt((uv->uv60_u - 0.292) * (uv->uv60_u - 0.292) +
+	l_fp = ZSL_SQRT((uv->uv60_u - 0.292) * (uv->uv60_u - 0.292) +
 		    (uv->uv60_v - 0.24) * (uv->uv60_v - 0.24));
-	a = acos((uv->uv60_u - 0.292) / l_fp);
-	l_bb = zsl_clr_conv_xyy_cct_ohno_2014_data[6] * pow(a, 6) +
-	       zsl_clr_conv_xyy_cct_ohno_2014_data[5] * pow(a, 5) +
-	       zsl_clr_conv_xyy_cct_ohno_2014_data[4] * pow(a, 4) +
-	       zsl_clr_conv_xyy_cct_ohno_2014_data[3] * pow(a, 3) +
-	       zsl_clr_conv_xyy_cct_ohno_2014_data[2] * pow(a, 2) +
+	a = ZSL_ACOS((uv->uv60_u - 0.292) / l_fp);
+	l_bb = zsl_clr_conv_xyy_cct_ohno_2014_data[6] * ZSL_POW(a, 6) +
+	       zsl_clr_conv_xyy_cct_ohno_2014_data[5] * ZSL_POW(a, 5) +
+	       zsl_clr_conv_xyy_cct_ohno_2014_data[4] * ZSL_POW(a, 4) +
+	       zsl_clr_conv_xyy_cct_ohno_2014_data[3] * ZSL_POW(a, 3) +
+	       zsl_clr_conv_xyy_cct_ohno_2014_data[2] * ZSL_POW(a, 2) +
 	       zsl_clr_conv_xyy_cct_ohno_2014_data[1] * a +
 	       zsl_clr_conv_xyy_cct_ohno_2014_data[0];
 

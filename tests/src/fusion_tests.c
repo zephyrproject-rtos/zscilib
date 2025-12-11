@@ -9,7 +9,7 @@
 #include <zsl/orientation/fusion/fusion.h>
 #include "floatcheck.h"
 
-void test_fus_madgwick(void)
+ZTEST(zsl_tests, test_fus_madgwick)
 {
 	int rc = 0;
 
@@ -46,51 +46,51 @@ void test_fus_madgwick(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = madg_drv.init_handler(0.0, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = madg_drv.init_handler(100.0, madg_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the Madgwick algorithm. */
 	rc = madg_drv.feed_handler(&a, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999735780642940, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0039920127935612, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0044945146835265, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0040873395881737, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999735780642940, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0039920127935612, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0044945146835265, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0040873395881737, 1E-6));
 
 	/* Run the Madgwick algorithm with inclination angle provided. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, &g, &incl, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999757062543757, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0049228858339429, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0031924380087654, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0037630354354918, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999757062543757, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0049228858339429, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0031924380087654, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0037630354354918, 1E-6));
 
 	/* Run the Madgwick algorithm without accelerometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(NULL, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the Madgwick algorithm without magnetometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, NULL, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999774110335876, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0065495169685490, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0014692704230066, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499920938618, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999774110335876, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0065495169685490, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0014692704230066, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499920938618, 1E-6));
 
 	/* Run the Madgwick algorithm without gyroscope data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, NULL, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Madgwick algorithm with invalid accelerometer data. */
 	a.data[0] = 0.0;
@@ -98,11 +98,11 @@ void test_fus_madgwick(void)
 	a.data[2] = 0.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the Madgwick algorithm with invalid magnetometer data. */
 	a.data[0] = 0.01;
@@ -113,11 +113,11 @@ void test_fus_madgwick(void)
 	m.data[2] = 0.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999774110335876, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0065495169685490, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0014692704230066, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499920938618, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999774110335876, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0065495169685490, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0014692704230066, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499920938618, 1E-6));
 
 	ZSL_VECTOR_DEF(a2, 5);
 	ZSL_VECTOR_DEF(m2, 5);
@@ -131,30 +131,30 @@ void test_fus_madgwick(void)
 	madg_cfg.beta = -0.1;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Madgwick algorithm with invalid sensor data vector dimensions. */
 	madg_cfg.beta = 0.7;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a2, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m2, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = madg_drv.feed_handler(&a, &m, &g2, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Madgwick algorithm with a zero input quaternion. An error is
 	 * expected, because it can't be normalized. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	rc = madg_drv.feed_handler(&a, &m, &g, NULL, &q, madg_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_fus_mahony(void)
+ZTEST(zsl_tests, test_fus_mahony)
 {
 	int rc = 0;
 
@@ -197,19 +197,19 @@ void test_fus_mahony(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = mahn_drv.init_handler(0.0, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = mahn_drv.init_handler(100.0, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the Mahony algorithm. */
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999308295647051, 1E-4), NULL);
-	zassert_true(val_is_equal(q.i, -0.0068815222147659, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0065074388222656, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0069738065661901, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999308295647051, 1E-4));
+	zassert_true(val_is_equal(q.i, -0.0068815222147659, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0065074388222656, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0069738065661901, 1E-6));
 
 	/* Run the Mahony algorithm with inclination angle provided. */
 	a.data[0] = 0.01;
@@ -226,11 +226,11 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, &incl, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999134883142473, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0097283268194340, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0047955090791204, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0074416824173269, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999134883142473, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0097283268194340, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0047955090791204, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0074416824173269, 1E-6));
 
 	/* Run the Mahony algorithm without accelerometer data. */
 	a.data[0] = 0.01;
@@ -247,11 +247,11 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(NULL, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the Mahony algorithm without magnetometer data. */
 	a.data[0] = 0.01;
@@ -268,11 +268,11 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, NULL, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999532404548704, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0095471287140318, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0014989158007184, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499836341592, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999532404548704, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0095471287140318, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0014989158007184, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499836341592, 1E-6));
 
 	/* Run the Mahony algorithm without gyroscope data. */
 	a.data[0] = 0.01;
@@ -289,7 +289,7 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, NULL, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Mahony algorithm with invalid accelerometer data. */
 	a.data[0] = 0.0;
@@ -306,11 +306,11 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the Mahony algorithm with invalid magnetometer data. */
 	a.data[0] = 0.01;
@@ -327,11 +327,11 @@ void test_fus_mahony(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999532404548704, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0095471287140318, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0014989158007184, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499836341592, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999532404548704, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0095471287140318, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0014989158007184, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499836341592, 1E-6));
 
 	a.data[0] = 0.01;
 	a.data[1] = -1.01;
@@ -353,36 +353,36 @@ void test_fus_mahony(void)
 	mahn_cfg.ki = -0.1;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	mahn_cfg.ki = 0.005;
 	mahn_cfg.kp = -0.1;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Mahony algorithm with invalid sensor data vector dimensions. */
 	mahn_cfg.kp = 2.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a2, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m2, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = mahn_drv.feed_handler(&a, &m, &g2, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Mahony algorithm with a zero input quaternion. An error is
 	 * expected, because it can't be normalized. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	rc = mahn_drv.feed_handler(&a, &m, &g, NULL, &q, mahn_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_fus_saam(void)
+ZTEST(zsl_tests, test_fus_saam)
 {
 	int rc = 0;
 
@@ -414,49 +414,49 @@ void test_fus_saam(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = saam_drv.init_handler(0.0, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = saam_drv.init_handler(100.0, saam_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the SAAM algorithm. */
 	rc = saam_drv.feed_handler(&a, &m, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6));
 
 	/* Run the SAAM algorithm with inclination angle provided. It should give
 	 * the same results. */
 	rc = saam_drv.feed_handler(&a, &m, &g, &incl, &q, saam_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6));
 
 	/* Run the SAAM algorithm without gyroscope data. It should give the same
 	 * results. */
 	rc = saam_drv.feed_handler(&a, &m, NULL, NULL, &q, saam_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.1934598725297102, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.1905244514984266, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.6881852932869889, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.6728110531237675, 1E-6));
 
 	/* Run the SAAM algorithm without magnetometer data. An error is
 	 * expected. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a, NULL, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the SAAM algorithm without accelerometer data. An error is
 	 * expected. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(NULL, &m, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the SAAM algorithm with all zero magnetometer data. An error is
 	 * expected. */
@@ -466,7 +466,7 @@ void test_fus_saam(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a, &m, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the SAAM algorithm with all zero magnetometer data. An error is
 	 * expected. */
@@ -480,7 +480,7 @@ void test_fus_saam(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a, &m, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	ZSL_VECTOR_DEF(a2, 5);
 	ZSL_VECTOR_DEF(m2, 5);
@@ -493,18 +493,18 @@ void test_fus_saam(void)
 	/* Run the SAAM algorithm with invalid sensor data vector dimensions. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a2, &m, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a, &m2, &g, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = saam_drv.feed_handler(&a, &m, &g2, NULL, &q, saam_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_fus_complementary(void)
+ZTEST(zsl_tests, test_fus_complementary)
 {
 	int rc = 0;
 
@@ -541,37 +541,37 @@ void test_fus_complementary(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = comp_drv.init_handler(0.0, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = comp_drv.init_handler(100.0, comp_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the complementary algorithm. */
 	rc = comp_drv.feed_handler(&a, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6));
 
 	/* Run the complementary algorithm with inclination angle provided. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, &g, &incl, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.7806422574656674, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.4621974380629751, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.2979802370474076, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.2969494442427867, 1E-6));
 
 	/* Run the complementary algorithm without magnetometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, NULL, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the complementary algorithm with invalid magnetometer data. */
 	m.data[0] = 0.0;
@@ -579,11 +579,11 @@ void test_fus_complementary(void)
 	m.data[2] = 0.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the complementary algorithm without accelerometer data. */
 	m.data[0] = -66.0;
@@ -591,11 +591,11 @@ void test_fus_complementary(void)
 	m.data[2] = -43.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(NULL, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the complementary algorithm with invalid accelerometer data. */
 	a.data[0] = 0.0;
@@ -603,11 +603,11 @@ void test_fus_complementary(void)
 	a.data[2] = 0.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019579, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the complementary algorithm with no gyroscope. */
 	a.data[0] = 0.01;
@@ -615,7 +615,7 @@ void test_fus_complementary(void)
 	a.data[2] = -0.02;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, NULL, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	ZSL_VECTOR_DEF(a2, 5);
 	ZSL_VECTOR_DEF(m2, 5);
@@ -625,39 +625,39 @@ void test_fus_complementary(void)
 	comp_cfg.alpha = -0.7;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a2, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	comp_cfg.alpha = 3.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a2, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the complementary algorithm with invalid sensor data vector
 	 * dimensions. */
 	comp_cfg.alpha = 0.7;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a2, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a2, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m2, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = comp_drv.feed_handler(&a, &m, &g2, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the complementary algorithm with a zero input quaternion. An error
 	 * is expected, because it can't be normalized. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	rc = comp_drv.feed_handler(&a, &m, &g, NULL, &q, comp_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_fus_aqua(void)
+ZTEST(zsl_tests, test_fus_aqua)
 {
 	int rc = 0;
 
@@ -697,19 +697,19 @@ void test_fus_aqua(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = aqua_drv.init_handler(0.0, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = aqua_drv.init_handler(100.0, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the AQUA algorithm. */
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.7269775641540803, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0012887113095840, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0007083207036711, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.6866596381916891, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.7269775641540803, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0012887113095840, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0007083207036711, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.6866596381916891, 1E-6));
 
 	/* Run the AQUA algorithm with inclination angle provided. */
 	a.data[0] = 0.01;
@@ -726,34 +726,34 @@ void test_fus_aqua(void)
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, &incl, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.7269775641540803, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0012887113095840, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0007083207036711, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.6866596381916891, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.7269775641540803, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0012887113095840, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0007083207036711, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.6866596381916891, 1E-6));
 
 	/* Run the AQUA algorithm without accelerometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(NULL, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, -0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, -0.0003499996001257, 1E-6));
 
 	/* Run the AQUA algorithm without magnetometer data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, NULL, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6));
 
 	/* Run the AQUA algorithm without gyroscope data. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, NULL, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the AQUA algorithm with invalid accelerometer data. */
 	a.data[0] = 0.0;
@@ -769,11 +769,11 @@ void test_fus_aqua(void)
 	g.data[2] = -0.07;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6));
 
 	// /* Run the AQUA algorithm with invalid magnetometer data. */
 	a.data[0] = 0.01;
@@ -789,11 +789,11 @@ void test_fus_aqua(void)
 	g.data[2] = -0.07;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.9999988575019580, 1E-6));
+	zassert_true(val_is_equal(q.i, -0.0004499994858759, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0013999984005027, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0003499996001257, 1E-6));
 
 	ZSL_VECTOR_DEF(a2, 5);
 	ZSL_VECTOR_DEF(m2, 5);
@@ -807,46 +807,46 @@ void test_fus_aqua(void)
 	aqua_cfg.alpha = -0.7;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	aqua_cfg.alpha = 3.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	aqua_cfg.alpha = 0.7;
 	aqua_cfg.beta = -1.9;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	aqua_cfg.beta = 5.0;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the AQUA algorithm with invalid sensor data vector dimensions. */
 	aqua_cfg.beta = 0.7;
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a2, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m2, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_IDENTITY);
 	rc = aqua_drv.feed_handler(&a, &m, &g2, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the Madgwick algorithm with a zero input quaternion. An error is
 	 * expected, because it can't be normalized. */
 	zsl_quat_init(&q, ZSL_QUAT_TYPE_EMPTY);
 	rc = aqua_drv.feed_handler(&a, &m, &g, NULL, &q, aqua_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }
 
-void test_fus_kalman(void)
+ZTEST(zsl_tests, test_fus_kalman)
 {
 	int rc = 0;
 
@@ -897,42 +897,42 @@ void test_fus_kalman(void)
 
 	/* Init filter at 0 Hz. An error is expected. */
 	rc = kalm_drv.init_handler(0.0, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Init filter at 100 Hz. */
 	rc = kalm_drv.init_handler(100.0, kalm_drv.config);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	/* Run the kalman algorithm. */
 	rc = kalm_drv.feed_handler(&a, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.3186651048490019, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.6386866767275943, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.4721142772080947, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.5173393365852964, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.3186651048490019, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.6386866767275943, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.4721142772080947, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.5173393365852964, 1E-6));
 
 	/* Run the kalman algorithm with dip angle provided. */
 	rc = kalm_drv.feed_handler(&a, &m, &g, &incl, &q, kalm_drv.config);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q.r, 0.7715963603719183, 1E-6), NULL);
-	zassert_true(val_is_equal(q.i, 0.0123858064715810, 1E-6), NULL);
-	zassert_true(val_is_equal(q.j, 0.5043103125990586, 1E-6), NULL);
-	zassert_true(val_is_equal(q.k, 0.3875006542769926, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 0.7715963603719183, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0123858064715810, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.5043103125990586, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.3875006542769926, 1E-6));
 
 	/* Run the kalman algorithm without accelerometer data. An error
 	 * is expected. */
 	rc = kalm_drv.feed_handler(NULL, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the kalman algorithm without magnetometer data. An error
 	 * is expected. */
 	rc = kalm_drv.feed_handler(&a, NULL, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the kalman algorithm without gyroscope data. An error
 	 * is expected. */
 	rc = kalm_drv.feed_handler(&a, &m, NULL, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	ZSL_VECTOR_DEF(a2, 5);
 	ZSL_VECTOR_DEF(m2, 5);
@@ -941,26 +941,26 @@ void test_fus_kalman(void)
 	/* Run the kalman algorithm with invalid var_g, var_a, var_m. */
 	kalm_cfg.var_g = -0.8;
 	rc = kalm_drv.feed_handler(&a, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	kalm_cfg.var_g = 0.3 * 0.3;
 	kalm_cfg.var_a = -2.1;
 	rc = kalm_drv.feed_handler(&a, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	kalm_cfg.var_a = 0.5 * 0.5;
 	kalm_cfg.var_m = -5.0;
 	rc = kalm_drv.feed_handler(&a, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	/* Run the kalman algorithm with invalid sensor data vector dimensions. */
 	kalm_cfg.var_m = 0.8 * 0.8;
 	rc = kalm_drv.feed_handler(&a2, &m, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	rc = kalm_drv.feed_handler(&a, &m2, &g, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 
 	rc = kalm_drv.feed_handler(&a, &m, &g2, NULL, &q, kalm_drv.config);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 }

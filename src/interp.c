@@ -16,13 +16,13 @@ zsl_interp_lerp(zsl_real_t v0, zsl_real_t v1, zsl_real_t t, zsl_real_t *v)
 	int rc;
 
 	/* Ensure t = 0.0..1.0 */
-	if ((t < 0.0f) || (t > 1.0f)) {
+	if ((t < 0.0) || (t > 1.0)) {
 		rc = -EINVAL;
 		*v = NAN;
 		goto err;
 	}
 
-	*v = (1.0f - t) * v0 + t * v1;
+	*v = (1.0 - t) * v0 + t * v1;
 
 	return 0;
 err:
@@ -105,7 +105,7 @@ zsl_interp_nn(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
 
 	/* Make sure there is a delta x between xy1 and xy3. */
 	delta = xy3->x - xy1->x;
-	if (delta < 1E-6F && -delta < 1E-6F) {
+	if (delta < 1E-6 && -delta < 1E-6) {
 		rc = -EINVAL;
 		*y2 = NAN;
 		goto err;
@@ -118,7 +118,7 @@ zsl_interp_nn(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
 	}
 
 	/* Determine which value is closest, rounding up on 0.5. */
-	*y2 = x2 >= (xy1->x * 1.5f) ? xy3->y : xy1->y;
+	*y2 = x2 >= (xy1->x * 1.5) ? xy3->y : xy1->y;
 
 	return 0;
 err:
@@ -160,7 +160,7 @@ zsl_interp_lin_y(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
 
 	/* Make sure there is a delta on x between xy1 and xy3. */
 	delta = xy3->x - xy1->x;
-	if (delta < 1E-6F && -delta < 1E-6F) {
+	if (delta < 1E-6 && -delta < 1E-6) {
 		rc = -EINVAL;
 		*y2 = NAN;
 		goto err;
@@ -221,7 +221,7 @@ zsl_interp_lin_x(struct zsl_interp_xy *xy1, struct zsl_interp_xy *xy3,
 
 	/* Make sure there is a delta on x between xy1 and xy3. */
 	delta = xy3->x - xy1->x;
-	if (delta < 1E-6F && -delta < 1E-6F) {
+	if (delta < 1E-6 && -delta < 1E-6) {
 		rc = -EINVAL;
 		*x2 = NAN;
 		goto err;
@@ -275,12 +275,11 @@ zsl_interp_cubic_calc(struct zsl_interp_xyc xyc[], size_t n, zsl_real_t yp1,
 		goto err;
 	}
 
-	/* TODO: Remove 'f' restrictions? */
-	if (yp1 > 0.99e30f) {
-		xyc[0].y2 = u[0] = 0.0f;
+	if (yp1 > 0.99e30) {
+		xyc[0].y2 = u[0] = 0.0;
 	} else {
-		xyc[0].y2 = -0.5f;
-		u[0] = (3.0f / (xyc[1].x - xyc[0].x)) *
+		xyc[0].y2 = -0.5;
+		u[0] = (3.0 / (xyc[1].x - xyc[0].x)) *
 		       ((xyc[1].y - xyc[0].y) / (xyc[1].x - xyc[0].x) - yp1);
 	}
 
@@ -289,23 +288,23 @@ zsl_interp_cubic_calc(struct zsl_interp_xyc xyc[], size_t n, zsl_real_t yp1,
 		zsl_real_t x_i_im1 = xyc[i].x - xyc[i - 1].x;
 		zsl_real_t x_ip1_im1 = xyc[i + 1].x - xyc[i - 1].x;
 		sigma = x_i_im1 / x_ip1_im1;
-		p = sigma * xyc[i - 1].y2 + 2.0f;
-		xyc[i].y2 = (sigma - 1.0f) / p;
+		p = sigma * xyc[i - 1].y2 + 2.0;
+		xyc[i].y2 = (sigma - 1.0) / p;
 		u[i] = (xyc[i + 1].y - xyc[i].y) / (xyc[i + 1].x - xyc[i].x) -
 		       (xyc[i].y - xyc[i - 1].y) / (x_i_im1);
-		u[i] = (6.0f * u[i] / (x_ip1_im1) - sigma * u[i - 1]) / p;
+		u[i] = (6.0 * u[i] / (x_ip1_im1) - sigma * u[i - 1]) / p;
 	}
 
-	if (ypn > 0.99e30f) {
-		qn = un = 0.0f;
+	if (ypn > 0.99e30) {
+		qn = un = 0.0;
 	} else {
-		qn = 0.5f;
-		un = (3.0f / (xyc[n - 1].x - xyc[n - 2].x)) *
+		qn = 0.5;
+		un = (3.0 / (xyc[n - 1].x - xyc[n - 2].x)) *
 		     (ypn - (xyc[n - 1].y -
 			     xyc[n - 2].y) / (xyc[n - 1].x - xyc[n - 2].x));
 	}
 
-	xyc[n - 1].y2 = (un - qn * u[n - 2]) / (qn * xyc[n - 2].y2 + 1.0f);
+	xyc[n - 1].y2 = (un - qn * u[n - 2]) / (qn * xyc[n - 2].y2 + 1.0);
 
 	for (k = n - 2; k >= 0; k--) {
 		xyc[k].y2 = xyc[k].y2 * xyc[k + 1].y2 + u[k];
@@ -392,7 +391,7 @@ zsl_interp_cubic_arr(struct zsl_interp_xyc xyc[], size_t n,
 	/* Interpolate for y based on a, b using prev. calculated y2 vals. */
 	*y = a * xyc[klo].y + b * xyc[khi].y +
 	     ((a * a * a - a) * xyc[klo].y2 + (b * b * b - b) *
-	      xyc[khi].y2) * (h * h) / 6.0f;
+	      xyc[khi].y2) * (h * h) / 6.0;
 
 	return 0;
 err:

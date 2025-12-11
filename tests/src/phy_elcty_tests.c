@@ -12,23 +12,23 @@
 #include <zsl/physics/electricity.h>
 #include "floatcheck.h"
 
-void test_phy_elcty_current(void)
+ZTEST(zsl_tests, test_phy_elcty_current)
 {
 	int rc;
 	zsl_real_t i;
 
 	rc = zsl_phy_elcty_current(15.0, 10.0, &i);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(i, 1.5, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(i, 1.5, 1E-6));
 
 	/* Example for negative time. */
 	rc = zsl_phy_elcty_current(15.0, -10.0, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
+	zassert_true(i != i);
 }
 
-void test_phy_elcty_res_series(void)
+ZTEST(zsl_tests, test_phy_elcty_res_series)
 {
 	int rc;
 	zsl_real_t r;
@@ -41,22 +41,22 @@ void test_phy_elcty_res_series(void)
 
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&va, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&vb, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_phy_elcty_res_series(&va, &r);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(r, 11.2, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(r, 11.2, 1E-6));
 
 	/* Example for a negative resistance. */
 	rc = zsl_phy_elcty_res_series(&vb, &r);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(r != r, NULL);
+	zassert_true(r != r);
 }
 
-void test_phy_elcty_res_parallel(void)
+ZTEST(zsl_tests, test_phy_elcty_res_parallel)
 {
 	int rc;
 	zsl_real_t r;
@@ -69,22 +69,22 @@ void test_phy_elcty_res_parallel(void)
 
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&va, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&vb, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_phy_elcty_res_parallel(&va, &r);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(r, 0.25236593059, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(r, 0.25236593059, 1E-6));
 
 	/* Example for a negative resistance. */
 	rc = zsl_phy_elcty_res_parallel(&vb, &r);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(r != r, NULL);
+	zassert_true(r != r);
 }
 
-void test_phy_elcty_cap_series(void)
+ZTEST(zsl_tests, test_phy_elcty_cap_series)
 {
 	int rc;
 	zsl_real_t c;
@@ -97,22 +97,22 @@ void test_phy_elcty_cap_series(void)
 
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&va, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&vb, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_phy_elcty_cap_series(&va, &c);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(c, 0.25986078886, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(c, 0.25986078886, 1E-6));
 
 	/* Example for a negative capacitance. */
 	rc = zsl_phy_elcty_cap_series(&vb, &c);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(c != c, NULL);
+	zassert_true(c != c);
 }
 
-void test_phy_elcty_cap_parallel(void)
+ZTEST(zsl_tests, test_phy_elcty_cap_parallel)
 {
 	int rc;
 	zsl_real_t c;
@@ -125,103 +125,103 @@ void test_phy_elcty_cap_parallel(void)
 
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&va, a);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&vb, b);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 
 	rc = zsl_phy_elcty_cap_parallel(&va, &c);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(c, 12.2, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(c, 12.2, 1E-6));
 
 	/* Example for a negative capacitance. */
 	rc = zsl_phy_elcty_cap_parallel(&vb, &c);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(c != c, NULL);
+	zassert_true(c != c);
 }
 
-void test_phy_elcty_resistivity(void)
+ZTEST(zsl_tests, test_phy_elcty_resistivity)
 {
 	int rc;
 	zsl_real_t rty;
 
 	rc = zsl_phy_elcty_resistivity(250.0, 0.025, 0.001, &rty);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(rty, 6250.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(rty, 6250.0, 1E-6));
 
 	/* Example for negative resistance. */
 	rc = zsl_phy_elcty_resistivity(-250.0, 0.025, 0.001, &rty);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(rty != rty, NULL);
+	zassert_true(rty != rty);
 
 	/* Example for negative area section. */
 	rc = zsl_phy_elcty_resistivity(250.0, -0.025, 0.001, &rty);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(rty != rty, NULL);
+	zassert_true(rty != rty);
 
 	/* Example for negative length. */
 	rc = zsl_phy_elcty_resistivity(250.0, 0.025, -0.001, &rty);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(rty != rty, NULL);
+	zassert_true(rty != rty);
 }
 
-void test_phy_elcty_ohm_law(void)
+ZTEST(zsl_tests, test_phy_elcty_ohm_law)
 {
 	int rc;
 	zsl_real_t v;
 
 	rc = zsl_phy_elcty_ohm_law(0.025, 250.0, &v);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(v, 6.25, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(v, 6.25, 1E-6));
 
 	/* Example for negative resistance. */
 	rc = zsl_phy_elcty_ohm_law(0.025, -250.0, &v);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v != v, NULL);
+	zassert_true(v != v);
 }
 
-void test_phy_elcty_power_vi(void)
+ZTEST(zsl_tests, test_phy_elcty_power_vi)
 {
 	int rc;
 	zsl_real_t p;
 
 	rc = zsl_phy_elcty_power_vi(1.5, 0.025, &p);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(p, 0.0375, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(p, 0.0375, 1E-6));
 }
 
-void test_phy_elcty_power_ir(void)
+ZTEST(zsl_tests, test_phy_elcty_power_ir)
 {
 	int rc;
 	zsl_real_t p;
 
 	rc = zsl_phy_elcty_power_ir(0.025, 250.0, &p);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(p, 0.15625, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(p, 0.15625, 1E-6));
 
 	/* Example for negative resistance. */
 	rc = zsl_phy_elcty_power_ir(0.025, -250.0, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
+	zassert_true(p != p);
 }
 
-void test_phy_elcty_power_vr(void)
+ZTEST(zsl_tests, test_phy_elcty_power_vr)
 {
 	int rc;
 	zsl_real_t p;
 
 	rc = zsl_phy_elcty_power_vr(1.5, 250.0, &p);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(p, 0.009, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(p, 0.009, 1E-6));
 
 	/* Example for negative resistance. */
 	rc = zsl_phy_elcty_power_vr(1.5, -250.0, &p);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(p != p, NULL);
+	zassert_true(p != p);
 }

@@ -9,7 +9,7 @@ To run these units tests, make sure that you have previously run
 execute the following command to start the test-runner:
 
 ```
-$ twister --inline-logs -p mps2_an521 -T [zscilib_tests_folder]
+$ twister --inline-logs -p mps2/an521/cpu0 -T [zscilib_tests_folder]
 ```
 
 > **Tip**: If you wish to have **verbose output** to see any errors in

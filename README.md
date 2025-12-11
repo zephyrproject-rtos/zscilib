@@ -4,7 +4,7 @@
 
 [![API Documentation](doc/img/badge_api.svg)][1]
 
-[1]: https://zscilib.github.io/zscilib/
+[1]: https://zephyrproject-rtos.github.io/zscilib/
 
 The **Zephyr Scientific Library (zscilib)** is an attempt to provide a set of
 functions useful for scientific computing, data analysis and data manipulation
@@ -15,7 +15,7 @@ library is the [Zephyr Project](https://github.com/zephyrproject-rtos/zephyr),
 it tries to be as portable as possible, and a standalone reference project
 is included to use this library in non-Zephyr-based projects.
 
-This version of zscilib has been developed and tested against **Zephyr 2.6.0**.
+This version of zscilib has been developed and tested against **Zephyr 3.3.0**.
 
 ## Motivation
 
@@ -83,32 +83,6 @@ $ bin/zscilib
 
 ## Quick Start: Zephyr RTOS
 
-### Adding zscilib to your project via `west`
-
-For project that have been setup using `west`, you can add a local copy of
-zscilib by adding the following sections to `zephyr/west.yml`:
-
-1. In the `manifest/remotes` section add:
-
-```yaml
-remotes:
-  - name: zscilib
-    url-base: https://github.com/zscilib
-```
-
-2. In the `manifest/projects` section add:
-
-```yaml
-- name: zscilib
-  remote: zscilib
-  path: modules/lib/zscilib
-  revision: master
-```
-
-3. Save the file, and run `west update` from the project root to retrieve the
-latest version of zscilib from Github, or whatever `revision` was specified
-above.
-
 ### Running a sample application
 
 To run one of the sample applications using qemu, run the following commands:
@@ -118,7 +92,7 @@ To run one of the sample applications using qemu, run the following commands:
   assumes `qemu-system-arm` is available on your local system.
 
 ```
-$ west build -p -b mps2_an521 \
+$ west build -p -b mps2/an521/cpu0 \
   modules/lib/zscilib/samples/matrix/mult -t run
 ...
 *** Booting Zephyr OS build zephyr-v2.6.0-536-g89212a7fbf5f  ***
@@ -139,7 +113,7 @@ Press **`CTRL+A`** then **`x`** to quit qemu.
 To run the unit tests for this library, run the following command:
 
 ```bash
-$ twister --inline-logs -p mps2_an521 -T modules/lib/zscilib/tests
+$ twister --inline-logs -p mps2/an521/cpu0 -T modules/lib/zscilib/tests
 ```
 
 See the `tests` folder for further details.
@@ -167,7 +141,7 @@ you can run the following commands to start a new GDB debug session.
 In one terminal window, run:
 
 ```bash
-$ west build -p auto -b mps2_an521 modules/lib/zscilib/samples/matrix/pinv
+$ west build -p auto -b mps2/an521/cpu0 modules/lib/zscilib/samples/matrix/pinv
 ```
 
 Once the ELF file has been built, we can start a GDB server on the default
@@ -270,10 +244,10 @@ to ensure that the stack pointer is double-word aligned).
 ## Current Features
 
 > Features marked with the
-  [v0.2.0](https://github.com/zscilib/zscilib/projects/2) flag are in progress
+  [v0.2.0](https://github.com/zephyrproject-rtos/zscilib/projects/2) flag are in progress
   or planned as part of the current release cycle, and may be partially
   implemented or stubbed at present.
-  [v0.3.0](https://github.com/zscilib/zscilib/projects/3) indicates features planned for that later release.
+  [v0.3.0](https://github.com/zephyrproject-rtos/zscilib/projects/3) indicates features planned for that later release.
 
 ### Linear Algebra
 
@@ -957,11 +931,11 @@ common text editors (Atom Beautify, for example).
 
 If you wish to contribute to this library, you can raise a PR as follows:
 
-1. Fork the repository: https://github.com/zscilib/zscilib/fork
+1. Fork the repository: https://github.com/zephyrproject-rtos/zscilib/fork
 2. `git clone` your forked repository.
 3. Update your local repo and commit any changes.
 4. Push the changes out to your fork on Github.
-5. Navigate to https://github.com/zscilib/zscilib and to the
+5. Navigate to https://github.com/zephyrproject-rtos/zscilib and to the
    right of the **Branch** menu click **New pull request**.
 6. Fill out the form that is presented.
 7. Click the **Create Pull Request** button to submit the PR.
@@ -969,7 +943,7 @@ If you wish to contribute to this library, you can raise a PR as follows:
 Also have a look at the [Issues][4] page to see if there is any outstanding
 work or issues that you might be able to help with!
 
-[4]: https://github.com/zscilib/zscilib/issues
+[4]: https://github.com/zephyrproject-rtos/zscilib/issues
 
 ## License
 
