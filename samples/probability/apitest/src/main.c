@@ -5,8 +5,8 @@
  */
 
 #include <stdio.h>
-#include <zephyr.h>
-#include <sys/printk.h>
+#include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
 #include <zsl/zsl.h>
 #include <zsl/probability.h>
 
@@ -112,9 +112,13 @@ void probability_demo(void)
 	printf("The probability is %f.\n\n", h);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("\n\nzscilib probability demo\n\n");
 
 	probability_demo();
+
+	return err;
 }

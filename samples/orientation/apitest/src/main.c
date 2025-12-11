@@ -5,8 +5,8 @@
  */
 
 #include <stdio.h>
-#include <zephyr.h>
-#include <sys/printk.h>
+#include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
 #include <zsl/zsl.h>
 #include <zsl/orientation/orientation.h>
 #include <zsl/instrumentation.h>
@@ -224,8 +224,10 @@ void compass_demo(void)
 	printf("Geographic North     = %.6f\n", gn);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("Orientation API demo\n");
 	printf("--------------------\n\n");
 
@@ -261,4 +263,6 @@ void main(void)
 
 	printf("Compass Test:\n");
 	compass_demo();
+
+	return err;
 }

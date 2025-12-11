@@ -4,16 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr.h>
-#include <sys/printk.h>
+#include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
 #include <zsl/colorimetry.h>
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printk("zscilib     : %s\n", zsl_version);
 	printk("\nType 'help' for command options.\n");
 
 	while (1) {
 		k_sleep(K_FOREVER);
 	}
+
+	return err;
 }

@@ -5,10 +5,10 @@
  */
 
 #include <stdio.h>
-#include <zephyr.h>
-#include <device.h>
-#include <devicetree.h>
-#include <drivers/sensor.h>
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/sensor.h>
 #include <zsl/zsl.h>
 #include <zsl/orientation/orientation.h>
 #include <zsl/instrumentation.h>
@@ -67,18 +67,20 @@ void sensor_timer_handler(struct k_timer *dummy)
 
 K_TIMER_DEFINE(sensor_timer, sensor_timer_handler, NULL);
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	/* Make sure the accel+mag was found and properly initialised. */
 	if (amtdev == NULL || !device_is_ready(amtdev)) {
 		printf("Could not get FXOS8700 device\n");
-		return;
+		return err;
 	}
 
 	/* Make sure the gyro was found and properly initialised. */
 	if (gdev == NULL || !device_is_ready(gdev)) {
 		printf("Could not get FXAS21002 device\n");
-		return;
+		return err;
 	}
 
 	printf("ns, ax, ay, az, mx, my, mz, gz, gy, gz, temp_c\n");
@@ -89,4 +91,6 @@ void main(void)
 	while (1) {
 		k_sleep(K_MSEC(100));
 	}
+
+	return err;
 }

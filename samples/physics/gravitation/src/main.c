@@ -7,8 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/gravitation.h>
 #include <zsl/physics/energy.h>
@@ -94,9 +93,12 @@ void gravitation_demo(void)
 	printf("Its acceleration is %f meters per second squared.\n\n", g);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
 	printf("\n\nzscilib gravitation demo\n\n");
 
 	gravitation_demo();
+
+	return err;
 }

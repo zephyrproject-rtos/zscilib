@@ -7,8 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <errno.h>
-#include <kernel.h>
-#include <zephyr.h>
+#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/projectiles.h>
 
@@ -102,10 +101,14 @@ void projectiles_demo(void)
 	printf("The total range is %f meters.\n\n", dist);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("\n\nzscilib projectiles demo\n\n");
 
 	projectiles_demo();
+
+	return err;
 
 }
