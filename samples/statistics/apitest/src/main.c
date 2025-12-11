@@ -392,7 +392,11 @@ void statistics_demo(void)
 	printf("    I:      %f\n", el_coef.data[8]);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	statistics_demo();
+
+	return err;
 }

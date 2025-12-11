@@ -72,8 +72,9 @@ void test_vec_add(void)
 	printk("zsl_vec_add (avg): %u ns\n", instr_total / BENCH_LOOPS);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
 	printk("zscilib benchmark\n\n");
 	print_settings();
 
@@ -81,4 +82,6 @@ void main(void)
 		test_vec_add();
 		k_sleep(K_FOREVER);
 	}
+
+	return err;
 }
