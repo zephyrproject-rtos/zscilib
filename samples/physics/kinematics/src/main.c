@@ -8,7 +8,6 @@
 #include <math.h>
 #include <errno.h>
 #include <zephyr/kernel.h>
-#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/kinematics.h>
 
@@ -73,9 +72,13 @@ void kinematics_demo(void)
 	printf("Its acceleration is %f meters per second squared.\n\n", accel);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("\n\nzscilib kinematics demo\n\n");
 
 	kinematics_demo();
+
+	return err;
 }

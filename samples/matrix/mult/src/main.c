@@ -48,8 +48,9 @@ void test_mtx_mult_demo(void)
 	zsl_mtx_print(&mc);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
 	printf("zscilib matrix mult demo\n\n");
 
 	test_mtx_mult_demo();
@@ -57,4 +58,6 @@ void main(void)
 	while (1) {
 		k_sleep(K_FOREVER);
 	}
+
+	return err;
 }
