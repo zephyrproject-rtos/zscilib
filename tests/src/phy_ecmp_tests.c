@@ -17,13 +17,13 @@ ZTEST(zsl_tests, test_phy_ecmp_capac_cpv)
 	zsl_real_t c;
 
 	rc = zsl_phy_ecmp_capac_cpv(100.0, 10.0, &c);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(c, 10.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(c, 10.0, 1E-6));
 
 	rc = zsl_phy_ecmp_capac_cpv(100.0, 0.0, &c);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(c != c, NULL);
+	zassert_true(c != c);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_capac_ad)
@@ -33,13 +33,13 @@ ZTEST(zsl_tests, test_phy_ecmp_capac_ad)
 
 	/* E * 0.015 m^2 plate / 0.006 m gap = 22.135 pF */
 	rc = zsl_phy_ecmp_capac_ad(150E-4, 0.6E-2, &c);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(c, 2.2135E-11, 1E-13), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(c, 2.2135E-11, 1E-13));
 
 	rc = zsl_phy_ecmp_capac_ad(150E-4, 0.0, &c);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(c != c, NULL);
+	zassert_true(c != c);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_ener_capac)
@@ -48,8 +48,8 @@ ZTEST(zsl_tests, test_phy_ecmp_ener_capac)
 	zsl_real_t e;
 
 	rc = zsl_phy_ecmp_ener_capac(3.0, 1.0, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e, 1.5, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e, 1.5, 1E-6));
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_ener_induc)
@@ -58,8 +58,8 @@ ZTEST(zsl_tests, test_phy_ecmp_ener_induc)
 	zsl_real_t e;
 
 	rc = zsl_phy_ecmp_ener_induc(3.0, 1.0, &e);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(e, 1.5, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(e, 1.5, 1E-6));
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_trans)
@@ -68,14 +68,14 @@ ZTEST(zsl_tests, test_phy_ecmp_trans)
 	zsl_real_t v2;
 
 	rc = zsl_phy_ecmp_trans(5, 2.0, 10, &v2);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(v2, 4.0, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(v2, 4.0, 1E-6));
+
 	/* Example for zero 't1'. */
 	rc = zsl_phy_ecmp_trans(0, 2.0, 10, &v2);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(v2 != v2, NULL);
+	zassert_true(v2 != v2);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rlc_volt)
@@ -84,8 +84,8 @@ ZTEST(zsl_tests, test_phy_ecmp_rlc_volt)
 	zsl_real_t v;
 
 	rc = zsl_phy_ecmp_rlc_volt(5.0, 2.0, 10.0, &v);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(v, 9.4339811321, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(v, 9.4339811321, 1E-6));
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rc_charg_i)
@@ -94,26 +94,26 @@ ZTEST(zsl_tests, test_phy_ecmp_rc_charg_i)
 	zsl_real_t i;
 
 	rc = zsl_phy_ecmp_rc_charg_i(200.0, 2.0, 10.0, 6.7, &i);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(i, 6.5345764106, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(i, 6.5345764106, 1E-6));
+
 	/* Example for zero 'r * c'. */
 	rc = zsl_phy_ecmp_rc_charg_i(0.0, 0.0, 10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative 'i0'. */
 	rc = zsl_phy_ecmp_rc_charg_i(200.0, 2.0, 10.0, -6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative time. */
 	rc = zsl_phy_ecmp_rc_charg_i(200.0, 2.0, -10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
+	zassert_true(i != i);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rc_charg_q)
@@ -122,26 +122,26 @@ ZTEST(zsl_tests, test_phy_ecmp_rc_charg_q)
 	zsl_real_t q;
 
 	rc = zsl_phy_ecmp_rc_charg_q(200.0, 2.0, 10.0, 6.7, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q, 0.1654235894, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q, 0.1654235894, 1E-6));
+
 	/* Example for zero 'r * c'. */
 	rc = zsl_phy_ecmp_rc_charg_q(0.0, 0.0, 10.0, 6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
-	
+	zassert_true(q != q);
+
 	/* Example for negative 'q0'. */
 	rc = zsl_phy_ecmp_rc_charg_q(200.0, 2.0, 10.0, -6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
-	
+	zassert_true(q != q);
+
 	/* Example for negative time. */
 	rc = zsl_phy_ecmp_rc_charg_q(200.0, 2.0, -10.0, 6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
+	zassert_true(q != q);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_i)
@@ -150,26 +150,26 @@ ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_i)
 	zsl_real_t i;
 
 	rc = zsl_phy_ecmp_rc_discharg_i(200.0, 2.0, 10.0, 6.7, &i);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(i, -6.5345764106, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(i, -6.5345764106, 1E-6));
+
 	/* Example for zero 'r * c'. */
 	rc = zsl_phy_ecmp_rc_discharg_i(0.0, 0.0, 10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative 'i0'. */
 	rc = zsl_phy_ecmp_rc_discharg_i(200.0, 2.0, 10.0, -6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative time. */
 	rc = zsl_phy_ecmp_rc_discharg_i(200.0, 2.0, -10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
+	zassert_true(i != i);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_q)
@@ -178,26 +178,26 @@ ZTEST(zsl_tests, test_phy_ecmp_rc_discharg_q)
 	zsl_real_t q;
 
 	rc = zsl_phy_ecmp_rc_discharg_q(200.0, 2.0, 10.0, 6.7, &q);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(q, 6.5345764106, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q, 6.5345764106, 1E-6));
+
 	/* Example for zero 'r * c'. */
 	rc = zsl_phy_ecmp_rc_discharg_q(0.0, 0.0, 10.0, 6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
-	
+	zassert_true(q != q);
+
 	/* Example for negative 'q0'. */
 	rc = zsl_phy_ecmp_rc_discharg_q(200.0, 2.0, 10.0, -6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
-	
+	zassert_true(q != q);
+
 	/* Example for negative time. */
 	rc = zsl_phy_ecmp_rc_discharg_q(200.0, 2.0, -10.0, 6.7, &q);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(q != q, NULL);
+	zassert_true(q != q);
 }
 
 ZTEST(zsl_tests, test_phy_ecmp_rl_current)
@@ -206,30 +206,30 @@ ZTEST(zsl_tests, test_phy_ecmp_rl_current)
 	zsl_real_t i;
 
 	rc = zsl_phy_ecmp_rl_current(2.0, 2.0, 10.0, 6.7, &i);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(i, 6.6996958205, 1E-6), NULL);
-	
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(i, 6.6996958205, 1E-6));
+
 	/* Example for zero 'l'. */
 	rc = zsl_phy_ecmp_rl_current(200.0, 0.0, 10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative 'i0'. */
 	rc = zsl_phy_ecmp_rl_current(200.0, 2.0, 10.0, -6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative time. */
 	rc = zsl_phy_ecmp_rl_current(200.0, 2.0, -10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
-	
+	zassert_true(i != i);
+
 	/* Example for negative resistance. */
 	rc = zsl_phy_ecmp_rl_current(-200.0, 2.0, 10.0, 6.7, &i);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(i != i, NULL);
+	zassert_true(i != i);
 }

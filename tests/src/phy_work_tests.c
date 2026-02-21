@@ -17,20 +17,20 @@ ZTEST(zsl_tests, test_phy_work_module)
 	zsl_real_t w;
 
 	rc = zsl_phy_work_module(54.2, 3.0, &w);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(w, 162.6, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(w, 162.6, 1E-6));
 
 	/* Example for negative force. */
 	rc = zsl_phy_work_module(-54.2, 3.0, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
-	
+	zassert_true(w != w);
+
 	/* Example for negative distance. */
 	rc = zsl_phy_work_module(54.2, -3.0, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
+	zassert_true(w != w);
 }
 
 ZTEST(zsl_tests, test_phy_work_x)
@@ -39,24 +39,24 @@ ZTEST(zsl_tests, test_phy_work_x)
 	zsl_real_t w;
 
 	rc = zsl_phy_work_x(54.2, 3.0, 0.4, &w);
-	zassert_true(rc == 0, NULL);
+	zassert_true(rc == 0);
 #ifdef CONFIG_ZSL_SINGLE_PRECISION
- 	zassert_true(val_is_equal(w, 149.7645176249, 1E-4), NULL);
+ 	zassert_true(val_is_equal(w, 149.7645176249, 1E-4));
 #else
-	zassert_true(val_is_equal(w, 149.7645176249, 1E-8), NULL);
+	zassert_true(val_is_equal(w, 149.7645176249, 1E-8));
 #endif
 
 	/* Example for negative force. */
 	rc = zsl_phy_work_x(-54.2, 3.0, 0.4, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
-	
+	zassert_true(w != w);
+
 	/* Example for negative distance. */
 	rc = zsl_phy_work_x(54.2, -3.0, 0.4, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
+	zassert_true(w != w);
 }
 
 ZTEST(zsl_tests, test_phy_work_y)
@@ -65,20 +65,20 @@ ZTEST(zsl_tests, test_phy_work_y)
 	zsl_real_t w;
 
 	rc = zsl_phy_work_y(54.2, 3.0, 0.4, &w);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(w, 63.3194224594, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(w, 63.3194224594, 1E-6));
 
 	/* Example for negative force. */
 	rc = zsl_phy_work_y(-54.2, 3.0, 0.4, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
-	
+	zassert_true(w != w);
+
 	/* Example for negative distance. */
 	rc = zsl_phy_work_y(54.2, -3.0, 0.4, &w);
-	zassert_true(rc == -EINVAL, NULL);
+	zassert_true(rc == -EINVAL);
 	/* IEEE standard states that x != x is true only for NAN values. */
-	zassert_true(w != w, NULL);
+	zassert_true(w != w);
 }
 
 ZTEST(zsl_tests, test_phy_work_kin)
@@ -87,6 +87,6 @@ ZTEST(zsl_tests, test_phy_work_kin)
 	zsl_real_t w;
 
 	rc = zsl_phy_work_kin(14.0, 35.0, &w);
-	zassert_true(rc == 0, NULL);
-	zassert_true(val_is_equal(w, 21.0, 1E-6), NULL);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(w, 21.0, 1E-6));
 }
