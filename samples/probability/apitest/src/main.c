@@ -112,9 +112,13 @@ void probability_demo(void)
 	printf("The probability is %f.\n\n", h);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("\n\nzscilib probability demo\n\n");
 
 	probability_demo();
+
+	return err;
 }

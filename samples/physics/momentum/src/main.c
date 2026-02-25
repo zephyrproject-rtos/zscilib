@@ -8,7 +8,6 @@
 #include <math.h>
 #include <errno.h>
 #include <zephyr/kernel.h>
-#include <zephyr/kernel.h>
 #include <zsl/zsl.h>
 #include <zsl/physics/momentum.h>
 
@@ -82,9 +81,13 @@ void momentum_demo(void)
 	printf("Its final velocity would be %f m/s.\n\n", vf);
 }
 
-void main(void)
+int main(void)
 {
+	int err = 0;
+
 	printf("\n\nzscilib momentum demo\n\n");
 
 	momentum_demo();
+
+	return err;
 }
