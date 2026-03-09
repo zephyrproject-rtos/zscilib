@@ -423,6 +423,29 @@ int zsl_quat_from_ang_vel(struct zsl_vec *w, struct zsl_quat *qin,
 int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
 			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
 
+
+/**
+ * @brief Sets an orientation quaternion from an input acceleration sample.
+ *
+ * Given a tri-axial acceleration vector a = <x ,y, z> in m/s^2, compute and set a
+ * quaternion that describes the current orientation (q) of a body.
+ * This function returns the estimation of the orientation of the body in the
+ * form of a unit quaternion (q).
+ *
+ * This is direct port from AHRS's orientation library. (https://ahrs.readthedocs.io/)
+ * This function is useful for "bootstrapping" the orientation of a body
+ * when there is no prior quaternion q[n-1] to estimate q[n].
+ * The output q can serve as the q0 input to the Madgwick IMU filter.
+ *
+ * @param a     Tridimensional acceleration vector, in meters per second squared.
+ * @param q     The output orientation quaternion of the body
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ *         acceleration vector is null or its dimension is not 3.
+ */
+int zsl_quat_from_accel(struct zsl_vec *a, struct zsl_quat *q);
+
+
 /**
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
  *        values expressed in radians.
