@@ -15,3 +15,9 @@ tests:
     extra_configs:
       - CONFIG_ZSL_SINGLE_PRECISION=y
       - CONFIG_ZSL_PLATFORM_OPT=0
+  # Armv8.1-M MVE (Helium) functions, single precision only
+  zsl.core.mve.single:
+    platform_allow: mps3/corstone300/an547
+    extra_configs:
+      - CONFIG_ZSL_SINGLE_PRECISION=y
+      - CONFIG_ZSL_PLATFORM_OPT=3
