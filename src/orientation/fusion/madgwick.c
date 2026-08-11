@@ -38,6 +38,21 @@ static int zsl_fus_madgwick_imu(struct zsl_vec *g, struct zsl_vec *a,
 	ZSL_VECTOR_DEF(grad, 4);
 	zsl_vec_init(&grad);
 
+	/* AHRS convention variables (https://github.com/Mayitzin/ahrs/). */
+	struct zsl_quat q_dot;
+	struct zsl_quat q_gyr = {
+		.r = 0.0,
+		.i = g->data[0],
+		.j = g->data[1],
+		.k = g->data[2]
+	};
+
+	/* Compute the rate of change of the quaternion from the angular rate.
+	 * AHRS: qDot = 0.5 * q_prod(q, [0, *gyr]) # (eq. 12)
+	 */
+	zsl_quat_mult(q, &q_gyr, &q_dot);
+	zsl_quat_scale_d(&q_dot, 0.5);
+
 	/* Continue with the calculations only if the data from the accelerometer
 	 * is valid (non zero). */
 	if ((a != NULL) && ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
@@ -45,24 +60,15 @@ static int zsl_fus_madgwick_imu(struct zsl_vec *g, struct zsl_vec *a,
 		/* Normalize the acceleration vector. */
 		zsl_vec_to_unit(a);
 
-		/* Define the normalized quaternion of acceleration on the earth's
-		 * reference frame, which only has a vertical component. */
-		struct zsl_quat qa = {
-			.r = 0.0,
-			.i = 0.0,
-			.j = 0.0,
-			.k = 1.0
-		};
-
-		/* Calculate the function f by using the input quaternion to rotate the
-		 * normalised acceleration vector in the earth's reference frame, and
-		 * then substracting the acceleration vector. */
+		/* Calculate the objective function f by simplifying the sensor
+		 * field s to g=[0,0,0,1] and subtracting the acceleration
+		 * vector. (Equation 25)
+		 */
 		ZSL_MATRIX_DEF(f, 3, 1);
-		struct zsl_quat qaq;
-		zsl_quat_rot(q, &qa, &qaq);
-		f.data[0] = qaq.i - a->data[0];
-		f.data[1] = qaq.j - a->data[1];
-		f.data[2] = qaq.k - a->data[2];
+		f.data[0] = 2.0 * (q->i * q->k - q->r * q->j) - a->data[0];
+		f.data[1] = 2.0 * (q->r * q->i + q->j * q->k) - a->data[1];
+		f.data[2] = 2.0 * (0.5 - q->i * q->i - q->j * q->j) -
+			    a->data[2];
 
 		/* Define and compute the transpose of the Jacobian matrix of the
 		 * function f. */
@@ -84,14 +90,25 @@ static int zsl_fus_madgwick_imu(struct zsl_vec *g, struct zsl_vec *a,
 		/* Normalize the gradient vector. */
 		zsl_vec_from_arr(&grad, jtf.data);
 		zsl_vec_to_unit(&grad);
+
+		/* Steer the rate of change towards the gradient descent
+		 * solution. AHRS: qDot -= self.gain*gradient  # (eq. 33)
+		 */
+		q_dot.r -= *beta * grad.data[0];
+		q_dot.i -= *beta * grad.data[1];
+		q_dot.j -= *beta * grad.data[2];
+		q_dot.k -= *beta * grad.data[3];
 	}
 
-	/* Update the input quaternion with a modified quaternion integration. */
-	zsl_quat_from_ang_vel(g, q, 1.0 / zsl_fus_madg_freq, q);
-	q->r -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[0]);
-	q->i -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[1]);
-	q->j -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[2]);
-	q->k -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[3]);
+	/* Update the input quaternion.
+	 * AHRS: q += qDot*self.Dt  # (eq. 13)
+	 */
+	zsl_real_t dt = (zsl_real_t)1.0 / zsl_fus_madg_freq;
+
+	q->r += q_dot.r * dt;
+	q->i += q_dot.i * dt;
+	q->j += q_dot.j * dt;
+	q->k += q_dot.k * dt;
 
 	/* Normalize the output quaternion. */
 	zsl_quat_to_unit_d(q);
@@ -144,6 +161,21 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 	ZSL_VECTOR_DEF(grad, 4);
 	zsl_vec_init(&grad);
 
+	/* AHRS convention variables (https://github.com/Mayitzin/ahrs/). */
+	struct zsl_quat q_dot;
+	struct zsl_quat q_gyr = {
+		.r = 0.0,
+		.i = g->data[0],
+		.j = g->data[1],
+		.k = g->data[2]
+	};
+
+	/* Compute the rate of change of the quaternion from the angular rate.
+	 * AHRS: qDot = 0.5 * q_prod(q, [0, *gyr]) # (eq. 12)
+	 */
+	zsl_quat_mult(q, &q_gyr, &q_dot);
+	zsl_quat_scale_d(&q_dot, 0.5);
+
 	/* Continue with the calculations only if the data from the accelerometer
 	 * is valid (non zero). */
 	if ((a != NULL) && ZSL_ABS(zsl_vec_norm(a)) > 1E-6) {
@@ -154,24 +186,15 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 		/* Normalize the magnetic field vector. */
 		zsl_vec_to_unit(m);
 
-		/* Define the normalized vector of acceleration on the earth's
-		 * reference frame, which only has a vertical component. */
-		struct zsl_quat qa = {
-			.r = 0.0,
-			.i = 0.0,
-			.j = 0.0,
-			.k = 1.0
-		};
-
-		/* Calculate the function f_g by using the input quaternion to rotate
-		 * the normalised acceleration quaternion in the earth's reference
-		 * frame 'qa', and then substracting the acceleration vector. */
+		/* Calculate the objective function f_g by simplifying the
+		 * sensor field s to g=[0,0,0,1] and subtracting the
+		 * acceleration vector. (Equation 25)
+		 */
 		ZSL_MATRIX_DEF(f_g, 3, 1);
-		struct zsl_quat qaq;
-		zsl_quat_rot(q, &qa, &qaq);
-		f_g.data[0] = qaq.i - a->data[0];
-		f_g.data[1] = qaq.j - a->data[1];
-		f_g.data[2] = qaq.k - a->data[2];
+		f_g.data[0] = 2.0 * (q->i * q->k - q->r * q->j) - a->data[0];
+		f_g.data[1] = 2.0 * (q->r * q->i + q->j * q->k) - a->data[1];
+		f_g.data[2] = 2.0 * (0.5 - q->i * q->i - q->j * q->j) -
+			      a->data[2];
 
 		/* Define and compute the transpose of the Jacobian matrix of the
 		 * function f_g. */
@@ -215,17 +238,20 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 			bz = ZSL_SIN(*incl * ZSL_PI / 180.0);
 		}
 
-		struct zsl_quat b = { .r = 0.0, .i = bx, .j = 0.0, .k = bz };
-
-		/* Calculate the function f_b by using the input quaternion to rotate
-		 * the normalised magnetic field quaternion in the earth's reference
-		 * frame 'b', and then substracting the magnetometer data vector. */
+		/* Calculate the objective function f_b by rotating the earth
+		 * frame reference field b into the sensor frame and
+		 * subtracting the magnetometer vector. (Equation 29)
+		 */
 		ZSL_MATRIX_DEF(f_b, 3, 1);
-		struct zsl_quat qbq;
-		zsl_quat_rot(q, &b, &qbq);
-		f_b.data[0] = qbq.i - m->data[0];
-		f_b.data[1] = qbq.j - m->data[1];
-		f_b.data[2] = qbq.k - m->data[2];
+		f_b.data[0] = 2.0 * bx * (0.5 - q->j * q->j - q->k * q->k) +
+			      2.0 * bz * (q->i * q->k - q->r * q->j) -
+			      m->data[0];
+		f_b.data[1] = 2.0 * bx * (q->i * q->j - q->r * q->k) +
+			      2.0 * bz * (q->r * q->i + q->j * q->k) -
+			      m->data[1];
+		f_b.data[2] = 2.0 * bx * (q->r * q->j + q->i * q->k) +
+			      2.0 * bz * (0.5 - q->i * q->i - q->j * q->j) -
+			      m->data[2];
 
 		/* Define and compute the transpose of the Jacobian matrix of the
 		 * function f_b. */
@@ -264,14 +290,25 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 		grad.data[3] = jtf_g.data[3] + jtf_b.data[3];
 
 		zsl_vec_to_unit(&grad);
+
+		/* Steer the rate of change towards the gradient descent
+		 * solution. AHRS: qDot -= self.gain*gradient  # (eq. 33)
+		 */
+		q_dot.r -= *beta * grad.data[0];
+		q_dot.i -= *beta * grad.data[1];
+		q_dot.j -= *beta * grad.data[2];
+		q_dot.k -= *beta * grad.data[3];
 	}
 
-	/* Update the input quaternion with a modified quaternion integration. */
-	zsl_quat_from_ang_vel(g, q, 1.0 / zsl_fus_madg_freq, q);
-	q->r -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[0]);
-	q->i -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[1]);
-	q->j -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[2]);
-	q->k -= (1.0 / zsl_fus_madg_freq) * (*beta * grad.data[3]);
+	/* Update the input quaternion.
+	 * AHRS: q += qDot*self.Dt  # (eq. 13)
+	 */
+	zsl_real_t dt = (zsl_real_t)1.0 / zsl_fus_madg_freq;
+
+	q->r += q_dot.r * dt;
+	q->i += q_dot.i * dt;
+	q->j += q_dot.j * dt;
+	q->k += q_dot.k * dt;
 
 	/* Normalize the output quaternion. */
 	zsl_quat_to_unit_d(q);
