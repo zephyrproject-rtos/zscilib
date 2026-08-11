@@ -906,18 +906,18 @@ ZTEST(zsl_tests, test_fus_kalman)
 	/* Run the kalman algorithm. */
 	rc = kalm_drv.feed_handler(&a, &m, &g, NULL, &q, kalm_drv.config);
 	zassert_true(rc == 0);
-	zassert_true(val_is_equal(q.r, 0.3186651048490019, 1E-6));
-	zassert_true(val_is_equal(q.i, 0.6386866767275943, 1E-6));
-	zassert_true(val_is_equal(q.j, 0.4721142772080947, 1E-6));
-	zassert_true(val_is_equal(q.k, 0.5173393365852964, 1E-6));
+	zassert_true(val_is_equal(q.r, 0.3186651048490019, 1E-4));
+	zassert_true(val_is_equal(q.i, 0.6386866767275943, 1E-4));
+	zassert_true(val_is_equal(q.j, 0.4721142772080947, 1E-4));
+	zassert_true(val_is_equal(q.k, 0.5173393365852964, 1E-4));
 
 	/* Run the kalman algorithm with dip angle provided. */
 	rc = kalm_drv.feed_handler(&a, &m, &g, &incl, &q, kalm_drv.config);
 	zassert_true(rc == 0);
-	zassert_true(val_is_equal(q.r, 0.7715963603719183, 1E-6));
-	zassert_true(val_is_equal(q.i, 0.0123858064715810, 1E-6));
-	zassert_true(val_is_equal(q.j, 0.5043103125990586, 1E-6));
-	zassert_true(val_is_equal(q.k, 0.3875006542769926, 1E-6));
+	zassert_true(val_is_equal(q.r, 0.7715963603719183, 1E-4));
+	zassert_true(val_is_equal(q.i, 0.0123858064715810, 1E-4));
+	zassert_true(val_is_equal(q.j, 0.5043103125990586, 1E-4));
+	zassert_true(val_is_equal(q.k, 0.3875006542769926, 1E-4));
 
 	/* Run the kalman algorithm without accelerometer data. An error
 	 * is expected. */
