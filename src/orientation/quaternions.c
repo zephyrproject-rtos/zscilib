@@ -509,6 +509,53 @@ err:
 	return rc;
 }
 
+int zsl_quat_from_accel(struct zsl_vec *a, struct zsl_quat *q)
+{
+	int rc = 0;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+	/* Make sure the acceleration is a non-zero tridimensional vector, and
+	 * that an output quaternion has been provided.
+	 */
+	if (a == NULL || q == NULL || a->sz != 3) {
+		rc = -EINVAL;
+		goto err;
+	}
+	if (ZSL_ABS(zsl_vec_norm(a)) < 1E-6) {
+		rc = -EINVAL;
+		goto err;
+	}
+#endif
+
+	/* Normalize the acceleration vector. */
+	zsl_real_t norm = zsl_vec_norm(a);
+	zsl_real_t ax = a->data[0] / norm;
+	zsl_real_t ay = a->data[1] / norm;
+	zsl_real_t az = a->data[2] / norm;
+
+	/* Recover the roll and pitch angles from the gravity direction. */
+	zsl_real_t ex = ZSL_ATAN2(ay, az);
+	zsl_real_t ey = ZSL_ATAN2(-ax, ZSL_SQRT(ay * ay + az * az));
+
+	zsl_real_t cx2 = ZSL_COS(ex / 2.0);
+	zsl_real_t sx2 = ZSL_SIN(ex / 2.0);
+	zsl_real_t cy2 = ZSL_COS(ey / 2.0);
+	zsl_real_t sy2 = ZSL_SIN(ey / 2.0);
+
+	/* Compose the roll and pitch rotations. Yaw is unobservable from the
+	 * accelerometer alone and is left at zero.
+	 */
+	q->r = cx2 * cy2;
+	q->i = sx2 * cy2;
+	q->j = cx2 * sy2;
+	q->k = -sx2 * sy2;
+
+#if CONFIG_ZSL_BOUNDS_CHECKS
+err:
+#endif
+	return rc;
+}
+
 int zsl_quat_to_euler(struct zsl_quat *q, struct zsl_euler *e)
 {
 	int rc = 0;

@@ -424,6 +424,34 @@ int zsl_quat_from_ang_mom(struct zsl_vec *l, struct zsl_quat *qin,
 			  zsl_real_t *i, zsl_real_t t, struct zsl_quat *qout);
 
 /**
+ * @brief Sets an orientation quaternion from a single acceleration sample.
+ *
+ * Given a tridimensional acceleration vector (a), this function estimates the
+ * orientation of the body relative to the earth's reference frame, in the form
+ * of a unit quaternion (q). Only the roll and pitch components can be
+ * recovered this way, since rotating about the gravity vector leaves the
+ * accelerometer reading unchanged. The yaw component is therefore set to zero.
+ *
+ * The estimation is non-iterative and depends on the current sample alone,
+ * which makes it useful to bootstrap a fusion filter when no previous
+ * orientation is available. Feeding the output of this function to the
+ * Madgwick filter as its initial orientation avoids the long convergence
+ * ramp the filter would otherwise need to walk from the identity quaternion.
+ *
+ * This is a port of the acc2q function in the AHRS library:
+ * https://github.com/Mayitzin/ahrs/blob/master/ahrs/common/orientation.py
+ *
+ * @param a     Tridimensional acceleration vector, in meters per second
+ *              squared.
+ * @param q     Pointer to the output orientation quaternion.
+ *
+ * @return 0 if everything executed normally, or a negative error code if the
+ *         acceleration vector is NULL, has a dimension other than 3, or has a
+ *         zero magnitude.
+ */
+int zsl_quat_from_accel(struct zsl_vec *a, struct zsl_quat *q);
+
+/**
  * @brief Converts a unit quaternion to it's equivalent Euler angle. Euler
  *        values expressed in radians.
  *

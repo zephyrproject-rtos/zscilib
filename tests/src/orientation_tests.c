@@ -880,6 +880,68 @@ ZTEST(zsl_tests, test_quat_from_ang_mom)
 	zassert_true(rc == -EINVAL);
 }
 
+ZTEST(zsl_tests, test_quat_from_accel)
+{
+	int rc;
+	struct zsl_quat qcomp = {
+		.r = 0.9834823019142601,
+		.i = -0.1515970509991350,
+		.j = -0.0977440248224868,
+		.k = -0.0150665709866196
+	};
+	struct zsl_quat q;
+
+	ZSL_VECTOR_DEF(a, 3);
+	ZSL_VECTOR_DEF(a2, 4);
+	zsl_real_t v[3] = { 2.0, -3.0, 9.5 };
+
+	zsl_vec_from_arr(&a, v);
+
+	/* Estimate the orientation from a single acceleration sample. */
+	rc = zsl_quat_from_accel(&a, &q);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, qcomp.r, 1E-6));
+	zassert_true(val_is_equal(q.i, qcomp.i, 1E-6));
+	zassert_true(val_is_equal(q.j, qcomp.j, 1E-6));
+	zassert_true(val_is_equal(q.k, qcomp.k, 1E-6));
+
+	/* The estimated orientation must be a unit quaternion. */
+	zassert_true(val_is_equal(zsl_quat_magn(&q), 1.0, 1E-6));
+
+	/* An acceleration aligned with gravity must give the identity. */
+	a.data[0] = 0.0;
+	a.data[1] = 0.0;
+	a.data[2] = 9.80665;
+	rc = zsl_quat_from_accel(&a, &q);
+	zassert_true(rc == 0);
+	zassert_true(val_is_equal(q.r, 1.0, 1E-6));
+	zassert_true(val_is_equal(q.i, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.j, 0.0, 1E-6));
+	zassert_true(val_is_equal(q.k, 0.0, 1E-6));
+
+	/* In this case, an error is expected due to a zero acceleration
+	 * vector, which carries no orientation information.
+	 */
+	a.data[2] = 0.0;
+	rc = zsl_quat_from_accel(&a, &q);
+	zassert_true(rc == -EINVAL);
+
+	/* In this case, an error is expected due to the invalid dimension of
+	 * the acceleration vector.
+	 */
+	rc = zsl_quat_from_accel(&a2, &q);
+	zassert_true(rc == -EINVAL);
+
+	/* In this case, an error is expected due to a NULL input. */
+	rc = zsl_quat_from_accel(NULL, &q);
+	zassert_true(rc == -EINVAL);
+
+	/* In this case, an error is expected due to a NULL output. */
+	a.data[2] = 9.80665;
+	rc = zsl_quat_from_accel(&a, NULL);
+	zassert_true(rc == -EINVAL);
+}
+
 ZTEST(zsl_tests, test_quat_to_euler)
 {
 	int rc;
