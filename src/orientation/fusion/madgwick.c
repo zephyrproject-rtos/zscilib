@@ -263,12 +263,12 @@ static int zsl_fus_madgwick(struct zsl_vec *g, struct zsl_vec *a,
 			2.0 * bx * q->j,
 			/* 2x1..2x3 */
 			2.0 * bz * q->k,
-			2.0 * bz * q->j + 2.0 * bz * q->r,
+			2.0 * bx * q->j + 2.0 * bz * q->r,
 			2.0 * bx * q->k - 4.0 * bz * q->i,
 			/* 3x1..3x3 */
 			-4.0 * bx * q->j - 2.0 * bz * q->r,
-			2.0 * bx * q->i - 2.0 * bz * q->k,
-			2.0 * bx * q->r - 2.0 * bz * q->j,
+			2.0 * bx * q->i + 2.0 * bz * q->k,
+			2.0 * bx * q->r - 4.0 * bz * q->j,
 			/* 4x1..4x3 */
 			-4.0 * bx * q->k + 2.0 * bz * q->i,
 			-2.0 * bx * q->r + 2.0 * bz * q->j,
