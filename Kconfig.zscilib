@@ -34,12 +34,14 @@ config ZSL_SINGLE_PRECISION
 config ZSL_PLATFORM_OPT
 	int "Platform optimisations"
 	default 0
-	range 0 2
+	range 0 3
 	help
 	  Platform used for optimised assembly functions where possible.
 	  0 None
 	  1 ARM Thumb (GNU)
 	  2 ARM Thumb2 (GNU)
+	  3 Armv8.1-M MVE/Helium (Cortex-M55/M85, requires
+	    ZSL_SINGLE_PRECISION since MVE has no f64 support)
 
 config ZSL_VECTOR_INLINE
 	bool "Use inline vector functions."
