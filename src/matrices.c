@@ -1785,7 +1785,7 @@ zsl_mtx_pinv(struct zsl_mtx *m, struct zsl_mtx *pinv, size_t iter)
 		/* Invert the diagonal values in 'e'. If a value is zero, do
 		 * nothing to it. */
 		zsl_mtx_get(&e, g, g, &x);
-		if ((x < epsilon) || (x > -epsilon)) {
+		if (((x < epsilon) || (x > -epsilon)) && x != 0.0) {
 			x = 1 / x;
 			zsl_mtx_set(&e, g, g, x);
 		}
