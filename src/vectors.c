@@ -16,6 +16,11 @@
 #include <zsl/asm/arm/asm_arm_vectors.h>
 #endif
 
+/* Enable optimised Armv8.1-M MVE (Helium) functions if available. */
+#if (CONFIG_ZSL_PLATFORM_OPT == 3)
+#include <zsl/asm/arm/asm_arm_mve_vectors.h>
+#endif
+
 int zsl_vec_init(struct zsl_vec *v)
 {
 	memset(v->data, 0, v->sz * sizeof(zsl_real_t));
@@ -196,6 +201,7 @@ zsl_real_t zsl_vec_dist(struct zsl_vec *v, struct zsl_vec *w)
 	return zsl_vec_norm(&x);
 }
 
+#if !asm_vec_dot
 int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d)
 {
 	zsl_real_t res = 0.0;
@@ -215,6 +221,7 @@ int zsl_vec_dot(struct zsl_vec *v, struct zsl_vec *w, zsl_real_t *d)
 
 	return 0;
 }
+#endif
 
 zsl_real_t zsl_vec_norm(struct zsl_vec *v)
 {
@@ -300,6 +307,7 @@ int zsl_vec_cross(struct zsl_vec *v, struct zsl_vec *w, struct zsl_vec *c)
 	return 0;
 }
 
+#if !asm_vec_sum_of_sqrs
 zsl_real_t zsl_vec_sum_of_sqrs(struct zsl_vec *v)
 {
 	zsl_real_t dot = 0.0;
@@ -308,6 +316,7 @@ zsl_real_t zsl_vec_sum_of_sqrs(struct zsl_vec *v)
 
 	return dot;
 }
+#endif
 
 int zsl_vec_mean(struct zsl_vec **v, size_t n, struct zsl_vec *m)
 {
