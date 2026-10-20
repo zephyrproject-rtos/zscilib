@@ -484,7 +484,8 @@ int zsl_vec_sort(struct zsl_vec *v, struct zsl_vec *w)
 
 	/* Copy the vector 'v' into the vector 'u' with no repeated values. */
 	for (j = 0; j < v->sz; j++) {
-		if (v->data[j] >= 1E-5 || v->data[j] <= 1E-5) {
+		/* NaN cannot be ordered, so it is skipped. */
+		if (!isnan(v->data[j])) {
 			if (zsl_vec_contains(&u, v->data[j], 1E-5) == 0) {
 				u.data[count] = v->data[j];
 				count++;
