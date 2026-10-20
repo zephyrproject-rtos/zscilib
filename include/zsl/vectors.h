@@ -398,6 +398,8 @@ int zsl_vec_contains(struct zsl_vec *v, zsl_real_t val, zsl_real_t eps);
  * @brief Sorts the values in vector v from smallest to largest using quicksort,
  *        and assigns the sorted output to vector w.
  *
+ * NaN values in v are ignored.
+ *
  * @param v     The unsorted, input vector.
  * @param w     The sorted, output vector.
  *
