@@ -861,6 +861,9 @@ ZTEST(zsl_tests, test_vector_sort)
 	ZSL_VECTOR_DEF(w, 5);
 	ZSL_VECTOR_DEF(ws, 5);
 	ZSL_VECTOR_DEF(wp, 5);
+	ZSL_VECTOR_DEF(x, 5);
+	ZSL_VECTOR_DEF(xs, 4);
+	ZSL_VECTOR_DEF(xp, 5);
 
 	/* Vector with no repeated values. */
 	zsl_real_t a[5] = { 3.0, 4.5, -3.5, 0.0, -1.0 };
@@ -870,6 +873,10 @@ ZTEST(zsl_tests, test_vector_sort)
 	zsl_real_t c[5] = { -1.0, 4.5, 4.5, 0.0, -1.0 };
 	zsl_real_t d[5] = { -1.0, -1.0, 0.0, 4.5, 4.5 };
 
+	/* Vector with a NaN value, which is skipped. */
+	zsl_real_t e[5] = { 3.0, NAN, -1.0, 0.0, 4.5 };
+	zsl_real_t f[4] = { -1.0, 0.0, 3.0, 4.5 };
+
 	/* Assign arrays to vectors. */
 	rc = zsl_vec_from_arr(&v, a);
 	zassert_true(rc == 0);
@@ -878,6 +885,10 @@ ZTEST(zsl_tests, test_vector_sort)
 	rc = zsl_vec_from_arr(&w, c);
 	zassert_true(rc == 0);
 	rc = zsl_vec_from_arr(&ws, d);
+	zassert_true(rc == 0);
+	rc = zsl_vec_from_arr(&x, e);
+	zassert_true(rc == 0);
+	rc = zsl_vec_from_arr(&xs, f);
 	zassert_true(rc == 0);
 
 	/* Perform the sorting operation. */
@@ -915,4 +926,18 @@ ZTEST(zsl_tests, test_vector_sort)
 	zassert_equal(wp.data[2], ws.data[2]);
 	zassert_equal(wp.data[3], ws.data[3]);
 	zassert_equal(wp.data[4], ws.data[4]);
+
+	/* Sort a vector containing NaN. The NaN is skipped, so the output
+	 * holds the remaining values in order and its last element is left
+	 * untouched.
+	 */
+	rc = zsl_vec_init(&xp);
+	zassert_true(rc == 0);
+	rc = zsl_vec_sort(&x, &xp);
+	zassert_true(rc == 0);
+	zassert_equal(xp.data[0], xs.data[0]);
+	zassert_equal(xp.data[1], xs.data[1]);
+	zassert_equal(xp.data[2], xs.data[2]);
+	zassert_equal(xp.data[3], xs.data[3]);
+	zassert_equal(xp.data[4], 0.0);
 }
